@@ -1,4 +1,4 @@
-# Team CS Cats Term Project 
+# Team CS Cats Term Project (actual project name to come)
 Web-based CRUD database. 
 
 
@@ -36,7 +36,7 @@ python get-pip.py -g
 Git is a version control system. In this project, Git is used to clone (copy) the most up-to-date project files from GitHub to your local machine. Download the latest version of [git](https://git-scm.com/download/win) and install on your local machine.
 
 
-### Installation
+### Installation (will change based on project setup) 
 
 1. Open the command line on your local machine.
 
