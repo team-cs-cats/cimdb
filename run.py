@@ -14,6 +14,6 @@ from cim.webapp import webapp
 
 if __name__ == "__main__":
 	port_number = 5000
-    print(f'Local server running on port {port_number}.')
-    port = int(os.environ.get("PORT", port_number))
-    webapp.run(debug=True, host='0.0.0.0', port=port)
+	print(f'Local server running on port {port_number}.')
+	port = int(os.environ.get("PORT", port_number))
+	webapp.run(debug=True, host='0.0.0.0', port=port)
