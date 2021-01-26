@@ -1,4 +1,7 @@
+# webapp.py
 
+
+from datetime import datetime
 
 from flask import Flask, render_template
 from flask import request, redirect
@@ -12,7 +15,9 @@ webapp = Flask(__name__)
 #provide a route for the index of the webpage requests on the web application can be addressed
 @webapp.route('/')
 def index():
-    return render_template("index.html")
+    """The webapp's landing page."""
+    now = datetime.now()
 
-
-
+    current_time = now.strftime("%d/%m/%Y %H:%M:%S")
+    print(current_time)
+    return render_template("index.html", time=current_time)

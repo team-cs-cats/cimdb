@@ -36,6 +36,7 @@
     </div>
         <span>
             <p>Made by Team CS Cats. Project repository can be found <a href="https://github.com/team-cs-cats/cimdb">here</a>.</p>
+            Time is <span id='clock'></span>
         </span>
 
 
@@ -43,7 +44,10 @@
 </div>
 </div>
 
-<!-- Internal scripts will go here -->
+<!-- Internal scripts -->
+<!-- Can't link directly to static/js/main.js using templates, have to use url_for instead -->
+<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+
 </body>
 
 
