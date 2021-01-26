@@ -1,9 +1,11 @@
-# Team CS Cats Term Project (actual project name to come)
+# 2Fast4U Cats Inventory Management Database (CIMDB)
 Web-based CRUD database. 
 
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+
+2Fast4U Computers assembles and sells $2 million in PCs annually (on average 1,500 PCs assembled per year). The Cats Inventory and Manufacturing (CIM) web app will help manage the inventory, assembly, and quality control (QC) process for 2Fast4U. The state of the art database (DB) behind the CIM webapp will be used by 2Fast4U Employees at different production Sites. Employees are assigned Work Orders, which list Products to assemble using Regular Components (which are available in large quantities like MotherBoard, RAM, etc.) and Special Components (CPUs, which must be tracked using unique serial numbers). Regular Components and Special Components are stored in Locations at any particular Site until they are used to assemble Products. Once each Product has been assembled and QC’d, the Work Order can be closed.
 
 This class project was built for Oregon State's CS340 Databases class in Winter 2021.
 
@@ -25,7 +27,7 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-In order to make local changes to Flash Learning, you must first have Python and pip installed on your system. If you need assistance installing these prerequisites, see the folowing steps:
+In order to make local changes to the CIMDB, you must first have Python and pip installed on your system. If you need assistance installing these prerequisites, see the folowing steps:
 * Python is a programming language. Almost all of this project's code base (particularly the backend) is written in Python. Download the latest version of [Python](https://www.python.org/downloads/) and install onto your local machine.
 
 * Pip is the package installer for Python. Once Python is installed, open your local machine's command line and use the following command to utilize Python to install Pip:
