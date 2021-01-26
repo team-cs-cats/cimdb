@@ -1,0 +1,20 @@
+<!-- Top Nav Bar  -->
+<nav>
+	<a>CIMDB - <em>{{user.first_name}}'s {% block page_title %}{% endblock %}</em></a>
+
+	<a>Log Out {{ user.first_name }}</a>
+
+</nav>
+
+
+<!-- Internal custom CSS -->
+<!-- Can't link directly to static/css/main.css using templates, have to use url_for instead -->
+{% block head %}
+{% endblock %}
+
+<!-- Body goes here -->
+{% block body %}
+{% endblock %}
+
+<!-- Inherit from base template -->
+{% include 'base.html' %}
