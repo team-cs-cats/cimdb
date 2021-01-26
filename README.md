@@ -63,7 +63,7 @@ pip install -r requirements.txt
 python run.py
 ```
 7. On your browser, navigate to `http://localhost:5000/`. This will update to saved changes in your local directory upon refresh.
-
+8. Occasionally, some of the built-in resources (particularly the javascript scripts) of this project do not update when reloading changes made to files. To bypass these errors, reload the web page and bypass the cache. This can be done using the `Shift + left click Reload button` on Firefox or by entering developer mode on Google Chrome and selecting the `Empty Cache and Hard Reload` option.
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -73,7 +73,7 @@ python run.py
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/asa-leholland/team-cs-cats/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/team-cs-cats/cimdb/issues) for a list of proposed features (and known issues).
 
 
 
@@ -93,17 +93,17 @@ Contributions are what make the open source community such an amazing place to b
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See [LICENSE](https://github.com/asa-leholland/team-cs-cats/LICENSE.txt) for more information.
+Distributed under the MIT License. See [LICENSE](https://github.com/team-cs-cats/cimdb/LICENSE.txt) for more information.
 
 
 
 <!-- CONTACT -->
 ## Contact
 
-Ali Jalilian - jaliliam@oregonstate.edu
+Ali Jalilian - jalilian@oregonstate.edu
 Asa LeHolland - hollaasa@oregonstate.edu
 
-Project Link: [https://github.com/asa-leholland/team-cs-cats](https://github.com/asa-leholland/team-cs-cats)
+Project Link: [https://github.com/team-cs-cats/cimdb](https://github.com/team-cs-cats/cimdb)
 
 
 
