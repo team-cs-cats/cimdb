@@ -9,8 +9,23 @@ from flask_login import login_user, current_user, logout_user, login_required
 # This will eventually connect to the database, but for now it is not enabled
 # from db_connector.db_connector import connect_to_database, execute_query
 
+
 #create the web application
 webapp = Flask(__name__)
+
+
+# Set up login manager to handle basic user authentication
+login_manager = flask_login.LoginManager()
+login_manager.init_app(webapp)
+
+
+# Set up a mock set of user ids to use for our logins (this can be moved/replaced later)
+users = {
+'ali@cimdb.com': {'password': '12345'}
+'asa@cimdb.com': {'password': '54321'}
+}
+
+
 
 #provide a route for the index of the webpage requests on the web application can be addressed
 @webapp.route('/')
