@@ -14,6 +14,9 @@ from flask_login import login_user, current_user, logout_user, login_required
 #create the web application
 webapp = Flask(__name__)
 
+# added a 'secret' key for user management
+webapp.secret_key = 'Team CS Cats'
+
 
 # Set up login manager to handle basic user authentication
 login_manager = flask_login.LoginManager()
@@ -89,10 +92,10 @@ def index():
     return render_template("index.html")
 
 # Provide a route to redirect a logged in user to the orders page web app
-@webapp.route('/login')
+@webapp.route('/login', methods=['GET', 'POST'])
 def login():
 
-    flask_login.login_user(user)
+    
     # if the user attempts to login, but provides no info, refresh the page
     if request.method == 'GET':
         return render_template("index.html")
@@ -112,13 +115,13 @@ def login():
 
 
 # Provide a route to log out the web app
-@webapp.route('/logout')
+@webapp.route('/logout', methods=['GET', 'POST'])
 def logout():
     flask_login.logout_user()
     return render_template("index.html")
 
 
-@webapp.route('/workorders')
+@webapp.route('/workorders', methods=['GET', 'POST'])
 @login_required
 def workorders():
     """The webapp's page for work orders, which allows reviewing and adding work orders."""
@@ -130,20 +133,20 @@ def workorders():
     # otherwise, return the workorders page
     return render_template("workorders.html")
 
-@webapp.route('/products')
+@webapp.route('/products', methods=['GET', 'POST'])
 @login_required
 def products():
     """The webapp's page for viewing an employee's currently assigned products to assemble and QC."""
     return render_template("products.html")
 
-@webapp.route('/inventory')
+@webapp.route('/inventory', methods=['GET', 'POST'])
 @login_required
 def inventory():
     """The webapp's page for viewing the inventory.
     This allows the employee to review existing stock and order new stock of standard and special components."""
     return render_template("inventory.html")
 
-@webapp.route('/user_management')
+@webapp.route('/user_management', methods=['GET', 'POST'])
 @login_required
 def user_management():
     """The webapp's page for managing current users.

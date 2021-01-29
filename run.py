@@ -18,5 +18,4 @@ if __name__ == "__main__":
 	port = int(os.environ.get("PORT", port_number))
 	webapp.run(debug=True, host='0.0.0.0', port=port)
 
-	# added a secret key for user management
-	webapp.secret_key = 'Team CS Cats'
+	
