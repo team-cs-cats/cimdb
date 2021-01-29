@@ -4,6 +4,7 @@ from flask import request, redirect
 
 # import these to handle user accounts
 from flask import url_for, session
+import flask_login
 from flask_login import login_user, current_user, logout_user, login_required
 
 # This will eventually connect to the database, but for now it is not enabled
@@ -71,18 +72,40 @@ def index():
     """The webapp's landing page."""
 
     # if the user attempts to login, but provides no info, refresh the page
-    if flask.request.method == 'GET':
+    if request.method == 'GET':
         return render_template("index.html")
 
     # if the user attempts to login with info, check to see if their info is valid
-    email = flask.request.form['email']
-    if flask.request.form['password'] == users[email]['password']:
+    email = request.form['email']
+    if request.form['password'] == users[email]['password']:
 
     	# If valid credentials, sign the user into the Work Orders page
         user = User()
         user.id = email
         flask_login.login_user(user)
-        return flask.redirect(flask.url_for('/workorders'))
+        return redirect(url_for('/workorders'))
+
+    # If the user provided bad credentials, return them to the index page (TODO: flash error)
+    return render_template("index.html")
+
+# Provide a route to redirect a logged in user to the orders page web app
+@webapp.route('/login')
+def login():
+
+    flask_login.login_user(user)
+    # if the user attempts to login, but provides no info, refresh the page
+    if request.method == 'GET':
+        return render_template("index.html")
+
+    # if the user attempts to login with info, check to see if their info is valid
+    email = request.form['email']
+    if request.form['password'] == users[email]['password']:
+
+    	# If valid credentials, sign the user into the Work Orders page
+        user = User()
+        user.id = email
+        flask_login.login_user(user)
+        return redirect(url_for('/workorders'))
 
     # If the user provided bad credentials, return them to the index page (TODO: flash error)
     return render_template("index.html")
