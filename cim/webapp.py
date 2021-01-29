@@ -86,7 +86,7 @@ def index():
         user = User()
         user.id = email
         flask_login.login_user(user)
-        return redirect(url_for('/workorders'))
+        return redirect(url_for('workorders'))
 
     # If the user provided bad credentials, return them to the index page (TODO: flash error)
     return render_template("index.html")
@@ -108,7 +108,7 @@ def login():
         user = User()
         user.id = email
         flask_login.login_user(user)
-        return redirect(url_for('/workorders'))
+        return redirect(url_for('workorders'))
 
     # If the user provided bad credentials, return them to the index page (TODO: flash error)
     return render_template("index.html")
