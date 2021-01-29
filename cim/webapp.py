@@ -64,11 +64,42 @@ def request_loader(request):
 def unauthorized_handler():
     return 'Unauthorized'
 
+
 #provide a route for the index of the webpage requests on the web application can be addressed
 @webapp.route('/')
 def index():
     """The webapp's landing page."""
     return render_template("index.html")
+
+
+# add a route to allow the user to log in
+@webapp.route('/login', methods=['GET', 'POST'])
+def login():
+    if flask.request.method == 'GET':
+        return '''
+               <form action='login' method='POST'>
+                <input type='text' name='email' id='email' placeholder='email'/>
+                <input type='password' name='password' id='password' placeholder='password'/>
+                <input type='submit' name='submit'/>
+               </form>
+               '''
+
+    email = flask.request.form['email']
+    if flask.request.form['password'] == users[email]['password']:
+        user = User()
+        user.id = email
+        flask_login.login_user(user)
+        return flask.redirect(flask.url_for('protected'))
+
+    return 'Bad login'
+
+
+# Provide a route to log out the web app
+@webapp.route('/logout')
+def logout():
+    flask_login.logout_user()
+    return render_template("index.html")
+
 
 @webapp.route('/workorders')
 @login_required
