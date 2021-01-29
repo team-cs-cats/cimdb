@@ -66,32 +66,26 @@ def unauthorized_handler():
 
 
 #provide a route for the index of the webpage requests on the web application can be addressed
-@webapp.route('/')
+@webapp.route('/', methods=['GET', 'POST'])
 def index():
     """The webapp's landing page."""
-    return render_template("index.html")
 
-
-# add a route to allow the user to log in
-@webapp.route('/login', methods=['GET', 'POST'])
-def login():
+    # if the user attempts to login, but provides no info, refresh the page
     if flask.request.method == 'GET':
-        return '''
-               <form action='login' method='POST'>
-                <input type='text' name='email' id='email' placeholder='email'/>
-                <input type='password' name='password' id='password' placeholder='password'/>
-                <input type='submit' name='submit'/>
-               </form>
-               '''
+        return render_template("index.html")
 
+    # if the user attempts to login with info, check to see if their info is valid
     email = flask.request.form['email']
     if flask.request.form['password'] == users[email]['password']:
+
+    	# If valid credentials, sign the user into the Work Orders page
         user = User()
         user.id = email
         flask_login.login_user(user)
-        return flask.redirect(flask.url_for('protected'))
+        return flask.redirect(flask.url_for('/workorders'))
 
-    return 'Bad login'
+    # If the user provided bad credentials, return them to the index page (TODO: flash error)
+    return render_template("index.html")
 
 
 # Provide a route to log out the web app
