@@ -1,0 +1,54 @@
+<!-- base.html -->
+<!-- Description: this is a base file to use for additional templates -->
+<!-- This is where our default boilerplate html lives -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Team CS Cats: Ali Jalilian and Asa LeHolland">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="ie-edge">
+
+    <!-- Add Jinja2 syntax creating block in template for the title -->
+    {% block title %}
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>CIMDB</title>
+    {% endif %}
+    {% endblock %}
+
+    <!-- Add Jinja2 syntax creating block in template for the head -->
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+
+    <div id="page-container">  
+
+        <main>
+            <!-- Add Jinja2 syntax creating block in template for the body -->
+            {% block body %}{% endblock %}
+        </main>
+
+    </div>
+        <span>
+            <p>Made by Team CS Cats. Project repository can be found <a href="https://github.com/team-cs-cats/cimdb">here</a>.</p>
+            Time is <span id='clock'></span>
+        </span>
+
+
+</div>
+</div>
+</div>
+
+<!-- Internal scripts -->
+<!-- Can't link directly to static/js/main.js using templates, have to use url_for instead -->
+<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+
+
+</html>

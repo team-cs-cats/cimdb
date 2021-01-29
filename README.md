@@ -1,9 +1,11 @@
-# Team CS Cats Term Project (actual project name to come)
+# 2Fast4U Cats Inventory Management Database (CIMDB)
 Web-based CRUD database. 
 
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+
+2Fast4U Computers assembles and sells $2 million in PCs annually (on average 1,500 PCs assembled per year). The Cats Inventory and Manufacturing (CIM) web app will help manage the inventory, assembly, and quality control (QC) process for 2Fast4U. The state of the art database (DB) behind the CIM webapp will be used by 2Fast4U Employees at different production Sites. Employees are assigned Work Orders, which list Products to assemble using Regular Components (which are available in large quantities like MotherBoard, RAM, etc.) and Special Components (CPUs, which must be tracked using unique serial numbers). Regular Components and Special Components are stored in Locations at any particular Site until they are used to assemble Products. Once each Product has been assembled and QC’d, the Work Order can be closed.
 
 This class project was built for Oregon State's CS340 Databases class in Winter 2021.
 
@@ -25,7 +27,7 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-In order to make local changes to Flash Learning, you must first have Python and pip installed on your system. If you need assistance installing these prerequisites, see the folowing steps:
+In order to make local changes to the CIMDB, you must first have Python and pip installed on your system. If you need assistance installing these prerequisites, see the folowing steps:
 * Python is a programming language. Almost all of this project's code base (particularly the backend) is written in Python. Download the latest version of [Python](https://www.python.org/downloads/) and install onto your local machine.
 
 * Pip is the package installer for Python. Once Python is installed, open your local machine's command line and use the following command to utilize Python to install Pip:
@@ -61,7 +63,7 @@ pip install -r requirements.txt
 python run.py
 ```
 7. On your browser, navigate to `http://localhost:5000/`. This will update to saved changes in your local directory upon refresh.
-
+8. Occasionally, some of the built-in resources (particularly the javascript scripts) of this project do not update when reloading changes made to files. To bypass these errors, reload the web page and bypass the cache. This can be done using the `Shift + left click Reload button` on Firefox or by entering developer mode on Google Chrome and selecting the `Empty Cache and Hard Reload` option.
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -71,7 +73,7 @@ python run.py
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/asa-leholland/team-cs-cats/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/team-cs-cats/cimdb/issues) for a list of proposed features (and known issues).
 
 
 
@@ -91,17 +93,17 @@ Contributions are what make the open source community such an amazing place to b
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See [LICENSE](https://github.com/asa-leholland/team-cs-cats/LICENSE.txt) for more information.
+Distributed under the MIT License. See [LICENSE](https://github.com/team-cs-cats/cimdb/LICENSE.txt) for more information.
 
 
 
 <!-- CONTACT -->
 ## Contact
 
-Ali Jalilian - jaliliam@oregonstate.edu
+Ali Jalilian - jalilian@oregonstate.edu
 Asa LeHolland - hollaasa@oregonstate.edu
 
-Project Link: [https://github.com/asa-leholland/team-cs-cats](https://github.com/asa-leholland/team-cs-cats)
+Project Link: [https://github.com/team-cs-cats/cimdb](https://github.com/team-cs-cats/cimdb)
 
 
 

@@ -1,5 +1,4 @@
-
-
+# webapp.py
 from flask import Flask, render_template
 from flask import request, redirect
 
@@ -12,7 +11,5 @@ webapp = Flask(__name__)
 #provide a route for the index of the webpage requests on the web application can be addressed
 @webapp.route('/')
 def index():
+    """The webapp's landing page."""
     return render_template("index.html")
-
-
-

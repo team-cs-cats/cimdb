@@ -29,7 +29,7 @@ setup(
 
 	# Project name: 
 
-	name='',
+	name='2Fast4U Cats Inventory Management Database (CIMDB)',
 
 	# Packages to include in the distribution: 
 
@@ -55,19 +55,19 @@ setup(
 
 	# Your name: 
 
-	author='Asa LeHolland',
+	author='Ali Jalilian & Asa LeHolland',
 
 	# Your email address:
 
-	author_email='asaleholland@gmail.com',
+	author_email='jalilian@oregonstate.edu & hollaasa@oregonstate.edu',
 
 	# Link to your github repository or website: 
 
-	url='https://github.com/asa-leholland/{repo-name}',
+	url='https://github.com/team-cs-cats/cimdb',
 
 	# Download Link from where the project can be downloaded from:
 
-	download_url='https://github.com/asa-leholland/{repo-name}',
+	download_url='https://github.com/team-cs-cats/cimdb',
 
 	# List of keywords: 
 
