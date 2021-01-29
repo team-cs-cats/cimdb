@@ -21,8 +21,8 @@ login_manager.init_app(webapp)
 
 # Set up a mock set of user ids to use for our logins (this can be moved/replaced later)
 users = {
-'ali@cimdb.com': {'password': '12345'}
-'asa@cimdb.com': {'password': '54321'}
+	'ali@cimdb.com': {'password': '12345'},
+	'asa@cimdb.com': {'password': '54321'}
 }
 
 # Create a basic user class
