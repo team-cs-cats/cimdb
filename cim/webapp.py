@@ -25,7 +25,44 @@ users = {
 'asa@cimdb.com': {'password': '54321'}
 }
 
+# Create a basic user class
+class User(flask_login.UserMixin):
+	pass
 
+# Associate the login manager with the users provided, unless the user provided isn't on the allowed dictionary
+@login_manager.user_loader
+def user_loader(email):
+
+	# if the email provided is not in the prepopulated user database, return nothing
+    if email not in users:
+        return
+
+    # otherwise, initiate a new user based on the provided email and return it
+    user = User()
+    user.id = email
+    return user
+
+# Associate a logged in user with the current session
+@login_manager.request_loader
+def request_loader(request):
+
+	# obtain the current email
+    email = request.form.get('email')
+
+    # if the current email isn't on the list of allowed users, return nothing
+    if email not in users:
+        return
+
+    # if the user email is allowed, set it as the id of the current user
+    user = User()
+    user.id = email
+    user.is_authenticated = request.form['password'] == users[email]['password']
+    return user
+
+# Add an association for any unauthorized session logins.
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+    return 'Unauthorized'
 
 #provide a route for the index of the webpage requests on the web application can be addressed
 @webapp.route('/')
