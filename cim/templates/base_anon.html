@@ -2,20 +2,6 @@
 
 <!-- Base template for html on logged out (anonymous) pages -->
 
-<nav>
-	<a href="/">CIMDB</a>
-	<div class="collapse navbar-collapse" id="navbarText">
-		<ul class="navbar-nav mr-auto">
-			<!-- Additional top bar links can go here -->
-		</ul>
-
-		<!-- Log out Text in top right corner -->
-		<span class="navbar-text">
-			<a>Log In</a>
-		</span>
-	</div>
-</nav>
-
 {% block head %}
 {% endblock %}
 
@@ -23,8 +9,7 @@
 <div class="content">
 	<div class="card text-center" style="width: 100%">
 		<div class="card-body">
-			{% block body %}
-			{% endblock %}
+			
 		</div>
 	</div>
 </div>
@@ -32,3 +17,6 @@
 
 <!-- Inherit from base template -->
 {% include 'base.html' %}
+
+{% block body %}
+{% endblock %}

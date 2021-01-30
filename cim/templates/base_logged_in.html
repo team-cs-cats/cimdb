@@ -1,26 +1,22 @@
-<!-- Top Nav Bar  -->
-<nav>
-	<a>CIMDB</em></a>
+<!-- base_anon.html -->
 
-	<a href="/">Home</a>
-	<a href="/workorders">Work Orders</a>
-	<a href="/products">Products</a>
-	<a href="/inventory">Inventory</a>
-	<a href="/user_management">User Management</a>
+<!-- Base template for html on logged out (anonymous) pages -->
 
-	<a href="logout">Log Out</a>
-
-</nav>
-
-
-<!-- Internal custom CSS -->
-<!-- Can't link directly to static/css/main.css using templates, have to use url_for instead -->
 {% block head %}
 {% endblock %}
 
 <!-- Body goes here -->
-{% block body %}
-{% endblock %}
+<div class="content">
+	<div class="card text-center" style="width: 100%">
+		<div class="card-body">
+			
+		</div>
+	</div>
+</div>
+
 
 <!-- Inherit from base template -->
 {% include 'base.html' %}
+
+{% block body %}
+{% endblock %}
