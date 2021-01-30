@@ -1,0 +1,42 @@
+<!-- Links to 'base_anon.html' as a base template file (which inherits from the base.html) -->
+{% extends 'base_logged_in.html' %}
+
+<!-- Jinja2 Template Block for Head of Webpage -->
+{% block head %}
+
+{% endblock %}
+
+<!-- Jinja2 Template Block for Body of Webpage -->
+{% block body %}
+
+<!-- Navigation bar -->
+<div>
+</div>
+
+<div class="content">
+	
+    <h1>Welcome CS Cats, to the CIMDB!</h1>
+    <p>This is the Work Orders page</p>
+
+<table style="width:100%">
+	<h5>Current Work Orders</h5>
+	<tr>
+		<th>Reference Number</th>
+		<th>Status</th>
+		<th>Open Date</th>
+		<th>Close Date</th>
+		<th>Assigned To</th>
+	</tr>
+	{% for work_order in work_orders %}
+	<tr>
+		<td>{{work_order.ref_number}}</td>
+		<td>{{work_order.status}}</td>
+		<td>{{work_order.open_date}}</td>
+		<td>{{work_order.close_date}}</td>
+		<td>{{work_order.employee}}</td>
+	</tr>
+	{% endfor %}
+</table>
+
+</div>
+{% endblock %}

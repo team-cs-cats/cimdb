@@ -1,20 +1,22 @@
-<!-- Top Nav Bar  -->
-<nav>
-	<a>CIMDB - <em>{{user.first_name}}'s {% block page_title %}{% endblock %}</em></a>
+<!-- base_anon.html -->
 
-	<a>Log Out {{ user.first_name }}</a>
+<!-- Base template for html on logged out (anonymous) pages -->
 
-</nav>
-
-
-<!-- Internal custom CSS -->
-<!-- Can't link directly to static/css/main.css using templates, have to use url_for instead -->
 {% block head %}
 {% endblock %}
 
 <!-- Body goes here -->
-{% block body %}
-{% endblock %}
+<div class="content">
+	<div class="card text-center" style="width: 100%">
+		<div class="card-body">
+			
+		</div>
+	</div>
+</div>
+
 
 <!-- Inherit from base template -->
 {% include 'base.html' %}
+
+{% block body %}
+{% endblock %}
