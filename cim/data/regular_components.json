@@ -1,0 +1,30 @@
+// Provides dummy data for regular components on the inventory page
+
+// list of dictionaries, each dictionary representing one regular component
+[
+  {
+    "rc_pn": "12345",
+    "rc_category": "RAM",
+    "rc_quantity": 73
+  },
+  {
+    "rc_pn": "52636",
+    "rc_category": "GC",
+    "rc_quantity": 556
+  },
+  {
+    "rc_pn": "73621",
+    "rc_category": "Case",
+    "rc_quantity": 123
+  },
+  {
+    "rc_pn": "62361",
+    "rc_category": "MB",
+    "rc_quantity": 52
+  },
+  {
+    "rc_pn": "47327",
+    "rc_category": "HDD",
+    "rc_quantity": 1231
+  }
+]
