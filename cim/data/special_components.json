@@ -1,0 +1,35 @@
+// Provides dummy data for special components on the inventory page
+
+// list of dictionaries, each dictionary representing one special component
+[
+  {
+    "sc_sn": 1564887459,
+    "sc_pn": 456123,
+    "sc_is_free": true,
+    "sc_location": "LA, Room 4, Shelf 6"
+  },
+  {
+    "sc_sn": 1564887460,
+    "sc_pn": 456123,
+    "sc_is_free": true,
+    "sc_location": "LA, Room 3, Shelf 8"
+  },
+  {
+    "sc_sn": 1564887461,
+    "sc_pn": 456123,
+    "sc_is_free": false,
+    "sc_location": "LA, Room 4, Shelf 12"
+  },
+  {
+    "sc_sn": 1564887462,
+    "sc_pn": 456123,
+    "sc_is_free": true,
+    "sc_location": "LA, Room 3, Shelf 5"
+  },
+  {
+    "sc_sn": 1564887463,
+    "sc_pn": 456123,
+    "sc_is_free": false,
+    "sc_location": "LA, Room 4, Shelf 4"
+  },
+]
