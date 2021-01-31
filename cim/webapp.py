@@ -152,3 +152,73 @@ def user_management():
     """The webapp's page for managing current users.
     This allows a manager to update information about current users."""
     return render_template("user_management.html")
+
+# workorder details. it takes the wo_id as argument to retrive the the information from DB
+@webapp.route('/wo-details', methods=['GET', 'POST'])
+@login_required
+def wo_details(wo_id=None):
+    """The webapp's page takes wo_id and retirve the inforamtion from DB."""
+
+    # if the current user is not authenticated, redirect the user to the landing page
+    if not current_user.is_authenticated:
+    	return redirect(url_for("cim.templates.index"))
+
+    if request.method=="GET":
+        
+        #if wo_id not none:
+            #SQL query
+        # render the detail page
+        return render_template("wo-details.html")
+
+
+# products details. it takes the product_sn as argument to retrive the the information from DB
+@webapp.route('/product-details', methods=['GET', 'POST'])
+@login_required
+def product_details(product_sn=None):
+    """The webapp's page takes product_sn and retirve the inforamtion from DB."""
+
+    # if the current user is not authenticated, redirect the user to the landing page
+    if not current_user.is_authenticated:
+    	return redirect(url_for("cim.templates.index"))
+
+    if request.method=="GET":
+        
+        #if product_sn not none:
+            #SQL query
+        # render the detail page
+        return render_template("product-details.html")
+
+# Assembly page. The page lists are assigned products ready for assembly 
+@webapp.route('/assembly', methods=['GET', 'POST'])
+@login_required
+def assembly():
+    """The webapp's page retirve the inforamtion from DB for the Assembly process."""
+
+    # if the current user is not authenticated, redirect the user to the landing page
+    if not current_user.is_authenticated:
+    	return redirect(url_for("cim.templates.index"))
+
+    if request.method=="GET":
+        
+        #SQL query
+
+        # render the assembly page
+        return render_template("assembly.html")
+
+
+# QC page. The page lists are assigned products ready for assembly 
+@webapp.route('/qc', methods=['GET', 'POST'])
+@login_required
+def QC():
+    """The webapp's page retirve the inforamtion from DB for the Assembly process."""
+
+    # if the current user is not authenticated, redirect the user to the landing page
+    if not current_user.is_authenticated:
+    	return redirect(url_for("cim.templates.index"))
+
+    if request.method=="GET":
+        
+        #SQL query
+
+        # render the assembly page
+        return render_template("qc.html")

@@ -1,0 +1,131 @@
+<!-- Links to 'base.html' as a base template file (which inherits from the base.html) -->
+{% extends 'base.html' %}
+
+<!-- Title of the page -->
+{% block title %} Workorder Details{% endblock%}
+
+
+{% block body %} 
+
+<div class='intro-div'>
+	<h2>Product details</h2>
+	
+	<h6>Family: <i>Baic</i> </h6>
+	<h6>PN: <i>Baic-i3</i> </h6>
+	<h6>SN: <i>P1000</i> </h6>
+</div>
+
+
+<!-- add new form -->
+<div id="data-entry-div">
+	<h3>Product components</h3>
+
+	<!-- dummy content for demo --will be replaced -->
+<div id="results">
+	<table class="table table-striped" >
+		<tr>
+			<th>CPU SN</th>
+			<th>Mother Board</th>
+            <th>RAM</th>
+            <th>RAM Quantity</th>
+			<th>Graphic Card</th>
+			<th>HDD</th>
+            <th>HDD Quantity</th>
+            <th>Case</th>
+            
+            
+		</tr>
+		<tr>
+			<td>i3-123456</td>
+			<td>MB1</td>
+            <td>RAM3</td>
+            <td>3</td>
+			<td>No GC</td>
+			<td>HDD3</td>
+            <td>1</td>
+            <td>Case 1</td>
+            
+		</tr>
+				
+	</table>
+	
+</div>
+
+	<h4>Update Componenet Infroamtions</h4>
+
+	<form id="product-component-entry" action="">
+
+		<div class="inner-div">
+			<label for="product_sc_sn">CPU SN: </label>
+			<input type="text" name="product_sc_sn" id="product_sc_sn" placeholder="Enter Serial Number">
+			<input type="button" class="btn btn-primary " value="random">
+			<input type="button" class="btn btn-secondary " value="FIFO">
+			<input type="button" class="btn btn-info " value="LILO">
+		</div>
+
+		
+		<div class="inner-div">
+			<label for="motherboard">Mother Board</label>
+			<select name="motherboard" id="motherboard">
+				<option value="0">MB1</option>
+				<option value="1">MB2</option>
+				<option value="2">MB3</option>
+			</select>
+			
+			<label for="case">Case</label>
+			<select name="case" id="case">
+				<option value="0">Case 1</option>
+				<option value="1">Case 2</option>
+				<option value="2">Case 3</option>
+			</select>
+
+			<label for="gc">Graphic Card</label>
+			<select name="gc" id="gc">
+				<option value="0">No GC</option>
+				<option value="1">GC 1</option>
+				<option value="2">GC 2</option>
+			</select>
+
+			<br>
+		</div>
+		
+		<div class="inner-div"> 
+			<label for="ram">RAM</label>
+			<select name="ram" id="ram">
+				<option value="0">RAM 1</option>
+				<option value="1">RAM 2</option>
+				<option value="2">RAM 3</option>
+			</select>
+
+			<label for="ram-quant">RAM Quantity: </label>
+			<input type="number" value="" id="ram-quant">
+			
+			<label for="hdd">HDD</label>
+			<select name="hdd" id="hdd">
+				<option value="0">HDD 1</option>
+				<option value="1">HDD 2</option>
+				<option value="2">HDD 3</option>
+			</select>
+
+			<label for="hdd-quant">HDD Quantity: </label>
+			<input type="number" value="" id="hdd-quant">
+		</div>
+        
+		<div class="inner-div">
+			<input type="button" class="btn btn-warning" value="Update" onclick=addData() >
+		</div>
+		
+	 
+	</form>
+
+</div>
+
+
+
+
+
+
+{% endblock%}
+
+
+

@@ -1,0 +1,115 @@
+<!-- Links to 'base.html' as a base template file (which inherits from the base.html) -->
+{% extends 'base.html' %}
+
+<!-- Title of the page -->
+{% block title %} Assembly{% endblock%}
+
+
+{% block body %} 
+
+<!-- add new form -->
+<div class="intro-div">
+    <h2>Assembly line</h2>
+	
+	<p> The items below are assiagned for you for the assembly.</p>
+
+</div>
+
+
+<div id="data-filtering">
+	<h3>Filter the data:</h3>
+
+	<form id="assembly-data-filter" action="">
+
+		<div class="inner-div">
+			<label for="wo_id">wo_id:</label>
+			<input type="text" name="wo_id" id="wo_id" placeholder="wo_id">
+			
+			<label for="wo_open_date">wo_open_date: </label>
+			<input type="date" name="wo_open_date" id="wo_open_date">
+		
+        </div>
+        
+        <div class="inner-div">
+            <label for="product_sn">Product SN:</label>
+			<input type="text" name="product_sn" id="product_sn" placeholder="product_sn">
+
+			<label for="product_family">Product Family</label>
+			<select name="product_family" id="product_family">
+				<option value="0">Baic</option>
+				<option value="1">Pro</option>
+			</select>
+			
+			<label for="product_pn">Product PN</label>
+			<select name="product_pn" id="product_pn">
+				<option value="0">Baic-i3</option>
+				<option value="1">Baic-i5</option>
+				<option value="2">Baic-i7</option>
+				<option value="3">Pro-i3</option>
+				<option value="4">Pro-i5</option>
+				<option value="5">Pro-i7</option>
+			</select>
+		
+		</div>
+				
+		<div class="inner-div">
+			<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
+		</div>
+	</form>
+</div>
+
+
+
+<!-- dummy content for demo --will be replaced -->
+<div id="results">
+	<table class="table table-striped" >
+		<tr>
+			<th>wo id</th>
+			<th>wo open date</th>
+			<th>product SN</th>
+			<th>product family</th>
+			<th>product PN</th>
+			<th>Details</th>
+			<th>Assembled</th>
+			<th>Report</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2020-12-01</td>
+			<td>P1000</td>
+			<td>Basic</td>
+			<td>Basic-i3</td>
+			<td><button class="btn btn-info"><a href="\product-details">Details(demo)</a></td>
+			<th><button class="btn btn-success">Assembled</button></th>
+			<td><button class="btn btn-danger">Report</button></td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2020-12-01</td>
+			<td>P2000</td>
+			<td>Pro</td>
+			<td>Pro-i7</td>
+			<td><button class="btn btn-info">Details</td>
+			<th><button class="btn btn-success">Assembled</button></th>
+			<td><button class="btn btn-danger">Report</button></td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>2021-01-01</td>
+			<td>P1265</td>
+			<td>Pro</td>
+			<td>Pro-i5</td>
+			<td><button class="btn btn-info">Details</td>
+			<th><button class="btn btn-success">Assembled</button></th>
+			<td><button class="btn btn-danger">Report</button></td>
+		</tr>
+		
+	</table>
+	
+</div>
+
+
+{% endblock%}
+
+
+
