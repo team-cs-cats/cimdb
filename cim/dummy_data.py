@@ -7,7 +7,7 @@ import json
 
 
 class DummyData:
-    """Generate a set of dummy data to populate the site's database."""
+    """Generate a set of dummy data to populate the site's webpages."""
 
     def __init__(self):
         """Load all dummy files on initialization."""
@@ -25,3 +25,10 @@ class DummyData:
         # Load the json filename proviced
         with open(f"{data_path}/{filename}.json") as json_file:
             return json.load(json_file)
+
+    # methods to return dummy data
+    def get_sc(self):
+    	return self.special_components
+    def get_rc(self):
+    	return self.regular_components
+    	
