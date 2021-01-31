@@ -1,0 +1,105 @@
+<!-- Links to 'base.html' as a base template file (which inherits from the base.html) -->
+{% extends 'base.html' %}
+
+<!-- Title of the page -->
+{% block title %} Workorder Details{% endblock%}
+
+
+{% block body %} 
+
+<div class='intro-div'>
+	<h2>Work order details</h2>
+	<p>View, Add , Edit and Delete products from a WorkOrder</p>
+</div>
+
+
+<!-- add new form -->
+<div id="data-entry-div">
+	<h3>New Product</h3>
+	<p>Add new product to this order:</p>
+
+	<form id="product-data-entry" action="">
+		<div class="inner-div">
+			<label for="product_family">product_family</label>
+			<select name="product_family" id="product_family">
+				<option value="0">Baic</option>
+				<option value="1">Pro</option>
+			</select>
+			
+			<label for="product_pn">product_pn</label>
+			<select name="product_pn" id="product_pn">
+				<option value="0">Baic-i3</option>
+				<option value="1">Baic-i5</option>
+				<option value="2">Baic-i7</option>
+				<option value="3">Pro-i3</option>
+				<option value="4">Pro-i5</option>
+				<option value="5">Pro-i7</option>
+			</select>
+		</div>
+
+		<div class="inner-div">
+			<input type="button" class="btn btn-success" value="Add New Product" onclick=addData() >
+		</div>
+	</form>
+</div>
+
+
+
+<!-- dummy content for demo --will be replaced -->
+<div id="results">
+	<table class="table table-striped" >
+		<tr>
+			<th>Serial Number</th>
+			<th>Family</th>
+            <th>Part Number</th>
+            <th>Status</th>
+			<th>Assembly Date</th>
+			<th>QC Date</th>
+            <th>Waranty Date</th>
+            <th>Employee</th>
+            <th>Location</th>
+            <th>Special Comp. SN</th>
+			<th>Components</th>
+			<th>Edit</th>
+			<th>Delete</th>
+		</tr>
+		<tr>
+			<td>P1000</td>
+			<td>Baic</td>
+            <td>Baic-i3</td>
+            <td>QC</td>
+			<td>2020-12-05</td>
+			<td>Null</td>
+            <td>Null</td>
+            <td>50</td>
+            <td>12</td>
+            <td>123654</td>
+			<td><button class="btn btn-info"><a href="\product-details">info (demo)</a> </button></td>
+			<td><button class="btn btn-warning">Edit</button></td>
+			<td><button class="btn btn-danger">Delete</button></td>
+		</tr>
+		<tr>
+			<td>P2000</td>
+			<td>Pro</td>
+            <td>Pro-i7</td>
+            <td>shipping</td>
+			<td>2020-12-05</td>
+			<td>2020-12-05</td>
+            <td>Null</td>
+            <td>50</td>
+            <td>12</td>
+            <td>36521</td>
+			<td><button class="btn btn-info">info</button></td>
+			<td><button class="btn btn-warning">Edit</button></td>
+			<td><button class="btn btn-danger">Delete</button></td>
+		</tr>
+		
+	</table>
+	
+</div>
+
+
+{% endblock%}
+
+
+

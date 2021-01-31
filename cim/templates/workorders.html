@@ -1,42 +1,125 @@
-<!-- Links to 'base_anon.html' as a base template file (which inherits from the base.html) -->
-{% extends 'base_logged_in.html' %}
+<!-- Links to 'base.html' as a base template file (which inherits from the base.html) -->
+{% extends 'base.html' %}
 
-<!-- Jinja2 Template Block for Head of Webpage -->
-{% block head %}
+<!-- Title of the page -->
+{% block title %} workorders{% endblock%}
 
-{% endblock %}
 
-<!-- Jinja2 Template Block for Body of Webpage -->
-{% block body %}
+{% block body %} 
 
-<!-- Navigation bar -->
-<div>
+<!-- add new form -->
+<div id="data-entry-div">
+	<h3>New Work Order</h3>
+	<p>Add new Workorder using the form below:</p>
+
+	<form id="wo-data-entry" action="">
+
+		<div class="inner-div">
+			<label for="wo_employee_id">Employee in Charge:</label>
+			<input type="text" name="wo_employee_id" id="wo_employee_id" placeholder="wo_employee_id">
+			
+			<label for="date">Date: </label>
+			<input type="date" name="date" id="date">
+		</div>
+
+		<div class="inner-div">
+			<input type="button" class="btn btn-success" value="Add New" onclick=addData() >
+		</div>	
+
+	</form>
 </div>
 
-<div class="content">
+
+<div id="data-filtering">
+	<h3>Filter the data:</h3>
+
+	<form id="wo-data-filter" action="">
+
+		<div class="inner-div">
+			<label for="wo_id">wo_id:</label>
+			<input type="text" name="wo_id" id="wo_id" placeholder="wo_id">
+			
+			<label for="wo_open_date">wo_open_date: </label>
+			<input type="date" name="wo_open_date" id="wo_open_date">
+
+			<label for="wo_close_date">wo_close_date: </label>
+			<input type="date" name="wo_close_date" id="wo_close_date">
+		</div>
+		
+		
+		<div class="inner-div">
+			<label for="wo_employee_id">Employee in Charge:</label>
+			<input type="text" name="wo_employee_id" id="wo_employee_id" placeholder="wo_employee_id">
+			
+			<label for="wo_status">status</label>
+			<select name="wo_status" id="wo_status">
+				<option value="0">open</option>
+				<option value="0">closed</option>
+			</select>
+		</div>
 	
-    <h1>Welcome CS Cats, to the CIMDB!</h1>
-    <p>This is the Work Orders page</p>
-
-<table style="width:100%">
-	<h5>Current Work Orders</h5>
-	<tr>
-		<th>Reference Number</th>
-		<th>Status</th>
-		<th>Open Date</th>
-		<th>Close Date</th>
-		<th>Assigned To</th>
-	</tr>
-	{% for work_order in work_orders %}
-	<tr>
-		<td>{{work_order.ref_number}}</td>
-		<td>{{work_order.status}}</td>
-		<td>{{work_order.open_date}}</td>
-		<td>{{work_order.close_date}}</td>
-		<td>{{work_order.employee}}</td>
-	</tr>
-	{% endfor %}
-</table>
-
+		<div class="inner-div">
+			<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
+		</div>
+	</form>
 </div>
-{% endblock %}
+
+
+
+<!-- dummy content for demo --will be replaced -->
+<div id="results">
+	<table class="table table-striped" >
+		<tr>
+			<th>wo_id</th>
+			<th>wo_open_date</th>
+			<th>wo_close_date</th>
+			<th>wo_status</th>
+			<th>wo_employee_id</th>
+			<th>wo_refrence_number</th>
+			<th>Products</th>
+			<th>Edit</th>
+			<th>Delete</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2020-12-01</td>
+			<td>null</td>
+			<td>open</td>
+			<td>60</td>
+			<td>null</td>
+			<td><button class="btn btn-info"><a href="\wo-details">2(demo)</a></button></td>
+			<td><button class="btn btn-warning">Edit</button></td>
+			<td><button class="btn btn-danger">Delete</button></td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>2020-12-15</td>
+			<td>2020-12-31</td>
+			<td>closed</td>
+			<td>50</td>
+			<td>H45g</td>
+			<td><button class="btn btn-info">3</button></td>
+			<td><button class="btn btn-warning">Edit</button></td>
+			<td><button class="btn btn-danger">Delete</button></td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>2021-01-01</td>
+			<td>null</td>
+			<td>open</td>
+			<td>20</td>
+			<td>N8965</td>
+			<td><button class="btn btn-info">6</button></td>
+			<td><button class="btn btn-warning">Edit</button></td>
+			<td><button class="btn btn-danger">Delete</button></td>
+		</tr>
+		
+	</table>
+	
+</div>
+
+
+{% endblock%}
+
+
+

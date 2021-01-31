@@ -1,0 +1,34 @@
+
+.footer{
+    background-color: #383737;
+    color: azure;
+    text-align: center;
+    margin-top: 1em;
+  }
+
+#data-entry-div{
+    display: grid;
+    margin: 1em;
+    align-items: center;
+}
+
+#data-filtering{
+  display: grid;
+  margin: 1em;
+  align-items: center;
+
+}
+
+#results{
+  margin: 1em;
+  align-items: center;
+}
+
+.intro-div{
+  margin: 1em;
+  align-items: center;
+}
+
+.inner-div{
+  margin: 0.5em;
+}
