@@ -21,19 +21,19 @@
 <table style="width:100%">
 	<h5>Stock: Serialized Components</h5>
 	<tr>
-		<th>Reference Number</th>
-		<th>Status</th>
-		<th>Open Date</th>
-		<th>Close Date</th>
-		<th>Assigned To</th>
+		<th>Part Number</th>
+		<th>Category</th>
+		<th>Quantity</th>
+		<th>Location</th>
 	</tr>
-	{% for work_order in work_orders %}
+	{% for special_component in special_components %}
 	<tr>
-		<td>{{work_order.ref_number}}</td>
-		<td>{{work_order.status}}</td>
-		<td>{{work_order.open_date}}</td>
-		<td>{{work_order.close_date}}</td>
-		<td>{{work_order.employee}}</td>
+		<td>{{special_component.sc_sn}}</td>
+		<td>{{special_component.sc_pn}}</td>
+		<td>{{special_component.sc_is_free}}</td>
+		<td>
+			Site {{special_component.sc_location.location_site_id}}, Room {{special_component.sc_location.location_room_number}}, Shelf {{special_component.sc_location.location_shelf_number}}
+		</td>
 	</tr>
 	{% endfor %}
 </table>
@@ -53,7 +53,7 @@
 		<td>{{regular_component.rc_quantity}}</td>
 		<td>
 			{% for location in regular_component.rc_locations %}
-				<ul>{{location.location_site_id}} Site, Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</ul>
+				<ul>Site {{location.location_site_id}}, Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</ul>
 			{% endfor %}
 		</td>
 	</tr>
