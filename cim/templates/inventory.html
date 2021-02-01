@@ -14,56 +14,85 @@
 </div>
 
 <div class="content">
-	
+	<div class="container">
+	  <div class="row">
+	  	<h5>Stock: Special Components</h5>
 
-
-<div id="results">
-	<table class="table table-striped">
-		<h5>Stock: Special Components</h5>
-		<tr>
-			<th>Part Number</th>
-			<th>Category</th>
-			<th>Quantity</th>
-			<th>Location</th>
-			</tr>
-			{% for special_component in special_components %}
-				<tr>
-					<td>{{special_component.sc_sn}}</td>
-					<td>{{special_component.sc_pn}}</td>
-					<td>{{special_component.sc_is_free}}</td>
-					<td>
-						Site {{special_component.sc_location.location_site_id}}, Room {{special_component.sc_location.location_room_number}}, Shelf {{special_component.sc_location.location_shelf_number}}
-					</td>
-			</tr>
-		{% endfor %}
-	</table>
-</div>
-
-<div id="results">
-	<table class="table table-striped">
-		<h5>Stock: Standard Components</h5>
-		<tr>
-			<th>Part Number</th>
-			<th>Category</th>
-			<th>Quantity</th>
-			<th>Location(s)</th>
-		</tr>
-		{% for regular_component in regular_components %}
-		<tr>
-			<td>{{regular_component.rc_pn}}</td>
-			<td>{{regular_component.rc_category}}</td>
-			<td>{{regular_component.rc_quantity}}</td>
-			<td>
-				<ul>
-					{% for location in regular_component.rc_locations %}
-						<li>Site {{location.location_site_id}}, Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</li>
+	  	<!-- Upper Left Quadrant: Special Component Filtering -->
+	    <div class="col">
+	      1 of 2
+	    </div>
+	    
+	    <!-- Upper Right Quadrant: Special Component Results -->
+	    <div class="col">
+	    	
+	    	<div id="results">
+				<table class="table table-striped">
+					<tr>
+						<th>Serial Number</th>
+						<th>Part Number</th>
+						<th>Is Free</th>
+						<th>Location</th>
+						</tr>
+						{% for special_component in special_components %}
+							<tr>
+								<td>{{special_component.sc_sn}}</td>
+								<td>{{special_component.sc_pn}}</td>
+								<td>{{special_component.sc_is_free}}</td>
+								<td>
+									Site {{special_component.sc_location.location_site_id}}, Room {{special_component.sc_location.location_room_number}}, Shelf {{special_component.sc_location.location_shelf_number}}
+								</td>
+						</tr>
 					{% endfor %}
-				</ul>
-			</td>
-		</tr>
-		{% endfor %}
-	</table>
+				</table>
+			</div>
+
+	    </div>
+
+	  </div>
+	  <div class="row">
+	  	<h5>Stock: Regular Components</h5>
+	    
+	  	<!-- Lower Left Quadrant: Regular Component Filtering -->
+	    <div class="col">
+	      1 of 3
+	    </div>
+	    
+	    <!-- Lower Right Quadrant: Regular Component Results -->
+	    <div class="col">
+	    	
+	    	<div id="results">
+				<table class="table table-striped">
+					<tr>
+						<th>Part Number</th>
+						<th>Category</th>
+						<th>Quantity</th>
+						<th>Location(s)</th>
+					</tr>
+					{% for regular_component in regular_components %}
+					<tr>
+						<td>{{regular_component.rc_pn}}</td>
+						<td>{{regular_component.rc_category}}</td>
+						<td>{{regular_component.rc_quantity}}</td>
+						<td>
+							<ul>
+								{% for location in regular_component.rc_locations %}
+									<li>Site {{location.location_site_id}}, Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</li>
+								{% endfor %}
+							</ul>
+						</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+	    	
+	    </div>
+
+	  </div>
+	</div>
 </div>
+
+
 
 
 </div>
