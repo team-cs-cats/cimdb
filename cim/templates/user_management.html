@@ -82,23 +82,78 @@
 
 	    	{% for site in sites %}
 
-	    		<div><b>Site {{site.site_id}}</b>: {{site.site_address}}</div>
+	    		<div class="card" style="width: 18rem;">
+				  <div class="card-header">
+				    <b>Site {{site.site_id}}</b>: {{site.site_address}}
+				  </div>
+				  <ul class="list-group list-group-flush">
+				    <li class="list-group-item">
 
-	    		{% for employee in employees%}
+				    	<div class="container">
+						  <div class="row">
+						    <div class="col-sm">
+						      Supervisor
+						    </div>
+						    <div class="col-sm">
+						      {% for employee in employees%}
 						
-						{% if site.site_id == employee.employee_site_id and employee.employee_group == "supervisor" %}
-							<p>Supervisor: {{employee.employee_first_name}} {{employee.employee_last_name}}</p>
-						{% endif %}
+									{% if site.site_id == employee.employee_site_id and employee.employee_group == "supervisor" %}
+										<p>{{employee.employee_first_name}} {{employee.employee_last_name}}</p>
+									{% endif %}
+								{% endfor %}
+						    </div>
+						  </div>
+						</div>
+				    	
 			
-				{% endfor %}
-						<p>Production Staff</p>
-				{% for employee in employees %}
+				
+				    	</li>
+				    <li class="list-group-item">
+
+				    	<div class="container">
+						  <div class="row">
+						    <div class="col-sm">
+						      Production Staff
+						    </div>
+						    <div class="col-sm">
+
+						    	<table class="table">
+								  <thead>
+								    <tr>
+								      <th scope="col">First</th>
+								      <th scope="col">Last</th>
+								      <th scope="col">ID</th>
+								      <th scope="col">Email</th>
+								    </tr>
+								  </thead>
+								  <tbody>
+								    {% for employee in employees %}
+								    	{% if employee.employee_group == "production" and site.site_id == employee.employee_site_id %}
+									    	<tr>
+											      <td>{{employee.employee_first_name}}</td>
+											      <td>{{employee.employee_last_name}}</td>
+											      <td>{{employee.employee_id}}</td>
+											      <td>{{employee.employee_email}}</td>
+									    	</tr>
+								    	{% endif %}
+								    {% endfor %}
+								  </tbody>
+								</table>
+						    </div>
+						  </div>
+						</div>
+
+
+				    	<p></p>
+				
+				    </li>
+				    <li class="list-group-item">Vestibulum at eros</li>
+				  </ul>
+				</div>
+
+
+	    		
 						
-						{% if employee.group != supervisor %}
-							<p>{{employee.employee_first_name}} {{employee.employee_last_name}}</p>
-						{% endif %}
-			
-				{% endfor %}
 
 			{% endfor %}
 	    
