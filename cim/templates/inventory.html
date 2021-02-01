@@ -15,53 +15,55 @@
 
 <div class="content">
 	
-    <h1>Welcome CS Cats, to the CIMDB!</h1>
-    <p>This is the Inventory page</p>
 
-<table style="width:100%">
-	<h5>Stock: Serialized Components</h5>
-	<tr>
-		<th>Part Number</th>
-		<th>Category</th>
-		<th>Quantity</th>
-		<th>Location</th>
-	</tr>
-	{% for special_component in special_components %}
-	<tr>
-		<td>{{special_component.sc_sn}}</td>
-		<td>{{special_component.sc_pn}}</td>
-		<td>{{special_component.sc_is_free}}</td>
-		<td>
-			Site {{special_component.sc_location.location_site_id}}, Room {{special_component.sc_location.location_room_number}}, Shelf {{special_component.sc_location.location_shelf_number}}
-		</td>
-	</tr>
-	{% endfor %}
-</table>
 
-<table style="width:100%">
-	<h5>Stock: Standard Components</h5>
-	<tr>
-		<th>Part Number</th>
-		<th>Category</th>
-		<th>Quantity</th>
-		<th>Location(s)</th>
-	</tr>
-	{% for regular_component in regular_components %}
-	<tr>
-		<td>{{regular_component.rc_pn}}</td>
-		<td>{{regular_component.rc_category}}</td>
-		<td>{{regular_component.rc_quantity}}</td>
-		<td>
-			<ul>
-				{% for location in regular_component.rc_locations %}
-					<li>Site {{location.location_site_id}}, Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</li>
-				{% endfor %}
-			</ul>
-		</td>
-	</tr>
-	{% endfor %}
-</table>
+<div id="results">
+	<table class="table table-striped">
+		<h5>Stock: Special Components</h5>
+		<tr>
+			<th>Part Number</th>
+			<th>Category</th>
+			<th>Quantity</th>
+			<th>Location</th>
+			</tr>
+			{% for special_component in special_components %}
+				<tr>
+					<td>{{special_component.sc_sn}}</td>
+					<td>{{special_component.sc_pn}}</td>
+					<td>{{special_component.sc_is_free}}</td>
+					<td>
+						Site {{special_component.sc_location.location_site_id}}, Room {{special_component.sc_location.location_room_number}}, Shelf {{special_component.sc_location.location_shelf_number}}
+					</td>
+			</tr>
+		{% endfor %}
+	</table>
+</div>
 
+<div id="results">
+	<table class="table table-striped">
+		<h5>Stock: Standard Components</h5>
+		<tr>
+			<th>Part Number</th>
+			<th>Category</th>
+			<th>Quantity</th>
+			<th>Location(s)</th>
+		</tr>
+		{% for regular_component in regular_components %}
+		<tr>
+			<td>{{regular_component.rc_pn}}</td>
+			<td>{{regular_component.rc_category}}</td>
+			<td>{{regular_component.rc_quantity}}</td>
+			<td>
+				<ul>
+					{% for location in regular_component.rc_locations %}
+						<li>Site {{location.location_site_id}}, Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</li>
+					{% endfor %}
+				</ul>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
 
 
 </div>
