@@ -52,9 +52,11 @@
 		<td>{{regular_component.rc_category}}</td>
 		<td>{{regular_component.rc_quantity}}</td>
 		<td>
-			{% for location in regular_component.rc_locations %}
-				<ul>Site {{location.location_site_id}}, Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</ul>
-			{% endfor %}
+			<ul>
+				{% for location in regular_component.rc_locations %}
+					<li>Site {{location.location_site_id}}, Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</li>
+				{% endfor %}
+			</ul>
 		</td>
 	</tr>
 	{% endfor %}
