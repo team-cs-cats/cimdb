@@ -167,7 +167,7 @@ def shipping():
 
 
 
-@webapp.route('/user_management', methods=['GET', 'POST'])
+@webapp.route('/management', methods=['GET', 'POST'])
 @login_required
 def user_management():
     """The webapp's page for managing current users.
