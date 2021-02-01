@@ -156,7 +156,7 @@ def products():
 def inventory():
     """The webapp's page for viewing the inventory.
     This allows the employee to review existing stock and order new stock of standard and special components."""
-    return render_template("inventory.html", regular_components=data.get_rc(), special_components=data.get_sc())
+    return render_template("inventory.html", regular_components=data.regular_components, special_components=data.special_components)
 
 @webapp.route('/user_management', methods=['GET', 'POST'])
 @login_required

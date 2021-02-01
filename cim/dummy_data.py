@@ -28,7 +28,7 @@ class DummyData:
 
     # methods to return dummy data
     def get_sc(self):
-    	return self.special_components
+        return self.load_data("special_components")
     def get_rc(self):
-    	return self.regular_components
-    	
+        return self.load_data("regular_components")
+        

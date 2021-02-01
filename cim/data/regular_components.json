@@ -1,6 +1,4 @@
-// Provides dummy data for regular components on the inventory page
 
-// list of dictionaries, each dictionary representing one regular component
 [
   {
     "rc_pn": "12345",
@@ -17,7 +15,7 @@
     "rc_pn": "52636",
     "rc_category": "GC",
     "rc_quantity": 556,
-    "rc_locations": [
+        "rc_locations": [
       {"location_site_id": 12, "location_id": 54283, "location_room_number": 7, "location_shelf_number": 7},
       {"location_site_id": 12, "location_id": 45785, "location_room_number": 8, "location_shelf_number": 4}, 
       {"location_site_id": 12, "location_id": 45378, "location_room_number": 6, "location_shelf_number": 2}
@@ -27,7 +25,7 @@
     "rc_pn": "73621",
     "rc_category": "Case",
     "rc_quantity": 123,
-    "rc_locations": [
+        "rc_locations": [
       {"location_site_id": 12, "location_id": 75754, "location_room_number": 4, "location_shelf_number": 6},
       {"location_site_id": 12, "location_id": 64687, "location_room_number": 7, "location_shelf_number": 2}, 
       {"location_site_id": 12, "location_id": 45432, "location_room_number": 4, "location_shelf_number": 15},
@@ -40,7 +38,7 @@
     "rc_pn": "62361",
     "rc_category": "MB",
     "rc_quantity": 52,
-    "rc_locations": [
+        "rc_locations": [
       {"location_site_id": 12, "location_id": 54374, "location_room_number": 4, "location_shelf_number": 9},
       {"location_site_id": 12, "location_id": 34538, "location_room_number": 8, "location_shelf_number": 2}, 
       {"location_site_id": 12, "location_id": 45347, "location_room_number": 4, "location_shelf_number": 15}, 
@@ -51,7 +49,7 @@
     "rc_pn": "47327",
     "rc_category": "HDD",
     "rc_quantity": 1231,
-    "rc_locations": [
+        "rc_locations": [
       {"location_site_id": 12, "location_id": 78673, "location_room_number": 4, "location_shelf_number": 9},
       {"location_site_id": 12, "location_id": 12378, "location_room_number": 8, "location_shelf_number": 2}, 
       {"location_site_id": 12, "location_id": 45378, "location_room_number": 4, "location_shelf_number": 11},
