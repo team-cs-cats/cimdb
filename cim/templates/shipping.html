@@ -19,8 +19,8 @@
 	  	<div class="container">
 		  <div class="row">
 
-		    <div class="col-sm">
-		      <h6>Pending Assembly</h6>
+		    <div class="col-sm border text-center">
+		      <h6>Pending QC</h6>
 		      <!-- <div class="overflow-auto"> -->
 				{% for work_order in work_orders %}
 
@@ -28,11 +28,11 @@
 					<div class="card-body">
 					<div>
 						<h6 class="card-title">Work Order {{work_order.wo_id}}</h6>
-					</div>
-					</div>
-					</div>
 
-
+						<a href="#" class="btn-sm btn-primary">View Order</a>
+					</div>
+					</div>
+					</div>
 			      	
 				{% endfor %}
 		      	
@@ -40,16 +40,23 @@
 		      <!-- </div> -->
 		    </div>
 
-		    <div class="col-sm">
-		      <h6>Pending QC</h6>
-		      <div class="overflow-auto">
-
-		      </div>
-		    </div>
-
-		    <div class="col-sm">
+		    <div class="col-sm border text-center">
 		      <h6>Ready to Ship</h6>
 		      <div class="overflow-auto">
+
+		      	{% for work_order in work_orders %}
+
+					<div class="card">
+					<div class="card-body">
+					<div>
+						<h6 class="card-title">Work Order {{work_order.wo_id}}</h6>
+
+						<a href="#" class="btn-sm btn-primary">View Order</a>
+					</div>
+					</div>
+					</div>
+			      	
+				{% endfor %}
 
 		      </div>
 		    </div>
