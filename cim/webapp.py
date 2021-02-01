@@ -172,7 +172,7 @@ def shipping():
 def user_management():
     """The webapp's page for managing current users.
     This allows a manager to update information about current users."""
-    return render_template("user_management.html")
+    return render_template("user_management.html", sites=data.get_sites(), employees=data.get_emp())
 
 # workorder details. it takes the wo_id as argument to retrive the the information from DB
 @webapp.route('/wo-details', methods=['GET', 'POST'])
