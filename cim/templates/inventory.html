@@ -18,7 +18,7 @@
     <h1>Welcome CS Cats, to the CIMDB!</h1>
     <p>This is the Inventory page</p>
 
-    <table style="width:100%">
+<table style="width:100%">
 	<h5>Stock: Serialized Components</h5>
 	<tr>
 		<th>Reference Number</th>
@@ -41,22 +41,26 @@
 <table style="width:100%">
 	<h5>Stock: Standard Components</h5>
 	<tr>
-		<th>Reference Number</th>
-		<th>Status</th>
-		<th>Open Date</th>
-		<th>Close Date</th>
-		<th>Assigned To</th>
+		<th>Part Number</th>
+		<th>Category</th>
+		<th>Quantity</th>
+		<th>Location(s)</th>
 	</tr>
-	{% for work_order in work_orders %}
+	{% for regular_component in regular_components %}
 	<tr>
-		<td>{{work_order.ref_number}}</td>
-		<td>{{work_order.status}}</td>
-		<td>{{work_order.open_date}}</td>
-		<td>{{work_order.close_date}}</td>
-		<td>{{work_order.employee}}</td>
+		<td>{{regular_component.rc_pn}}</td>
+		<td>{{regular_component.rc_category}}</td>
+		<td>{{regular_component.rc_quantity}}</td>
+		<td>
+			{% for location in regular_component.rc_locations %}
+				<ul>{{location.location_site_id}} Site, Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</ul>
+			{% endfor %}
+		</td>
 	</tr>
 	{% endfor %}
 </table>
+
+
 
 </div>
 {% endblock %}
