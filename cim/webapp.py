@@ -9,7 +9,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 
 
 # perform a local import to load the dummy data
-from dummy_data import DummyData
+from cim.dummy_data import DummyData
 
 # This will eventually connect to the database, but for now it is not enabled
 # from db_connector.db_connector import connect_to_database, execute_query
