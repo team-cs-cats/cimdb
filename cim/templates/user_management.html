@@ -84,12 +84,9 @@
 
 	    		<div><b>Site {{site.site_id}}</b>: {{site.site_address}}</div>
 
-	    		{% set rowloop = loop %}
-
 	    		{% for employee in employees%}
 						
-						{% if employee.employee_group == "supervisor" %}
-						<p>{{ rowloop.index }}</p>
+						{% if site.site_id == employee.employee_site_id and employee.employee_group == "supervisor" %}
 							<p>Supervisor: {{employee.employee_first_name}} {{employee.employee_last_name}}</p>
 						{% endif %}
 			
