@@ -82,7 +82,7 @@
 
 	    	{% for site in sites %}
 
-	    		<div class="card" style="width: 40rem;">
+	    		<div class="card" style="width: 50rem;">
 				  <div class="card-header">
 				    <b>Site {{site.site_id}}</b>: {{site.site_address}}
 				  </div>
@@ -91,20 +91,36 @@
 
 				    	<div class="container">
 						  <div class="row">
-						    <div class="col-sm">
+						    <div class="col-4">
 						      Supervisor
 						    </div>
-						    <div class="col-sm">
-						      {% for employee in employees%}
-						
-									{% if site.site_id == employee.employee_site_id and employee.employee_group == "supervisor" %}
-										<p>{{employee.employee_first_name}} {{employee.employee_last_name}}</p>
-									{% endif %}
-								{% endfor %}
+						    <div class="col-8">
+
+						    	<table class="table" style="width: 30rem;">
+								  <thead>
+								    <tr>
+								      <th scope="col">First</th>
+								      <th scope="col">Last</th>
+								      <th scope="col">ID</th>
+								      <th scope="col">Email</th>
+								    </tr>
+								  </thead>
+								  <tbody>
+								    {% for employee in employees %}
+								    	{% if site.site_id == employee.employee_site_id and employee.employee_group == "supervisor" %}
+									    	<tr>
+											      <td>{{employee.employee_first_name}}</td>
+											      <td>{{employee.employee_last_name}}</td>
+											      <td>{{employee.employee_id}}</td>
+											      <td>{{employee.employee_email}}</td>
+									    	</tr>
+								    	{% endif %}
+								    {% endfor %}
+								  </tbody>
+								</table>
 						    </div>
 						  </div>
-						</div>
-				    	
+						</div>				    	
 			
 				
 				    	</li>
@@ -112,10 +128,10 @@
 
 				    	<div class="container">
 						  <div class="row">
-						    <div class="col-sm">
+						    <div class="col-4">
 						      Production Staff
 						    </div>
-						    <div class="col-sm">
+						    <div class="col-8">
 
 						    	<table class="table">
 								  <thead>
@@ -147,7 +163,6 @@
 				    	<p></p>
 				
 				    </li>
-				    <li class="list-group-item">Vestibulum at eros</li>
 				  </ul>
 				</div>
 
