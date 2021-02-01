@@ -1,4 +1,4 @@
-<!-- Links to 'base_anon.html' as a base template file (which inherits from the base.html) -->
+<!-- Links to 'base_logged_in.html' as a base template file (which inherits from the base.html) -->
 {% extends 'base_logged_in.html' %}
 
 <!-- Jinja2 Template Block for Head of Webpage -->
@@ -70,6 +70,7 @@
 				
 					<div class="inner-div">
 						<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
+						<input type="button" class="btn btn-primary" value="Clear Filters" onclick=clearFilters() >
 					</div>
 				</form>
 			</div>
@@ -108,7 +109,60 @@
 	    
 	  	<!-- Lower Left Quadrant: Regular Component Filtering -->
 	    <div class="col-4">
-	      1 of 3
+
+	    	<div id="data-filtering">
+
+				<form id="sc-data-filter" class="form-horizontal" action="">
+
+					<div class="form-group row">
+						<label for="rc_pn" class="col-sm-4 col-form-label">Part Number: </label>
+						<div class="col-sm-8">
+							<input type="text" name="rc_pn" id="rc_pn" placeholder="123456">
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label for="rc_category" class="col-sm-4 col-form-label">Category: </label>
+						<div class="col-sm-8">
+							<select class="custom-select" id="rc_category">
+								<option selected>Select Category</option>
+							    <option>Case</option>
+							    <option>Graphics Card (GC)</option>
+							    <option>Hard Drive Disk (HDD)</option>
+							    <option>Motherboard (MB)</option>
+							    <option>Random Access Memory (RAM)</option>
+							  </select>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label for="rc_site" class="col-sm-4 col-form-label">Site: </label>
+						<div class="col-sm-8">
+							<input type="text" name="rc_site" id="rc_site" placeholder="99">
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label for="rc_room" class="col-sm-4 col-form-label">Room: </label>
+						<div class="col-sm-8">
+							<input type="text" name="rc_room" id="rc_room" placeholder="99">
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label for="rc_shelf" class="col-sm-4 col-form-label">Shelf: </label>
+						<div class="col-sm-8">
+							<input type="text" name="rc_shelf" id="rc_shelf" placeholder="99">
+						</div>
+					</div>
+				
+					<div class="inner-div">
+						<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
+						<input type="button" class="btn btn-primary" value="Clear Filters" onclick=clearFilters() >
+					</div>
+				</form>
+			</div>
+
 	    </div>
 	    
 	    <!-- Lower Right Quadrant: Regular Component Results -->
