@@ -14,6 +14,7 @@ class DummyData:
 
         self.special_components = self.load_data("special_components")
         self.regular_components = self.load_data("regular_components")
+        self.work_orders = self.load_data("work_orders")
 
     @staticmethod
     def load_data(filename):
@@ -28,7 +29,8 @@ class DummyData:
 
     # methods to return dummy data
     def get_sc(self):
-        return self.load_data("special_components")
+        return self.special_components
     def get_rc(self):
-        return self.load_data("regular_components")
-        
+        return self.regular_components
+    def get_wo(self):
+        return self.work_orders

@@ -156,7 +156,16 @@ def products():
 def inventory():
     """The webapp's page for viewing the inventory.
     This allows the employee to review existing stock and order new stock of standard and special components."""
-    return render_template("inventory.html", regular_components=data.regular_components, special_components=data.special_components)
+    return render_template("inventory.html", regular_components=data.get_rc(), special_components=data.get_sc())
+
+@webapp.route('/shipping', methods=['GET', 'POST'])
+@login_required
+def shipping():
+    """The webapp's page for viewing the shipping status of work orders.
+    This allows the employee to review existing work orders and see if they are ready to ship or not."""
+    return render_template("shipping.html", work_orders=data.get_wo())
+
+
 
 @webapp.route('/user_management', methods=['GET', 'POST'])
 @login_required
