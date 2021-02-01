@@ -27,44 +27,37 @@
 				<form id="sc-data-filter" class="form-horizontal" action="">
 
 					<div class="form-group row">
-						<label for="sc_sn" class="col-sm-4 col-form-label">Serial Number:</label>
+						<label for="emp_id" class="col-sm-4 col-form-label">Employee ID:</label>
 						<div class="col-sm-8">
-							<input type="text" name="sc_sn" id="sc_sn" placeholder="1234567890">
+							<input type="text" name="emp_id" id="emp_id" placeholder="99999">
 						</div>
 					</div>
 
 					<div class="form-group row">
-						<label for="sc_pn" class="col-sm-4 col-form-label">Part Number: </label>
+						<label for="emp_fname" class="col-sm-4 col-form-label">Employee First Name: </label>
 						<div class="col-sm-8">
-							<input type="text" name="sc_pn" id="sc_pn" placeholder="123456">
+							<input type="text" name="emp_fname" id="emp_fname" placeholder="John">
 						</div>
 					</div>
 
 					<div class="form-group row">
-						<label for="sc_is_free" class="col-sm-4 col-form-label">Is Free: </label>
+						<label for="emp_lname" class="col-sm-4 col-form-label">Employee Last Name: </label>
 						<div class="col-sm-8">
-							<input type="checkbox" name="sc_is_free" id="sc_is_free">
+							<input type="text" name="emp_lname" id="emp_lname" placeholder="Doe">
 						</div>
 					</div>
 
 					<div class="form-group row">
-						<label for="sc_site" class="col-sm-4 col-form-label">Site: </label>
+						<label for="emp_email" class="col-sm-4 col-form-label">Employee Email: </label>
 						<div class="col-sm-8">
-							<input type="text" name="sc_site" id="sc_site" placeholder="99">
+							<input type="text" name="emp_email" id="emp_email" placeholder="jsmith8@2fast4you.com">
 						</div>
 					</div>
 
 					<div class="form-group row">
-						<label for="sc_room" class="col-sm-4 col-form-label">Room: </label>
+						<label for="sc_room" class="col-sm-4 col-form-label">Site ID: </label>
 						<div class="col-sm-8">
 							<input type="text" name="sc_room" id="sc_room" placeholder="99">
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="sc_shelf" class="col-sm-4 col-form-label">Shelf: </label>
-						<div class="col-sm-8">
-							<input type="text" name="sc_shelf" id="sc_shelf" placeholder="99">
 						</div>
 					</div>
 				
@@ -78,11 +71,11 @@
 	    </div>
 	    
 	    <!-- Upper Right Quadrant: Special Component Results -->
-	    <div class="col-8">
+	    <div class="col-6">
 
 	    	{% for site in sites %}
 
-	    		<div class="card" style="width: 50rem;">
+	    		<div class="card" style="width: 60rem;">
 				  <div class="card-header">
 				    <b>Site {{site.site_id}}</b>: {{site.site_address}}
 				  </div>
@@ -91,7 +84,7 @@
 
 				    	<div class="container">
 						  <div class="row">
-						    <div class="col-4">
+						    <div class="col-2">
 						      Supervisor
 						    </div>
 						    <div class="col-8">
@@ -103,6 +96,8 @@
 								      <th scope="col">Last</th>
 								      <th scope="col">ID</th>
 								      <th scope="col">Email</th>
+								      <th scope="col">Edit</th>
+								      <th scope="col">Delete</th>
 								    </tr>
 								  </thead>
 								  <tbody>
@@ -113,6 +108,8 @@
 											      <td>{{employee.employee_last_name}}</td>
 											      <td>{{employee.employee_id}}</td>
 											      <td>{{employee.employee_email}}</td>
+											      <td><button class="btn-sm btn-warning">Edit</button></td>
+												  <td><button class="btn-sm btn-danger">Delete</button></td>
 									    	</tr>
 								    	{% endif %}
 								    {% endfor %}
@@ -128,18 +125,20 @@
 
 				    	<div class="container">
 						  <div class="row">
-						    <div class="col-4">
+						    <div class="col-2">
 						      Production Staff
 						    </div>
 						    <div class="col-8">
 
-						    	<table class="table">
+						    	<table class="table" style="width: 30rem;">
 								  <thead>
 								    <tr>
 								      <th scope="col">First</th>
 								      <th scope="col">Last</th>
 								      <th scope="col">ID</th>
 								      <th scope="col">Email</th>
+								      <th scope="col">Edit</th>
+								      <th scope="col">Delete</th>
 								    </tr>
 								  </thead>
 								  <tbody>
@@ -150,6 +149,8 @@
 											      <td>{{employee.employee_last_name}}</td>
 											      <td>{{employee.employee_id}}</td>
 											      <td>{{employee.employee_email}}</td>
+											      <td><button class="btn-sm btn-warning">Edit</button></td>
+												  <td><button class="btn-sm btn-danger">Delete</button></td>
 									    	</tr>
 								    	{% endif %}
 								    {% endfor %}
