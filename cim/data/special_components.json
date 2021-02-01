@@ -31,5 +31,5 @@
     "sc_pn": 456123,
     "sc_is_free": false,
     "sc_location": {"location_site_id": 12, "location_id": 784123, "location_room_number": 5, "location_shelf_number": 12}
-  },
+  }
 ]
