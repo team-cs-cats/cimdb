@@ -18,6 +18,7 @@ class DummyData:
         self.employees = self.load_data("employees")
         self.sites = self.load_data("sites")
         self.locations = self.load_data("locations")
+        self.products = self.load_data("products")
 
     @staticmethod
     def load_data(filename):
@@ -43,3 +44,5 @@ class DummyData:
         return self.work_orders
     def get_loc(self):
         return self.locations
+    def get_products(self):
+        return self.products

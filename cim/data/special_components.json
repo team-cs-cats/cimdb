@@ -4,30 +4,30 @@
     "sc_sn": 1564887459,
     "sc_pn": 456123,
     "sc_is_free": true,
-    "sc_location": {"location_site_id": 12, "location_id": 54812, "location_room_number": 8, "location_shelf_number": 11}
+    "sc_location": {"location_site_id": 12, "location_id": 37394, "location_room_number": 8, "location_shelf_number": 11}
   },
   {
     "sc_sn": 1564887460,
     "sc_pn": 456123,
     "sc_is_free": true,
-    "sc_location": {"location_site_id": 12, "location_id": 78654, "location_room_number": 7, "location_shelf_number": 3}
+    "sc_location": {"location_site_id": 12, "location_id": 45806, "location_room_number": 7, "location_shelf_number": 3}
   },
   {
     "sc_sn": 1564887461,
     "sc_pn": 456123,
     "sc_is_free": false,
-    "sc_location": {"location_site_id": 12, "location_id": 45378, "location_room_number": 5, "location_shelf_number": 2}
+    "sc_location": {"location_site_id": 12, "location_id": 40258, "location_room_number": 5, "location_shelf_number": 2}
   },
   {
     "sc_sn": 1564887462,
     "sc_pn": 456123,
     "sc_is_free": true,
-    "sc_location": {"location_site_id": 12, "location_id": 78453, "location_room_number": 5, "location_shelf_number": 17}
+    "sc_location": {"location_site_id": 12, "location_id": 40258, "location_room_number": 5, "location_shelf_number": 17}
   },
   {
     "sc_sn": 1564887463,
     "sc_pn": 456123,
     "sc_is_free": false,
-    "sc_location": {"location_site_id": 12, "location_id": 784123, "location_room_number": 5, "location_shelf_number": 12}
+    "sc_location": {"location_site_id": 12, "location_id": 27442, "location_room_number": 5, "location_shelf_number": 12}
   }
 ]
