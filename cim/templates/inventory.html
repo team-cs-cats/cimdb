@@ -9,129 +9,68 @@
 <!-- Jinja2 Template Block for Body of Webpage -->
 {% block body %}
 
-<!-- Navigation bar -->
-<div>
-</div>
 
-<div class="content">
-	<div class="container">
-	  <div class="row">
-	  	<h5>Filter Stock: Special Components</h5>
+<div class="container">
+	<h5>Special Components</h5>
+  <div class="row">
 
-	  	<!-- Upper Left Quadrant: Special Component Filtering -->
-	    <div class="col-4">
-	     
-	     	<h6>Filter Special Components</h6>
+    <div class="col-2">
+      <!-- Special Components Filter -->
+      <div class="text-center"><h6>Filter Special Components</h6></div>
 
-	    	<div id="data-filtering">
+      <div id="data-filtering">
 
-				<form id="sc-data-filter" class="form-horizontal" action="">
+		<form id="sc-data-filter" class="form-horizontal" action="">
 
-					<div class="form-group row">
-						<label for="sc_sn" class="col-sm-4 col-form-label">Serial Number:</label>
-						<div class="col-sm-8">
-							<input type="text" name="sc_sn" id="sc_sn" placeholder="1234567890">
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="sc_pn" class="col-sm-4 col-form-label">Part Number: </label>
-						<div class="col-sm-8">
-							<input type="text" name="sc_pn" id="sc_pn" placeholder="123456">
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="sc_is_free" class="col-sm-4 col-form-label">Is Free: </label>
-						<div class="col-sm-8">
-							<input type="checkbox" name="sc_is_free" id="sc_is_free">
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="sc_site" class="col-sm-4 col-form-label">Site: </label>
-						<div class="col-sm-8">
-							<input type="text" name="sc_site" id="sc_site" placeholder="99">
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="sc_room" class="col-sm-4 col-form-label">Room: </label>
-						<div class="col-sm-8">
-							<input type="text" name="sc_room" id="sc_room" placeholder="99">
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="sc_shelf" class="col-sm-4 col-form-label">Shelf: </label>
-						<div class="col-sm-8">
-							<input type="text" name="sc_shelf" id="sc_shelf" placeholder="99">
-						</div>
-					</div>
-				
-					<div class="inner-div">
-						<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
-						<input type="button" class="btn btn-primary" value="Clear Filters" onclick=clearFilters() >
-					</div>
-				</form>
+			<div class="form-row">
+				<div class="col-sm">
+					<input type="text" name="sc_sn" id="sc_sn" placeholder="Serial Number">
+				</div>
 			</div>
 
-
-			<h6>Order New Special Components</h6>
-			<p>Add new serialized CPU components to the stock.</p>
-						<!-- add new form -->
-			<div id="data-entry-div">	
-
-				<form id="sc_entry" class="form-horizontal" action="">
-
-					<div class="form-group row">
-						<div class="inner-div">
-							<label for="new_sc_pn">New Part Number: </label>
-							<input type="number" name="new_sc_pn" id="new_sc_pn" min="10000" max="99998" placeholder="12345">
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<div class="inner-div">
-							<label for="new_sc_type">CPU Type: </label>
-							<select name="new_sc_type" id="new_sc_type">
-								<option value="Pro-i3">Pro-i3</option>
-								<option value="Pro-i5">Pro-i5</option>
-								<option value="Pro-i7">Pro-i7</option>
-							</select>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<div class="inner-div">
-							<label for="new_sc_quantity">Order Quantity: </label>
-							<input type="number" name="new_sc_quantity" id="new_sc_quantity" min="1" max="50" placeholder="17">
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<div class="inner-div">
-							<label for="new_sc_order_location">Order to Site: </label>
-							<select name="new_sc_order_location" id="new_sc_order_location">
-								<option value="12">LA-12</option>
-								<option value="14">SF-14</option>
-								<option value="16">Reno-16</option>
-							</select>
-					</div>
-
-					<div class="inner-div">
-						<input type="button" class="btn-sm btn-success" value="Order Special Components" onclick=addData() >
-					</div>
-
-				</form>
+			<div class="form-row">
+				<div class="col-sm">
+					<input type="text" name="sc_pn" id="sc_pn" placeholder="Part Number">
+				</div>
 			</div>
 
-	    </div>
-	    
-	    <!-- Upper Right Quadrant: Special Component Results -->
-	    <div class="col-8">
-	    	
-	    	<div id="results">
+			<div class="form-row">
+				<div class="col-sm">
+					<input type="text" name="sc_site" id="sc_site" placeholder="Site: 99">
+				</div>
+			</div>
+
+			<div class="form-row">
+				<div class="col-sm">
+					<input type="text" name="sc_room" id="sc_room" placeholder="Room: 99">
+				</div>
+			</div>
+
+			<div class="form-row">
+				<div class="col-sm">
+					<input type="text" name="sc_shelf" id="sc_shelf" placeholder="Shelf: 99">
+				</div>
+			</div>
+
+			<div class="form-row text-center">
+				<label for="sc_is_free">Is Free: </label> <input type="checkbox" name="sc_is_free" id="sc_is_free">
+
+			</div>
+		
+			<div class="inner-div">
+				<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
+				<input type="button" class="btn btn-primary" value="Clear Filters" onclick=clearFilters() >
+			</div>
+		</form>
+	</div>
+
+    </div>
+
+    <div class="col-8">
+      <!-- Special Components Results -->
+      <div class="text-center"><h6>Special Components Inventory</h6></div>
+
+      <div id="results">
 				<table class="table table-striped">
 					<tr>
 						<th>Serial Number</th>
@@ -156,112 +95,93 @@
 				</table>
 			</div>
 
-	    </div>
+    </div>
 
-	  </div>
-	  <div class="row">
-	  	<h5>Stock: Regular Components</h5>
-	    
-	  	<!-- Lower Left Quadrant: Regular Component Filtering -->
-	    <div class="col-4">
+    <div class="col-2">
+      <!-- Special Components Add -->
+      <div class="text-center"><h6>Order Special Components</h6></div>
 
-	    	<div id="data-filtering">
+		<div id="data-entry-div">	
 
-				<form id="sc-data-filter" class="form-horizontal" action="">
+		<form id="sc_entry" class="form-horizontal" action="">
 
-					<div class="form-group row">
-						<label for="rc_pn" class="col-sm-4 col-form-label">Part Number: </label>
-						<div class="col-sm-8">
-							<input type="text" name="rc_pn" id="rc_pn" placeholder="123456">
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="rc_category" class="col-sm-4 col-form-label">Category: </label>
-						<div class="col-sm-8">
-							<select class="custom-select" id="rc_category">
-								<option selected>Select Category</option>
-							    <option>Case</option>
-							    <option>Graphics Card (GC)</option>
-							    <option>Hard Drive Disk (HDD)</option>
-							    <option>Motherboard (MB)</option>
-							    <option>Random Access Memory (RAM)</option>
-							  </select>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="rc_site" class="col-sm-4 col-form-label">Site: </label>
-						<div class="col-sm-8">
-							<input type="text" name="rc_site" id="rc_site" placeholder="99">
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="rc_room" class="col-sm-4 col-form-label">Room: </label>
-						<div class="col-sm-8">
-							<input type="text" name="rc_room" id="rc_room" placeholder="99">
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="rc_shelf" class="col-sm-4 col-form-label">Shelf: </label>
-						<div class="col-sm-8">
-							<input type="text" name="rc_shelf" id="rc_shelf" placeholder="99">
-						</div>
-					</div>
-				
-					<div class="inner-div">
-						<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
-						<input type="button" class="btn btn-primary" value="Clear Filters" onclick=clearFilters() >
-					</div>
-				</form>
+			<div class="form-group row">
+				<div class="inner-div">
+					<label for="new_sc_pn">New Part Number: </label>
+					<input type="number" name="new_sc_pn" id="new_sc_pn" min="10000" max="99998" placeholder="12345">
+				</div>
 			</div>
 
-	    </div>
-	    
-	    <!-- Lower Right Quadrant: Regular Component Results -->
-	    <div class="col-8">
-	    	
-	    	<div id="results">
-				<table class="table table-striped">
-					<tr>
-						<th>Part Number</th>
-						<th>Category</th>
-						<th>Quantity</th>
-						<th>Location(s)</th>
-						<th>Order More</th>
-						<th>Edit</th>
-						<th>Delete</th>
-					</tr>
-					{% for regular_component in regular_components %}
-					<tr>
-						<td>{{regular_component.rc_pn}}</td>
-						<td>{{regular_component.rc_category}}</td>
-						<td>{{regular_component.rc_quantity}}</td>
-						<td>
-							<ul>
-								{% for location in regular_component.rc_locations %}
-									<li>Site {{location.location_site_id}}, Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</li>
-								{% endfor %}
-							</ul>
-						</td>
-						<td><button class="btn btn-primary">Order More</button></td>
-						<td><button class="btn btn-warning">Edit</button></td>
-						<td><button class="btn btn-danger">Delete</button></td>
-					</tr>
-					{% endfor %}
-				</table>
+			<div class="form-group row">
+				<div class="inner-div">
+					<label for="new_sc_type">CPU Type: </label>
+					<select name="new_sc_type" id="new_sc_type">
+						<option value="Pro-i3">Pro-i3</option>
+						<option value="Pro-i5">Pro-i5</option>
+						<option value="Pro-i7">Pro-i7</option>
+					</select>
+				</div>
 			</div>
 
-	    </div>
+			<div class="form-group row">
+				<div class="inner-div">
+					<label for="new_sc_quantity">Order Quantity: </label>
+					<input type="number" name="new_sc_quantity" id="new_sc_quantity" min="1" max="50" placeholder="17">
+				</div>
+			</div>
 
-	  </div>
-	</div>
+			<div class="form-group row">
+				<div class="inner-div">
+					<label for="new_sc_order_location">Order to Site: </label>
+					<select name="new_sc_order_location" id="new_sc_order_location">
+						<option value="12">LA-12</option>
+						<option value="14">SF-14</option>
+						<option value="16">Reno-16</option>
+					</select>
+			</div>
+
+			<div class="inner-div">
+				<input type="button" class="btn-sm btn-success" value="Order Special Components" onclick=addData() >
+			</div>
+
+		</form>
+
+    	</div>
+
+  </div>
+
 </div>
 
+<div class="container">
+	<div><h5>Regular Components</h5></div>
+<div class="row">
+  	
+
+    <div class="col">
+      <!-- Special Components Filter -->
+      <h6>Filter</h6>
 
 
 
+    </div>
+
+    <div class="col-8">
+      <!-- Special Components Results -->
+      <h6>Results</h6>
+
+
+
+    </div>
+
+    <div class="col">
+      <!-- Special Components Add -->
+      <h6>Add</h6>
+
+
+
+    </div>
+
+  </div>
 </div>
+
 {% endblock %}
