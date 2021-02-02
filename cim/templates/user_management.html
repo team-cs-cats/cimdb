@@ -1,4 +1,4 @@
-<!-- Links to 'base_anon.html' as a base template file (which inherits from the base.html) -->
+<!-- Links to 'base_logged_in.html' as a base template file (which inherits from the base.html) -->
 {% extends 'base_logged_in.html' %}
 
 <!-- Jinja2 Template Block for Head of Webpage -->
@@ -14,9 +14,168 @@
 </div>
 
 <div class="content">
-	
-    <h1>Welcome CS Cats, to the CIMDB!</h1>
-    <p>This is the User Management page</p>
+	<div class="container">
+	  <div class="row">
+	  	<h5>User Management</h5>
+
+	  	<!-- User Filtering -->
+	    <div class="col-4">
+	      
+
+	    	<div id="data-filtering">
+
+				<form id="sc-data-filter" class="form-horizontal" action="">
+
+					<div class="form-group row">
+						<label for="emp_id" class="col-sm-4 col-form-label">Employee ID:</label>
+						<div class="col-sm-8">
+							<input type="text" name="emp_id" id="emp_id" placeholder="99999">
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label for="emp_fname" class="col-sm-4 col-form-label">Employee First Name: </label>
+						<div class="col-sm-8">
+							<input type="text" name="emp_fname" id="emp_fname" placeholder="John">
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label for="emp_lname" class="col-sm-4 col-form-label">Employee Last Name: </label>
+						<div class="col-sm-8">
+							<input type="text" name="emp_lname" id="emp_lname" placeholder="Doe">
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label for="emp_email" class="col-sm-4 col-form-label">Employee Email: </label>
+						<div class="col-sm-8">
+							<input type="text" name="emp_email" id="emp_email" placeholder="jsmith8@2fast4you.com">
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label for="sc_room" class="col-sm-4 col-form-label">Site ID: </label>
+						<div class="col-sm-8">
+							<input type="text" name="sc_room" id="sc_room" placeholder="99">
+						</div>
+					</div>
+				
+					<div class="inner-div">
+						<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
+						<input type="button" class="btn btn-primary" value="Clear Filters" onclick=clearFilters() >
+					</div>
+				</form>
+			</div>
+
+	    </div>
+	    
+	    <!-- Upper Right Quadrant: Special Component Results -->
+	    <div class="col-6">
+
+	    	{% for site in sites %}
+
+	    		<div class="card" style="width: 60rem;">
+				  <div class="card-header">
+				    <b>Site {{site.site_id}}</b>: {{site.site_address}}
+				  </div>
+				  <ul class="list-group list-group-flush">
+				    <li class="list-group-item">
+
+				    	<div class="container">
+						  <div class="row">
+						    <div class="col-2">
+						      Supervisor
+						    </div>
+						    <div class="col-8">
+
+						    	<table class="table" style="width: 30rem;">
+								  <thead>
+								    <tr>
+								      <th scope="col">First</th>
+								      <th scope="col">Last</th>
+								      <th scope="col">ID</th>
+								      <th scope="col">Email</th>
+								      <th scope="col">Edit</th>
+								      <th scope="col">Delete</th>
+								    </tr>
+								  </thead>
+								  <tbody>
+								    {% for employee in employees %}
+								    	{% if site.site_id == employee.employee_site_id and employee.employee_group == "supervisor" %}
+									    	<tr>
+											      <td>{{employee.employee_first_name}}</td>
+											      <td>{{employee.employee_last_name}}</td>
+											      <td>{{employee.employee_id}}</td>
+											      <td>{{employee.employee_email}}</td>
+											      <td><button class="btn-sm btn-warning">Edit</button></td>
+												  <td><button class="btn-sm btn-danger">Delete</button></td>
+									    	</tr>
+								    	{% endif %}
+								    {% endfor %}
+								  </tbody>
+								</table>
+						    </div>
+						  </div>
+						</div>				    	
+			
+				
+				    	</li>
+				    <li class="list-group-item">
+
+				    	<div class="container">
+						  <div class="row">
+						    <div class="col-2">
+						      Production Staff
+						    </div>
+						    <div class="col-8">
+
+						    	<table class="table" style="width: 30rem;">
+								  <thead>
+								    <tr>
+								      <th scope="col">First</th>
+								      <th scope="col">Last</th>
+								      <th scope="col">ID</th>
+								      <th scope="col">Email</th>
+								      <th scope="col">Edit</th>
+								      <th scope="col">Delete</th>
+								    </tr>
+								  </thead>
+								  <tbody>
+								    {% for employee in employees %}
+								    	{% if employee.employee_group == "production" and site.site_id == employee.employee_site_id %}
+									    	<tr>
+											      <td>{{employee.employee_first_name}}</td>
+											      <td>{{employee.employee_last_name}}</td>
+											      <td>{{employee.employee_id}}</td>
+											      <td>{{employee.employee_email}}</td>
+											      <td><button class="btn-sm btn-warning">Edit</button></td>
+												  <td><button class="btn-sm btn-danger">Delete</button></td>
+									    	</tr>
+								    	{% endif %}
+								    {% endfor %}
+								  </tbody>
+								</table>
+						    </div>
+						  </div>
+						</div>
+
+
+				    	<p></p>
+				
+				    </li>
+				  </ul>
+				</div>
+
+
+	    		
+						
+
+			{% endfor %}
+	    
+	    </div>
+
+	  </div>
 
 </div>
 {% endblock %}

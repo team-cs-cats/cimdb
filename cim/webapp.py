@@ -7,6 +7,10 @@ from flask import url_for, session
 import flask_login
 from flask_login import login_user, current_user, logout_user, login_required
 
+
+# perform a local import to load the dummy data
+from cim.dummy_data import DummyData
+
 # This will eventually connect to the database, but for now it is not enabled
 # from db_connector.db_connector import connect_to_database, execute_query
 
@@ -28,6 +32,12 @@ users = {
 	'ali@cimdb.com': {'password': '12345'},
 	'asa@cimdb.com': {'password': '54321'}
 }
+
+
+
+# Load dummy data for the webpages to reference
+data = DummyData()
+
 
 # Create a basic user class
 class User(flask_login.UserMixin):
@@ -67,6 +77,8 @@ def request_loader(request):
 @login_manager.unauthorized_handler
 def unauthorized_handler():
     return 'Unauthorized'
+
+
 
 
 #provide a route for the index of the webpage requests on the web application can be addressed
@@ -144,14 +156,23 @@ def products():
 def inventory():
     """The webapp's page for viewing the inventory.
     This allows the employee to review existing stock and order new stock of standard and special components."""
-    return render_template("inventory.html")
+    return render_template("inventory.html", regular_components=data.get_rc(), special_components=data.get_sc())
 
-@webapp.route('/user_management', methods=['GET', 'POST'])
+@webapp.route('/shipping', methods=['GET', 'POST'])
+@login_required
+def shipping():
+    """The webapp's page for viewing the shipping status of work orders.
+    This allows the employee to review existing work orders and see if they are ready to ship or not."""
+    return render_template("shipping.html", work_orders=data.get_wo())
+
+
+
+@webapp.route('/management', methods=['GET', 'POST'])
 @login_required
 def user_management():
     """The webapp's page for managing current users.
     This allows a manager to update information about current users."""
-    return render_template("user_management.html")
+    return render_template("user_management.html", sites=data.get_sites(), employees=data.get_emp())
 
 # workorder details. it takes the wo_id as argument to retrive the the information from DB
 @webapp.route('/wo-details', methods=['GET', 'POST'])

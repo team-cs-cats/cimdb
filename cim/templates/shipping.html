@@ -1,0 +1,74 @@
+<!-- Links to 'base_logged_in.html' as a base template file (which inherits from the base.html) -->
+{% extends 'base_logged_in.html' %}
+
+<!-- Jinja2 Template Block for Head of Webpage -->
+{% block head %}
+
+{% endblock %}
+
+<!-- Jinja2 Template Block for Body of Webpage -->
+{% block body %}
+
+
+
+<div class="content">
+	<div class="container">
+	  <div class="row">
+	  	<h5>Shipping</h5>
+
+	  	<div class="container">
+		  <div class="row">
+
+		    <div class="col-sm border text-center">
+		      <h6>Pending QC</h6>
+		      <!-- <div class="overflow-auto"> -->
+				{% for work_order in work_orders %}
+
+					<div class="card">
+					<div class="card-body">
+					<div>
+						<h6 class="card-title">Work Order {{work_order.wo_id}}</h6>
+
+						<a href="#" class="btn-sm btn-primary">View Order</a>
+					</div>
+					</div>
+					</div>
+			      	
+				{% endfor %}
+		      	
+
+		      <!-- </div> -->
+		    </div>
+
+		    <div class="col-sm border text-center">
+		      <h6>Ready to Ship</h6>
+		      <div class="overflow-auto">
+
+		      	{% for work_order in work_orders %}
+
+					<div class="card">
+					<div class="card-body">
+					<div>
+						<h6 class="card-title">Work Order {{work_order.wo_id}}</h6>
+
+						<a href="#" class="btn-sm btn-primary">View Order</a>
+					</div>
+					</div>
+					</div>
+			      	
+				{% endfor %}
+
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+	  </div>
+	</div>
+</div>
+
+
+
+
+</div>
+{% endblock %}
