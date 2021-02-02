@@ -14,7 +14,7 @@
 	<div class='text-center'><h4>Inventory - Special Components</h4></div>
   <div class="row">
 
-    <div class="col-2">
+    <div class="col-2 text-center">
       <!-- Special Components Filter -->
       <div class="text-center"><h6>Filter Special Components</h6></div>
 
@@ -96,7 +96,7 @@
 
     </div>
 
-    <div class="col-2">
+    <div class="col-2 text-center">
       <!-- Special Components Add -->
       <div class="text-center"><h6>Order Special Components</h6></div>
 
@@ -131,12 +131,13 @@
 
 				<div class="form-group row">
 					<div class="inner-div">
-						<label for="new_sc_order_location">Order to Site: </label>
-						<select name="new_sc_order_location" id="new_sc_order_location">
-							<option value="12">LA-12</option>
-							<option value="14">SF-14</option>
-							<option value="16">Reno-16</option>
+						<select class="custom-select" id="new_sc_site" required>
+							<option selected>Select Site: </option>
+						    <option value=12>LA-12</option>
+						    <option value=14>SF-14</option>
+						    <option value=16>Reno-16</option>
 						</select>
+					</div>
 				</div>
 
 				<div class="inner-div">
@@ -248,9 +249,9 @@
 
     </div>
 
-    <div class="col">
+    <div class="col text-center">
       <!-- Regular Components Add -->
-      <div class="text-center"><h6>Order New Regular Components</h6></div>
+      <div class="text-center"><h6>Order Regular Components</h6></div>
 
       <div id="data-entry-div">	
 
@@ -278,24 +279,14 @@
 
 				<div class="form-group row">
 					<div class="inner-div">
-						<label for="new_sc_quantity">Order Quantity: </label>
-						<input type="number" name="new_sc_quantity" id="new_sc_quantity" min="1" max="50" placeholder="17" required>
+						<label for="new_rc_quantity">Order Quantity: </label>
+						<input type="number" name="new_rc_quantity" id="new_rc_quantity" min="1" max="50" placeholder="17" required>
 					</div>
 				</div>
 
 				<div class="form-group row">
 					<div class="inner-div">
-						<label for="new_sc_order_location">Order to Site: </label>
-						<select name="new_sc_order_location" id="new_sc_order_location" required>
-							<option >LA-12</option>
-							<option value="14">SF-14</option>
-							<option value="16">Reno-16</option>
-						</select>
-				</div>
-
-				<div class="form-group row">
-					<div class="inner-div">
-						<select class="custom-select" id="rc_category" required>
+						<select class="custom-select" id="new_rc_site" required>
 							<option selected>Select Site: </option>
 						    <option value=12>LA-12</option>
 						    <option value=14>SF-14</option>
@@ -305,9 +296,11 @@
 				</div>
 
 
-
-					<input type="button" class="btn-sm btn-success" value="Order Components" onclick=addData() >
-
+				<div class="form-group row">
+					<div class="inner-div">
+					<input type="button" class="btn-sm btn-success" value="Order Regular Components" onclick=addData() >
+					</div>
+				</div>
 			</form>
 
     	</div>
