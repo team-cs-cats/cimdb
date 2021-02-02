@@ -3,58 +3,53 @@
   {
     "rc_pn": "12345",
     "rc_category": "RAM",
-    "rc_quantity": 73,
     "rc_locations": [
-      {"location_site_id": 12, "location_id": 43851, "location_room_number": 4, "location_shelf_number": 18},
-      {"location_site_id": 12, "location_id": 58413, "location_room_number": 8, "location_shelf_number": 2}, 
-      {"location_site_id": 12, "location_id": 68454, "location_room_number": 4, "location_shelf_number": 15}, 
-      {"location_site_id": 12, "location_id": 98564, "location_room_number": 3, "location_shelf_number": 2}
+      {"location_site_id": 12, "location_id": 50921, "location_room_number": 4, "location_shelf_number": 18, "quantity_at_location": 45},
+      {"location_site_id": 12, "location_id": 17815, "location_room_number": 8, "location_shelf_number": 2, "quantity_at_location": 23}, 
+      {"location_site_id": 12, "location_id": 37588, "location_room_number": 4, "location_shelf_number": 15, "quantity_at_location": 48}, 
+      {"location_site_id": 12, "location_id": 14369, "location_room_number": 3, "location_shelf_number": 2, "quantity_at_location": 12}
     ]
   },
   {
     "rc_pn": "52636",
     "rc_category": "GC",
-    "rc_quantity": 556,
         "rc_locations": [
-      {"location_site_id": 12, "location_id": 54283, "location_room_number": 7, "location_shelf_number": 7},
-      {"location_site_id": 12, "location_id": 45785, "location_room_number": 8, "location_shelf_number": 4}, 
-      {"location_site_id": 12, "location_id": 45378, "location_room_number": 6, "location_shelf_number": 2}
+      {"location_site_id": 12, "location_id": 41309, "location_room_number": 4, "location_shelf_number": 6, "quantity_at_location": 6},
+      {"location_site_id": 12, "location_id": 64808, "location_room_number": 7, "location_shelf_number": 7, "quantity_at_location": 8},
+      {"location_site_id": 12, "location_id": 16656, "location_room_number": 8, "location_shelf_number": 4, "quantity_at_location": 12}, 
+      {"location_site_id": 12, "location_id": 75228, "location_room_number": 6, "location_shelf_number": 2, "quantity_at_location": 17}
     ]
   },
   {
     "rc_pn": "73621",
     "rc_category": "Case",
-    "rc_quantity": 123,
         "rc_locations": [
-      {"location_site_id": 12, "location_id": 75754, "location_room_number": 4, "location_shelf_number": 6},
-      {"location_site_id": 12, "location_id": 64687, "location_room_number": 7, "location_shelf_number": 2}, 
-      {"location_site_id": 12, "location_id": 45432, "location_room_number": 4, "location_shelf_number": 15},
-      {"location_site_id": 12, "location_id": 76422, "location_room_number": 8, "location_shelf_number": 2}, 
-      {"location_site_id": 12, "location_id": 21347, "location_room_number": 4, "location_shelf_number": 4}, 
-      {"location_site_id": 12, "location_id": 43785, "location_room_number": 3, "location_shelf_number": 3}
+      {"location_site_id": 12, "location_id": 82694, "location_room_number": 7, "location_shelf_number": 2, "quantity_at_location": 5}, 
+      {"location_site_id": 12, "location_id": 45432, "location_room_number": 4, "location_shelf_number": 15, "quantity_at_location": 9},
+      {"location_site_id": 12, "location_id": 26311, "location_room_number": 8, "location_shelf_number": 2, "quantity_at_location": 14}, 
+      {"location_site_id": 12, "location_id": 16168, "location_room_number": 4, "location_shelf_number": 4, "quantity_at_location": 7}, 
+      {"location_site_id": 12, "location_id": 41309, "location_room_number": 3, "location_shelf_number": 3, "quantity_at_location": 24}
     ]
   },
   {
     "rc_pn": "62361",
     "rc_category": "MB",
-    "rc_quantity": 52,
         "rc_locations": [
-      {"location_site_id": 12, "location_id": 54374, "location_room_number": 4, "location_shelf_number": 9},
-      {"location_site_id": 12, "location_id": 34538, "location_room_number": 8, "location_shelf_number": 2}, 
-      {"location_site_id": 12, "location_id": 45347, "location_room_number": 4, "location_shelf_number": 15}, 
-      {"location_site_id": 12, "location_id": 45378, "location_room_number": 8, "location_shelf_number": 12}
+      {"location_site_id": 12, "location_id": 11190, "location_room_number": 4, "location_shelf_number": 9, "quantity_at_location": 21},
+      {"location_site_id": 12, "location_id": 59740, "location_room_number": 8, "location_shelf_number": 2, "quantity_at_location": 78}, 
+      {"location_site_id": 12, "location_id": 45347, "location_room_number": 4, "location_shelf_number": 15, "quantity_at_location": 65}, 
+      {"location_site_id": 12, "location_id": 45378, "location_room_number": 8, "location_shelf_number": 12, "quantity_at_location": 74}
     ]
   },
   {
     "rc_pn": "47327",
     "rc_category": "HDD",
-    "rc_quantity": 1231,
         "rc_locations": [
-      {"location_site_id": 12, "location_id": 78673, "location_room_number": 4, "location_shelf_number": 9},
-      {"location_site_id": 12, "location_id": 12378, "location_room_number": 8, "location_shelf_number": 2}, 
-      {"location_site_id": 12, "location_id": 45378, "location_room_number": 4, "location_shelf_number": 11},
-      {"location_site_id": 12, "location_id": 43784, "location_room_number": 4, "location_shelf_number": 15}, 
-      {"location_site_id": 12, "location_id": 37834, "location_room_number": 7, "location_shelf_number": 4}
+      {"location_site_id": 12, "location_id": 62446, "location_room_number": 4, "location_shelf_number": 9, "quantity_at_location": 25},
+      {"location_site_id": 12, "location_id": 54962, "location_room_number": 8, "location_shelf_number": 2, "quantity_at_location": 16}, 
+      {"location_site_id": 12, "location_id": 45378, "location_room_number": 4, "location_shelf_number": 11, "quantity_at_location": 4},
+      {"location_site_id": 12, "location_id": 61913, "location_room_number": 4, "location_shelf_number": 15, "quantity_at_location": 8}, 
+      {"location_site_id": 12, "location_id": 77314, "location_room_number": 7, "location_shelf_number": 4, "quantity_at_location": 8}
     ]
   }
 ]

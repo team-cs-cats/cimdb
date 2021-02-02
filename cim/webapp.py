@@ -165,7 +165,13 @@ def shipping():
     This allows the employee to review existing work orders and see if they are ready to ship or not."""
     return render_template("shipping.html", work_orders=data.get_wo())
 
-
+@webapp.route('/locations', methods=['GET', 'POST'])
+@login_required
+def locations():
+    """The webapp's page for viewing the locations at the various sites, 
+    as well as which regular components, special components, and products are placed in which locations."""
+    return render_template("locations.html", 
+        locations=data.get_loc(), products=data.get_products(), regular_components=data.get_rc(), special_components=data.get_sc(), sites=data.get_sites())
 
 @webapp.route('/management', methods=['GET', 'POST'])
 @login_required
