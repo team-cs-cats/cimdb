@@ -143,34 +143,59 @@ def workorders():
     	return redirect(url_for("cim.templates.index"))
 
     # otherwise, return the workorders page
-    return render_template("workorders.html")
+    if request.method=="GET":
+        return render_template("workorders.html")
 
 @webapp.route('/products', methods=['GET', 'POST'])
 @login_required
 def products():
     """The webapp's page for viewing an employee's currently assigned products to assemble and QC."""
-    return render_template("products.html")
+
+    # if the current user is not authenticated, redirect the user to the landing page
+    if not current_user.is_authenticated:
+        return redirect(url_for("cim.templates.index"))
+
+    if request.method=="GET":
+        return render_template("products.html")
 
 @webapp.route('/inventory', methods=['GET', 'POST'])
 @login_required
 def inventory():
     """The webapp's page for viewing the inventory.
     This allows the employee to review existing stock and order new stock of standard and special components."""
-    return render_template("inventory.html", regular_components=data.get_rc(), special_components=data.get_sc())
+
+    # if the current user is not authenticated, redirect the user to the landing page
+    if not current_user.is_authenticated:
+        return redirect(url_for("cim.templates.index"))
+
+    if request.method=="GET":
+        return render_template("inventory.html", regular_components=data.get_rc(), special_components=data.get_sc())
 
 @webapp.route('/shipping', methods=['GET', 'POST'])
 @login_required
 def shipping():
     """The webapp's page for viewing the shipping status of work orders.
     This allows the employee to review existing work orders and see if they are ready to ship or not."""
-    return render_template("shipping.html", work_orders=data.get_wo())
+
+    # if the current user is not authenticated, redirect the user to the landing page
+    if not current_user.is_authenticated:
+        return redirect(url_for("cim.templates.index"))
+
+    if request.method=="GET":
+        return render_template("shipping.html", work_orders=data.get_wo())
 
 @webapp.route('/locations', methods=['GET', 'POST'])
 @login_required
 def locations():
     """The webapp's page for viewing the locations at the various sites, 
     as well as which regular components, special components, and products are placed in which locations."""
-    return render_template("locations.html", 
+
+    # if the current user is not authenticated, redirect the user to the landing page
+    if not current_user.is_authenticated:
+        return redirect(url_for("cim.templates.index"))
+
+    if request.method=="GET":
+        return render_template("locations.html", 
         locations=data.get_loc(), products=data.get_products(), regular_components=data.get_rc(), special_components=data.get_sc(), sites=data.get_sites())
 
 @webapp.route('/management', methods=['GET', 'POST'])
@@ -178,7 +203,13 @@ def locations():
 def user_management():
     """The webapp's page for managing current users.
     This allows a manager to update information about current users."""
-    return render_template("user_management.html", sites=data.get_sites(), employees=data.get_emp())
+
+    # if the current user is not authenticated, redirect the user to the landing page
+    if not current_user.is_authenticated:
+        return redirect(url_for("cim.templates.index"))
+
+    if request.method=="GET":
+        return render_template("user_management.html", sites=data.get_sites(), employees=data.get_emp())
 
 # workorder details. it takes the wo_id as argument to retrive the the information from DB
 @webapp.route('/wo-details', methods=['GET', 'POST'])
