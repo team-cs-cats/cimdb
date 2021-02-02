@@ -15,19 +15,30 @@
 	<div class="container">
 	  <div class="row">
 	  	<h5>Shipping</h5>
+	  	<p>Below are Work Orders that are pending QC or are ready to ship.</p>
 
 	  	<div class="container">
 		  <div class="row">
 
+
 		    <div class="col-sm border text-center">
-		      <h6>Pending QC</h6>
+		    	<div class='text-center'><h6>Pending QC</h6></div>
+
+		    	<div style="height: 75vh; overflow-y: scroll;">
+		      
 		      <!-- <div class="overflow-auto"> -->
 				{% for work_order in work_orders %}
 
 					<div class="card">
-					<div class="card-body">
+					<div class="card-body ">
 					<div>
 						<h6 class="card-title">Work Order {{work_order.wo_id}}</h6>
+
+						{% for employee in employees %}
+							{% if employee.employee_id == work_order.wo_employee_id %}
+								<p>Pending QC by {{employee.employee_first_name}} {{employee.employee_last_name}} </p>
+							{% endif %}
+						{% endfor %}
 
 						<a href="#" class="btn-sm btn-primary">View Order</a>
 					</div>
@@ -36,13 +47,16 @@
 			      	
 				{% endfor %}
 		      	
+		      	</div>
 
 		      <!-- </div> -->
 		    </div>
 
 		    <div class="col-sm border text-center">
-		      <h6>Ready to Ship</h6>
-		      <div class="overflow-auto">
+
+		      	<div class='text-center'><h6>Ready to Ship</h6></div>
+
+		    	<div style="height: 75vh; overflow-y: scroll;">
 
 		      	{% for work_order in work_orders %}
 
@@ -52,6 +66,7 @@
 						<h6 class="card-title">Work Order {{work_order.wo_id}}</h6>
 
 						<a href="#" class="btn-sm btn-primary">View Order</a>
+						<a href="#" class="btn-sm btn-success">Ship</a>
 					</div>
 					</div>
 					</div>

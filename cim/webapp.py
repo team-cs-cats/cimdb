@@ -182,7 +182,7 @@ def shipping():
         return redirect(url_for("cim.templates.index"))
 
     if request.method=="GET":
-        return render_template("shipping.html", work_orders=data.get_wo())
+        return render_template("shipping.html", work_orders=data.get_wo(), employees=data.get_emp())
 
 @webapp.route('/locations', methods=['GET', 'POST'])
 @login_required
