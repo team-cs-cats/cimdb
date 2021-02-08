@@ -1,0 +1,88 @@
+<!-- Links to 'base_logged_in.html' as a base template file (which inherits from the base.html) -->
+{% extends 'base_logged_in.html' %}
+
+<!-- Title of the page -->
+{% block title %} Stock and Product Locations {% endblock%}
+
+
+{% block body %} 
+
+
+<!-- add new form -->
+<div class="intro-div">
+    <h2>Room/Shelf Locations at 2Fast4U sites</h2>
+	
+	<p> Welcome {{}}.</p>
+
+</div>
+
+
+<div id="data-filtering">
+
+	<form id="assembly-data-filter" action="">
+
+		<div class="inner-div text-center">
+
+			<label>Filter location information: </label>
+
+			<input type="text" name="location_site_id" id="location_site_id" placeholder="Site ID">
+
+			<input type="text" name="location_id" id="location_id" placeholder="Location ID">
+
+			<input type="text" name="location_room_number" id="location_room_number" placeholder="Room Number">
+
+			<input type="text" name="location_shelf_number" id="location_shelf_number" placeholder="Shelf Number">
+		
+			<input type="button" class="btn-sm btn-primary" value="Filter" onclick=addData() >
+			<input type="button" class="btn-sm btn-primary" value="Clear Filters" onclick=clearFilters() >
+		</div>
+        
+	</form>
+</div>
+
+
+
+<!-- dummy content for demo --will be replaced -->
+<div id="results">
+	<div class="border p-1 pt-2" style="height: 65vh; overflow-y: scroll;">
+	<table class="table table-striped" >
+		<tr>
+			<th>Location ID</th>
+			<th>2Fast4U Site Name</th>
+			<th>Room</th>
+			<th>Shelf</th>
+			<th>Edit</th>
+			<th>Delete</th>
+		</tr>
+		{% for location in locations %}
+			<tr>
+				<td>
+					{{location.location_id}}
+				</td>
+
+				<td>
+					{% for site in sites %}{% if site.site_id == location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}
+				</td>
+				
+				<td>
+					{{location.location_room_number}}
+				</td>
+				<td>
+					{{location.location_shelf_number}}
+				</td>
+
+				<th><button class="btn-sm btn-warning">Edit</button></th>
+				<td><button class="btn-sm btn-danger">Delete</button></td>
+			</tr>
+		{% endfor %}
+		
+	</table>
+	</div>
+</div>
+
+
+{% endblock%}
+
+
+
+

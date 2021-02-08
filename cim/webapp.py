@@ -27,16 +27,23 @@ login_manager = flask_login.LoginManager()
 login_manager.init_app(webapp)
 
 
-# Set up a mock set of user ids to use for our logins (this can be moved/replaced later)
-users = {
-	'ali@cimdb.com': {'password': '12345'},
-	'asa@cimdb.com': {'password': '54321'}
-}
 
 
 
 # Load dummy data for the webpages to reference
 data = DummyData()
+
+
+# Set up a mock set of user ids to use for our logins (this can be moved/replaced later)
+users = {}
+
+for employee in data.get_emp():
+    emp_email = employee["employee_email"]
+    emp_pass = employee["employee_password"]
+    users[emp_email] = {'password': emp_pass}
+
+
+print(users)
 
 
 # Create a basic user class
@@ -56,27 +63,27 @@ def user_loader(email):
     user.id = email
     return user
 
-# Associate a logged in user with the current session
-@login_manager.request_loader
-def request_loader(request):
+# # Associate a logged in user with the current session
+# @login_manager.request_loader
+# def request_loader(request):
 
-	# obtain the current email
-    email = request.form.get('email')
+# 	# obtain the current email
+#     email = request.form.get('email')
 
-    # if the current email isn't on the list of allowed users, return nothing
-    if email not in users:
-        return
+#     # if the current email isn't on the list of allowed users, return nothing
+#     if email not in users:
+#         return
 
-    # if the user email is allowed, set it as the id of the current user
-    user = User()
-    user.id = email
-    user.is_authenticated = request.form['password'] == users[email]['password']
-    return user
+#     # if the user email is allowed, set it as the id of the current user
+#     user = User()
+#     user.id = email
+#     user.is_authenticated = request.form['password'] == users[email]['password']
+#     return user
 
-# Add an association for any unauthorized session logins.
-@login_manager.unauthorized_handler
-def unauthorized_handler():
-    return 'Unauthorized'
+# # Add an association for any unauthorized session logins.
+# @login_manager.unauthorized_handler
+# def unauthorized_handler():
+#     return 'Unauthorized'
 
 
 
@@ -114,6 +121,10 @@ def login():
 
     # if the user attempts to login with info, check to see if their info is valid
     email = request.form['email']
+
+    if email not in users:
+        return redirect(url_for('index'))
+
     if request.form['password'] == users[email]['password']:
 
     	# If valid credentials, sign the user into the Work Orders page
