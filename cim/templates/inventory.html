@@ -75,7 +75,7 @@
 						<th>Serial Number</th>
 						<th>Part Number</th>
 						<th>Is Free</th>
-						<th>Location</th>
+						<th>Site / Location</th>
 						<th>Edit Component Details</th>
 						<th>Delete</th>
 						</tr>
@@ -85,7 +85,12 @@
 								<td>{{special_component.sc_pn}}</td>
 								<td> {% if special_component.sc_is_free %} Yes {% else %} No {% endif %}</td>
 								<td>
-									Site {{special_component.sc_location.location_site_id}}, Room {{special_component.sc_location.location_room_number}}, Shelf {{special_component.sc_location.location_shelf_number}}
+									{% for site in sites %}
+										{% if site.site_id == special_component.sc_location.location_site_id %}
+											{{site.site_name}}  
+										{% endif %}
+									{% endfor %}
+									/ Room {{special_component.sc_location.location_room_number}}, Shelf {{special_component.sc_location.location_shelf_number}}
 								</td>
 								<td><button class="btn-sm btn-warning">Edit</button></td>
 								<td><button class="btn-sm btn-danger">Delete</button></td>
