@@ -226,37 +226,24 @@
         	{% for regular_component in regular_components %}
         	<div class="row">
   				<div class="col text-left">Part Number: <strong>{{regular_component.rc_pn}}</strong> - Category: <strong>{{regular_component.rc_category}}</strong></div>
-  				<div class="col float-right"><button class="btn-sm btn-warning">Edit Component Details</button> <button class="btn-sm btn-danger">Delete Component</button></div>
+  				<div class="col-8 float-right"><td><button class="btn-sm btn-success">Order More of Component {{regular_component.rc_pn}}</button></td><button class="btn-sm btn-warning">Edit Details for Component {{regular_component.rc_pn}}</button> <button class="btn-sm btn-danger">Delete All Component {{regular_component.rc_pn}}</button></div>
   			</div>
-
-        	<div> </div>
 
 			<table class="table table-striped">
 				<tr>
 					<th>Site</th>
 					<th>Location</th>
 					<th>Quantity</th>
-					<th>Order More of This Component</th>
-					<th>Edit Component Details</th>
+					<th>Edit</th>
 					<th>Delete</th>
 				</tr>
-				{% for regular_component in regular_components %}
+				{% for location in regular_component.rc_locations %}
 				<tr>
-					<td></td>
-					<td></td>
-					<td>{{regular_component.rc_quantity}}</td>
-					<td>
-						<ul>
-							{% for site in sites %}
-								{% for location in regular_component.rc_locations %}
-									{% if site.site_id == location.location_site_id %}
-										<li>{{site.site_name}} / Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</li> 
-									{% endif %}
-								{% endfor %}
-							{% endfor %}
-						</ul>
-					</td>
-					<td><button class="btn-sm btn-primary">Order More</button></td>
+					<td>{% for site in sites %}{% if site.site_id == location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}</td>
+					<td>Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</td>
+					<td>{{location.quantity_at_location}}</td>
+					
+					
 					<td><button class="btn-sm btn-warning">Edit</button></td>
 					<td><button class="btn-sm btn-danger">Delete</button></td>
 				</tr>
