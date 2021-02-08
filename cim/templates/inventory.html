@@ -58,8 +58,8 @@
 			</div>
 		
 			<div class="inner-div">
-				<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
-				<input type="button" class="btn btn-primary" value="Clear Filters" onclick=clearFilters() >
+				<input type="button" class="btn-sm btn-primary" value="Filter" onclick=addData() >
+				<input type="button" class="btn-sm btn-primary" value="Clear Filters" onclick=clearFilters() >
 			</div>
 		</form>
 	</div>
@@ -76,7 +76,7 @@
 						<th>Part Number</th>
 						<th>Is Free</th>
 						<th>Location</th>
-						<th>Edit</th>
+						<th>Edit Component Details</th>
 						<th>Delete</th>
 						</tr>
 						{% for special_component in special_components %}
@@ -87,8 +87,8 @@
 								<td>
 									Site {{special_component.sc_location.location_site_id}}, Room {{special_component.sc_location.location_room_number}}, Shelf {{special_component.sc_location.location_shelf_number}}
 								</td>
-								<td><button class="btn btn-warning">Edit</button></td>
-								<td><button class="btn btn-danger">Delete</button></td>
+								<td><button class="btn-sm btn-warning">Edit</button></td>
+								<td><button class="btn-sm btn-danger">Delete</button></td>
 						</tr>
 					{% endfor %}
 				</table>
@@ -206,8 +206,8 @@
 
 		
 			<div class="inner-div">
-				<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
-				<input type="button" class="btn btn-primary" value="Clear Filters" onclick=clearFilters() >
+				<input type="button" class="btn-sm btn-primary" value="Filter" onclick=addData() >
+				<input type="button" class="btn=sm btn-primary" value="Clear Filters" onclick=clearFilters() >
 			</div>
 		</form>
 	</div>
@@ -239,9 +239,9 @@
 								{% endfor %}
 							</ul>
 						</td>
-						<td><button class="btn btn-primary">Order More</button></td>
-						<td><button class="btn btn-warning">Edit</button></td>
-						<td><button class="btn btn-danger">Delete</button></td>
+						<td><button class="btn-sm btn-primary">Order More</button></td>
+						<td><button class="btn-sm btn-warning">Edit</button></td>
+						<td><button class="btn-sm btn-danger">Delete</button></td>
 					</tr>
 					{% endfor %}
 				</table>
@@ -288,9 +288,9 @@
 					<div class="inner-div">
 						<select class="custom-select" id="new_rc_site" required>
 							<option selected>Select Site: </option>
-						    <option value=12>LA-12</option>
-						    <option value=14>SF-14</option>
-						    <option value=16>Reno-16</option>
+							{% for site in sites %}
+						    	<option>{{site.site_name}}</option>
+						    {% endfor %}
 						</select>
 					</div>
 				</div>

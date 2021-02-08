@@ -169,7 +169,7 @@ def inventory():
         return redirect(url_for("cim.templates.index"))
 
     if request.method=="GET":
-        return render_template("inventory.html", regular_components=data.get_rc(), special_components=data.get_sc())
+        return render_template("inventory.html", regular_components=data.get_rc(), special_components=data.get_sc(), sites=get_sites())
 
 @webapp.route('/shipping', methods=['GET', 'POST'])
 @login_required
