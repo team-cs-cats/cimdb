@@ -43,9 +43,6 @@ for employee in data.get_emp():
     users[emp_email] = {'password': emp_pass}
 
 
-print(users)
-
-
 # Create a basic user class
 class User(flask_login.UserMixin):
 	pass
@@ -132,20 +129,34 @@ def login():
         user.id = email
 
         # determine the employee ID of the user email provided
-        current_employee_id = None
+        employee_details = None
         for employee_info in data.get_emp():
             if employee_info['employee_email'] == email:
-                current_employee_id = employee_info['employee_id']
+                user.employee_details = employee_info
+
+                print('HERE', type(user.employee_details))
                 break
 
-        # if we couldn't find the employee id, redirect to the index
-        if current_employee_id is None:
+        # if we couldn't find the details, redirect to the index
+        if user.employee_details is None:
             return redirect(url_for('index'))
 
-        # otherwise save the id and render the landing page
-        user.employee_id = current_employee_id
+        # otherwise use the id to save the employee details and render the landing page
+        user_first_name = user.employee_details['employee_first_name']
+        user_last_name = user.employee_details['employee_last_name']
+        user_email = user.employee_details['employee_email']
+        user_id = user.employee_details['employee_id']
+        user_site_id = user.employee_details['employee_site_id']
+        user_group = user.employee_details['employee_group']
         flask_login.login_user(user)
-        return redirect(url_for('landing', current_employee_id=user.employee_id))
+        return redirect(url_for('landing', 
+            user_first_name=user_first_name, 
+            user_last_name=user_last_name, 
+            user_email=user_email, 
+            user_id=user_id, 
+            user_site_id=user_site_id, 
+            user_group=user_group
+            ))
 
     # If the user provided bad credentials, return them to the index page (TODO: flash error)
     return render_template("index.html")
@@ -178,7 +189,14 @@ def landing():
 
     # otherwise, return the landing page and pass it the employee ID which can be used as a key
     if request.method=="GET":
-        return render_template("landing.html", current_emp_id=request.args.get('current_employee_id'))
+        return render_template("landing.html", 
+            user_first_name=request.args.get('user_first_name'),
+            user_last_name=request.args.get('user_last_name'),
+            user_email=request.args.get('user_email'),
+            user_id=request.args.get('user_id'),
+            user_site_id=request.args.get('user_site_id'),
+            user_group=request.args.get('user_group')
+            )
 
 @webapp.route('/products', methods=['GET', 'POST'])
 @login_required
