@@ -83,7 +83,7 @@
 							<tr>
 								<td>{{special_component.sc_sn}}</td>
 								<td>{{special_component.sc_pn}}</td>
-								<td>{{special_component.sc_is_free}}</td>
+								<td> {% if special_component.sc_is_free %} Yes {% else %} No {% endif %}</td>
 								<td>
 									Site {{special_component.sc_location.location_site_id}}, Room {{special_component.sc_location.location_room_number}}, Shelf {{special_component.sc_location.location_shelf_number}}
 								</td>
