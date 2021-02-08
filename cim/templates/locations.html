@@ -7,9 +7,10 @@
 
 {% block body %} 
 
+
 <!-- add new form -->
 <div class="intro-div">
-    <h2>Locations of Components and Products</h2>
+    <h2>Room/Shelf Locations at 2Fast4U sites</h2>
 	
 	<p> The following table lists storage locations at 2Fast4U production sites.</p>
 
@@ -50,7 +51,6 @@
 			<th>2Fast4U Site Name</th>
 			<th>Room</th>
 			<th>Shelf</th>
-			<th>View Contents</th>
 			<th>Edit</th>
 			<th>Delete</th>
 		</tr>
@@ -71,12 +71,6 @@
 					{{location.location_shelf_number}}
 				</td>
 
-				<!-- Button trigger modal -->
-				<td>
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
-				</td>
 				<th><button class="btn-sm btn-warning">Edit</button></th>
 				<td><button class="btn-sm btn-danger">Delete</button></td>
 			</tr>
@@ -87,54 +81,6 @@
 </div>
 
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      	<ul>
-      		{% for regular_component in regular_components %}
-      		{% for regular_component_location in regular_component.rc_locations %}
-      		{% if regular_component_location.location_id == location.location_id %}
-      		<li>{{regular_component.rc_category}}: {{regular_component_location.quantity_at_location}} EA</li>
-      		{% endif %}
-      		{% endfor %}
-      		{% endfor %}
-      	</ul>
-      </td>
-      <td>
-      	<ul>
-      		{% for special_component in special_components  %}
-      		{% if special_component.sc_location.location_id == location.location_id %}
-      		<li>{{special_component.sc_sn}}</li>
-      		{% endif %}
-      		{% endfor %}
-      	</ul>
-      </td>
-      <td>
-      	<ul>
-      		{% for product in products %}
-      		{% if product.product_location_id == location.location_id  %}
-      		<li>{{product.product_sn}}</li>
-      		{% endif %}
-      		{% endfor %}
-      	</ul>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script src="{{ url_for('static',filename='js/locations.js') }}"></script>
 {% endblock%}
 
 
