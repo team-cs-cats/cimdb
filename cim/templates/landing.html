@@ -10,75 +10,54 @@
 
 <!-- add new form -->
 <div class="intro-div">
-    <h2>Room/Shelf Locations at 2Fast4U sites</h2>
+    <h2>Welcome {{current_emp_id}}</h2>
 	
-	<p> Welcome {{}}.</p>
+	<p> Welcome.</p>
 
 </div>
 
 
-<div id="data-filtering">
-
-	<form id="assembly-data-filter" action="">
-
-		<div class="inner-div text-center">
-
-			<label>Filter location information: </label>
-
-			<input type="text" name="location_site_id" id="location_site_id" placeholder="Site ID">
-
-			<input type="text" name="location_id" id="location_id" placeholder="Location ID">
-
-			<input type="text" name="location_room_number" id="location_room_number" placeholder="Room Number">
-
-			<input type="text" name="location_shelf_number" id="location_shelf_number" placeholder="Shelf Number">
-		
-			<input type="button" class="btn-sm btn-primary" value="Filter" onclick=addData() >
-			<input type="button" class="btn-sm btn-primary" value="Clear Filters" onclick=clearFilters() >
-		</div>
-        
-	</form>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+            <div class="well well-sm">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive" />
+                    </div>
+                    <div class="col-sm-6 col-md-8">
+                        <h4>
+                            Bhaumik Patel</h4>
+                        <small><cite title="San Francisco, USA">San Francisco, USA <i class="glyphicon glyphicon-map-marker">
+                        </i></cite></small>
+                        <p>
+                            <i class="glyphicon glyphicon-envelope"></i>email@example.com
+                            <br />
+                            <i class="glyphicon glyphicon-globe"></i><a href="http://www.jquery2dotnet.com">www.jquery2dotnet.com</a>
+                            <br />
+                            <i class="glyphicon glyphicon-gift"></i>June 02, 1988</p>
+                        <!-- Split button -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary">
+                                Social</button>
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span><span class="sr-only">Social</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Twitter</a></li>
+                                <li><a href="https://plus.google.com/+Jquery2dotnet/posts">Google +</a></li>
+                                <li><a href="https://www.facebook.com/jquery2dotnet">Facebook</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Github</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-
-
-<!-- dummy content for demo --will be replaced -->
-<div id="results">
-	<div class="border p-1 pt-2" style="height: 65vh; overflow-y: scroll;">
-	<table class="table table-striped" >
-		<tr>
-			<th>Location ID</th>
-			<th>2Fast4U Site Name</th>
-			<th>Room</th>
-			<th>Shelf</th>
-			<th>Edit</th>
-			<th>Delete</th>
-		</tr>
-		{% for location in locations %}
-			<tr>
-				<td>
-					{{location.location_id}}
-				</td>
-
-				<td>
-					{% for site in sites %}{% if site.site_id == location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}
-				</td>
-				
-				<td>
-					{{location.location_room_number}}
-				</td>
-				<td>
-					{{location.location_shelf_number}}
-				</td>
-
-				<th><button class="btn-sm btn-warning">Edit</button></th>
-				<td><button class="btn-sm btn-danger">Delete</button></td>
-			</tr>
-		{% endfor %}
-		
-	</table>
-	</div>
-</div>
 
 
 {% endblock%}

@@ -130,8 +130,22 @@ def login():
     	# If valid credentials, sign the user into the Work Orders page
         user = User()
         user.id = email
+
+        # determine the employee ID of the user email provided
+        current_employee_id = None
+        for employee_info in data.get_emp():
+            if employee_info['employee_email'] == email:
+                current_employee_id = employee_info['employee_id']
+                break
+
+        # if we couldn't find the employee id, redirect to the index
+        if current_employee_id is None:
+            return redirect(url_for('index'))
+
+        # otherwise save the id and render the landing page
+        user.employee_id = current_employee_id
         flask_login.login_user(user)
-        return redirect(url_for('workorders'))
+        return redirect(url_for('landing', current_employee_id=user.employee_id))
 
     # If the user provided bad credentials, return them to the index page (TODO: flash error)
     return render_template("index.html")
@@ -149,7 +163,7 @@ def logout():
 def workorders():
     """The webapp's page for work orders, which allows reviewing and adding work orders."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
     	return redirect(url_for("cim.templates.index"))
 
@@ -157,12 +171,21 @@ def workorders():
     if request.method=="GET":
         return render_template("workorders.html")
 
+@webapp.route('/landing', methods=['GET', 'POST'])
+@login_required
+def landing():
+    """The webapp's logged in landing page, which allows an employee to access the internal links."""
+
+    # otherwise, return the landing page and pass it the employee ID which can be used as a key
+    if request.method=="GET":
+        return render_template("landing.html", current_emp_id=request.args.get('current_employee_id'))
+
 @webapp.route('/products', methods=['GET', 'POST'])
 @login_required
 def products():
     """The webapp's page for viewing an employee's currently assigned products to assemble and QC."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
         return redirect(url_for("cim.templates.index"))
 
@@ -175,7 +198,7 @@ def inventory():
     """The webapp's page for viewing the inventory.
     This allows the employee to review existing stock and order new stock of standard and special components."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
         return redirect(url_for("cim.templates.index"))
 
@@ -188,7 +211,7 @@ def shipping():
     """The webapp's page for viewing the shipping status of work orders.
     This allows the employee to review existing work orders and see if they are ready to ship or not."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
         return redirect(url_for("cim.templates.index"))
 
@@ -201,7 +224,7 @@ def locations():
     """The webapp's page for viewing the locations at the various sites, 
     as well as which regular components, special components, and products are placed in which locations."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
         return redirect(url_for("cim.templates.index"))
 
@@ -215,7 +238,7 @@ def user_management():
     """The webapp's page for managing current users.
     This allows a manager to update information about current users."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
         return redirect(url_for("cim.templates.index"))
 
@@ -228,7 +251,7 @@ def user_management():
 def wo_details(wo_id=None):
     """The webapp's page takes wo_id and retirve the inforamtion from DB."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
     	return redirect(url_for("cim.templates.index"))
 
@@ -246,7 +269,7 @@ def wo_details(wo_id=None):
 def product_details(product_sn=None):
     """The webapp's page takes product_sn and retirve the inforamtion from DB."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
     	return redirect(url_for("cim.templates.index"))
 
@@ -263,7 +286,7 @@ def product_details(product_sn=None):
 def assembly():
     """The webapp's page retirve the inforamtion from DB for the Assembly process."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
     	return redirect(url_for("cim.templates.index"))
 
@@ -281,7 +304,7 @@ def assembly():
 def QC():
     """The webapp's page retirve the inforamtion from DB for the Assembly process."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
     	return redirect(url_for("cim.templates.index"))
 
