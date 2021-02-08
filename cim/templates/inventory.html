@@ -239,8 +239,12 @@
 						<td>{{regular_component.rc_quantity}}</td>
 						<td>
 							<ul>
-								{% for location in regular_component.rc_locations %}
-									<li>Site {{location.location_site_id}}, Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</li>
+								{% for site in sites %}
+									{% for location in regular_component.rc_locations %}
+										{% if site.site_id == location.location_site_id %}
+											<li>{{site.site_name}} / Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</li> 
+										{% endif %}
+									{% endfor %}
 								{% endfor %}
 							</ul>
 						</td>
