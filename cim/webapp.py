@@ -147,14 +147,14 @@ def login():
         user_email = user.employee_details['employee_email']
         user_id = user.employee_details['employee_id']
         user_site_id = user.employee_details['employee_site_id']
-        user_group = user.employee_details['employee_group']
+        user_group = user.employee_details['employee_group'].capitalize()
         flask_login.login_user(user)
         return redirect(url_for('landing', 
             user_first_name=user_first_name, 
             user_last_name=user_last_name, 
             user_email=user_email, 
             user_id=user_id, 
-            user_site_id=user_site_id, 
+            user_site_id=user_site_id,
             user_group=user_group
             ))
 
@@ -195,7 +195,8 @@ def landing():
             user_email=request.args.get('user_email'),
             user_id=request.args.get('user_id'),
             user_site_id=request.args.get('user_site_id'),
-            user_group=request.args.get('user_group')
+            user_group=request.args.get('user_group'),
+            sites = data.get_sites()
             )
 
 @webapp.route('/products', methods=['GET', 'POST'])
