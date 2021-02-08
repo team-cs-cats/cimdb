@@ -11,7 +11,7 @@
 <div class="intro-div">
     <h2>Locations of Components and Products</h2>
 	
-	<p> The following locations contain special/regular components or products, or are currently empty.</p>
+	<p> The following table lists storage locations at 2Fast4U production sites.</p>
 
 </div>
 
@@ -31,12 +31,6 @@
 			<input type="text" name="location_room_number" id="location_room_number" placeholder="Room Number">
 
 			<input type="text" name="location_shelf_number" id="location_shelf_number" placeholder="Shelf Number">
-
-			<input type="text" name="location_regular_components" id="location_regular_components" placeholder="Regular Components">
-
-			<input type="text" name="location_special_components" id="location_special_components" placeholder="Special Components">
-
-			<input type="text" name="location_products" id="location_products" placeholder="Products">
 		
 			<input type="button" class="btn-sm btn-primary" value="Filter" onclick=addData() >
 			<input type="button" class="btn-sm btn-primary" value="Clear Filters" onclick=clearFilters() >
@@ -49,73 +43,100 @@
 
 <!-- dummy content for demo --will be replaced -->
 <div id="results">
+	<div class="border p-1 pt-2" style="height: 65vh; overflow-y: scroll;">
 	<table class="table table-striped" >
 		<tr>
-			<th>Site ID</th>
 			<th>Location ID</th>
+			<th>2Fast4U Site Name</th>
 			<th>Room</th>
 			<th>Shelf</th>
-			<th>Regular Components</th>
-			<th>Special Components</th>
-			<th>Products</th>
-			<th>Empty</th>
+			<th>View Contents</th>
 			<th>Edit</th>
 			<th>Delete</th>
 		</tr>
 		{% for location in locations %}
 			<tr>
 				<td>
-					{{location.location_site_id}}
-				</td>
-				<td>
 					{{location.location_id}}
 				</td>
+
+				<td>
+					{% for site in sites %}{% if site.site_id == location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}
+				</td>
+				
 				<td>
 					{{location.location_room_number}}
 				</td>
 				<td>
 					{{location.location_shelf_number}}
 				</td>
+
+				<!-- Button trigger modal -->
 				<td>
-					<ul>
-						{% for regular_component in regular_components %}
-							{% for regular_component_location in regular_component.rc_locations %}
-								{% if regular_component_location.location_id == location.location_id %}
-									<li>{{regular_component.rc_category}}: {{regular_component_location.quantity_at_location}} EA</li>
-								{% endif %}
-							{% endfor %}
-						{% endfor %}
-					</ul>
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>
 				</td>
-				<td>
-					<ul>
-						{% for special_component in special_components  %}
-							{% if special_component.sc_location.location_id == location.location_id %}
-								<li>{{special_component.sc_sn}}</li>
-							{% endif %}
-						{% endfor %}
-					</ul>
-				</td>
-				<td>
-					<ul>
-						{% for product in products %}
-							{% if product.product_location_id == location.location_id  %}
-								<li>{{product.product_sn}}</li>
-							{% endif %}
-						{% endfor %}
-					</ul>
-				</td>
-				<th><button class="btn-sm btn-success">Empty</button></th>
-				<th><button class="btn-sm btn-success">Edit</button></th>
+				<th><button class="btn-sm btn-warning">Edit</button></th>
 				<td><button class="btn-sm btn-danger">Delete</button></td>
 			</tr>
 		{% endfor %}
 		
 	</table>
-	
+	</div>
 </div>
 
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<ul>
+      		{% for regular_component in regular_components %}
+      		{% for regular_component_location in regular_component.rc_locations %}
+      		{% if regular_component_location.location_id == location.location_id %}
+      		<li>{{regular_component.rc_category}}: {{regular_component_location.quantity_at_location}} EA</li>
+      		{% endif %}
+      		{% endfor %}
+      		{% endfor %}
+      	</ul>
+      </td>
+      <td>
+      	<ul>
+      		{% for special_component in special_components  %}
+      		{% if special_component.sc_location.location_id == location.location_id %}
+      		<li>{{special_component.sc_sn}}</li>
+      		{% endif %}
+      		{% endfor %}
+      	</ul>
+      </td>
+      <td>
+      	<ul>
+      		{% for product in products %}
+      		{% if product.product_location_id == location.location_id  %}
+      		<li>{{product.product_sn}}</li>
+      		{% endif %}
+      		{% endfor %}
+      	</ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static',filename='js/locations.js') }}"></script>
 {% endblock%}
+
+
 
 
