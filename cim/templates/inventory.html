@@ -110,7 +110,7 @@
 
     <div class="col-2 text-center">
       <!-- Special Components Add -->
-      <div class="text-center"><h6>Order Special Components</h6></div>
+      <div class="text-center"><h6>Order New Special Components</h6></div>
 
 		<div id="data-entry-div">	
 
@@ -119,7 +119,7 @@
 				<div class="form-group row">
 					<div class="inner-div">
 						<label for="new_sc_pn">New Part Number: </label>
-						<input type="number" name="new_sc_pn" id="new_sc_pn" min="10000" max="99998" placeholder="12345">
+						<input type="number" name="new_sc_pn" id="new_sc_pn" min="10000" max="99998" placeholder="12345" required>
 					</div>
 				</div>
 
@@ -137,7 +137,7 @@
 				<div class="form-group row">
 					<div class="inner-div">
 						<label for="new_sc_quantity">Order Quantity: </label>
-						<input type="number" name="new_sc_quantity" id="new_sc_quantity" min="1" max="50" placeholder="17">
+						<input type="number" name="new_sc_quantity" id="new_sc_quantity" min="1" max="50" placeholder="17" required>
 					</div>
 				</div>
 
@@ -153,7 +153,7 @@
 				</div>
 
 				<div class="inner-div">
-					<input type="button" class="btn-sm btn-success" value="Order Special Components" onclick=addData() >
+					<input type="button" class="btn-sm btn-success" value="Order New Special Components" onclick=addData() >
 				</div>
 
 				<div class="text-justify">Note that all ordered components will be placed in the Receiving Department (Room 0, Shelf 0) at the selected site.</div>
@@ -331,7 +331,7 @@
 
 				<div class="form-group row">
 					<div class="inner-div">
-					<input type="button" class="btn-sm btn-success" value="Order Regular Components" onclick=addData() >
+					<input type="button" class="btn-sm btn-success" value="Order New Regular Components" onclick=addData() >
 					</div>
 				</div>
 
