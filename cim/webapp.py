@@ -60,27 +60,27 @@ def user_loader(email):
     user.id = email
     return user
 
-# # Associate a logged in user with the current session
-# @login_manager.request_loader
-# def request_loader(request):
+# Associate a logged in user with the current session
+@login_manager.request_loader
+def request_loader(request):
 
-# 	# obtain the current email
-#     email = request.form.get('email')
+	# obtain the current email
+    email = request.form.get('email')
 
-#     # if the current email isn't on the list of allowed users, return nothing
-#     if email not in users:
-#         return
+    # if the current email isn't on the list of allowed users, return nothing
+    if email not in users:
+        return
 
-#     # if the user email is allowed, set it as the id of the current user
-#     user = User()
-#     user.id = email
-#     user.is_authenticated = request.form['password'] == users[email]['password']
-#     return user
+    # if the user email is allowed, set it as the id of the current user
+    user = User()
+    user.id = email
+    user.is_authenticated = request.form['password'] == users[email]['password']
+    return user
 
-# # Add an association for any unauthorized session logins.
-# @login_manager.unauthorized_handler
-# def unauthorized_handler():
-#     return 'Unauthorized'
+# Add an association for any unauthorized session logins.
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+    return 'Unauthorized'
 
 
 
@@ -149,6 +149,7 @@ def login():
         user_site_id = user.employee_details['employee_site_id']
         user_group = user.employee_details['employee_group'].capitalize()
         flask_login.login_user(user)
+        session['user_first_name'] = user_first_name
         return redirect(url_for('landing', 
             user_first_name=user_first_name, 
             user_last_name=user_last_name, 
