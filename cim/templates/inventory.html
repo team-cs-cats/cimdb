@@ -171,6 +171,7 @@
 <div class="">
 	<div class="text-center"><h4>Inventory - Regular Components</h4></div>
 	<div class='text-center'><h6>Regular components do not have unique serial numbers and can be stored in multiple locations at each site.</h6></div>
+	<div class='text-center'><p>Note that new orders of existing components will be placed in the Receiving Department (Room 0, Shelf 0) of the selected site.</p></div>
 <div class="row">
   	
 
@@ -246,14 +247,46 @@
 
         	{% for regular_component in regular_components %}
         	<div class="row">
-  				<div class="col text-center"> Part Number: <strong>{{regular_component.rc_pn}}</strong> - Category: <strong>{{regular_component.rc_category}}</strong></div>
-  				<div class="col-8 float-right">
-  					<button class="btn-sm btn-success">Order More of Component {{regular_component.rc_pn}}</button>
-  					<button class="btn-sm btn-warning">Edit Details for Component {{regular_component.rc_pn}}</button> 
-  					<button class="btn-sm btn-danger">Delete All Component {{regular_component.rc_pn}}</button>
+  				<div class="col text-center border-top"> 
+  					Part Number: <strong>{{regular_component.rc_pn}}</strong> - Category: <strong>{{regular_component.rc_category}}</strong>
   				</div>
+
   			</div>
 
+			<div class="row">
+
+				<div class="col d-flex flex-row">
+					<p class="mt-2">Order more of component {{regular_component.rc_pn}}: </p>
+					<div>
+							<select class="custom-select mt-2 pl-2" id="new_rc_site" required>
+							<option selected>Select Site: </option>
+							{% for site in sites %}
+							<option>{{site.site_name}}</option>
+							{% endfor %}
+							</select>
+						</div>
+
+						<div >
+							<select class="custom-select mt-2" id="new_rc_site" required>
+							<option selected>Select Quantity: </option>
+							<option>10</option>
+							<option>25</option>
+							<option>50</option>
+							<option>100</option>
+							</select>
+						</div>
+
+						<div><button class="btn-sm btn-info m-1">Order More</button></div>
+				</div>
+
+				<div class="col d-flex flex-row-reverse"> 
+  					<button class="btn-sm btn-danger">Delete All Component {{regular_component.rc_pn}}</button>
+					<button class="btn-sm btn-warning">Edit Details for Component {{regular_component.rc_pn}}</button>
+				</div>
+  			</div>
+
+  			<div class="row">
+  				
 			<table class="table table-striped">
 				<tr>
 					<th>Site</th>
@@ -274,6 +307,10 @@
 				</tr>
 				{% endfor %}
 			</table>
+
+  			</div>
+
+			
 			{% endfor %}
 
 			</div>
