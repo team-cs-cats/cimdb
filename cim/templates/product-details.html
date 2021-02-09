@@ -8,11 +8,51 @@
 {% block body %} 
 
 <div class='intro-div'>
-	<h2>Product details</h2>
-	
-	<h6>Family: <i>Baic</i> </h6>
-	<h6>PN: <i>Baic-i3</i> </h6>
-	<h6>SN: <i>P1000</i> </h6>
+	<div class="two-column">
+		<div class="information">
+			<h2>Manage Product Components Details</h2>
+			<h5 class="access-level">This page requires supervisor-level access permission for edit details</h5>
+			<h5 class="access-level">Employee-level access can only review data</h5>
+			<p>Manage(View, Add , Edit and Delete) components in a product</p>
+			<button type="button" class="btn btn-light">Back to products list</button>
+		</div>
+
+		<div class="process-overview">
+			<p>Workorder Process Overview</p>
+			<ul class="list-group">
+				<li class="list-group-item " >1. Workorder</li>
+				<li class="list-group-item ">2. Products list</li>
+				<li class="list-group-item active" aria-current="true">3. Components list</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class='intro-div'>
+	<div class="two-column">
+		<div class="information">
+			<h3>Product Details</h3>
+			
+			<h6>Family: <i>Baic</i> </h6>
+			<h6>PN: <i>Baic-i3</i> </h6>
+			<h6>SN: <i>P1000</i> </h6>
+		</div>
+
+		<div class="information">
+			<h3>Open another Product</h3>
+			<p>Open another product component list using the below form</p>
+
+			<div class="inner-div">
+				<label for="wo_id">product Serial Number:</label>
+				<input type="text" name="product_sn" id="product_sn" placeholder="product_sn">
+
+				<input type="button" class="btn btn-success" value="Refresh">
+								
+			</div>
+						
+		</div>
+
+	</div>
 </div>
 
 

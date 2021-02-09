@@ -8,10 +8,28 @@
 {% block body %} 
 
 <!-- add new form -->
-<div id="data-entry-div">
-	<h3>New Work Order</h3>
-	<p>Add new Workorder using the form below:</p>
+<div class='intro-div'>
+	<div class="two-column">
+		<div class="information">
+			<h3>Manage Work Orders</h3>
+			<h5 class="access-level">This page requires supervisor-level access permission</h5>
+			<p>Manage existing work orders or make a new one and assign it to an employee</p>
+		</div>
 
+		<div class="process-overview">
+			<p>Workorder Process Overview</p>
+			<ul class="list-group">
+				<li class="list-group-item active" aria-current="true">1. Workorder</li>
+				<li class="list-group-item">2. Products list</li>
+				<li class="list-group-item">3. Components list</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div id="data-entry-div">
+	<h3>Approve and Assign a New Work Order:</h3>
+	
 	<form id="wo-data-entry" action="">
 
 		<div class="inner-div">
@@ -23,7 +41,7 @@
 		</div>
 
 		<div class="inner-div">
-			<input type="button" class="btn btn-success" value="Add New" onclick=addData() >
+			<input type="button" class="btn btn-success" value="Assign and Add" onclick=addData() >
 		</div>	
 
 	</form>
@@ -31,18 +49,19 @@
 
 
 <div id="data-filtering">
-	<h3>Filter the data:</h3>
+	<h3>Filter Approved Work Orders</h3>
+	<p>Filter the the approved work orders using the form below:</p>
 
 	<form id="wo-data-filter" action="">
 
 		<div class="inner-div">
-			<label for="wo_id">wo_id:</label>
+			<label for="wo_id">Workorder ID:</label>
 			<input type="text" name="wo_id" id="wo_id" placeholder="wo_id">
 			
-			<label for="wo_open_date">wo_open_date: </label>
+			<label for="wo_open_date">Workorder Open Date: </label>
 			<input type="date" name="wo_open_date" id="wo_open_date">
 
-			<label for="wo_close_date">wo_close_date: </label>
+			<label for="wo_close_date">Workorder Close Date: </label>
 			<input type="date" name="wo_close_date" id="wo_close_date">
 		</div>
 		
@@ -53,13 +72,16 @@
 			
 			<label for="wo_status">status</label>
 			<select name="wo_status" id="wo_status">
-				<option value="0">open</option>
-				<option value="0">closed</option>
+				<option value="0">Pending_Assembly</option>
+				<option value="1">Pending_QC</option>
+				<option value="2">Pending_Shipping</option>
+				<option value="3">Completed</option>
 			</select>
 		</div>
 	
 		<div class="inner-div">
 			<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
+			<input type="button" class="btn btn-primary" value="Clear Filters" onclick=clear() >
 		</div>
 	</form>
 </div>
@@ -70,12 +92,12 @@
 <div id="results">
 	<table class="table table-striped" >
 		<tr>
-			<th>wo_id</th>
-			<th>wo_open_date</th>
-			<th>wo_close_date</th>
-			<th>wo_status</th>
-			<th>wo_employee_id</th>
-			<th>wo_refrence_number</th>
+			<th>ID</th>
+			<th>Open Date</th>
+			<th>Close Date</th>
+			<th>Status</th>
+			<th>Employee</th>
+			<th>Refrence Number</th>
 			<th>Products</th>
 			<th>Edit</th>
 			<th>Delete</th>
@@ -87,7 +109,7 @@
 			<td>open</td>
 			<td>60</td>
 			<td>null</td>
-			<td><button class="btn btn-info"><a href="\wo-details">2(demo)</a></button></td>
+			<td><button class="btn btn-secondary"><a href="\wo-details">2(demo)</a></button></td>
 			<td><button class="btn btn-warning">Edit</button></td>
 			<td><button class="btn btn-danger">Delete</button></td>
 		</tr>
@@ -98,7 +120,7 @@
 			<td>closed</td>
 			<td>50</td>
 			<td>H45g</td>
-			<td><button class="btn btn-info">3</button></td>
+			<td><button class="btn btn-secondary">3</button></td>
 			<td><button class="btn btn-warning">Edit</button></td>
 			<td><button class="btn btn-danger">Delete</button></td>
 		</tr>
@@ -109,7 +131,7 @@
 			<td>open</td>
 			<td>20</td>
 			<td>N8965</td>
-			<td><button class="btn btn-info">6</button></td>
+			<td><button class="btn btn-secondary">6</button></td>
 			<td><button class="btn btn-warning">Edit</button></td>
 			<td><button class="btn btn-danger">Delete</button></td>
 		</tr>

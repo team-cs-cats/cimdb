@@ -29,6 +29,14 @@
   align-items: center;
 }
 
+.two-column{
+  display: flex;
+  justify-content: space-between;
+  margin-right: 9em;
+
+}
+
+
 .inner-div{
   margin: 0.5em;
 }
@@ -37,3 +45,6 @@
   text-align: justify;
 }
 
+.access-level{
+  color: red;
+}

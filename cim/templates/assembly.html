@@ -9,23 +9,41 @@
 
 <!-- add new form -->
 <div class="intro-div">
-    <h2>Assembly line</h2>
-	
-	<p> The items below are assiagned for you for the assembly.</p>
+	<div class="two-column">
+			<div class="information">
+				<h2>Assembly Line</h2>
+				<p> The items below are assiagned to you for assembly by your supervisor.</p>
+				<p> The componenets inforamtion can be reviwed , using the <b>Details</b> button.</p>
+				<p> One the product is assembled, update the status using <b>Send to QC</b> button.</p>
+				<p> The inventory information will be updated automatically upon a product assembly.</p>
+				<p> You can order componnets from Inventory Tab in the Navbar above.</p>
+				<p> In the case of any problems , notify the supervisor by <b>Report</b> button.</p>
+			</div>
 
+			<div class="process-overview">
+				<p>Product Assembly Process Overview</p>
+				<ul class="list-group">
+					<li class="list-group-item active" aria-current="true">1. Assembly</li>
+					<li class="list-group-item">2. QC</li>
+					<li class="list-group-item">3.Shipping</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>
 
 
 <div id="data-filtering">
-	<h3>Filter the data:</h3>
+	<h3>Filter Products</h3>
+	<p>The list can be filtered using the form below:</p>
 
 	<form id="assembly-data-filter" action="">
 
 		<div class="inner-div">
-			<label for="wo_id">wo_id:</label>
+			<label for="wo_id">Workorder ID:</label>
 			<input type="text" name="wo_id" id="wo_id" placeholder="wo_id">
 			
-			<label for="wo_open_date">wo_open_date: </label>
+			<label for="wo_open_date">Workorder Open Date: </label>
 			<input type="date" name="wo_open_date" id="wo_open_date">
 		
         </div>
@@ -54,6 +72,7 @@
 				
 		<div class="inner-div">
 			<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
+			<input type="button" class="btn btn-primary" value="Clear Filters" onclick=clear() >
 		</div>
 	</form>
 </div>
@@ -70,8 +89,8 @@
 			<th>product family</th>
 			<th>product PN</th>
 			<th>Details</th>
-			<th>Assembled</th>
-			<th>Report</th>
+			<th>Assembled?</th>
+			<th>Problem?</th>
 		</tr>
 		<tr>
 			<td>1</td>
@@ -79,9 +98,9 @@
 			<td>P1000</td>
 			<td>Basic</td>
 			<td>Basic-i3</td>
-			<td><button class="btn btn-info"><a href="\product-details">Details(demo)</a></td>
-			<th><button class="btn btn-success">Assembled</button></th>
-			<td><button class="btn btn-danger">Report</button></td>
+			<td><button class="btn btn-secondary"><a href="\product-details">Details(demo)</a></td>
+			<th><button class="btn btn-info">send to QC</button></th>
+			<td><button class="btn btn-dark">Report</button></td>
 		</tr>
 		<tr>
 			<td>1</td>
@@ -89,9 +108,9 @@
 			<td>P2000</td>
 			<td>Pro</td>
 			<td>Pro-i7</td>
-			<td><button class="btn btn-info">Details</td>
-			<th><button class="btn btn-success">Assembled</button></th>
-			<td><button class="btn btn-danger">Report</button></td>
+			<td><button class="btn btn-secondary">Details</td>
+			<th><button class="btn btn-info">send to QC</button></th>
+			<td><button class="btn btn-dark">Report</button></td>
 		</tr>
 		<tr>
 			<td>3</td>
@@ -99,9 +118,9 @@
 			<td>P1265</td>
 			<td>Pro</td>
 			<td>Pro-i5</td>
-			<td><button class="btn btn-info">Details</td>
-			<th><button class="btn btn-success">Assembled</button></th>
-			<td><button class="btn btn-danger">Report</button></td>
+			<td><button class="btn btn-secondary">Details</td>
+			<th><button class="btn btn-info">send to QC</button></th>
+			<td><button class="btn btn-dark">Report</button></td>
 		</tr>
 		
 	</table>

@@ -9,26 +9,42 @@
 
 <!-- add new form -->
 <div class="intro-div">
-    <h2>QC line</h2>
-	
-	<p> The items below are assiagned for you for QC.</p>
+	<div class="two-column">
+			<div class="information">
+				<h2>QC Line</h2>
+				<p> The Products below are assembled and ready for QC.</p>
+				<p> The componenets inforamtion can be reviwed , using the <b>Details</b> button.</p>
+				<p> If the product passed QC, update the status using <b>Send to Shipping</b> button.</p>
+				<p> The inventory information will be updated automatically.</p>
+				<p> In the case of any problems , notify the supervisor by <b>Report</b> button.</p>
+			</div>
 
+			<div class="process-overview">
+				<p>Product Assembly Process Overview</p>
+				<ul class="list-group">
+					<li class="list-group-item">1. Assembly</li>
+					<li class="list-group-item active" aria-current="true">2. QC</li>
+					<li class="list-group-item">3.Shipping</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>
 
-
 <div id="data-filtering">
-	<h3>Filter the data:</h3>
+	<h3>Filter Products</h3>
+	<p>The list can be filtered using the form below:</p>
 
 	<form id="assembly-data-filter" action="">
 
 		<div class="inner-div">
-			<label for="wo_id">wo_id:</label>
+			<label for="wo_id">Workorder ID:</label>
 			<input type="text" name="wo_id" id="wo_id" placeholder="wo_id">
 			
-			<label for="wo_open_date">wo_open_date: </label>
+			<label for="wo_open_date">Workorder Open Date: </label>
             <input type="date" name="wo_open_date" id="wo_open_date">
             
-            <label for="product_assembly_date">Assembly Date</label>
+            <label for="product_assembly_date">Assembly Date:</label>
 			<input type="date" name="product_assembly_date" id="product_assembly_date">
 		
         </div>
@@ -74,7 +90,7 @@
             <th>product PN</th>
             <th>Assembly Date</th>
 			<th>Details</th>
-			<th>QC</th>
+			<th>Passed QC?</th>
 			<th>Report</th>
 		</tr>
 		<tr>
@@ -84,9 +100,9 @@
 			<td>Basic</td>
             <td>Basic-i5</td>
             <td>2020-01-21</td>
-			<td><button class="btn btn-info"><a href="\product-details">Details(demo)</a></td>
-			<th><button class="btn btn-success">Passed</button></th>
-			<td><button class="btn btn-danger">Report</button></td>
+			<td><button class="btn btn-secondary"><a href="\product-details">Details(demo)</a></td>
+			<th><button class="btn btn-info">Send to Shipping</button></th>
+			<td><button class="btn btn-dark">Report</button></td>
 		</tr>
 		<tr>
 			<td>5</td>
@@ -95,9 +111,9 @@
 			<td>Pro</td>
             <td>Pro-i5</td>
             <td>2020-12-21</td>          
-            <td><button class="btn btn-info">Details</td>
-			<th><button class="btn btn-success">Passed</button></th>
-			<td><button class="btn btn-danger">Report</button></td>
+            <td><button class="btn btn-secondary">Details</td>
+			<th><button class="btn btn-info">Send to Shipping</button></th>
+			<td><button class="btn btn-dark">Report</button></td>
 		</tr>
 		<tr>
 			<td>8</td>
@@ -106,9 +122,9 @@
 			<td>Pro</td>
             <td>Pro-i3</td>
             <td>2021-01-30</td>
-			<td><button class="btn btn-info">Details</td>
-			<th><button class="btn btn-success">Passed</button></th>
-			<td><button class="btn btn-danger">Report</button></td>
+			<td><button class="btn btn-secondary">Details</td>
+			<th><button class="btn btn-info">Send to Shipping</button></th>
+			<td><button class="btn btn-dark">Report</button></td>
 		</tr>
 		
 	</table>
