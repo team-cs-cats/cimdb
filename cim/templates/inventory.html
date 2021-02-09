@@ -13,6 +13,7 @@
 <div class="w-100">
 	<div class='text-center'><h4>Inventory - Special Components</h4></div>
 	<div class='text-center'><h6>Each special component has a unique serial number and can only be stored in a single location at a single site.</h6></div>
+	<div class='text-center'><h6>Special comopnents are considered 'free' if they have not yet been asssigned to be assembled into a particular product.</h6></div>
   <div class="row">
 
     <div class="col-2 text-center">
@@ -52,11 +53,6 @@
 					<input type="text" name="sc_shelf" id="sc_shelf" placeholder="Shelf: 99">
 				</div>
 			</div>
-
-			<div class="form-row text-center">
-				<label for="sc_is_free">Is Free: </label> <input type="checkbox" name="sc_is_free" id="sc_is_free">
-
-			</div>
 		
 			<div class="inner-div">
 				<input type="button" class="btn-sm btn-primary" value="Filter" onclick=addData() >
@@ -82,7 +78,7 @@
 						<th>Part Number</th>
 						<th>Is Free</th>
 						<th>Site / Location</th>
-						<th>Edit Component Details</th>
+						<th>Edit Details</th>
 						<th>Delete</th>
 						</tr>
 						{% for special_component in special_components %}
@@ -251,8 +247,8 @@
 					<th>Site</th>
 					<th>Location</th>
 					<th>Quantity</th>
-					<th>Edit</th>
-					<th>Delete</th>
+					<th>Edit Quantity</th>
+					<th>Delete from Location</th>
 				</tr>
 				{% for location in regular_component.rc_locations %}
 				<tr>
