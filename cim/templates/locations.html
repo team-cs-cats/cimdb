@@ -10,20 +10,48 @@
 
 <!-- add new form -->
 <div class="intro-div">
-    <h2>Room/Shelf Locations at 2Fast4U sites</h2>
+    <h2>Room/Shelf Storage Locations at 2Fast4U Sites</h2>
 	
-	<p> The following table lists storage locations at 2Fast4U production sites.</p>
+	<p>Each 2Fast4U site has many rooms containing shelves used for storing components and products. </p>
+	<p>Each unique Room/Shelf combination is represented as a unique location ID. The following table lists storage locations at 2Fast4U production sites.</p> 
 
 </div>
 
-
-<div id="data-filtering">
+<div id="data-add" class="border">
 
 	<form id="assembly-data-filter" action="">
 
 		<div class="inner-div text-center">
 
-			<label>Filter location information: </label>
+			<label>Add new location to site: </label>
+
+			<select class="custom-select" id="new_site" required>
+							<option selected>Select Site: </option>
+							{% for site in sites %}
+						    	<option>{{site.site_name}}</option>
+						    {% endfor %}
+						</select>
+
+			<input type="text" name="new_location_room_number" id="location_room_number" placeholder="Room Number">
+
+			<input type="text" name="new_location_shelf_number" id="location_shelf_number" placeholder="Shelf Number">
+		
+			<input type="button" class="btn-sm btn-success" value="Add New Location" onclick=addData() >
+		</div>
+
+		<div class="inner-div text-center">Each new location will automatically be assigned a location ID upon creation.</div>
+        
+	</form>
+</div>
+
+
+<div id="data-filtering" class="mb-0">
+
+	<form id="assembly-data-filter" action="">
+
+		<div class="inner-div text-center">
+
+			<label>Filter existing location information: </label>
 
 			<input type="text" name="location_site_id" id="location_site_id" placeholder="Site ID">
 
@@ -33,8 +61,11 @@
 
 			<input type="text" name="location_shelf_number" id="location_shelf_number" placeholder="Shelf Number">
 		
-			<input type="button" class="btn-sm btn-primary" value="Filter" onclick=addData() >
+			<input type="button" class="btn-sm btn-primary" value="Filter" onclick=filterData() >
 			<input type="button" class="btn-sm btn-primary" value="Clear Filters" onclick=clearFilters() >
+
+			<div>For all sites, Receiving Department is Room 0, Shelf 0 and Shipping Department is Room 0, Shelf 1.</div>
+			<div>Please note that if a deleted location is storing products or components at the time of deletion, those products and components will be moved to the Receiving Department of that site.</div>
 		</div>
         
 	</form>
@@ -42,11 +73,13 @@
 
 
 
+
+
 <!-- dummy content for demo --will be replaced -->
 <div id="results">
-	<div class="border p-1 pt-2" style="height: 65vh; overflow-y: scroll;">
-	<table class="table table-striped" >
-		<tr>
+	<div class="border pl-1 pr-1 pb-1 mt-0" style="height: 65vh; overflow-y: scroll;">
+	<table class="table table-striped " >
+		<tr >
 			<th>Location ID</th>
 			<th>2Fast4U Site Name</th>
 			<th>Room</th>
