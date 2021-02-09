@@ -11,9 +11,9 @@
 
 
 <div class="w-100">
-	<div class='text-center'><h4>Inventory - Special Components</h4></div>
-	<div class='text-center'><h6>Each special component has a unique serial number and can only be stored in a single location at a single site.</h6></div>
-	<div class='text-center'><h6>Special comopnents are considered 'free' if they have not yet been asssigned to be assembled into a particular product.</h6></div>
+	<div class='text-center'><h4>Inventory - CPUs (Special Components)</h4></div>
+	<div class='text-center'><h6>Each CPU is a special component with a unique serial number, and can only be stored in a single location at a single site.</h6></div>
+	<div class='text-center'><h6>A special component is considered 'free' if it has not yet been assigned to be assembled into a particular product.</h6></div>
   <div class="row">
 
     <div class="col-2 text-center">
@@ -26,32 +26,37 @@
 
 			<div class="form-row">
 				<div class="col-sm">
-					<input type="text" name="sc_sn" id="sc_sn" placeholder="Serial Number">
+					<input type="number" name="sc_sn" id="sc_sn" placeholder="Serial Number">
 				</div>
 			</div>
 
 			<div class="form-row">
 				<div class="col-sm">
-					<input type="text" name="sc_pn" id="sc_pn" placeholder="Part Number">
+					<input type="number" name="sc_pn" id="sc_pn" placeholder="Part Number">
+				</div>
+			</div>
+
+			<select class="custom-select" id="new_site" required>
+							<option selected>Select Site: </option>
+							{% for site in sites %}
+						    	<option>{{site.site_name}}</option>
+						    {% endfor %}
+						</select>
+
+			<div class="form-row">
+				<div class="col-sm">
+					<input type="number" name="sc_room" id="sc_room" placeholder="Room: 99">
 				</div>
 			</div>
 
 			<div class="form-row">
 				<div class="col-sm">
-					<input type="text" name="sc_site" id="sc_site" placeholder="Site: 99">
+					<input type="number" name="sc_shelf" id="sc_shelf" placeholder="Shelf: 99">
 				</div>
 			</div>
 
-			<div class="form-row">
-				<div class="col-sm">
-					<input type="text" name="sc_room" id="sc_room" placeholder="Room: 99">
-				</div>
-			</div>
-
-			<div class="form-row">
-				<div class="col-sm">
-					<input type="text" name="sc_shelf" id="sc_shelf" placeholder="Shelf: 99">
-				</div>
+			<div class="form-row text-center">
+				<label for="sc_is_free">Is Free: </label> <input type="checkbox" name="sc_is_free" id="sc_is_free">
 			</div>
 		
 			<div class="inner-div">
@@ -151,6 +156,8 @@
 					<input type="button" class="btn-sm btn-success" value="Order Special Components" onclick=addData() >
 				</div>
 
+				<div class="text-justify">Note that all ordered components will be placed in the Receiving Department (Room 0, Shelf 0) at the selected site.</div>
+
 			</form>
 
     	</div>
@@ -177,7 +184,7 @@
 
 			<div class="form-row">
 				<div class="col-sm">
-					<select class="custom-select" id="rc_category">
+					<select class="custom-select" id="rc_category" required>
 						<option selected>Select Category</option>
 					    <option>Case</option>
 					    <option>Graphics Card (GC)</option>
@@ -190,25 +197,30 @@
 
 			<div class="form-row">
 				<div class="col-sm">
-					<input type="text" name="rc_pn" id="rc_pn" placeholder="Part Number">
+					<input type="number" name="rc_pn" id="rc_pn" placeholder="Part Number">
+				</div>
+			</div>
+
+			<div class="form-row">
+					<div class="col-sm">
+						<select class="custom-select" id="select_sc_site" required>
+							<option selected>Select Site: </option>
+							{% for site in sites %}
+						    	<option>{{site.site_name}}</option>
+						    {% endfor %}
+						</select>
+					</div>
+				</div>
+
+			<div class="form-row">
+				<div class="col-sm">
+					<input type="number" name="sc_room" id="sc_room" placeholder="Room: 99">
 				</div>
 			</div>
 
 			<div class="form-row">
 				<div class="col-sm">
-					<input type="text" name="sc_site" id="sc_site" placeholder="Site: 99">
-				</div>
-			</div>
-
-			<div class="form-row">
-				<div class="col-sm">
-					<input type="text" name="sc_room" id="sc_room" placeholder="Room: 99">
-				</div>
-			</div>
-
-			<div class="form-row">
-				<div class="col-sm">
-					<input type="text" name="sc_shelf" id="sc_shelf" placeholder="Shelf: 99">
+					<input type="number" name="sc_shelf" id="sc_shelf" placeholder="Shelf: 99">
 				</div>
 			</div>
 
@@ -322,6 +334,8 @@
 					<input type="button" class="btn-sm btn-success" value="Order Regular Components" onclick=addData() >
 					</div>
 				</div>
+
+				<div class="text-justify">Note that all ordered components will be placed in the Receiving Department (Room 0, Shelf 0) at the selected site.</div>
 			</form>
 
     	</div>
