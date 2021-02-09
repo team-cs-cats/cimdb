@@ -12,6 +12,7 @@
 
 <div class="w-100">
 	<div class='text-center'><h4>Inventory - Special Components</h4></div>
+	<div class='text-center'><h6>Each special component has a unique serial number and can only be stored in a single location at a single site.</h6></div>
   <div class="row">
 
     <div class="col-2 text-center">
@@ -61,6 +62,8 @@
 				<input type="button" class="btn-sm btn-primary" value="Filter" onclick=addData() >
 				<input type="button" class="btn-sm btn-primary" value="Clear Filters" onclick=clearFilters() >
 			</div>
+
+			<div class='text-center'><h6>Note that each location can store multiple special components, each with a unique serial number.</h6></div>
 		</form>
 	</div>
 
@@ -164,6 +167,7 @@
 
 <div class="">
 	<div class="text-center"><h4>Inventory - Regular Components</h4></div>
+	<div class='text-center'><h6>Regular components do not have unique serial numbers and can be stored in multiple locations at each site.</h6></div>
 <div class="row">
   	
 
@@ -217,8 +221,12 @@
 				<input type="button" class="btn-sm btn-primary" value="Filter" onclick=addData() >
 				<input type="button" class="btn-sm btn-primary" value="Clear Filters" onclick=clearFilters() >
 			</div>
+
+			<div class='text-center'><h6>Note that each location can store multiple regular components regardless of category or part number.</h6></div>
 		</form>
 	</div>
+
+
     </div>
 
     <div class="col-8">
