@@ -15,16 +15,57 @@
 
 <div class="content">
 	
-    <h1>Welcome to the 2Fast4U Computer Inventory Management Database!</h1>
+    <h1 class="text-center">Welcome to the 2Fast4U Computer Inventory Management Database!</h1>
 
-    <p>2Fast4U Computers assembles and sells $2 million in PCs annually (on average 1,500 PCs assembled per year). The Computer Inventory and Manufacturing (CIM) web app helps manage our inventory, assembly, and quality control (QC) process. All 2Fast4U Employees at our production Sites have access to the database. Employees are assigned Work Orders, which list Products to assemble using Regular Components (which are available in large quantities like MotherBoard, RAM, etc.) and Special Components (CPUs, which must be tracked using unique serial numbers). Regular Components and Special Components are stored in Locations at any particular Site until they are used to assemble Products. Once each Product has been assembled and QC’d, the Work Order can be closed.</p>
+    <div class="card">
 
-    <p>Please sign in to continue.</p>
-	<form action='login' method='POST'>
-		<input type='text' name='email' id='email' placeholder='email' value='klepard1@2fast4you.com'/>
-		<input type='password' name='password' id='password' placeholder='password' value='L32nLN0'/>
-		<input type='submit' name='submit'/>
-	</form>
+    <div class="card-body">
+
+    	<div class="container">
+		  <div class="row">
+		    <div class="col text-justify">
+
+		    	<p class='text-justify'>2Fast4U Computers is proud to assemble and sell $2 million in PCs annually (on average 1,500 PCs assembled per year!). The Computer Inventory and Manufacturing (CIM) web app helps us manage our inventory, assembly, and quality control (QC) process.</p>
+
+		    	<p class='text-justify'>All 2Fast4U Employees at our production Sites have access to this database. Employees are assigned Work Orders, which list Products to assemble using Regular Components (which are available in large quantities like MotherBoard, RAM, etc.) and Special Components (CPUs, which must be tracked using unique serial numbers). Regular Components and Special Components are stored in Locations at any particular Site until they are used to assemble Products. Once each Product has been assembled and QC’d, the Work Order can be closed.</p>
+
+		    </div>
+		    <div class="col m-3">
+
+    		    <p>Please sign in to continue.</p>
+
+			    <div class='align-center'>
+			    	<form action='login' method='POST'>
+			    		<div class="row">
+			    			<div class="col">
+			    				<label for="exampleInputEmail1">2Fast4U Email</label>
+			    				<input type="email" class="form-control" name='email' id='email' aria-describedby="emailHelp" placeholder="Enter email" value='klepard1@2fast4you.com'>
+			    			</div>
+			    			<div class="col">
+			    				<label for="exampleInputPassword1">Password</label>
+			    				<input type="password" class="form-control" name='password' id='password' placeholder="Password" value='L32nLN0'>
+			    			</div>
+			    		</div>
+			    		<div>
+			    			<small id="emailHelp" class="form-text text-muted m-2">If you have forgotten your password, please contact your supervisor for assistance.</small>
+			    		</div>
+			    		<button type="submit" name='submit' class="btn btn-primary m-2">Sign In</button>
+			    	</form>
+			    </div>
+
+		    </div>
+		  </div>
+		</div>
+
+
+
+
+
+	 
+
+	</div>
+
+	</div>
 
 </div>
 {% endblock %}
