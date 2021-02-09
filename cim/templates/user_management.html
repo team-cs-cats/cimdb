@@ -21,7 +21,7 @@
 	  	<!-- User Filtering -->
 	    <div class="col-4">
 	      
-				<div class='text-center'><h6>Filter Current Users and Sites </h6></div>
+				<div class='text-center'><h6>Filter Current Employees and Sites </h6></div>
 	    	<div id="data-filtering">
 
 				<form id="sc-data-filter" class="form-horizontal" action="">
@@ -168,28 +168,43 @@
 	    	{% for site in sites %}
 
 	    		<div class="card" style="width: 60rem;">
-				  <div class="card-header">
-				    <b>Site {{site.site_id}}</b>: {{site.site_address}}
-				  </div>
+				  
+	    			<div class="card-header border">
+				  <div class="row">
+				  	
+		  				<div class="col"> 
+		  					
+							    <b>Site {{site.site_id}}</b>: {{site.site_address}}
+							  
+		  				</div>
+		  				<div class="col-2">
+		  					<button class="btn-sm btn-warning">Edit Site Details</button> 
+		  					
+		  				</div>
+		  				<div class="col-2">
+		  					<button class="btn-sm btn-danger">Delete Site</button>
+		  				</div>
+	  				</div>
+	  			</div>
 				  <ul class="list-group list-group-flush">
 				    <li class="list-group-item">
 
 				    	<div class="container">
 						  <div class="row">
-						    <div class="col-2">
+						    <div>
 						      Supervisor
 						    </div>
-						    <div class="col-8">
+						    <div class="col">
 
-						    	<table class="table" style="width: 30rem;">
+						    	<table class="table" >
 								  <thead>
 								    <tr>
 								      <th scope="col">First</th>
 								      <th scope="col">Last</th>
 								      <th scope="col">ID</th>
 								      <th scope="col">Email</th>
-								      <th scope="col">Edit</th>
-								      <th scope="col">Delete</th>
+								      <th scope="col">Edit Details</th>
+								      <th scope="col">Delete Employee</th>
 								    </tr>
 								  </thead>
 								  <tbody>
@@ -217,20 +232,20 @@
 
 				    	<div class="container">
 						  <div class="row">
-						    <div class="col-2">
+						    <div>
 						      Production Staff
 						    </div>
-						    <div class="col-8">
+						    <div class="col">
 
-						    	<table class="table" style="width: 30rem;">
+						    	<table class="table">
 								  <thead>
 								    <tr>
 								      <th scope="col">First</th>
 								      <th scope="col">Last</th>
 								      <th scope="col">ID</th>
 								      <th scope="col">Email</th>
-								      <th scope="col">Edit</th>
-								      <th scope="col">Delete</th>
+								      <th scope="col">Edit Details</th>
+								      <th scope="col">Delete Employee</th>
 								    </tr>
 								  </thead>
 								  <tbody>
