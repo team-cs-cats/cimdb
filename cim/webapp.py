@@ -27,16 +27,20 @@ login_manager = flask_login.LoginManager()
 login_manager.init_app(webapp)
 
 
-# Set up a mock set of user ids to use for our logins (this can be moved/replaced later)
-users = {
-	'ali@cimdb.com': {'password': '12345'},
-	'asa@cimdb.com': {'password': '54321'}
-}
 
 
 
 # Load dummy data for the webpages to reference
 data = DummyData()
+
+
+# Set up a mock set of user ids to use for our logins (this can be moved/replaced later)
+users = {}
+
+for employee in data.get_emp():
+    emp_email = employee["employee_email"]
+    emp_pass = employee["employee_password"]
+    users[emp_email] = {'password': emp_pass}
 
 
 # Create a basic user class
@@ -114,13 +118,46 @@ def login():
 
     # if the user attempts to login with info, check to see if their info is valid
     email = request.form['email']
+
+    if email not in users:
+        return redirect(url_for('index'))
+
     if request.form['password'] == users[email]['password']:
 
     	# If valid credentials, sign the user into the Work Orders page
         user = User()
         user.id = email
+
+        # determine the employee ID of the user email provided
+        employee_details = None
+        for employee_info in data.get_emp():
+            if employee_info['employee_email'] == email:
+                user.employee_details = employee_info
+
+                print('HERE', type(user.employee_details))
+                break
+
+        # if we couldn't find the details, redirect to the index
+        if user.employee_details is None:
+            return redirect(url_for('index'))
+
+        # otherwise use the id to save the employee details and render the landing page
+        user_first_name = user.employee_details['employee_first_name']
+        user_last_name = user.employee_details['employee_last_name']
+        user_email = user.employee_details['employee_email']
+        user_id = user.employee_details['employee_id']
+        user_site_id = user.employee_details['employee_site_id']
+        user_group = user.employee_details['employee_group'].capitalize()
         flask_login.login_user(user)
-        return redirect(url_for('workorders'))
+        session['user_first_name'] = user_first_name
+        return redirect(url_for('landing', 
+            user_first_name=user_first_name, 
+            user_last_name=user_last_name, 
+            user_email=user_email, 
+            user_id=user_id, 
+            user_site_id=user_site_id,
+            user_group=user_group
+            ))
 
     # If the user provided bad credentials, return them to the index page (TODO: flash error)
     return render_template("index.html")
@@ -138,7 +175,7 @@ def logout():
 def workorders():
     """The webapp's page for work orders, which allows reviewing and adding work orders."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
     	return redirect(url_for("cim.templates.index"))
 
@@ -146,12 +183,29 @@ def workorders():
     if request.method=="GET":
         return render_template("workorders.html")
 
+@webapp.route('/landing', methods=['GET', 'POST'])
+@login_required
+def landing():
+    """The webapp's logged in landing page, which allows an employee to access the internal links."""
+
+    # otherwise, return the landing page and pass it the employee ID which can be used as a key
+    if request.method=="GET":
+        return render_template("landing.html", 
+            user_first_name=request.args.get('user_first_name'),
+            user_last_name=request.args.get('user_last_name'),
+            user_email=request.args.get('user_email'),
+            user_id=request.args.get('user_id'),
+            user_site_id=request.args.get('user_site_id'),
+            user_group=request.args.get('user_group'),
+            sites = data.get_sites()
+            )
+
 @webapp.route('/products', methods=['GET', 'POST'])
 @login_required
 def products():
     """The webapp's page for viewing an employee's currently assigned products to assemble and QC."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
         return redirect(url_for("cim.templates.index"))
 
@@ -164,12 +218,12 @@ def inventory():
     """The webapp's page for viewing the inventory.
     This allows the employee to review existing stock and order new stock of standard and special components."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
         return redirect(url_for("cim.templates.index"))
 
     if request.method=="GET":
-        return render_template("inventory.html", regular_components=data.get_rc(), special_components=data.get_sc())
+        return render_template("inventory.html", regular_components=data.get_rc(), special_components=data.get_sc(), sites=data.get_sites())
 
 @webapp.route('/shipping', methods=['GET', 'POST'])
 @login_required
@@ -177,7 +231,7 @@ def shipping():
     """The webapp's page for viewing the shipping status of work orders.
     This allows the employee to review existing work orders and see if they are ready to ship or not."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
         return redirect(url_for("cim.templates.index"))
 
@@ -190,7 +244,7 @@ def locations():
     """The webapp's page for viewing the locations at the various sites, 
     as well as which regular components, special components, and products are placed in which locations."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
         return redirect(url_for("cim.templates.index"))
 
@@ -204,7 +258,7 @@ def user_management():
     """The webapp's page for managing current users.
     This allows a manager to update information about current users."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
         return redirect(url_for("cim.templates.index"))
 
@@ -217,7 +271,7 @@ def user_management():
 def wo_details(wo_id=None):
     """The webapp's page takes wo_id and retirve the inforamtion from DB."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
     	return redirect(url_for("cim.templates.index"))
 
@@ -235,7 +289,7 @@ def wo_details(wo_id=None):
 def product_details(product_sn=None):
     """The webapp's page takes product_sn and retirve the inforamtion from DB."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
     	return redirect(url_for("cim.templates.index"))
 
@@ -252,7 +306,7 @@ def product_details(product_sn=None):
 def assembly():
     """The webapp's page retirve the inforamtion from DB for the Assembly process."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
     	return redirect(url_for("cim.templates.index"))
 
@@ -270,7 +324,7 @@ def assembly():
 def QC():
     """The webapp's page retirve the inforamtion from DB for the Assembly process."""
 
-    # if the current user is not authenticated, redirect the user to the landing page
+    # if the current user is not authenticated, redirect the user to the logged out index page
     if not current_user.is_authenticated:
     	return redirect(url_for("cim.templates.index"))
 

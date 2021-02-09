@@ -7,74 +7,36 @@
 
 {% block body %} 
 
+
 <!-- add new form -->
 <div class="intro-div">
-    <h2>Locations of Components and Products</h2>
+    <h2>Room/Shelf Locations at 2Fast4U sites</h2>
 	
-	<p> The following locations contain special/regular components or products, or are currently empty.</p>
+	<p> The following table lists storage locations at 2Fast4U production sites.</p>
 
 </div>
 
 
 <div id="data-filtering">
-	<h3>Filter all Location Information:</h3>
 
 	<form id="assembly-data-filter" action="">
 
-		<div class="inner-div">
-			<label for="location_site_id">Site ID: </label>
-			<input type="text" name="location_site_id" id="location_site_id">
+		<div class="inner-div text-center">
 
-			<label for="location_id">Location ID: </label>
-			<input type="text" name="location_id" id="location_id" placeholder="12345">
+			<label>Filter location information: </label>
 
-			<label for="location_room_number">Room Number: </label>
-			<input type="text" name="location_room_number" id="location_room_number">
+			<input type="text" name="location_site_id" id="location_site_id" placeholder="Site ID">
 
-			<label for="location_shelf_number">Shelf Number: </label>
-			<input type="text" name="location_shelf_number" id="location_shelf_number">
+			<input type="text" name="location_id" id="location_id" placeholder="Location ID">
 
-			<label for="location_regular_components">Regular Components: </label>
-			<input type="text" name="location_regular_components" id="location_regular_components">
+			<input type="text" name="location_room_number" id="location_room_number" placeholder="Room Number">
 
-			<label for="location_special_components">Special Components: </label>
-			<input type="text" name="location_special_components" id="location_special_components">
-
-			<label for="location_products">Products: </label>
-			<input type="text" name="location_products" id="location_products">
+			<input type="text" name="location_shelf_number" id="location_shelf_number" placeholder="Shelf Number">
 		
-        </div>
-
-		<div class="inner-div">
-			<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
-			<input type="button" class="btn btn-primary" value="Clear Filters" onclick=clearFilters() >
+			<input type="button" class="btn-sm btn-primary" value="Filter" onclick=addData() >
+			<input type="button" class="btn-sm btn-primary" value="Clear Filters" onclick=clearFilters() >
 		</div>
         
-        <div class="inner-div">
-            <label for="product_sn">Product SN:</label>
-			<input type="text" name="product_sn" id="product_sn" placeholder="product_sn">
-
-			<label for="product_family">Product Family</label>
-			<select name="product_family" id="product_family">
-				<option value="0">Baic</option>
-				<option value="1">Pro</option>
-			</select>
-			
-			<label for="product_pn">Product PN</label>
-			<select name="product_pn" id="product_pn">
-				<option value="0">Baic-i3</option>
-				<option value="1">Baic-i5</option>
-				<option value="2">Baic-i7</option>
-				<option value="3">Pro-i3</option>
-				<option value="4">Pro-i5</option>
-				<option value="5">Pro-i7</option>
-			</select>
-		
-		</div>
-				
-		<div class="inner-div">
-			<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
-		</div>
 	</form>
 </div>
 
@@ -82,73 +44,45 @@
 
 <!-- dummy content for demo --will be replaced -->
 <div id="results">
+	<div class="border p-1 pt-2" style="height: 65vh; overflow-y: scroll;">
 	<table class="table table-striped" >
 		<tr>
-			<th>Site ID</th>
 			<th>Location ID</th>
+			<th>2Fast4U Site Name</th>
 			<th>Room</th>
 			<th>Shelf</th>
-			<th>Regular Components</th>
-			<th>Special Components</th>
-			<th>Products</th>
-			<th>Empty</th>
 			<th>Edit</th>
 			<th>Delete</th>
 		</tr>
 		{% for location in locations %}
 			<tr>
 				<td>
-					{{location.location_site_id}}
-				</td>
-				<td>
 					{{location.location_id}}
 				</td>
+
+				<td>
+					{% for site in sites %}{% if site.site_id == location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}
+				</td>
+				
 				<td>
 					{{location.location_room_number}}
 				</td>
 				<td>
 					{{location.location_shelf_number}}
 				</td>
-				<td>
-					<ul>
-						{% for regular_component in regular_components %}
-							{% for regular_component_location in regular_component.rc_locations %}
-								{% if regular_component_location.location_id == location.location_id %}
-									<li>{{regular_component.rc_category}}: {{regular_component_location.quantity_at_location}} EA</li>
-								{% endif %}
-							{% endfor %}
-						{% endfor %}
-					</ul>
-				</td>
-				<td>
-					<ul>
-						{% for special_component in special_components  %}
-							{% if special_component.sc_location.location_id == location.location_id %}
-								<li>{{special_component.sc_sn}}</li>
-							{% endif %}
-						{% endfor %}
-					</ul>
-				</td>
-				<td>
-					<ul>
-						{% for product in products %}
-							{% if product.product_location_id == location.location_id  %}
-								<li>{{product.product_sn}}</li>
-							{% endif %}
-						{% endfor %}
-					</ul>
-				</td>
-				<th><button class="btn-sm btn-success">Empty</button></th>
-				<th><button class="btn-sm btn-success">Edit</button></th>
+
+				<th><button class="btn-sm btn-warning">Edit</button></th>
 				<td><button class="btn-sm btn-danger">Delete</button></td>
 			</tr>
 		{% endfor %}
 		
 	</table>
-	
+	</div>
 </div>
 
 
 {% endblock%}
+
+
 
 

@@ -58,8 +58,8 @@
 			</div>
 		
 			<div class="inner-div">
-				<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
-				<input type="button" class="btn btn-primary" value="Clear Filters" onclick=clearFilters() >
+				<input type="button" class="btn-sm btn-primary" value="Filter" onclick=addData() >
+				<input type="button" class="btn-sm btn-primary" value="Clear Filters" onclick=clearFilters() >
 			</div>
 		</form>
 	</div>
@@ -70,30 +70,38 @@
       <!-- Special Components Results -->
 
       <div id="results">
+
+      		<div class="border p-1 pt-2" style="height: 30vh; overflow-y: scroll;">
+
 				<table class="table table-striped">
 					<tr>
 						<th>Serial Number</th>
 						<th>Part Number</th>
 						<th>Is Free</th>
-						<th>Location</th>
-						<th>Edit</th>
+						<th>Site / Location</th>
+						<th>Edit Component Details</th>
 						<th>Delete</th>
 						</tr>
 						{% for special_component in special_components %}
 							<tr>
 								<td>{{special_component.sc_sn}}</td>
 								<td>{{special_component.sc_pn}}</td>
-								<td>{{special_component.sc_is_free}}</td>
+								<td> {% if special_component.sc_is_free %} Yes {% else %} No {% endif %}</td>
 								<td>
-									Site {{special_component.sc_location.location_site_id}}, Room {{special_component.sc_location.location_room_number}}, Shelf {{special_component.sc_location.location_shelf_number}}
+									{% for site in sites %}
+										{% if site.site_id == special_component.sc_location.location_site_id %}
+											{{site.site_name}}  
+										{% endif %}
+									{% endfor %}
+									/ Room {{special_component.sc_location.location_room_number}}, Shelf {{special_component.sc_location.location_shelf_number}}
 								</td>
-								<td><button class="btn btn-warning">Edit</button></td>
-								<td><button class="btn btn-danger">Delete</button></td>
+								<td><button class="btn-sm btn-warning">Edit</button></td>
+								<td><button class="btn-sm btn-danger">Delete</button></td>
 						</tr>
 					{% endfor %}
 				</table>
 			</div>
-
+		</div>
     </div>
 
     <div class="col-2 text-center">
@@ -206,8 +214,8 @@
 
 		
 			<div class="inner-div">
-				<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
-				<input type="button" class="btn btn-primary" value="Clear Filters" onclick=clearFilters() >
+				<input type="button" class="btn-sm btn-primary" value="Filter" onclick=addData() >
+				<input type="button" class="btn-sm btn-primary" value="Clear Filters" onclick=clearFilters() >
 			</div>
 		</form>
 	</div>
@@ -216,42 +224,51 @@
     <div class="col-8">
       <!-- Regular Components Results -->
 
-      <div id="results">
-				<table class="table table-striped">
-					<tr>
-						<th>Part Number</th>
-						<th>Category</th>
-						<th>Quantity</th>
-						<th>Location(s)</th>
-						<th>Order More</th>
-						<th>Edit</th>
-						<th>Delete</th>
-					</tr>
-					{% for regular_component in regular_components %}
-					<tr>
-						<td>{{regular_component.rc_pn}}</td>
-						<td>{{regular_component.rc_category}}</td>
-						<td>{{regular_component.rc_quantity}}</td>
-						<td>
-							<ul>
-								{% for location in regular_component.rc_locations %}
-									<li>Site {{location.location_site_id}}, Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</li>
-								{% endfor %}
-							</ul>
-						</td>
-						<td><button class="btn btn-primary">Order More</button></td>
-						<td><button class="btn btn-warning">Edit</button></td>
-						<td><button class="btn btn-danger">Delete</button></td>
-					</tr>
-					{% endfor %}
-				</table>
+        <div id="results">
+
+        	<div class="border p-1 pt-2" style="height: 35vh; overflow-y: scroll;">
+
+        	{% for regular_component in regular_components %}
+        	<div class="row">
+  				<div class="col text-center"> Part Number: <strong>{{regular_component.rc_pn}}</strong> - Category: <strong>{{regular_component.rc_category}}</strong></div>
+  				<div class="col-8 float-right">
+  					<button class="btn-sm btn-success">Order More of Component {{regular_component.rc_pn}}</button>
+  					<button class="btn-sm btn-warning">Edit Details for Component {{regular_component.rc_pn}}</button> 
+  					<button class="btn-sm btn-danger">Delete All Component {{regular_component.rc_pn}}</button>
+  				</div>
+  			</div>
+
+			<table class="table table-striped">
+				<tr>
+					<th>Site</th>
+					<th>Location</th>
+					<th>Quantity</th>
+					<th>Edit</th>
+					<th>Delete</th>
+				</tr>
+				{% for location in regular_component.rc_locations %}
+				<tr>
+					<td>{% for site in sites %}{% if site.site_id == location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}</td>
+					<td>Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</td>
+					<td>{{location.quantity_at_location}}</td>
+					
+					
+					<td class="text-right"><button class="btn-sm btn-warning">Edit</button></td>
+					<td><button class="btn-sm btn-danger">Delete</button></td>
+				</tr>
+				{% endfor %}
+			</table>
+			{% endfor %}
+
 			</div>
+
+		</div>
 
     </div>
 
     <div class="col text-center">
       <!-- Regular Components Add -->
-      <div class="text-center"><h6>Order Regular Components</h6></div>
+      <div class="text-center"><h6>Order New Regular Components</h6></div>
 
       <div id="data-entry-div">	
 
@@ -288,9 +305,9 @@
 					<div class="inner-div">
 						<select class="custom-select" id="new_rc_site" required>
 							<option selected>Select Site: </option>
-						    <option value=12>LA-12</option>
-						    <option value=14>SF-14</option>
-						    <option value=16>Reno-16</option>
+							{% for site in sites %}
+						    	<option>{{site.site_name}}</option>
+						    {% endfor %}
 						</select>
 					</div>
 				</div>

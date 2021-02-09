@@ -29,7 +29,7 @@ setup(
 
 	# Project name: 
 
-	name='2Fast4U Cats Inventory Management Database (CIMDB)',
+	name='2Fast4U Computer Inventory Management Database (CIMDB)',
 
 	# Packages to include in the distribution: 
 

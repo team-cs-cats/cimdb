@@ -1,0 +1,34 @@
+<!-- Links to 'base_logged_in.html' as a base template file (which inherits from the base.html) -->
+{% extends 'base_logged_in.html' %}
+
+<!-- Title of the page -->
+{% block title %} Stock and Product Locations {% endblock%}
+
+
+{% block body %} 
+
+
+<!-- add new form -->
+<div class="intro-div">
+    <h2>Welcome {{user_first_name}} {{user_last_name}}</h2>
+
+
+</div>
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{user_group}}</h5>
+    <p class="card-text">Site: {% for site in sites %}{% if site.site_id == user_site_id|int %}{{site.site_name}}{% endif %}{% endfor %}</p>
+    <p class="card-text">Email: {{user_email}}</p>
+  </div>
+</div>
+
+
+
+
+
+{% endblock%}
+
+
+
+

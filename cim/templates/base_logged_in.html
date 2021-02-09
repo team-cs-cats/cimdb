@@ -5,15 +5,27 @@
 {% block head %}
 {% endblock %}
 
-<!-- Body goes here -->
-<div class="content">
-	<div class="card text-center" style="width: 100%">
-		<div class="card-body">
-			
-		</div>
-	</div>
-</div>
-
+<!-- top menu for all pages -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/landing">2Fast4U - {{user_first_name}} {{user_last_name}}</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-link active" aria-current="page" href="/workorders">Work Orders</a>
+              <a class="nav-link" href="/assembly">Assembly</a>
+              <a class="nav-link" href="/qc">QC</a>
+              <a class="nav-link" href="/shipping">Shipping</a>
+              <a class="nav-link" href="/inventory">Inventory</a>
+              <a class="nav-link" href="/locations">Locations</a>
+              <a class="nav-link" href="/management">Employee and Site Management</a>
+              <a class="nav-link" href="/logout">Logout</a>
+            </div>
+          </div>
+        </div>
+      </nav>
 
 
 <!-- Inherit from base template -->
