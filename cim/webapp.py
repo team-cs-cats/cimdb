@@ -192,6 +192,14 @@ def landing():
 
 	# otherwise, return the landing page and pass it the employee ID which can be used as a key
 	if request.method=="GET":
+
+		# determine the number of work orders currently assigned to the current employee
+		wo_count = 0
+		for work_order in data.get_wo():
+			if work_order['wo_employee_id'] == request.args.get('user_id'):
+				wo_count += 1
+
+
 		return render_template("landing.html", 
 			user_first_name=request.args.get('user_first_name'),
 			user_last_name=request.args.get('user_last_name'),
@@ -199,7 +207,8 @@ def landing():
 			user_id=request.args.get('user_id'),
 			user_site_id=request.args.get('user_site_id'),
 			user_group=request.args.get('user_group'),
-			sites = data.get_sites()
+			sites = data.get_sites(),
+			work_order_count = wo_count
 			)
 
 @webapp.route('/products', methods=['GET', 'POST'])

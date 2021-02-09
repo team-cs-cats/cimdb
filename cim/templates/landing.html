@@ -8,23 +8,81 @@
 {% block body %} 
 
 
-<!-- add new form -->
-<div class="intro-div">
-    <h2>Welcome {{user_first_name}} {{user_last_name}}</h2>
 
+<div class="content">
+	
+	<h4 class="text-center">Welcome {{user_first_name}} {{user_last_name}}</h1>
+
+	<div class="card">
+
+		<div class="card-body">
+
+			<div class="container">
+				<div class="row">
+					<div class="col text-justify">
+
+						<div class="card m-5" style="width: 18rem;">
+						  <div class="card-body">
+						    <h5 class="card-title">{{user_group}}</h5>
+						    <p class="card-text">Site: {% for site in sites %}{% if site.site_id == user_site_id|int %}{{site.site_name}}{% endif %}{% endfor %}</p>
+						    <p class="card-text">Email: {{user_email}}</p>
+						  </div>
+						</div>
+
+ 
+
+					</div>
+					<div class="col m-3">
+
+						{% if work_order_count > 1 %}
+
+						<p>Your Current Work Orders:</p>
+
+						<div class='align-center border'>
+							<div style="height: 70vh; overflow-y: scroll;">
+
+						      	{% for work_order in work_orders %}
+
+						      		{% if work_order.wo_employee_id == user_id %}
+
+										<div class="card">
+										<div class="card-body">
+										<div>
+											<h6 class="card-title">Work Order {{work_order.wo_id}}</h6>
+
+											<p>Status: 
+												{% if work_order.wo_status == 'assembly_pending' %}Not Yet Assembled
+												{% elif work_order.wo_status == 'qc_pending' %}Not Yet QC'd
+												{% elif work_order.wo_status == 'shipping_pending' %}Not Yet Shipped
+												{% endif %}
+											</p>
+											<a href="#" class="btn-sm btn-primary">View Order</a>
+										</div>
+										</div>
+										</div>
+
+									{% endif %}
+							      	
+								{% endfor %}
+
+						      </div>
+						</div>
+
+						{% else %}
+						<div class='text-center p-2 border'>
+							<p>You are not currently assigned any work orders.</p>
+						</div>
+						{% endif %}
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
 
 </div>
-
-<div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">{{user_group}}</h5>
-    <p class="card-text">Site: {% for site in sites %}{% if site.site_id == user_site_id|int %}{{site.site_name}}{% endif %}{% endfor %}</p>
-    <p class="card-text">Email: {{user_email}}</p>
-  </div>
-</div>
-
-
-
 
 
 {% endblock%}
