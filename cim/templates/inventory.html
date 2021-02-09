@@ -145,9 +145,9 @@
 					<div class="inner-div">
 						<select class="custom-select" id="new_sc_site" required>
 							<option selected>Select Site: </option>
-						    <option value=12>LA-12</option>
-						    <option value=14>SF-14</option>
-						    <option value=16>Reno-16</option>
+							{% for site in sites %}
+						    	<option>{{site.site_name}}</option>
+						    {% endfor %}
 						</select>
 					</div>
 				</div>
