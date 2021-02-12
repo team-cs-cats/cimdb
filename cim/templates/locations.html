@@ -109,7 +109,7 @@
 				</td>
 
 				<!-- <th><button class="btn-sm btn-warning">Edit</button></th> -->
-				<th><button type="button" class="btn-sm btn-warning" data-toggle="modal" data-target="#myModal" data-site-name="{% for site in sites %}{% if site.site_id == location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}" data-location-room-number="{{location.location_room_number}}" data-location-shelf-number="{{location.location_shelf_number}}" data-title="Edit {{location.location_id}}">Edit</button></th>
+				<th><button type="button" class="btn-sm btn-warning" data-toggle="modal" data-target="#editLocation" data-site-name="{% for site in sites %}{% if site.site_id == location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}" data-location-room-number="{{location.location_room_number}}" data-location-shelf-number="{{location.location_shelf_number}}" data-title="Edit Location ID {{location.location_id}}">Edit</button></th>
 				<td><button class="btn-sm btn-danger">Delete</button></td>
 			</tr>
 		{% endfor %}
@@ -118,7 +118,7 @@
 	</div>
 </div>
 
-<div id="myModal" class="modal fade" tabindex="-1">
+<div id="editLocation" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form>
@@ -126,19 +126,30 @@
                         <h5 class="modal-title">Modal Window</h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-                    <div class="modal-body">                        
+                    <div class="modal-body">  
+
+                    	<div class="form-group">
+                    		<select class="custom-select" id="location-site" required>
+							<option selected>Select Site: </option>
+								{% for site in sites %}
+							    	<option>{{site.site_name}}</option>
+							    {% endfor %}
+							</select>
+						</div>
+
                         <div class="form-group">
-                            <label class="control-label">Email:</label>
-                            <input type="text" class="form-control">
-                        </div>
+                            <label class="control-label" >Room Number:</label>
+                            <input type="number" min="0" max="999" id="room-number" class="form-control" value=>
+                        </div>   
+
                         <div class="form-group">
-                            <label class="control-label">Message:</label>
-                            <textarea class="form-control"></textarea>
-                        </div>                        
+                            <label class="control-label" >Shelf Number:</label>
+                            <input type="number" min="0" max="999" id="shelf-number" class="form-control">
+                        </div>                      
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-primary">Update</button>
                     </div>
                 </form>
             </div>
@@ -146,13 +157,23 @@
     </div>
 <script>
 $(document).ready(function(){
-    $("#myModal").on("show.bs.modal", function(event){
+    $("#editLocation").on("show.bs.modal", function(event){
         // Get the button that triggered the modal
         var button = $(event.relatedTarget);
 
         // Extract value from the custom data-* attribute
         var titleData = button.data("title");
         $(this).find(".modal-title").text(titleData);
+
+        var roomNumberData = parseInt(button.data("location-room-number"));
+        console.log(roomNumberData);
+        $(this).find("#room-number").val(roomNumberData);
+
+        var shelfNumberData = parseInt(button.data("location-shelf-number"));
+        $(this).find("#shelf-number").val(shelfNumberData);
+
+        var siteNameData = parseInt(button.data("site-name"));        
+        $(this).find("#location-site").val(siteNameData);
     });
 });
 </script>
