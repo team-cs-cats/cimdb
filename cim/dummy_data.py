@@ -20,6 +20,13 @@ class DummyData:
         self.locations = self.load_data("locations")
         self.products = self.load_data("products")
 
+        #Ali
+        self.products_catalog=self.load_data("products_catalog")
+        self.regular_componenets_catalog=self.load_data("regular_componenets_catalog")
+        self.special_componenets_catalog=self.load_data("special_componenets_catalog")
+        self.workorderproducts=self.load_data("workorderproducts")
+        self.product_componenets=self.load_data("product_componenets")
+
     @staticmethod
     def load_data(filename):
         """Load json files containing dummy data."""
@@ -46,3 +53,16 @@ class DummyData:
         return self.locations
     def get_products(self):
         return self.products
+
+    #Ali
+    def get_products_catalog(self):
+        # print(f'products key: {self.products_catalog.keys()}')
+        return self.products_catalog
+    def get_rc_catalog(self):
+        return self.regular_componenets_catalog
+    def get_sp_catalog(self):
+        return self.special_componenets_catalog
+    def get_workorderproducts(self):
+        return self.workorderproducts
+    def get_product_componenets(self):
+        return self.product_componenets

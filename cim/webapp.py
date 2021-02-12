@@ -183,7 +183,7 @@ def workorders():
 
 	# otherwise, return the workorders page
 	if request.method=="GET":
-		return render_template("workorders.html")
+		return render_template("workorders.html",employees=data.get_emp(),workorders=data.get_wo())
 
 @webapp.route('/landing', methods=['GET', 'POST'])
 @login_required
@@ -279,7 +279,7 @@ def user_management():
 # workorder details. it takes the wo_id as argument to retrive the the information from DB
 @webapp.route('/wo-details', methods=['GET', 'POST'])
 @login_required
-def wo_details(wo_id=None):
+def wo_details(wo_id=""):
 	"""The webapp's page takes wo_id and retirve the inforamtion from DB."""
 
 	# if the current user is not authenticated, redirect the user to the logged out index page
@@ -287,17 +287,33 @@ def wo_details(wo_id=None):
 		return redirect(url_for("cim.templates.index"))
 
 	if request.method=="GET":
+
+		if request.args.get("wo_id"):
+			wo_id=request.args.get("wo_id")
 		
+
+		# get wo products information:
+		if wo_id:
+			products=data.get_workorderproducts()[wo_id]
+		else:
+			products={}
+		
+
+		#get products catalog
+		products_catalog=data.get_products_catalog()
+		
+		print(f'############ wo_id is : {wo_id}')
+		print(f'############ products are is : {products}')
 		#if wo_id not none:
 			#SQL query
 		# render the detail page
-		return render_template("wo-details.html")
+		return render_template("wo-details.html",wo_id=wo_id, products_catalog=data.products_catalog , products=products)
 
 
 # products details. it takes the product_sn as argument to retrive the the information from DB
 @webapp.route('/product-details', methods=['GET', 'POST'])
 @login_required
-def product_details(product_sn=None):
+def product_details(product_sn=""):
 	"""The webapp's page takes product_sn and retirve the inforamtion from DB."""
 
 	# if the current user is not authenticated, redirect the user to the logged out index page
@@ -305,11 +321,51 @@ def product_details(product_sn=None):
 		return redirect(url_for("cim.templates.index"))
 
 	if request.method=="GET":
+
+		if request.args.get("product_sn"):
+			product_sn=request.args.get("product_sn")
+		
+
+		# get product information:
+		if product_sn:
+			products=data.get_products()
+			print(f'############ products is : {products}')
+			
+			for target in products:
+				print(f'Product ["product_sn"] :{target["product_sn"]} ')
+				if target["product_sn"]==product_sn:
+					product=target
+					break
+				else:
+					product={}
+		else:
+			product={}
+		
+		# get components information:
+		if product_sn:
+			components_master=data.get_product_componenets()
+			print(f'############ components_master is : {components_master}')
+			
+			for target in components_master:
+				print(f'components_master ["product_sn"] :{target["product_sn"]} ')
+				if target["product_sn"]==product_sn:
+					components=target["components"]
+					break
+				else:
+					components={}
+		else:
+			components={}
+		
+
+		print(f'############ components is : {components}')
+		
+		#get products catalog
+		products_catalog=data.get_products_catalog()
 		
 		#if product_sn not none:
 			#SQL query
 		# render the detail page
-		return render_template("product-details.html")
+		return render_template("product-details.html",product=product,components=components)
 
 # Assembly page. The page lists are assigned products ready for assembly 
 @webapp.route('/assembly', methods=['GET', 'POST'])
@@ -345,3 +401,11 @@ def QC():
 
 		# render the assembly page
 		return render_template("qc.html")
+
+@webapp.route('/data/product_catalog', methods=['GET', 'POST'])
+@login_required
+def get_products_catalog_r():
+	if request.method=="GET":
+		print(data.get_products_catalog())
+		return data.get_products_catalog()
+		

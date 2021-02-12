@@ -1,0 +1,23 @@
+
+[
+    {"product_sn":"P7125",
+    "components":{
+        "sc_sn":"472694",
+        "MB":"MB1",
+        "RAM":"RAM3",
+        "RAM_Q":3,
+        "GC":"NO GC",
+        "HDD":"HDD3",
+        "CASE":"CASE1"}
+    },
+    {"product_sn":"P8766",
+        "components":{
+            "sc_sn":"766959",
+            "MB":"MB3",
+            "RAM":"RAM2",
+            "RAM_Q":30,
+            "GC":"GC1",
+            "HDD":"HDD2",
+            "CASE":"CASE3"}
+    }
+]
