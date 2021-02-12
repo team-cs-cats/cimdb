@@ -128,7 +128,8 @@
                     </div>
                     <div class="modal-body">  
 
-                    	<div class="form-group">
+                    	<div class="form-group p-1">
+                    		<label class="control-label" >Site:</label>
                     		<select class="custom-select" id="location-site" required>
 							<option selected>Select Site: </option>
 								{% for site in sites %}
@@ -137,12 +138,12 @@
 							</select>
 						</div>
 
-                        <div class="form-group">
+                        <div class="form-group p-1">
                             <label class="control-label" >Room Number:</label>
                             <input type="number" min="0" max="999" id="room-number" class="form-control" value=>
                         </div>   
 
-                        <div class="form-group">
+                        <div class="form-group p-1">
                             <label class="control-label" >Shelf Number:</label>
                             <input type="number" min="0" max="999" id="shelf-number" class="form-control">
                         </div>                      
@@ -166,13 +167,12 @@ $(document).ready(function(){
         $(this).find(".modal-title").text(titleData);
 
         var roomNumberData = parseInt(button.data("location-room-number"));
-        console.log(roomNumberData);
         $(this).find("#room-number").val(roomNumberData);
 
         var shelfNumberData = parseInt(button.data("location-shelf-number"));
         $(this).find("#shelf-number").val(shelfNumberData);
 
-        var siteNameData = parseInt(button.data("site-name"));        
+        var siteNameData = button.data("site-name");        
         $(this).find("#location-site").val(siteNameData);
     });
 });
