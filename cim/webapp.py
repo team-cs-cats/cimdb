@@ -307,7 +307,7 @@ def wo_details(wo_id=""):
 		#if wo_id not none:
 			#SQL query
 		# render the detail page
-		return render_template("wo-details.html",wo_id=wo_id, products_catalog=data.products_catalog , products=products)
+		return render_template("wo-details.html",wo_id=wo_id, products_catalog=products_catalog , products=products)
 
 
 # products details. it takes the product_sn as argument to retrive the the information from DB
@@ -329,10 +329,10 @@ def product_details(product_sn=""):
 		# get product information:
 		if product_sn:
 			products=data.get_products()
-			print(f'############ products is : {products}')
+		
 			
 			for target in products:
-				print(f'Product ["product_sn"] :{target["product_sn"]} ')
+				
 				if target["product_sn"]==product_sn:
 					product=target
 					break
@@ -344,10 +344,10 @@ def product_details(product_sn=""):
 		# get components information:
 		if product_sn:
 			components_master=data.get_product_componenets()
-			print(f'############ components_master is : {components_master}')
+			
 			
 			for target in components_master:
-				print(f'components_master ["product_sn"] :{target["product_sn"]} ')
+			
 				if target["product_sn"]==product_sn:
 					components=target["components"]
 					break
@@ -357,15 +357,21 @@ def product_details(product_sn=""):
 			components={}
 		
 
-		print(f'############ components is : {components}')
 		
-		#get products catalog
-		products_catalog=data.get_products_catalog()
 		
+		#get reqular componenet catalog
+		regular_componenet_catalog=data.get_rc_catalog()
+		print(f'regular_componenet_catalog is {regular_componenet_catalog}')
+
+		#get special compoenent catalog
+		special_componenet_catalog=data.get_sp_catalog()
+		print(f'special_componenet_catalog is {special_componenet_catalog}')
+		
+
 		#if product_sn not none:
 			#SQL query
 		# render the detail page
-		return render_template("product-details.html",product=product,components=components)
+		return render_template("product-details.html",product=product,components=components,special_componenet_catalog=special_componenet_catalog,regular_componenet_catalog=regular_componenet_catalog)
 
 # Assembly page. The page lists are assigned products ready for assembly 
 @webapp.route('/assembly', methods=['GET', 'POST'])
@@ -378,11 +384,17 @@ def assembly():
 		return redirect(url_for("cim.templates.index"))
 
 	if request.method=="GET":
+
+		assembly_list=data.get_assembly()
+
+		print(f'assembly is: {assembly_list}')
+
+		products_catalog=data.get_products_catalog()
 		
 		#SQL query
 
 		# render the assembly page
-		return render_template("assembly.html")
+		return render_template("assembly.html",assembly_list=assembly_list,products_catalog=products_catalog)
 
 
 # QC page. The page lists are assigned products ready for assembly 
@@ -396,11 +408,17 @@ def QC():
 		return redirect(url_for("cim.templates.index"))
 
 	if request.method=="GET":
+
+		qc_list=data.get_qc()
+
+		print(f'assembly is: {qc_list}')
+
+		products_catalog=data.get_products_catalog()
 		
 		#SQL query
 
 		# render the assembly page
-		return render_template("qc.html")
+		return render_template("qc.html",qc_list=qc_list,products_catalog=products_catalog)
 
 @webapp.route('/data/product_catalog', methods=['GET', 'POST'])
 @login_required

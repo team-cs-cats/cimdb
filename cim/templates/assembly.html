@@ -52,20 +52,21 @@
             <label for="product_sn">Product SN:</label>
 			<input type="text" name="product_sn" id="product_sn" placeholder="product_sn">
 
-			<label for="product_family">Product Family</label>
-			<select name="product_family" id="product_family">
-				<option value="0">Baic</option>
-				<option value="1">Pro</option>
-			</select>
 			
+			<label for="product_family">Product Family:</label>
+			<select class="custom-select" id="product_family" required>
+				<option selected>Select Family:</option>
+				{% for product in products_catalog %}
+					<option>{{product}}</option>
+				{% endfor %}
+			</select>
+	
 			<label for="product_pn">Product PN</label>
-			<select name="product_pn" id="product_pn">
-				<option value="0">Baic-i3</option>
-				<option value="1">Baic-i5</option>
-				<option value="2">Baic-i7</option>
-				<option value="3">Pro-i3</option>
-				<option value="4">Pro-i5</option>
-				<option value="5">Pro-i7</option>
+			<select class="custom-select" id="product_pn">
+				<option selected>Select Family First:</option>
+				{% for product in products_catalog %}
+					<option>{{product}}</option>
+				{% endfor %}
 			</select>
 		
 		</div>
@@ -92,41 +93,25 @@
 			<th>Assembled?</th>
 			<th>Problem?</th>
 		</tr>
-		<tr>
-			<td>1</td>
-			<td>2020-12-01</td>
-			<td>P1000</td>
-			<td>Basic</td>
-			<td>Basic-i3</td>
-			<td><button class="btn btn-secondary"><a href="\product-details">Details(demo)</a></td>
-			<th><button class="btn btn-info">send to QC</button></th>
-			<td><button class="btn btn-dark">Report</button></td>
-		</tr>
-		<tr>
-			<td>1</td>
-			<td>2020-12-01</td>
-			<td>P2000</td>
-			<td>Pro</td>
-			<td>Pro-i7</td>
-			<td><button class="btn btn-secondary">Details</td>
-			<th><button class="btn btn-info">send to QC</button></th>
-			<td><button class="btn btn-dark">Report</button></td>
-		</tr>
-		<tr>
-			<td>3</td>
-			<td>2021-01-01</td>
-			<td>P1265</td>
-			<td>Pro</td>
-			<td>Pro-i5</td>
-			<td><button class="btn btn-secondary">Details</td>
-			<th><button class="btn btn-info">send to QC</button></th>
-			<td><button class="btn btn-dark">Report</button></td>
-		</tr>
-		
+
+		{% for product in assembly_list %}
+			<tr>
+				<td>{{product.wo_id}}</td>
+				<td>{{product.wo_open_date}}</td>
+				<td>{{product.product_sn}}</td>
+				<td>{{product.product_family}}</td>
+				<td>{{product.product_pn}}</td>
+				<td><button class="btn btn-secondary" onclick=components_info("{{product.product_sn}}")>Details</td>
+				<th><button class="btn btn-info" onclick=assemble_product("{{product.product_sn}}")>send to QC</button></th>
+				<td><button class="btn btn-dark" onclick=report_product("{{product.product_sn}}")>Report</button></td>
+			</tr>
+		{% endfor %}
+			
 	</table>
 	
 </div>
 
+<script src="{{ url_for('static', filename='js/assembly.js') }}"></script>
 
 {% endblock%}
 

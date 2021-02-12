@@ -1,0 +1,47 @@
+[
+    {
+        "wo_id":"ABC123",
+        "wo_open_date":"11/22/2020",
+        "product_sn":"P7125",
+        "product_pn":"Pro-i5",
+        "product_date_of_assembly":null,
+        "product_family":"Pro"
+    },
+    {
+        "wo_id":"ABC123",
+        "wo_open_date":"11/22/2020",
+        "product_sn":"P8766",
+        "product_pn":"Pro-i7",
+        "product_date_of_assembly":null,
+        "product_family":"Pro"
+    },
+            
+    {   
+        "wo_id":"ABC123",
+        "wo_open_date":"11/22/2020",
+        "product_sn":"P1006",
+        "product_pn":"Basic-i3",
+        "product_date_of_assembly":null,
+        "product_family":"Basic"
+    },
+        
+    
+    {
+        "wo_id":"XYZ123",
+        "wo_open_date":"11/05/2020",
+        "product_sn":"P4762",
+        "product_pn":"Pro-i3",
+        "product_date_of_assembly":null,
+        "product_family":"Pro"
+    },
+
+    {
+        "wo_id":"XYZ123",
+        "wo_open_date":"11/05/2020",
+        "product_sn":"P1478",
+        "product_pn":"Basic-i5",
+        "product_date_of_assembly":null,
+        "product_family":"Basic"
+    }
+
+]

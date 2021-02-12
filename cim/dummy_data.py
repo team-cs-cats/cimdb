@@ -26,6 +26,8 @@ class DummyData:
         self.special_componenets_catalog=self.load_data("special_componenets_catalog")
         self.workorderproducts=self.load_data("workorderproducts")
         self.product_componenets=self.load_data("product_componenets")
+        self.assembly=self.load_data("assembly")
+        self.qc=self.load_data("qc")
 
     @staticmethod
     def load_data(filename):
@@ -66,3 +68,7 @@ class DummyData:
         return self.workorderproducts
     def get_product_componenets(self):
         return self.product_componenets
+    def get_assembly(self):
+        return self.assembly
+    def get_qc(self):
+        return self.qc

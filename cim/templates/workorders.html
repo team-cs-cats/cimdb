@@ -112,18 +112,7 @@
 			<th>Delete</th>
 		</tr>
 
-		<tr>
-			<td>1</td>
-			<td>2020-12-01</td>
-			<td>null</td>
-			<td>open</td>
-			<td>60</td>
-			<td>null</td>
-			<td><button class="btn btn-secondary"><a href="\wo-details">2(demo)</a></button></td>
-			<td><button class="btn btn-warning">Edit</button></td>
-			<td><button class="btn btn-danger">Delete</button></td>
-		</tr>
-
+		
 		{% for wo in workorders %}
 			<tr>
 				<td>{{wo.wo_id}}</td>
@@ -132,9 +121,9 @@
 				<td>{{wo.wo_status}}</td>
 				<td>{{wo.wo_reference_number}}</td>
 				<td>{{wo.wo_employee_id}}</td>
-				<td><button class="btn btn-secondary">???</button></td>
-				<td><button class="btn btn-warning">Edit</button></td>
-				<td><button class="btn btn-danger">Delete</button></td>
+				<td><button class="btn btn-secondary" onclick=products_info("{{wo.wo_id}}")># of products</button></td>
+				<td><button class="btn btn-warning" onclick=edit_workorder_info("{{wo.wo_id}}")>Edit</button></td>
+				<td><button class="btn btn-danger" onclick=delete_workorder("{{wo.wo_id}}")>Delete</button></td>
 			</tr>
 		{% endfor %}
 
@@ -143,6 +132,7 @@
 	
 </div>
 
+<script src="{{ url_for('static', filename='js/workorders.js') }}"></script>
 
 {% endblock%}
 

@@ -1,32 +1,5 @@
 console.log("I am  connected!")
 
-function go_back() {
-  window.history.back();
-}
-
-
-
-// Open another wo using the wo_id
-//reloads the page
-function reload_workorder(){
-  console.log("clicked")
-  var wo=document.getElementById("wo_id_reload").value;
-  
-  valid=["879845","815348"]
-  if(valid.includes(wo)){
-      
-    var url='/wo-details?'+'wo_id='+wo
-    console.log("URL IS: ",url)
-    
-    window.location.href=url
-  }else{
-  alert('only "879845" and "815348" are implemented for demo')
-}
-}
-
-
-
-
   
 
 //get component information details
@@ -46,16 +19,16 @@ if(valid.includes(serial_number)){
 
 }
 
-//edit product information 
-function edit_product_info(serial_number){
+//assembel product information 
+function qc_product(serial_number){
   console.log("clicked")
-  alert("Product: "+serial_number+" will be editted later!")
+  alert("Product: "+serial_number+" will be QC'ed later!")
 };
 
-//delete product details
-function delete_product(serial_number){
+//report product details
+function report_product(serial_number){
   console.log("clicked")
-  alert("Product: "+serial_number+" will be DELETED later!")
+  alert("Product: "+serial_number+" will be REPORTED later!")
 };
 
 

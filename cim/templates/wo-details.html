@@ -13,7 +13,7 @@
 			<h3>Manage Work Order Details</h3>
 			<h5 class="access-level">This page requires supervisor-level access permission</h5>
 			<p>Manage(View, Add , Edit and Delete) products in a WorkOrder</p>
-			<button type="button" class="btn btn-light">Back to Workorders</button>
+			<button type="button" class="btn btn-light" onclick=go_back()>Back to Workorders</button>
 		</div>
 
 		<div class="process-overview">
@@ -43,13 +43,14 @@
 				<div class="inner-div">
 					<label for="product_family">Product Family:</label>
 					<select class="custom-select" id="product_family" required>
+						<option selected>Select Family:</option>
 						{% for product in products_catalog %}
 							<option>{{product}}</option>
 						{% endfor %}
 					</select>
 			
-					<select class="custom-select" id="product_pn" required>
-						<option selected>Part Number: </option>
+					<select class="custom-select" id="product_pn">
+						<option selected>Select Family First:</option>
 						{% for product in products_catalog %}
 							<option>{{product}}</option>
 						{% endfor %}
@@ -75,7 +76,8 @@
 					
 				</form>				
 			</div>
-						
+			
+			<p> example: 879845</p>
 		</div>
 
 	</div>
@@ -111,44 +113,14 @@
 					<td>{{product.product_employee_id}}</td>
 					<td>{{product.product_location_id}}</td>
 					<td>{{product.product_sc_sn}}</td>
-					<td><button class="btn btn-secondary"><a href="\product-details">info (demo)</a> </button></td>
-					<td><button class="btn btn-warning">Edit</button></td>
-					<td><button class="btn btn-danger">Delete</button></td>
+					<td><button class="btn btn-secondary" onclick=components_info("{{product.product_sn}}")>info</button></td>
+					<td><button class="btn btn-warning" onclick=edit_product_info("{{product.product_sn}}")>Edit</button></td>
+					<td><button class="btn btn-danger" onclick=delete_product("{{product.product_sn}}")>Delete</button></td>
 				</tr>
 			{% endfor %}
 			
+			
 		
-		<tr>
-			<td>P1000</td>
-			<td>Baic</td>
-            <td>Baic-i3</td>
-            <td>QC</td>
-			<td>2020-12-05</td>
-			<td>Null</td>
-            <td>Null</td>
-            <td>50</td>
-            <td>12</td>
-            <td>123654</td>
-			<td><button class="btn btn-secondary"><a href="\product-details">info (demo)</a> </button></td>
-			<td><button class="btn btn-warning">Edit</button></td>
-			<td><button class="btn btn-danger">Delete</button></td>
-		</tr>
-
-		<tr>
-			<td>P2000</td>
-			<td>Pro</td>
-            <td>Pro-i7</td>
-            <td>shipping</td>
-			<td>2020-12-05</td>
-			<td>2020-12-05</td>
-            <td>Null</td>
-            <td>50</td>
-            <td>12</td>
-            <td>36521</td>
-			<td><button class="btn btn-secondary">info</button></td>
-			<td><button class="btn btn-warning">Edit</button></td>
-			<td><button class="btn btn-danger">Delete</button></td>
-		</tr>
 		
 	</table>
 	
