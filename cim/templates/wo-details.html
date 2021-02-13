@@ -13,7 +13,7 @@
 			<h3>Manage Work Order Details</h3>
 			<h5 class="access-level">This page requires supervisor-level access permission</h5>
 			<p>Manage(View, Add , Edit and Delete) products in a WorkOrder</p>
-			<button type="button" class="btn btn-light">Back to Workorders</button>
+			<button type="button" class="btn btn-light" onclick=go_back()>Back to Workorders</button>
 		</div>
 
 		<div class="process-overview">
@@ -34,7 +34,7 @@
 <div class='intro-div'>
 	<div class="two-column">
 		<div id="data-entry-div">
-			<h3>Update Products in Workorder #1 </h3>
+			<h3>Update Products in Workorder <b>{{wo_id}} </b></h3>
 			<h4>Add a New Product</h4>
 			<p>Add new product to this order. You will be redirecterd to
 				a new page to enter componenets information for the new product</p>
@@ -42,19 +42,18 @@
 			<form id="product-data-entry" action="">
 				<div class="inner-div">
 					<label for="product_family">Product Family:</label>
-					<select name="product_family" id="product_family">
-						<option value="0">Baic</option>
-						<option value="1">Pro</option>
+					<select class="custom-select" id="product_family" required>
+						<option selected>Select Family:</option>
+						{% for product in products_catalog %}
+							<option>{{product}}</option>
+						{% endfor %}
 					</select>
-					
-					<label for="product_pn">Product Part Number: </label>
-					<select name="product_pn" id="product_pn">
-						<option value="0">Baic-i3</option>
-						<option value="1">Baic-i5</option>
-						<option value="2">Baic-i7</option>
-						<option value="3">Pro-i3</option>
-						<option value="4">Pro-i5</option>
-						<option value="5">Pro-i7</option>
+			
+					<select class="custom-select" id="product_pn">
+						<option selected>Select Family First:</option>
+						{% for product in products_catalog %}
+							<option>{{product}}</option>
+						{% endfor %}
 					</select>
 				</div>
 		
@@ -69,18 +68,20 @@
 			<p>Open another workorder products list using the form below:</p>
 
 			<div class="inner-div">
-				<label for="wo_id">Workorder ID:</label>
-				<input type="text" name="wo_id" id="product_sn" placeholder="wo_id">
+				<form action="">
+					<label for="wo_id">Workorder ID:</label>
+					<input type="text" name="wo_id" id="wo_id_reload" placeholder="wo_id">
 
-				<input type="button" class="btn btn-success" value="Refresh">
-								
+					<input type="button" class="btn btn-success" value="Refresh" onclick=reload_workorder()>
+					
+				</form>				
 			</div>
-						
+			
+			<p> example: 879845</p>
 		</div>
 
 	</div>
 </div>
-
 
 <!-- dummy content for demo --will be replaced -->
 <div id="results">
@@ -99,42 +100,33 @@
 			<th>Components</th>
 			<th>Edit</th>
 			<th>Delete</th>
-		</tr>
-		<tr>
-			<td>P1000</td>
-			<td>Baic</td>
-            <td>Baic-i3</td>
-            <td>QC</td>
-			<td>2020-12-05</td>
-			<td>Null</td>
-            <td>Null</td>
-            <td>50</td>
-            <td>12</td>
-            <td>123654</td>
-			<td><button class="btn btn-secondary"><a href="\product-details">info (demo)</a> </button></td>
-			<td><button class="btn btn-warning">Edit</button></td>
-			<td><button class="btn btn-danger">Delete</button></td>
-		</tr>
-		<tr>
-			<td>P2000</td>
-			<td>Pro</td>
-            <td>Pro-i7</td>
-            <td>shipping</td>
-			<td>2020-12-05</td>
-			<td>2020-12-05</td>
-            <td>Null</td>
-            <td>50</td>
-            <td>12</td>
-            <td>36521</td>
-			<td><button class="btn btn-secondary">info</button></td>
-			<td><button class="btn btn-warning">Edit</button></td>
-			<td><button class="btn btn-danger">Delete</button></td>
-		</tr>
+			
+			{% for product in products %}
+				<tr>
+					<td>{{product.product_sn}}</td>
+					<td>{{product.product_family}}</td>
+					<td>{{product.product_pn}}</td>
+					<td>{{product.product_status}}</td>
+					<td>{{product.product_date_of_assembly}}</td>
+					<td>{{product.product_qc_date}}</td>
+					<td>{{product.product_warranty_expiration_date}}</td>
+					<td>{{product.product_employee_id}}</td>
+					<td>{{product.product_location_id}}</td>
+					<td>{{product.product_sc_sn}}</td>
+					<td><button class="btn btn-secondary" onclick=components_info("{{product.product_sn}}")>info</button></td>
+					<td><button class="btn btn-warning" onclick=edit_product_info("{{product.product_sn}}")>Edit</button></td>
+					<td><button class="btn btn-danger" onclick=delete_product("{{product.product_sn}}")>Delete</button></td>
+				</tr>
+			{% endfor %}
+			
+			
+		
 		
 	</table>
 	
 </div>
 
+<script src="{{ url_for('static', filename='js/wo-details.js') }}"></script>
 
 {% endblock%}
 

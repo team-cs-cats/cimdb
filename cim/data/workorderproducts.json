@@ -1,0 +1,12 @@
+
+{    "879845":[
+        {"product_sn":"P7125","product_family":"Pro","product_pn":"Pro-i5","product_date_of_assembly":"06/17/2020","product_qc_date":null,"product_warranty_expiration_date":null,"product_employee_id":11,"product_location_id":14777,"product_sc_sn":"472694","product_status":"QC_pending"},
+        {"product_sn":"P8766","product_family":"Pro","product_pn":"Pro-i7","product_date_of_assembly":"02/13/2020","product_qc_date":"03/09/2020","product_warranty_expiration_date":"08/20/2020","product_employee_id":64,"product_location_id":77314,"product_sc_sn":"766959","product_status":"QC_pending"},
+        {"product_sn":"P1006","product_family":"Basic","product_pn":"Basic-i3","product_date_of_assembly":"06/15/2020","product_qc_date":"06/13/2020","product_warranty_expiration_date":"05/14/2020","product_employee_id":62,"product_location_id":61913,"product_sc_sn":"786612","product_status":"QC_pending"},
+        {"product_sn":"P4762","product_family":"Pro","product_pn":"Pro-i3","product_date_of_assembly":"06/10/2020","product_qc_date":null,"product_warranty_expiration_date":null,"product_employee_id":34,"product_location_id":72595,"product_sc_sn":"394782","product_status":"QC_pending"}
+        ],
+    "815348":[
+        {"product_sn":"P1478","product_family":"Basic","product_pn":"Basic-i5","product_date_of_assembly":"03/08/2020","product_qc_date":null,"product_warranty_expiration_date":null,"product_employee_id":44,"product_location_id":99862,"product_sc_sn":"266679","product_status":"QC_pending"},
+        {"product_sn":"P7748","product_family":"Pro","product_pn":"Pro-i3","product_date_of_assembly":"01/30/2021","product_qc_date":null,"product_warranty_expiration_date":null,"product_employee_id":10,"product_location_id":92746,"product_sc_sn":"037062","product_status":"QC_pending"}
+    ]
+}
