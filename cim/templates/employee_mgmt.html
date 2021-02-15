@@ -44,6 +44,12 @@ Add New Employee
 		<label for="new_employee_email">Employee Email:</label>
 		<input type="text" class='m-1' name="new_employee_email" id="new_employee_email" placeholder="jsmith8@2fast4you.com">
 
+		<select class="custom-select m-1" id="new_employee_group" required>
+			<option selected>Select Group: </option>
+		    <option value='Production'>Production</option>
+		    <option value='Supervisor'>Supervisor</option>
+		</select>
+
 		<select class="custom-select m-1" id="new_employee_site">
 			<option selected>Select Site: </option>
 			{% for site in sites %}
@@ -86,6 +92,12 @@ Filter Existing Employees
 
 		<label for="existing_employee_email">Employee Email:</label>
 		<input type="text" class='m-1' name="existing_employee_email" id="existing_employee_email" placeholder="jsmith8@2fast4you.com">
+
+		<select class="custom-select m-1" id="existing_employee_group">
+			<option selected>Select Group: </option>
+		    <option value='Production'>Production</option>
+		    <option value='Supervisor'>Supervisor</option>
+		</select>
 
 		<select class="custom-select m-1" id="existing_employee_site">
 			<option selected>Select Site: </option>
