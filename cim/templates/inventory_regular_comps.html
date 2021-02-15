@@ -66,7 +66,7 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 
 <!-- Header for Filter section -->
 {% block filter_header %}
-Filter Regular Components
+Filter Existing Regular Components
 {% endblock %}
 
 <!-- Description for Filter section -->
@@ -78,7 +78,7 @@ Note that each shelf in each room can store multiple regular components regardle
 {% block filter_form %}
 <form id="existing-reg-comp-data-filter" action="">
 
-	<div class="inner-div text-center">
+	<div class="text-center">
 
 		<select class="custom-select m-1" id="new_category" required>
 			<option selected>Select Category: </option>
@@ -117,90 +117,90 @@ Note that each shelf in each room can store multiple regular components regardle
 <!-- Main results table -->
 {% block table_contents %}
 {% for regular_component in regular_components %}
-        	<div class="row">
-  				<div class="col text-center border-top"> 
-  					Part Number: <strong>{{regular_component.rc_pn}}</strong> - Category: <strong>{{regular_component.rc_category}}</strong>
-  				</div>
+<div class="row">
+		<div class="col text-center border-top"> 
+			Part Number: <strong>{{regular_component.rc_pn}}</strong> - Category: <strong>{{regular_component.rc_category}}</strong>
+		</div>
 
-  			</div>
+	</div>
 
-			<div class="row">
+<div class="row ml-5 mr-5">
 
-				<div class="col d-flex flex-row">
-					<p class="mt-2">Order more of component {{regular_component.rc_pn}}: </p>
-					<div>
-							<select class="custom-select mt-2 pl-2" id="new_rc_site" required>
-							<option selected>Select Site: </option>
-							{% for site in sites %}
-							<option>{{site.site_name}}</option>
-							{% endfor %}
-							</select>
-						</div>
-
-						<div >
-							<select class="custom-select mt-2" id="new_rc_site" required>
-							<option selected>Select Quantity: </option>
-							<option>10</option>
-							<option>25</option>
-							<option>50</option>
-							<option>100</option>
-							</select>
-						</div>
-
-						<div><button class="btn-sm btn-info m-1">Order More</button></div>
-				</div>
-
-				<div class="col d-flex flex-row-reverse"> 
-  					<button class="btn-sm btn-danger">Delete All Component {{regular_component.rc_pn}}</button>
-
-					<button type="button" 
-						class="btn-sm btn-warning text-right" 
-						data-toggle="modal" 
-						data-target="#editRegularComponent" 
-						data-reg-comp-part-number="{{regular_component.rc_pn}}"
-						data-reg-comp-category="{{regular_component.rc_category}}"
-						data-title="Edit Quantity of Part Number {{regular_component.rc_pn}}">Edit Details for Component {{regular_component.rc_pn}}</button>
-
-				</div>
-  			</div>
-
-  			<div class="row">
-  				
-			<table class="table table-striped">
-				<tr>
-					<th>Site</th>
-					<th>Location</th>
-					<th>Quantity</th>
-					<th>Edit Quantity</th>
-					<th>Delete from Location</th>
-				</tr>
-				{% for location in regular_component.rc_locations %}
-				<tr>
-					<td>{% for site in sites %}{% if site.site_id == location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}</td>
-					<td>Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</td>
-					<td>{{location.quantity_at_location}}</td>
-					
-					<th><button type="button" 
-						class="btn-sm btn-warning text-right" 
-						data-toggle="modal" 
-						data-target="#editRegularComponentQuantity" 
-						data-reg-comp-part-number="{{regular_component.rc_pn}}"
-						data-reg-comp-category="{{regular_component.rc_category}}"
-						data-reg-comp-site-name="{% for site in sites %}{% if location.location_site_id == site.site_id%}{{site.site_name}}{% endif %}{% endfor %}" 
-						data-reg-comp-room-number="{{location.location_room_number}}" 
-						data-reg-comp-shelf-number="{{location.location_shelf_number}}" 
-						data-reg-comp-quantity={{location.quantity_at_location}}
-						data-title="Edit Quantity of Part Number {{regular_component.rc_pn}}">Edit</button></th>
-
-					<td><button class="btn-sm btn-danger">Delete</button></td>
-				</tr>
+	<div class="col d-flex flex-row ml-5">
+		<p class="mt-2">Order more of component {{regular_component.rc_pn}}: </p>
+		<div>
+				<select class="custom-select mt-2 pl-2" id="new_rc_site" required>
+				<option selected>Select Site: </option>
+				{% for site in sites %}
+				<option>{{site.site_name}}</option>
 				{% endfor %}
-			</table>
+				</select>
+			</div>
 
-  			</div>
+			<div >
+				<select class="custom-select mt-2" id="new_rc_site" required>
+				<option selected>Select Quantity: </option>
+				<option>10</option>
+				<option>25</option>
+				<option>50</option>
+				<option>100</option>
+				</select>
+			</div>
 
-			
-			{% endfor %}
+			<div><button class="btn-sm btn-info m-1">Order More</button></div>
+	</div>
+
+	<div class="col d-flex flex-row-reverse"> 
+			<button class="btn-sm btn-danger">Delete All Component {{regular_component.rc_pn}}</button>
+
+		<button type="button" 
+			class="btn-sm btn-warning text-right" 
+			data-toggle="modal" 
+			data-target="#editRegularComponent" 
+			data-reg-comp-part-number="{{regular_component.rc_pn}}"
+			data-reg-comp-category="{{regular_component.rc_category}}"
+			data-title="Edit Quantity of Part Number {{regular_component.rc_pn}}">Edit Details for Component {{regular_component.rc_pn}}</button>
+
+	</div>
+	</div>
+
+	<div class="row ml-5 mr-5">
+		
+<table class="table table-striped ml-5 mr-5">
+	<tr>
+		<th>Site</th>
+		<th>Location</th>
+		<th>Quantity</th>
+		<th>Edit Quantity</th>
+		<th>Delete from Location</th>
+	</tr>
+	{% for location in regular_component.rc_locations %}
+	<tr>
+		<td>{% for site in sites %}{% if site.site_id == location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}</td>
+		<td>Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</td>
+		<td>{{location.quantity_at_location}}</td>
+		
+		<th><button type="button" 
+			class="btn-sm btn-warning text-right" 
+			data-toggle="modal" 
+			data-target="#editRegularComponentQuantity" 
+			data-reg-comp-part-number="{{regular_component.rc_pn}}"
+			data-reg-comp-category="{{regular_component.rc_category}}"
+			data-reg-comp-site-name="{% for site in sites %}{% if location.location_site_id == site.site_id%}{{site.site_name}}{% endif %}{% endfor %}" 
+			data-reg-comp-room-number="{{location.location_room_number}}" 
+			data-reg-comp-shelf-number="{{location.location_shelf_number}}" 
+			data-reg-comp-quantity={{location.quantity_at_location}}
+			data-title="Edit Quantity of Part Number {{regular_component.rc_pn}}">Edit</button></th>
+
+		<td><button class="btn-sm btn-danger">Delete</button></td>
+	</tr>
+	{% endfor %}
+</table>
+
+	</div>
+
+
+{% endfor %}
 
 {% endblock %}
 
@@ -208,7 +208,7 @@ Note that each shelf in each room can store multiple regular components regardle
 
 <!-- Page-specific modals -->
 {% block page_modals %}
-<!-- Modal popup for regular component quantity Edit feature -->=
+<!-- Modal popup for regular component quantity Edit feature -->
 <div id="editRegularComponentQuantity" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -236,7 +236,7 @@ Note that each shelf in each room can store multiple regular components regardle
     </div>
 
 
-<!-- Modal popup for regular component details Edit feature -->=
+<!-- Modal popup for regular component details Edit feature -->
 <div id="editRegularComponentQuantity" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
