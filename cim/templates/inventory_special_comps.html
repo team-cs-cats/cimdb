@@ -22,9 +22,6 @@
 </div>
 
 
-
-
-
 <div id="data-add" class="border">
 
 	<div class="text-center"><h6>Order New CPUs (Special Components)</h6></div>
@@ -67,65 +64,46 @@
 
 
 
+<div id="data-filtering" class="mb-0">
 
+	<div class="text-center"><h6>Filter Existing CPUs (Special Components)</h6></div>
 
+	<form id="existing-reg-comp-data-filter" action="">
 
+		<div class="inner-div text-center">
 
-<div class="row">
+			<label for="new_reg_comp_part_number">Serial Number: </label>
+			<input type="number" min="1000000000" max="9999999998" class='m-1' name="existing_reg_comp_serial_number" id="existing_reg_comp_serial_number" placeholder="1234567890">	
 
-    <div class="col-2 text-center">
-      <!-- Special Components Filter -->
-      <div class="text-center"><h6>Filter Special Components</h6></div>
+			<label for="new_reg_comp_part_number">Part Number: </label>
+			<input type="number" min="10000" max="99998" class='m-1' name="existing_reg_comp_part_number" id="existing_reg_comp_part_number" placeholder="12345">		
 
-      <div id="data-filtering">
+			<select class="custom-select m-1" id="existing_reg_comp_site">
+				<option selected>Select Site: </option>
+				{% for site in sites %}
+					<option>{{site.site_name}}</option>
+				{% endfor %}
+			</select>
 
-		<form id="sc-data-filter" class="form-horizontal" action="">
+			<label for="new_reg_comp_room_number">Room Number: </label>
+			<input type="number" min="0" max="99" class='m-1' name="existing_reg_comp_room_number" id="existing_reg_comp_room_number" placeholder="99">
 
-			<div class="form-row">
-				<div class="col-sm">
-					<input type="number" name="sc_sn" id="sc_sn" placeholder="Serial Number">
-				</div>
-			</div>
+			<label for="new_reg_comp_shelf_number">Shelf Number: </label>
+			<input type="number" min="0" max="99" class='m-1' name="existing_reg_comp_shelf_number" id="existing_reg_comp_shelf_number" placeholder="99">
 
-			<div class="form-row">
-				<div class="col-sm">
-					<input type="number" name="sc_pn" id="sc_pn" placeholder="Part Number">
-				</div>
-			</div>
-
-			<select class="custom-select" id="new_site" required>
-							<option selected>Select Site: </option>
-							{% for site in sites %}
-						    	<option>{{site.site_name}}</option>
-						    {% endfor %}
-						</select>
-
-			<div class="form-row">
-				<div class="col-sm">
-					<input type="number" name="sc_room" id="sc_room" placeholder="Room # (ie. 99)">
-				</div>
-			</div>
-
-			<div class="form-row">
-				<div class="col-sm">
-					<input type="number" name="sc_shelf" id="sc_shelf" placeholder="Shelf # (ie. 99)">
-				</div>
-			</div>
-
-			<div class="form-row text-center">
-				<label for="sc_is_free">Is Free: </label> <input type="checkbox" name="sc_is_free" id="sc_is_free">
-			</div>
+			<label for="sc_is_free">Is Free: </label>
+			<input type="checkbox" name="sc_is_free" id="sc_is_free">
 		
-			<div class="inner-div">
-				<input type="button" class="btn-sm btn-primary" value="Filter" onclick=addData() >
-				<input type="button" class="btn-sm btn-primary" value="Clear Filters" onclick=clearFilters() >
-			</div>
+			<input type="button" class="btn-sm btn-primary m-1" value="Filter" onclick=filterData() >
+			<input type="button" class="btn-sm btn-primary m-1" value="Clear Filters" onclick=clearFilters() >
 
-			<div class='text-center'><h6>Note that each shelf in each room can store multiple special components, each with a unique serial number.</h6></div>
-		</form>
-	</div>
+			<div>Note that each shelf in each room can store multiple special components, each with a unique serial number.</div>
+		</div>
+        
+	</form>
+</div>
 
-    </div>
+
 
     <div class="col-8">
       <!-- Special Components Results -->
