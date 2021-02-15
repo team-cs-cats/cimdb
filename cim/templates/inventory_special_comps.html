@@ -16,7 +16,7 @@
 
 <!-- add new form -->
 <div class="intro-div">
-    <h4>Inventory - CPUs (Special Components)</h4>
+	<h4>Inventory - CPUs (Special Components)</h4>
 	<p>Each CPU is a special component with a unique serial number, and can only be stored in a single location at a single site.</p>
 	<p>A special component is considered 'free' if it has not yet been assigned to be assembled into a particular product.</p> 
 </div>
@@ -25,53 +25,53 @@
 <div>
 
 	<div class="card m-3 p-2 border">
-  <div class="row">
-  	<div class="text-center"><h6>Order New CPUs (Special Components)</h6></div>
-    <div class="col-sm">
-      	
-		<p class="text-justify">If new CPUs (special components with unique serial numbers) need to be added to the inventory, use this form. Newly added CPUs will have unique serial numbers generated upon creation. Note that all ordered components will be placed in the Receiving Department (Room 0, Shelf 0) at the selected site.</p>
+		<div class="row">
+			<div class="text-center"><h6>Order New CPUs (Special Components)</h6></div>
+			<div class="col-sm">
+				
+				<p class="text-justify">If new CPUs (special components with unique serial numbers) need to be added to the inventory, use this form. Newly added CPUs will have unique serial numbers generated upon creation. Note that all ordered components will be placed in the Receiving Department (Room 0, Shelf 0) at the selected site.</p>
 
-    </div>
-    
+			</div>
+			
 
-    <div class="col-sm">
-      
-    	<form id="add-special-components" action="">
+			<div class="col-sm">
+				
+				<form id="add-special-components" action="">
 
-		<div class="inner-div text-center">
+					<div class="inner-div text-center">
 
-			<label>Add new Special Components to Inventory: </label>
+						<label>Add new Special Components to Inventory: </label>
 
-			<label for="new_reg_comp_part_number">Part Number: </label>
-			<input type="number" min="10000" max="99998" class='m-1' name="new_reg_comp_part_number" id="new_reg_comp_part_number" placeholder="12345" required>
+						<label for="new_reg_comp_part_number">Part Number: </label>
+						<input type="number" min="10000" max="99998" class='m-1' name="new_reg_comp_part_number" id="new_reg_comp_part_number" placeholder="12345" required>
 
-			<select class="custom-select m-1" id="new_site" required>
+						<select class="custom-select m-1" id="new_site" required>
 							<option selected>CPU Type: </option>
 							{% for sc_category in special_components_catalog.CPU %}
-						    	<option>{{sc_category}}</option>
-						    {% endfor %}
+							<option>{{sc_category}}</option>
+							{% endfor %}
 						</select>
 
-			<select class="custom-select m-1" id="new_reg_comp_site" required>
-				<option selected>Select Site: </option>
-				{% for site in sites %}
-					<option>{{site.site_name}}</option>
-				{% endfor %}
-			</select>
+						<select class="custom-select m-1" id="new_reg_comp_site" required>
+							<option selected>Select Site: </option>
+							{% for site in sites %}
+							<option>{{site.site_name}}</option>
+							{% endfor %}
+						</select>
 
-			<label for="new_reg_comp_quantity">Order Quantity: </label>
-			<input type="number" min="1" max="50" class='m-1' name="new_reg_comp_quantity" id="new_reg_comp_quantity" placeholder="#" required>
-		
-			<input type="button" class="btn-sm btn-success m-1" value="Order New Special Components" onclick=addData() >
+						<label for="new_reg_comp_quantity">Order Quantity: </label>
+						<input type="number" min="1" max="50" class='m-1' name="new_reg_comp_quantity" id="new_reg_comp_quantity" placeholder="#" required>
+						
+						<input type="button" class="btn-sm btn-success m-1" value="Order New Special Components" onclick=addData() >
+					</div>
+
+					
+					
+				</form>
+
+			</div>
 		</div>
-
-		
-        
-	</form>
-
-    </div>
-  </div>
-</div>
+	</div>
 
 	
 
@@ -84,58 +84,58 @@
 
 	<div class="card m-3 p-2 border">
 
-	<div class="text-center"><h6>Filter Existing CPUs (Special Components)</h6></div>
+		<div class="text-center"><h6>Filter Existing CPUs (Special Components)</h6></div>
 
-	<div>
-  <div class="row">
-    <div class="col-sm">
+		<div>
+			<div class="row">
+				<div class="col-sm">
 
-    	<p class="text-justify">Note that each shelf in each room can store multiple special components, each with a unique serial number.</p>
+					<p class="text-justify">Note that each shelf in each room can store multiple special components, each with a unique serial number.</p>
 
-    </div>
+				</div>
 
 
-    <div class="col-sm">
-      
+				<div class="col-sm">
+					
 
-    	<form id="existing-reg-comp-data-filter" action="">
+					<form id="existing-reg-comp-data-filter" action="">
 
-		<div class="inner-div text-center">
+						<div class="inner-div text-center">
 
-			<label for="new_reg_comp_part_number">Serial Number: </label>
-			<input type="number" min="1000000000" max="9999999998" class='m-1' name="existing_reg_comp_serial_number" id="existing_reg_comp_serial_number" placeholder="1234567890">	
+							<label for="new_reg_comp_part_number">Serial Number: </label>
+							<input type="number" min="1000000000" max="9999999998" class='m-1' name="existing_reg_comp_serial_number" id="existing_reg_comp_serial_number" placeholder="1234567890">	
 
-			<label for="new_reg_comp_part_number">Part Number: </label>
-			<input type="number" min="10000" max="99998" class='m-1' name="existing_reg_comp_part_number" id="existing_reg_comp_part_number" placeholder="12345">		
+							<label for="new_reg_comp_part_number">Part Number: </label>
+							<input type="number" min="10000" max="99998" class='m-1' name="existing_reg_comp_part_number" id="existing_reg_comp_part_number" placeholder="12345">		
 
-			<select class="custom-select m-1" id="existing_reg_comp_site">
-				<option selected>Select Site: </option>
-				{% for site in sites %}
-					<option>{{site.site_name}}</option>
-				{% endfor %}
-			</select>
+							<select class="custom-select m-1" id="existing_reg_comp_site">
+								<option selected>Select Site: </option>
+								{% for site in sites %}
+								<option>{{site.site_name}}</option>
+								{% endfor %}
+							</select>
 
-			<label for="new_reg_comp_room_number">Room Number: </label>
-			<input type="number" min="0" max="99" class='m-1' name="existing_reg_comp_room_number" id="existing_reg_comp_room_number" placeholder="99">
+							<label for="new_reg_comp_room_number">Room Number: </label>
+							<input type="number" min="0" max="99" class='m-1' name="existing_reg_comp_room_number" id="existing_reg_comp_room_number" placeholder="99">
 
-			<label for="new_reg_comp_shelf_number">Shelf Number: </label>
-			<input type="number" min="0" max="99" class='m-1' name="existing_reg_comp_shelf_number" id="existing_reg_comp_shelf_number" placeholder="99">
+							<label for="new_reg_comp_shelf_number">Shelf Number: </label>
+							<input type="number" min="0" max="99" class='m-1' name="existing_reg_comp_shelf_number" id="existing_reg_comp_shelf_number" placeholder="99">
 
-			<label for="sc_is_free">Is Free: </label>
-			<input type="checkbox" name="sc_is_free" id="sc_is_free">
-		
-			<input type="button" class="btn-sm btn-primary m-1" value="Filter" onclick=filterData() >
-			<input type="button" class="btn-sm btn-primary m-1" value="Clear Filters" onclick=clearFilters() >
+							<label for="sc_is_free">Is Free: </label>
+							<input type="checkbox" name="sc_is_free" id="sc_is_free">
+							
+							<input type="button" class="btn-sm btn-primary m-1" value="Filter" onclick=filterData() >
+							<input type="button" class="btn-sm btn-primary m-1" value="Clear Filters" onclick=clearFilters() >
 
-			
+							
+						</div>
+						
+					</form>
+
+
+				</div>
+			</div>
 		</div>
-        
-	</form>
-
-
-    </div>
-  </div>
-</div>
 
 	</div>
 </div>
@@ -143,29 +143,29 @@
 <!-- current special components results -->
 <div id="results">
 	<div class="border pl-1 pr-1 pb-1 mt-0" style="height: 65vh; overflow-y: scroll;">
-	<table class="table table-striped " >
-		<tr >
-			<th>CPU Serial Number</th>
-			<th>Part Number</th>
-			<th>Is Free</th>
-			<th>Site / Location</th>
-			<th>Edit Details</th>
-			<th>Delete</th>
-		</tr>
-		{% for special_component in special_components %}
+		<table class="table table-striped " >
+			<tr >
+				<th>CPU Serial Number</th>
+				<th>Part Number</th>
+				<th>Is Free</th>
+				<th>Site / Location</th>
+				<th>Edit Details</th>
+				<th>Delete</th>
+			</tr>
+			{% for special_component in special_components %}
 			<tr>
 				<td>{{special_component.sc_sn}}</td>
 				<td>{{special_component.sc_pn}}</td>
 				<td> {% if special_component.sc_is_free %} Yes {% else %} No {% endif %}</td>
 				<td>
 					{% for site in sites %}
-						{% if site.site_id == special_component.sc_location.location_site_id %}
-							{{site.site_name}}  
-						{% endif %}
+					{% if site.site_id == special_component.sc_location.location_site_id %}
+					{{site.site_name}}  
+					{% endif %}
 					{% endfor %}
 					/ Room {{special_component.sc_location.location_room_number}}, Shelf {{special_component.sc_location.location_shelf_number}}
 				</td>
-					
+				
 				<!-- <th><button class="btn-sm btn-warning">Edit</button></th> -->
 				<th><button type="button" 
 					class="btn-sm btn-warning" 
@@ -178,74 +178,74 @@
 					data-spec-comp-is-free="{{special_component.sc_is_free}}" 
 					data-title="Edit Special Component ID {{special_component.sc_sn}}">Edit</button></th>
 
-				<td><button class="btn-sm btn-danger">Delete</button></td>
-		</tr>
-	{% endfor %}
-		
-	</table>
+					<td><button class="btn-sm btn-danger">Delete</button></td>
+				</tr>
+				{% endfor %}
+				
+			</table>
+		</div>
 	</div>
-</div>
 
 </div>
 
 
 <!-- Modal popup for special component Edit feature -->
 <div id="editSpecialComponent" class="modal fade" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form>
-                    <div class="modal-header">
-                        <h5 class="modal-title">Modal Window</h5>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">  
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form>
+				<div class="modal-header">
+					<h5 class="modal-title">Modal Window</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">  
 
-                    	<div class="form-group p-1">
-                            <label class="control-label" >Part Number:</label>
-                            <input type="number" min="0" max="999" id="spec-comp-edit-part-number" class="form-control" placeholder="123456" required>
-                        </div> 
+					<div class="form-group p-1">
+						<label class="control-label" >Part Number:</label>
+						<input type="number" min="0" max="999" id="spec-comp-edit-part-number" class="form-control" placeholder="123456" required>
+					</div> 
 
-						<div class="form-group p-1">
-							<label class="control-label" >Site:</label>
-							<select class="custom-select" id="spec-comp-edit-site" required>
+					<div class="form-group p-1">
+						<label class="control-label" >Site:</label>
+						<select class="custom-select" id="spec-comp-edit-site" required>
 							<option selected>Select Site: </option>
-								{% for site in sites %}
-							    	<option>{{site.site_name}}</option>
-							    {% endfor %}
-							</select>
-						</div>                    	
+							{% for site in sites %}
+							<option>{{site.site_name}}</option>
+							{% endfor %}
+						</select>
+					</div>                    	
 
-                        <div class="form-group p-1">
-                            <label class="control-label" >Room Number:</label>
-                            <input type="number" min="0" max="999" id="spec-comp-edit-room-number" class="form-control"  required>
-                        </div>   
+					<div class="form-group p-1">
+						<label class="control-label" >Room Number:</label>
+						<input type="number" min="0" max="999" id="spec-comp-edit-room-number" class="form-control"  required>
+					</div>   
 
-                        <div class="form-group p-1">
-                            <label class="control-label" >Shelf Number:</label>
-                            <input type="number" min="0" max="999" id="spec-comp-edit-shelf-number" class="form-control" required>
-                        </div>  
+					<div class="form-group p-1">
+						<label class="control-label" >Shelf Number:</label>
+						<input type="number" min="0" max="999" id="spec-comp-edit-shelf-number" class="form-control" required>
+					</div>  
 
-						<div class="custom-control custom-checkbox">
-							<label class="custom-control-label" for="defaultUnchecked">Is Free:  </label>
-							<input type="checkbox" class="custom-control-input ml-2" id="spec-comp-edit-is-free" checked/>
-							
-						</div>
-					
+					<div class="custom-control custom-checkbox">
+						<label class="custom-control-label" for="defaultUnchecked">Is Free:  </label>
+						<input type="checkbox" class="custom-control-input ml-2" id="spec-comp-edit-is-free" checked/>
+						
 					</div>
+					
+				</div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary">Update</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary">Update</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
 
 <script>
-$(document).ready(function(){
-    $("#editSpecialComponent").on("show.bs.modal", function(event){
+	$(document).ready(function(){
+		$("#editSpecialComponent").on("show.bs.modal", function(event){
         // Get the button that triggered the modal
         var button = $(event.relatedTarget);
 
@@ -270,7 +270,7 @@ $(document).ready(function(){
 
         
     });
-});
+	});
 </script>
 
 
