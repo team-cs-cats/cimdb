@@ -28,14 +28,14 @@
   <div class="card m-3 p-2 border">
     <div class="row">
       <div class="text-center"><h6>{% block create_header %}{% endblock %}</h6></div>
-      <div class="col-sm">
+      <div class="col">
         
-        <p class="text-justify">{% block create_description %}{% endblock %}</p>
+        <p class="text-justify ">{% block create_description %}{% endblock %}</p>
 
       </div>
       
 
-      <div class="col-sm">
+      <div class="col-6 ">
         
         {% block create_form %}{% endblock %}
 
@@ -58,18 +58,17 @@
 
     <div>
       <div class="row">
-        <div class="col-sm">
-
-          <p class="text-justify">{% block filter_description %}{% endblock %}</p>
-
-        </div>
 
 
-        <div class="col-sm">
+          <p class="text-center">{% block filter_description %}{% endblock %}</p>
+
+
+
+
+
           
           {% block filter_form %}{% endblock %}
 
-        </div>
       </div>
     </div>
 
