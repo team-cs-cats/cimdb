@@ -118,6 +118,38 @@ Filter Existing Employees
 <!-- Main results table -->
 {% block table_contents %}
 
+<table class="table table-striped " >
+<tr >
+	<th>First</th>
+	<th>Last</th>
+	<th>ID</th>
+	<th>Email</th>
+	<th>Edit Details</th>
+	<th>Delete Employee</th>
+</tr>
+{% for employee in employees %}
+	{% if employee.employee_group == "production" and site.site_id == employee.employee_site_id %}
+		<tr>
+		      <td>{{employee.employee_first_name}}</td>
+		      <td>{{employee.employee_last_name}}</td>
+		      <td>{{employee.employee_id}}</td>
+		      <td>{{employee.employee_email}}</td>
+
+	<!-- <th><button class="btn-sm btn-warning">Edit</button></th> -->
+	<th><button type="button" 
+		class="btn-sm btn-warning" 
+		data-toggle="modal" 
+		data-target="#editSpecialComponent" 
+		data-spec-comp-part-number="{{special_component.sc_pn}}"
+		data-spec-comp-site-name="{% for site in sites %}{% if special_component.sc_location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}" 
+		data-spec-comp-room-number="{{special_component.sc_location.location_room_number}}" 
+		data-spec-comp-shelf-number="{{special_component.sc_location.location_shelf_number}}" 
+		data-spec-comp-is-free="{{special_component.sc_is_free}}" 
+		data-title="Edit Special Component ID {{special_component.sc_sn}}">Edit</button></th>
+
+		<td><button class="btn-sm btn-danger">Delete</button></td>
+	</tr>
+	{% endfor %}
 
 {% endblock %}
 
