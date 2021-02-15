@@ -337,6 +337,29 @@ def user_management():
 	if request.method=="GET":
 		return render_template("user_management.html", sites=site_results, employees=data.get_emp())
 
+
+@webapp.route('/site_mgmt', methods=['GET', 'POST'])
+@login_required
+def site_management():
+	"""The webapp's page for managing current sites. This allows a manager to update information about current sites."""
+
+	# if the current user is not authenticated, redirect the user to the logged out index page
+	if not current_user.is_authenticated:
+		return redirect(url_for("cim.templates.index"))
+
+
+	# Load SQL query for site data
+	query = "SELECT * FROM sites;"
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	site_results = cursor.fetchall()
+
+	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
+	if len(site_results) == 0:
+		site_results = data.get_sites()
+
+	if request.method=="GET":
+		return render_template("site_mgmt.html", sites=site_results, employees=data.get_emp())
+
 # workorder details. it takes the wo_id as argument to retrive the the information from DB
 @webapp.route('/wo-details', methods=['GET', 'POST'])
 @login_required
