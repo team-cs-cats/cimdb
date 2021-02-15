@@ -103,57 +103,51 @@
 	</form>
 </div>
 
-
-
-    <div class="col-8">
-      <!-- Special Components Results -->
-
-      <div id="results">
-
-      		<div class="border p-1 pt-2" style="height: 50vh; overflow-y: scroll;">
-
-				<table class="table table-striped">
-					<tr>
-						<th>Serial Number</th>
-						<th>Part Number</th>
-						<th>Is Free</th>
-						<th>Site / Location</th>
-						<th>Edit Details</th>
-						<th>Delete</th>
-						</tr>
-						{% for special_component in special_components %}
-							<tr>
-								<td>{{special_component.sc_sn}}</td>
-								<td>{{special_component.sc_pn}}</td>
-								<td> {% if special_component.sc_is_free %} Yes {% else %} No {% endif %}</td>
-								<td>
-									{% for site in sites %}
-										{% if site.site_id == special_component.sc_location.location_site_id %}
-											{{site.site_name}}  
-										{% endif %}
-									{% endfor %}
-									/ Room {{special_component.sc_location.location_room_number}}, Shelf {{special_component.sc_location.location_shelf_number}}
-								</td>
-									
-								<!-- <th><button class="btn-sm btn-warning">Edit</button></th> -->
-								<th><button type="button" 
-									class="btn-sm btn-warning" 
-									data-toggle="modal" 
-									data-target="#editSpecialComponent" 
-									data-spec-comp-part-number="{{special_component.sc_pn}}"
-									data-spec-comp-site-name="{% for site in sites %}{% if special_component.sc_location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}" 
-									data-spec-comp-room-number="{{special_component.sc_location.location_room_number}}" 
-									data-spec-comp-shelf-number="{{special_component.sc_location.location_shelf_number}}" 
-									data-spec-comp-is-free="{{special_component.sc_is_free}}" 
-									data-title="Edit Special Component ID {{special_component.sc_sn}}">Edit</button></th>
-
-								<td><button class="btn-sm btn-danger">Delete</button></td>
-						</tr>
+<!-- current special components results -->
+<div id="results">
+	<div class="border pl-1 pr-1 pb-1 mt-0" style="height: 65vh; overflow-y: scroll;">
+	<table class="table table-striped " >
+		<tr >
+			<th>Serial Number</th>
+			<th>Part Number</th>
+			<th>Is Free</th>
+			<th>Site / Location</th>
+			<th>Edit Details</th>
+			<th>Delete</th>
+		</tr>
+		{% for special_component in special_components %}
+			<tr>
+				<td>{{special_component.sc_sn}}</td>
+				<td>{{special_component.sc_pn}}</td>
+				<td> {% if special_component.sc_is_free %} Yes {% else %} No {% endif %}</td>
+				<td>
+					{% for site in sites %}
+						{% if site.site_id == special_component.sc_location.location_site_id %}
+							{{site.site_name}}  
+						{% endif %}
 					{% endfor %}
-				</table>
-			</div>
-		</div>
-    </div>
+					/ Room {{special_component.sc_location.location_room_number}}, Shelf {{special_component.sc_location.location_shelf_number}}
+				</td>
+					
+				<!-- <th><button class="btn-sm btn-warning">Edit</button></th> -->
+				<th><button type="button" 
+					class="btn-sm btn-warning" 
+					data-toggle="modal" 
+					data-target="#editSpecialComponent" 
+					data-spec-comp-part-number="{{special_component.sc_pn}}"
+					data-spec-comp-site-name="{% for site in sites %}{% if special_component.sc_location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}" 
+					data-spec-comp-room-number="{{special_component.sc_location.location_room_number}}" 
+					data-spec-comp-shelf-number="{{special_component.sc_location.location_shelf_number}}" 
+					data-spec-comp-is-free="{{special_component.sc_is_free}}" 
+					data-title="Edit Special Component ID {{special_component.sc_sn}}">Edit</button></th>
+
+				<td><button class="btn-sm btn-danger">Delete</button></td>
+		</tr>
+	{% endfor %}
+		
+	</table>
+	</div>
+</div>
 
 </div>
 
