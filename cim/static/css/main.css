@@ -60,3 +60,7 @@
   width: 250px;
   height: 150px;
 }
+
+a:hover {
+  font-weight: 500;
+}

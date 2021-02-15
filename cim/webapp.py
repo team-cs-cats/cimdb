@@ -337,7 +337,7 @@ def user_management():
 	if request.method=="GET":
 		return render_template("user_management.html", sites=site_results, employees=data.get_emp())
 
-@webapp.route('/employee_mgmt', methods=['GET', 'POST'])
+@webapp.route('/employee-mgmt', methods=['GET', 'POST'])
 @login_required
 def employee_management():
 	"""The webapp's page for managing current sites. This allows a manager to update information about current sites."""
@@ -360,7 +360,7 @@ def employee_management():
 		return render_template("employee_mgmt.html", sites=site_results, employees=data.get_emp())
 
 
-@webapp.route('/site_mgmt', methods=['GET', 'POST'])
+@webapp.route('/site-mgmt', methods=['GET', 'POST'])
 @login_required
 def site_management():
 	"""The webapp's page for managing current sites. This allows a manager to update information about current sites."""
