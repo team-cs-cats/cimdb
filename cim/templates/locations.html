@@ -29,18 +29,18 @@
 
 			<label>Add new location to site: </label>
 
-			<select class="custom-select" id="new_site" required>
+			<select class="custom-select m-1" id="new_site" required>
 							<option selected>Select Site: </option>
 							{% for site in sites %}
 						    	<option>{{site.site_name}}</option>
 						    {% endfor %}
 						</select>
 
-			<input type="text" name="new_location_room_number" id="location_room_number" placeholder="Room Number">
+			<input type="text" class='m-1' name="new_location_room_number" id="location_room_number" placeholder="Room Number">
 
-			<input type="text" name="new_location_shelf_number" id="location_shelf_number" placeholder="Shelf Number">
+			<input type="text" class='m-1' name="new_location_shelf_number" id="location_shelf_number" placeholder="Shelf Number">
 		
-			<input type="button" class="btn-sm btn-success" value="Add New Location" onclick=addData() >
+			<input type="button" class="btn-sm btn-success m-1" value="Add New Location" onclick=addData() >
 		</div>
 
 		<div class="inner-div text-center">Each new location will automatically be assigned a location ID upon creation.</div>
@@ -57,16 +57,16 @@
 
 			<label>Filter existing location information: </label>
 
-			<input type="text" name="location_site_id" id="location_site_id" placeholder="Site ID">
+			<input type="text" class='m-1' name="location_site_id" id="location_site_id" placeholder="Site ID">
 
-			<input type="text" name="location_id" id="location_id" placeholder="Location ID">
+			<input type="text" class='m-1' name="location_id" id="location_id" placeholder="Location ID">
 
-			<input type="text" name="location_room_number" id="location_room_number" placeholder="Room Number">
+			<input type="text" class='m-1' name="location_room_number" id="location_room_number" placeholder="Room Number">
 
-			<input type="text" name="location_shelf_number" id="location_shelf_number" placeholder="Shelf Number">
+			<input type="text" class='m-1' name="location_shelf_number" id="location_shelf_number" placeholder="Shelf Number">
 		
-			<input type="button" class="btn-sm btn-primary" value="Filter" onclick=filterData() >
-			<input type="button" class="btn-sm btn-primary" value="Clear Filters" onclick=clearFilters() >
+			<input type="button" class="btn-sm btn-primary m-1" value="Filter" onclick=filterData() >
+			<input type="button" class="btn-sm btn-primary m-1" value="Clear Filters" onclick=clearFilters() >
 
 			<div>For all sites, Receiving Department is Room 0, Shelf 0 and Shipping Department is Room 0, Shelf 1.</div>
 			<div>Please note that if a deleted location is storing products or components at the time of deletion, those products and components will be moved to the Receiving Department of that site.</div>
