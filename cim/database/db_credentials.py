@@ -9,8 +9,8 @@
 # For Local Development
 host = 'localhost'
 user = 'root'                                   # can be different if you set up another username in your MySQL installation
-passwd = 'nottellingyou'                        # set accordingly
-db = 'bsg'
+passwd = '1qaz2wsx!QAZ@WSX'                        # set accordingly
+db = 'cimdb'
 
 
 # For OSU Flip Servers

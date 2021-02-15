@@ -2,6 +2,9 @@
 from flask import Flask, render_template, flash
 from flask import request, redirect
 
+# add json to handle db connection
+from flask import json
+
 # import these to handle user accounts
 from flask import url_for, session
 import flask_login
@@ -11,8 +14,8 @@ from flask_login import login_user, current_user, logout_user, login_required
 # perform a local import to load the dummy data
 from cim.dummy_data import DummyData
 
-# This will eventually connect to the database, but for now it is not enabled
-# from db_connector.db_connector import connect_to_database, execute_query
+# connect to databse
+import cim.database.db_connector as db
 
 
 #create the web application
@@ -26,8 +29,8 @@ webapp.secret_key = 'Team CS Cats'
 login_manager = flask_login.LoginManager()
 login_manager.init_app(webapp)
 
-
-
+# Create a connection to the database
+db_connection = db.connect_to_database()
 
 
 # Load dummy data for the webpages to reference
@@ -46,6 +49,7 @@ for employee in data.get_emp():
 # Create a basic user class
 class User(flask_login.UserMixin):
 	pass
+
 
 # Associate the login manager with the users provided, unless the user provided isn't on the allowed dictionary
 @login_manager.user_loader
@@ -106,6 +110,20 @@ def index():
 
 	# If the user provided bad credentials, return them to the index page (TODO: flash error)
 	return render_template("index.html")
+
+# test route for adding database conenction
+@webapp.route('/test', methods=['GET', 'POST'])
+@login_required
+def test():
+
+	# Write the query and save it to a variable
+	query = "SELECT * FROM sites;"
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	results = json.dumps(cursor.fetchall())
+
+	# otherwise, return the workorders page
+	if request.method=="GET":
+		return results
 
 # Provide a route to redirect a logged in user to the orders page web app
 @webapp.route('/login', methods=['GET', 'POST'])
