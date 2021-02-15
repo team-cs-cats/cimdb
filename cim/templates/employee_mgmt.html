@@ -152,11 +152,64 @@ Filter Existing Employees
 		<td><button class="btn-sm btn-danger">Delete</button></td>
 	</tr>
 	{% endfor %}
-
+{% endblock %}
 <!-- Page-specific modals -->
 {% block page_modals %}
 <!-- Modal popup for special component Edit feature -->
+<div id="editEmployee" class="modal fade" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form>
+				<div class="modal-header">
+					<h5 class="modal-title">Modal Window</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">                    	
 
+					<div class="form-group p-1">
+						<label class="control-label" >First Name:</label>
+						<input type="text" id="site-employee-first-name" class="form-control" placeholder="Jane" required>
+					</div>  
+
+					<div class="form-group p-1">
+						<label class="control-label" >Last Name:</label>
+						<input type="text" id="site-employee-last-name" class="form-control" placeholder='Doe' required>
+					</div>  
+
+					<div class="form-group p-1">
+						<label class="control-label" >Group:</label>
+						<select class="custom-select" id="site-employee-group" required>
+							<option selected>Select Group: </option>
+							<option>Supervisor</option>
+							<option>Production</option>
+						</select>
+					</div>
+
+					<div class="form-group p-1">
+						<label class="control-label" >Site:</label>
+						<select class="custom-select" id="site-employee-site" required>
+							<option selected>Select Site: </option>
+							{% for site in sites %}
+							<option>{{site.site_address_city}}</option>
+							{% endfor %}
+						</select>
+					</div>  
+
+					<div class="form-group p-1">
+						<label class="control-label" >Email:</label>
+						<input type="text" id="site-employee-email" class="form-control" placeholder="jsmith8@2fast4you.com" required>
+					</div>   
+					
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary">Update</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
 {% endblock %}
 
