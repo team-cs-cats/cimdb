@@ -24,6 +24,7 @@ CREATE TABLE `WorkOrderProducts` (
   PRIMARY KEY (`wop_id`)
 );
 
+DROP TABLE IF EXISTS `Sites`;
 CREATE TABLE `Sites` (
   `site_id` int,
   `site_address_1` varchar(255),
@@ -34,6 +35,7 @@ CREATE TABLE `Sites` (
   PRIMARY KEY (`site_id`)
 );
 
+DROP TABLE IF EXISTS `Locations`;
 CREATE TABLE `Locations` (
   `location_id` int,
   `location_room_number` int,
@@ -42,6 +44,7 @@ CREATE TABLE `Locations` (
   PRIMARY KEY (`location_id`)
 );
 
+DROP TABLE IF EXISTS `ProductsRegularComps`;
 CREATE TABLE `ProductsRegularComps` (
   `prc_id` int,
   `prc_product_sn` int,
@@ -50,6 +53,7 @@ CREATE TABLE `ProductsRegularComps` (
   PRIMARY KEY (`prc_id`)
 );
 
+DROP TABLE IF EXISTS `Employees`;
 CREATE TABLE `Employees` (
   `employee_id` int,
   `employee_group` varchar(255),
@@ -61,6 +65,7 @@ CREATE TABLE `Employees` (
   PRIMARY KEY (`employee_id`)
 );
 
+DROP TABLE IF EXISTS `WorkOrders`;
 CREATE TABLE `WorkOrders` (
   `wo_id` int,
   `wo_open_date` date,
@@ -71,6 +76,7 @@ CREATE TABLE `WorkOrders` (
   PRIMARY KEY (`wo_id`)
 );
 
+DROP TABLE IF EXISTS `SpecialComponents`;
 CREATE TABLE `SpecialComponents` (
   `sc_sn` int,
   `sc_pn` char(16),
@@ -80,12 +86,14 @@ CREATE TABLE `SpecialComponents` (
   PRIMARY KEY (`sc_sn`)
 );
 
+DROP TABLE IF EXISTS `RegularComponents`;
 CREATE TABLE `RegularComponents` (
   `rc_pn` int,
   `rc_category` varchar(255),
   PRIMARY KEY (`rc_pn`)
 );
 
+DROP TABLE IF EXISTS `LocationsRegularComps`;
 CREATE TABLE `LocationsRegularComps` (
   `lrc_id` int,
   `lrc_location_id` int,
