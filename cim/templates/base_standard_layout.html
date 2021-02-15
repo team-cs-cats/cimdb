@@ -9,7 +9,7 @@
 <!-- Inherit from base template -->
 {% include 'base_logged_in.html' %}
 
-{% block body %}
+
 
 <!-- scripts to run the Edit modals -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -18,26 +18,26 @@
 
 <!-- add new form -->
 <div class="intro-div">
-  <h4>{% block page-header %}{% endblock %}</h4>
+  <h4>{% block page_header %}{% endblock %}</h4>
 
-  {% block page-description %}{% endblock %}
+  {% block page_description %}{% endblock %}
 </div>
 
 <div>
 
   <div class="card m-3 p-2 border">
     <div class="row">
-      <div class="text-center"><h6>{% block create-header %}{% endblock %}</h6></div>
+      <div class="text-center"><h6>{% block create_header %}{% endblock %}</h6></div>
       <div class="col-sm">
         
-        <p class="text-justify">{% block create-description %}{% endblock %}</p>
+        <p class="text-justify">{% block create_description %}{% endblock %}</p>
 
       </div>
       
 
       <div class="col-sm">
         
-        {% block create-form %}{% endblock %}
+        {% block create_form %}{% endblock %}
 
       </div>
     </div>
@@ -54,20 +54,20 @@
 
   <div class="card m-3 p-2 border">
 
-    <div class="text-center"><h6>{% block filter-header %}{% endblock %}</h6></div>
+    <div class="text-center"><h6>{% block filter_header %}{% endblock %}</h6></div>
 
     <div>
       <div class="row">
         <div class="col-sm">
 
-          <p class="text-justify">{% block filter-description %}{% endblock %}</p>
+          <p class="text-justify">{% block filter_description %}{% endblock %}</p>
 
         </div>
 
 
         <div class="col-sm">
           
-          {% block filter-form %}{% endblock %}
+          {% block filter_form %}{% endblock %}
 
         </div>
       </div>
@@ -81,28 +81,21 @@
   <div class="border pl-1 pr-1 pb-1 mt-0" style="height: 65vh; overflow-y: scroll;">
     <table class="table table-striped " >
         
-        {% block table-contents %}{% endblock %}
+        {% block table_contents %}{% endblock %}
         
       </table>
     </div>
   </div>
 
-</div>
 
 
 <!-- Modal popup for special component Edit feature -->
-{% block page-modals %}{% endblock %}
+{% block page_modals %}{% endblock %}
 
 <!-- Site-specific javascripts (like modal jquery scripts) -->
-{% block page-scripts %}{% endblock %}
-
-
-</div>
-
-{% endblock %}
+{% block page_scripts %}{% endblock %}
 
 
 
 
-{% endblock %}
-
+{% include 'footer.html' %}
