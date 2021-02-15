@@ -7,6 +7,7 @@
 
 {% block body %} 
 
+
 <!-- add new form -->
 <div class='intro-div'>
 	<div class="two-column">
@@ -34,10 +35,14 @@
 
 		<div class="inner-div">
 			<label for="wo_employee_id">Employee in Charge:</label>
-			<input type="text" name="wo_employee_id" id="wo_employee_id" placeholder="wo_employee_id">
-			
+			<select class="custom-select" id="wo_employee_name_assign" required>
+				{% for employee in employees %}
+					<option>{{employee.employee_first_name}} {{employee.employee_last_name}}</option>
+				{% endfor %}
+			</select>
+
 			<label for="date">Date: </label>
-			<input type="date" name="date" id="date">
+			<input type="date" name="date" id="wo_open_date_assign">
 		</div>
 
 		<div class="inner-div">
@@ -56,22 +61,26 @@
 
 		<div class="inner-div">
 			<label for="wo_id">Workorder ID:</label>
-			<input type="text" name="wo_id" id="wo_id" placeholder="wo_id">
+			<input type="text" name="wo_id" id="wo_id_filter" placeholder="wo_id">
 			
 			<label for="wo_open_date">Workorder Open Date: </label>
-			<input type="date" name="wo_open_date" id="wo_open_date">
+			<input type="date" name="wo_open_date_filter" id="wo_open_date">
 
 			<label for="wo_close_date">Workorder Close Date: </label>
-			<input type="date" name="wo_close_date" id="wo_close_date">
+			<input type="date" name="wo_close_date_filter" id="wo_close_date">
 		</div>
 		
 		
 		<div class="inner-div">
 			<label for="wo_employee_id">Employee in Charge:</label>
-			<input type="text" name="wo_employee_id" id="wo_employee_id" placeholder="wo_employee_id">
+			<select class="custom-select" id="wo_employee_name_filter" required>
+				{% for employee in employees %}
+					<option>{{employee.employee_first_name}} {{employee.employee_last_name}}</option>
+				{% endfor %}
+			</select>
 			
 			<label for="wo_status">status</label>
-			<select name="wo_status" id="wo_status">
+			<select name="wo_status" id="wo_status_filter">
 				<option value="0">Pending_Assembly</option>
 				<option value="1">Pending_QC</option>
 				<option value="2">Pending_Shipping</option>
@@ -96,50 +105,34 @@
 			<th>Open Date</th>
 			<th>Close Date</th>
 			<th>Status</th>
-			<th>Employee</th>
 			<th>Refrence Number</th>
+			<th>Employee</th>
 			<th>Products</th>
 			<th>Edit</th>
 			<th>Delete</th>
 		</tr>
-		<tr>
-			<td>1</td>
-			<td>2020-12-01</td>
-			<td>null</td>
-			<td>open</td>
-			<td>60</td>
-			<td>null</td>
-			<td><button class="btn btn-secondary"><a href="\wo-details">2(demo)</a></button></td>
-			<td><button class="btn btn-warning">Edit</button></td>
-			<td><button class="btn btn-danger">Delete</button></td>
-		</tr>
-		<tr>
-			<td>2</td>
-			<td>2020-12-15</td>
-			<td>2020-12-31</td>
-			<td>closed</td>
-			<td>50</td>
-			<td>H45g</td>
-			<td><button class="btn btn-secondary">3</button></td>
-			<td><button class="btn btn-warning">Edit</button></td>
-			<td><button class="btn btn-danger">Delete</button></td>
-		</tr>
-		<tr>
-			<td>3</td>
-			<td>2021-01-01</td>
-			<td>null</td>
-			<td>open</td>
-			<td>20</td>
-			<td>N8965</td>
-			<td><button class="btn btn-secondary">6</button></td>
-			<td><button class="btn btn-warning">Edit</button></td>
-			<td><button class="btn btn-danger">Delete</button></td>
-		</tr>
+
+		
+		{% for wo in workorders %}
+			<tr>
+				<td>{{wo.wo_id}}</td>
+				<td>{{wo.wo_open_date}}</td>
+				<td>{{wo.wo_close_date}}</td>
+				<td>{{wo.wo_status}}</td>
+				<td>{{wo.wo_reference_number}}</td>
+				<td>{{wo.wo_employee_id}}</td>
+				<td><button class="btn btn-secondary" onclick=products_info("{{wo.wo_id}}")># of products</button></td>
+				<td><button class="btn btn-warning" onclick=edit_workorder_info("{{wo.wo_id}}")>Edit</button></td>
+				<td><button class="btn btn-danger" onclick=delete_workorder("{{wo.wo_id}}")>Delete</button></td>
+			</tr>
+		{% endfor %}
+
 		
 	</table>
 	
 </div>
 
+<script src="{{ url_for('static', filename='js/workorders.js') }}"></script>
 
 {% endblock%}
 

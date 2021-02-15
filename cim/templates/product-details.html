@@ -14,7 +14,7 @@
 			<h5 class="access-level">This page requires supervisor-level access permission for edit details</h5>
 			<h5 class="access-level">Employee-level access can only review data</h5>
 			<p>Manage(View, Add , Edit and Delete) components in a product</p>
-			<button type="button" class="btn btn-light">Back to products list</button>
+			<button type="button" class="btn btn-light" onclick=go_back()>Back to products list</button>
 		</div>
 
 		<div class="process-overview">
@@ -33,9 +33,9 @@
 		<div class="information">
 			<h3>Product Details</h3>
 			
-			<h6>Family: <i>Baic</i> </h6>
-			<h6>PN: <i>Baic-i3</i> </h6>
-			<h6>SN: <i>P1000</i> </h6>
+			<h6>Family: <i>{{product.product_family}}</i> </h6>
+			<h6>PN: <i>{{product.product_pn}}</i> </h6>
+			<h6>SN: <i>{{product.product_sn}}</i> </h6>
 		</div>
 
 		<div class="information">
@@ -44,11 +44,13 @@
 
 			<div class="inner-div">
 				<label for="wo_id">product Serial Number:</label>
-				<input type="text" name="product_sn" id="product_sn" placeholder="product_sn">
+				<input type="text" name="product_sn" id="product_sn_reload" placeholder="product_sn">
 
-				<input type="button" class="btn btn-success" value="Refresh">
+				<input type="button" class="btn btn-success" value="Refresh" onclick=reload_product()>
 								
 			</div>
+
+			<p>for now, only "P7125","P8766" are valid</p>
 						
 		</div>
 
@@ -75,15 +77,17 @@
             
             
 		</tr>
+		
+
 		<tr>
-			<td>i3-123456</td>
-			<td>MB1</td>
-            <td>RAM3</td>
-            <td>3</td>
-			<td>No GC</td>
-			<td>HDD3</td>
-            <td>1</td>
-            <td>Case 1</td>
+			<td>{{components.sc_sn}}</td>
+			<td>{{components.MB}}</td>
+            <td>{{components.RAM}}</td>
+            <td>{{components.RAM_Q}}</td>
+			<td>{{components.GC}}</td>
+			<td>{{components.HDD}}</td>
+            <td>{{components.HDD_Q}}</td>
+            <td>{{components.CASE}}</td>
             
 		</tr>
 				
@@ -107,23 +111,23 @@
 		<div class="inner-div">
 			<label for="motherboard">Mother Board</label>
 			<select name="motherboard" id="motherboard">
-				<option value="0">MB1</option>
-				<option value="1">MB2</option>
-				<option value="2">MB3</option>
+				{% for mb in regular_componenet_catalog["MB"] %}
+					<option> {{mb}} </option>
+				{% endfor %}
 			</select>
 			
 			<label for="case">Case</label>
 			<select name="case" id="case">
-				<option value="0">Case 1</option>
-				<option value="1">Case 2</option>
-				<option value="2">Case 3</option>
+				{% for case in regular_componenet_catalog["Case"] %}
+					<option> {{case}} </option>
+				{% endfor %}
 			</select>
 
 			<label for="gc">Graphic Card</label>
 			<select name="gc" id="gc">
-				<option value="0">No GC</option>
-				<option value="1">GC 1</option>
-				<option value="2">GC 2</option>
+				{% for gc in regular_componenet_catalog["GC"] %}
+					<option> {{gc}} </option>
+				{% endfor %}
 			</select>
 
 			<br>
@@ -132,9 +136,9 @@
 		<div class="inner-div"> 
 			<label for="ram">RAM</label>
 			<select name="ram" id="ram">
-				<option value="0">RAM 1</option>
-				<option value="1">RAM 2</option>
-				<option value="2">RAM 3</option>
+				{% for ram in regular_componenet_catalog["RAM"] %}
+					<option> {{ram}} </option>
+				{% endfor %}
 			</select>
 
 			<label for="ram-quant">RAM Quantity: </label>
@@ -142,9 +146,9 @@
 			
 			<label for="hdd">HDD</label>
 			<select name="hdd" id="hdd">
-				<option value="0">HDD 1</option>
-				<option value="1">HDD 2</option>
-				<option value="2">HDD 3</option>
+				{% for hdd in regular_componenet_catalog["HDD"] %}
+					<option> {{hdd}} </option>
+				{% endfor %}
 			</select>
 
 			<label for="hdd-quant">HDD Quantity: </label>
@@ -162,8 +166,7 @@
 
 
 
-
-
+<script src="{{ url_for('static', filename='js/product-details.js') }}"></script>
 
 {% endblock%}
 

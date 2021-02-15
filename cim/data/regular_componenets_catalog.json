@@ -1,0 +1,7 @@
+{
+    "MB":["MB 1","MB 2","MB 3"],
+    "RAM":["RAM 1","RAM 2","RAM 3"],
+    "Case":["Case 1","Case 2","Case 3"],
+    "HDD":["HDD 1","HDD 2","HDD3"],
+    "GC":["NO GC","GC 1","GC 2"]
+}
