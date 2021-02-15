@@ -248,7 +248,11 @@ def inventory_special_components():
 		return redirect(url_for("cim.templates.index"))
 
 	if request.method=="GET":
-		return render_template("inventory_special_comps.html", special_components=data.get_sc(), sites=data.get_sites())
+		return render_template("inventory_special_comps.html", 
+			special_components=data.get_sc(), 
+			sites=data.get_sites(),
+			special_components_catalog=data.get_sp_catalog()
+			)
 
 
 @webapp.route('/inventory-reg', methods=['GET', 'POST'])

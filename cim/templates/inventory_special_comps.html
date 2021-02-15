@@ -14,11 +14,64 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<div class="w-100">
-	<div class='text-center'><h4>Inventory - CPUs (Special Components)</h4></div>
-	<div class='text-center'><h6>Each CPU is a special component with a unique serial number, and can only be stored in a single location at a single site.</h6></div>
-	<div class='text-center'><h6>A special component is considered 'free' if it has not yet been assigned to be assembled into a particular product.</h6></div>
-  <div class="row">
+<!-- add new form -->
+<div class="intro-div">
+    <h4>Inventory - CPUs (Special Components)</h4>
+	<p>Each CPU is a special component with a unique serial number, and can only be stored in a single location at a single site.</p>
+	<p>A special component is considered 'free' if it has not yet been assigned to be assembled into a particular product.</p> 
+</div>
+
+
+
+
+
+<div id="data-add" class="border">
+
+	<div class="text-center"><h6>Order New CPUs (Special Components)</h6></div>
+
+	<p class="text-center">If new CPUs (special components with unique serial numbers) need to be added to the inventory, use this form. Newly added CPUs will have unique serial numbers generated upon creation.</p>
+
+	<form id="add-special-components" action="">
+
+		<div class="inner-div text-center">
+
+			<label>Add new Special Components to Inventory: </label>
+
+			<label for="new_reg_comp_part_number">Part Number: </label>
+			<input type="number" min="10000" max="99998" class='m-1' name="new_reg_comp_part_number" id="new_reg_comp_part_number" placeholder="Part Number" required>
+
+			<select class="custom-select m-1" id="new_site" required>
+							<option selected>CPU Type: </option>
+							{% for sc_category in special_components_catalog.CPU %}
+						    	<option>{{sc_category}}</option>
+						    {% endfor %}
+						</select>
+
+			<select class="custom-select m-1" id="new_reg_comp_site" required>
+				<option selected>Select Site: </option>
+				{% for site in sites %}
+					<option>{{site.site_name}}</option>
+				{% endfor %}
+			</select>
+
+			<label for="new_reg_comp_quantity">Order Quantity: </label>
+			<input type="number" min="1" max="50" class='m-1' name="new_reg_comp_quantity" id="new_reg_comp_quantity" placeholder="#" required>
+		
+			<input type="button" class="btn-sm btn-success m-1" value="Order New Special Components" onclick=addData() >
+		</div>
+
+		<div class="inner-div text-center">Note that all ordered components will be placed in the Receiving Department (Room 0, Shelf 0) at the selected site.</div>
+        
+	</form>
+</div>
+
+
+
+
+
+
+
+<div class="row">
 
     <div class="col-2 text-center">
       <!-- Special Components Filter -->
@@ -123,64 +176,6 @@
 			</div>
 		</div>
     </div>
-
-    <div class="col-2 text-center">
-      <!-- Special Components Add -->
-      <div class="text-center"><h6>Order New Special Components</h6></div>
-
-      <p class="text-justify">If new CPUs (special components with unique serial numbers) need to be added to the inventory, use this form. Newly added CPUs will have unique serial numbers generated upon creation.</p>
-
-		<div id="data-entry-div">	
-
-			<form id="sc_entry" class="form-horizontal" action="">
-
-				<div class="form-group row">
-					<div class="inner-div">
-						<label for="new_sc_pn">New Part Number: </label>
-						<input type="number" name="new_sc_pn" id="new_sc_pn" min="10000" max="99998" placeholder="12345" required>
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<div class="inner-div">
-						<label for="new_sc_type">CPU Type: </label>
-						<select name="new_sc_type" id="new_sc_type">
-							<option value="Pro-i3">Pro-i3</option>
-							<option value="Pro-i5">Pro-i5</option>
-							<option value="Pro-i7">Pro-i7</option>
-						</select>
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<div class="inner-div">
-						<label for="new_sc_quantity">Order Quantity: </label>
-						<input type="number" name="new_sc_quantity" id="new_sc_quantity" min="1" max="50" placeholder="17" required>
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<div class="inner-div">
-						<select class="custom-select" id="new_sc_site" required>
-							<option selected>Select Site: </option>
-							{% for site in sites %}
-						    	<option>{{site.site_name}}</option>
-						    {% endfor %}
-						</select>
-					</div>
-				</div>
-
-				<div class="inner-div">
-					<input type="button" class="btn-sm btn-success" value="Order New Special Components" onclick=addData() >
-				</div>
-
-				<div class="text-justify">Note that all ordered components will be placed in the Receiving Department (Room 0, Shelf 0) at the selected site.</div>
-
-			</form>
-
-    	</div>
-
-  </div>
 
 </div>
 

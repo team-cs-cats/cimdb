@@ -14,13 +14,10 @@
 
 <!-- add new form -->
 <div class="intro-div">
-    <h2>Room/Shelf Storage Locations at 2Fast4U Sites</h2>
-	
-	<p>Each 2Fast4U site has many rooms containing shelves used for storing components and products. </p>
-	<p>Each unique Room/Shelf combination is represented as a unique location ID. The following table lists storage locations at 2Fast4U production sites.</p> 
-
+    <h4 class='text-center'>Room/Shelf Storage Locations at 2Fast4U Sites</h4>
+	<p class='text-center'>Each 2Fast4U site has many rooms containing shelves used for storing components and products. </p>
+	<p class='text-center'>Each unique Room/Shelf combination is represented as a unique location ID. The following table lists storage locations at 2Fast4U production sites.</p> 
 </div>
-
 <div id="data-add" class="border">
 
 	<form id="assembly-data-filter" action="">
@@ -36,9 +33,9 @@
 						    {% endfor %}
 						</select>
 
-			<input type="text" class='m-1' name="new_location_room_number" id="location_room_number" placeholder="Room Number">
+			<input type="text" class='m-1' name="new_location_room_number" id="location_room_number" placeholder="Room Number" required>
 
-			<input type="text" class='m-1' name="new_location_shelf_number" id="location_shelf_number" placeholder="Shelf Number">
+			<input type="text" class='m-1' name="new_location_shelf_number" id="location_shelf_number" placeholder="Shelf Number" required>
 		
 			<input type="button" class="btn-sm btn-success m-1" value="Add New Location" onclick=addData() >
 		</div>
