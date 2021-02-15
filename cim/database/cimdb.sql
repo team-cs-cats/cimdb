@@ -20,6 +20,18 @@ CREATE TABLE `Sites` (
 ) ENGINE=INNODB;
 
 
+-- Add site data to database
+
+LOCK TABLES `Sites` WRITE;
+/*!40000 ALTER TABLE `Sites` DISABLE KEYS */;
+INSERT INTO `Sites` VALUES 
+(12, '12745 Lampwood Road', 'Suite 612', 'Los Angeles', 'CA', '90023'),
+(14, '26262 Shoreline Drive', NULL, 'San Francisco', 'CA', '94125'),
+(16, '1984 Washoe Street', NULL, 'Reno', 'CA', '89523');
+/*!40000 ALTER TABLE `Sites` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 -- DROP TABLE IF EXISTS `Products`;
 -- CREATE TABLE `Products` (
 --   `product_sn` int,

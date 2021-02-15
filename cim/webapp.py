@@ -119,11 +119,11 @@ def test():
 	# Write the query and save it to a variable
 	query = "SELECT * FROM sites;"
 	cursor = db.execute_query(db_connection=db_connection, query=query)
-	results = json.dumps(cursor.fetchall())
+	site_results = json.dumps(cursor.fetchall())
 
 	# otherwise, return the workorders page
 	if request.method=="GET":
-		return results
+		return site_results
 
 # Provide a route to redirect a logged in user to the orders page web app
 @webapp.route('/login', methods=['GET', 'POST'])
@@ -324,8 +324,18 @@ def user_management():
 	if not current_user.is_authenticated:
 		return redirect(url_for("cim.templates.index"))
 
+
+	# Load SQL query for site data
+	query = "SELECT * FROM sites;"
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	site_results = cursor.fetchall()
+
+	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
+	if len(site_results) == 0:
+		site_results = data.get_sites()
+
 	if request.method=="GET":
-		return render_template("user_management.html", sites=data.get_sites(), employees=data.get_emp())
+		return render_template("user_management.html", sites=site_results, employees=data.get_emp())
 
 # workorder details. it takes the wo_id as argument to retrive the the information from DB
 @webapp.route('/wo-details', methods=['GET', 'POST'])

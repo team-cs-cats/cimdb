@@ -3,16 +3,32 @@
   {
     "site_id": 12,
     "site_name": "Los Angeles",
-    "site_address": "12745 Lampwood Road, Suite 612, Los Angeles, CA 90023"
+    "site_address": "12745 Lampwood Road, Suite 612, Los Angeles, CA 90023",
+    "site_address_1": "12745 Lampwood Road",
+    "site_address_2": "Suite 612",
+    "site_address_city": "Los Angeles",
+    "site_address_state": "CA",
+    "site_address_postal_code": "90023"
+
   },
   {
     "site_id": 14,
     "site_name": "San Francisco",
-    "site_address": "26262 Shoreline Drive, San Francisco, CA 94125"
+    "site_address": "26262 Shoreline Drive, San Francisco, CA 94125",
+    "site_address_1": "26262 Shoreline Drive",
+    "site_address_2": null,
+    "site_address_city": "San Francisco",
+    "site_address_state": "CA",
+    "site_address_postal_code": "94125"
   },
   {
     "site_id": 16,
     "site_name": "Reno",
-    "site_address": "1984 Washoe Street, Reno, NV 89523"
+    "site_address": "1984 Washoe Street, Reno, NV 89523",
+    "site_address_1": "1984 Washoe Street",
+    "site_address_2": null,
+    "site_address_city": "Reno",
+    "site_address_state": "NV",
+    "site_address_postal_code": "89523"
   }
 ]
