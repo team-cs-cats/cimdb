@@ -26,7 +26,7 @@ Add New Employee
 
 <!-- Description for Create New section -->
 {% block create_description %}
-
+Employee ID numbers are automatically generated upon employee addition. 
 {% endblock %}
 
 <!-- Form for Create New section -->
@@ -53,11 +53,11 @@ Add New Employee
 		<select class="custom-select m-1" id="new_employee_site">
 			<option selected>Select Site: </option>
 			{% for site in sites %}
-			<option>{{site.site_name}}</option>
+			<option>{{site.site_address_city}}</option>
 			{% endfor %}
 		</select>
 
-		<input type="button" class="btn-sm btn-success m-1" value="Filter" onclick=addData() >
+		<input type="button" class="btn-sm btn-success m-1" value="Add New Employee" onclick=addData() >
 
 
 	</div>
@@ -102,7 +102,7 @@ Filter Existing Employees
 		<select class="custom-select m-1" id="existing_employee_site">
 			<option selected>Select Site: </option>
 			{% for site in sites %}
-			<option>{{site.site_name}}</option>
+			<option>{{site.site_address_city}}</option>
 			{% endfor %}
 		</select>
 
@@ -123,6 +123,7 @@ Filter Existing Employees
 	<th>Employee ID</th>
 	<th>First</th>
 	<th>Last</th>
+	<th>Group</th>
 	<th>Site</th>
 	<th>Email</th>
 	<th>Edit Details</th>
@@ -133,6 +134,7 @@ Filter Existing Employees
 	<td>{{employee.employee_id}}</td>
 	<td>{{employee.employee_first_name}}</td>
 	<td>{{employee.employee_last_name}}</td>
+	<td>{% if employee.employee_group == 'production' %}Production{% else %}Supervisor{% endif %}</td>
 	<td>{%for site in sites%}{% if site.site_id == employee.employee_site_id %}{{site.site_address_city}}{% endif %}{% endfor %}</td>
 	<td>{{employee.employee_email}}</td>
 
@@ -141,12 +143,12 @@ Filter Existing Employees
 		class="btn-sm btn-warning" 
 		data-toggle="modal" 
 		data-target="#editEmployee"
-		data-site-employee-id="{{employee.employee_id}}"
-		data-site-employee-first-name="{{employee.employee_first_name}}"
-		data-site-employee-last-name="{{employee.employee_last_name}}"
-		data-site-employee-group="{{employee.employee_group}}"
-		data-site-employee-site="{%for site in sites%}{% if site.site_id == employee.employee_site_id %}{{site.site_address_city}}{% endif %}{% endfor %}"
-		data-site-employee-email="{{employee.employee_email}}"
+		data-employee-id="{{employee.employee_id}}"
+		data-employee-first-name="{{employee.employee_first_name}}"
+		data-employee-last-name="{{employee.employee_last_name}}"
+		data-employee-group="{% if employee.employee_group == 'production' %}Production{% else %}Supervisor{% endif %}"
+		data-employee-site="{%for site in sites%}{% if site.site_id == employee.employee_site_id %}{{site.site_address_city}}{% endif %}{% endfor %}"
+		data-employee-email="{{employee.employee_email}}"
 		data-title="Edit Details of Employee {{employee.employee_id}}">Edit</button></th>
 
 		<td><button class="btn-sm btn-danger">Delete</button></td>
@@ -168,17 +170,17 @@ Filter Existing Employees
 
 					<div class="form-group p-1">
 						<label class="control-label" >First Name:</label>
-						<input type="text" id="site-employee-first-name" class="form-control" placeholder="Jane" required>
+						<input type="text" id="edit-employee-first-name" class="form-control" placeholder="Jane" required>
 					</div>  
 
 					<div class="form-group p-1">
 						<label class="control-label" >Last Name:</label>
-						<input type="text" id="site-employee-last-name" class="form-control" placeholder='Doe' required>
+						<input type="text" id="edit-employee-last-name" class="form-control" placeholder='Doe' required>
 					</div>  
 
 					<div class="form-group p-1">
 						<label class="control-label" >Group:</label>
-						<select class="custom-select" id="site-employee-group" required>
+						<select class="custom-select" id="edit-employee-group" required>
 							<option selected>Select Group: </option>
 							<option>Supervisor</option>
 							<option>Production</option>
@@ -187,7 +189,7 @@ Filter Existing Employees
 
 					<div class="form-group p-1">
 						<label class="control-label" >Site:</label>
-						<select class="custom-select" id="site-employee-site" required>
+						<select class="custom-select" id="edit-employee-site" required>
 							<option selected>Select Site: </option>
 							{% for site in sites %}
 							<option>{{site.site_address_city}}</option>
@@ -197,7 +199,7 @@ Filter Existing Employees
 
 					<div class="form-group p-1">
 						<label class="control-label" >Email:</label>
-						<input type="text" id="site-employee-email" class="form-control" placeholder="jsmith8@2fast4you.com" required>
+						<input type="text" id="edit-employee-email" class="form-control" placeholder="jsmith8@2fast4you.com" required>
 					</div>   
 					
 				</div>
@@ -215,7 +217,35 @@ Filter Existing Employees
 
 <!-- Page-specific scripts -->
 {% block page_scripts %}
+<script>
+	$(document).ready(function(){
+		$("#editEmployee").on("show.bs.modal", function(event){
+	// Get the button that triggered the modal
+	var button = $(event.relatedTarget);
 
+	// Extract value from the custom data-* attribute
+	var titleData = button.data("title");
+	$(this).find(".modal-title").text(titleData);
+
+	var employeeFirstNameData = button.data("employee-first-name");
+	$(this).find("#edit-employee-first-name").val(employeeFirstNameData);
+
+	var employeeLastNameData = button.data("employee-last-name");        
+	$(this).find("#edit-employee-last-name").val(employeeLastNameData);
+
+	var employeeGroupData = button.data("employee-group");
+	$(this).find("#edit-employee-group").val(employeeGroupData);
+
+	var employeeSiteData = button.data("employee-site");
+	$(this).find("#edit-employee-site").val(employeeSiteData);
+
+	var employeeEmailData = button.data("employee-email");
+	$(this).find("#edit-employee-email").val(employeeEmailData);
+
+	
+});
+	});
+</script>
 
 {% endblock %}
 
