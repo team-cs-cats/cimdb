@@ -1,5 +1,5 @@
-<!-- Links to 'base_logged_in.html' as a base template file (which inherits from the base.html) -->
-{% extends 'base_logged_in.html' %}
+<!-- Links to 'base_standard_layout.html' as a base template file (which inherits from the base_logged_in.html and base.html) -->
+{% extends 'base_standard_layout.html' %}
 
 <!-- Jinja2 Template Block for Head of Webpage -->
 {% block head %}
@@ -9,93 +9,114 @@
 <!-- Jinja2 Template Block for Body of Webpage -->
 {% block body %}
 
-<!-- scripts to run the Edit modals -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Overall Page Title -->
+{% block page_header %}
+Inventory - Regular Components
+{% endblock %}
 
-<div class="w-100">
-	
-<div class="intro-div">
-	<h4>Inventory - Regular Components</h4>
-	<p>Regular components do not have unique serial numbers and can be stored in multiple locations at each site.</p>
-	<p>Note that new orders of existing components will be placed in the Receiving Department (Room 0, Shelf 0) of the selected site.</p>
-</div>
+<!-- Page Description -->
+{% block page_description %}
+<p>Regular components do not have unique serial numbers and can be stored in multiple locations at each site.</p>
+<p>Note that new orders of existing components will be placed in the Receiving Department (Room 0, Shelf 0) of the selected site.</p>
+{% endblock %}
 
-<div class="row">
-  	
+<!-- Header for Create New section -->
+{% block create_header %}
+Order New Regular Components
+{% endblock %}
 
-    <div class="col-2 text-center">
-      <!-- Regular Components Filter -->
-      <div class="text-center"><h6>Filter Regular Components</h6></div>
+<!-- Description for Create New section -->
+{% block create_description %}
+If a new regular component (non-CPU/non unique) needs to be ordered and added to the inventory, use this form. Note that all ordered components will be placed in the Receiving Department (Room 0, Shelf 0) at the selected site.
+{% endblock %}
 
-      <div id="data-filtering">
+<!-- Form for Create New section -->
+{% block create_form %}
+<form id="add-special-components" action="">
 
-      		<form id="sc-data-filter" class="form-horizontal" action="">
+	<div class="inner-div text-center">
 
-			<div class="form-row">
-				<div class="col-sm">
-					<select class="custom-select" id="rc_category" required>
-						<option selected>Select Category</option>
-					    <option>Case</option>
-					    <option>Graphics Card (GC)</option>
-					    <option>Hard Drive Disk (HDD)</option>
-					    <option>Motherboard (MB)</option>
-					    <option>RAM</option>
-					</select>
-				</div>
-			</div>
+		<label for="new_reg_comp_part_number">Part Number: </label>
+		<input type="number" min="10000" max="99998" class='m-1' name="new_reg_comp_part_number" id="new_reg_comp_part_number" placeholder="12345" required>
 
-			<div class="form-row">
-				<div class="col-sm">
-					<input type="number" name="rc_pn" id="rc_pn" placeholder="Part Number">
-				</div>
-			</div>
+		<select class="custom-select m-1" id="new_category" required>
+			<option selected>Select Category: </option>
+			<option>Case</option>
+		    <option>Graphics Card (GC)</option>
+		    <option>Hard Drive Disk (HDD)</option>
+		    <option>Motherboard (MB)</option>
+		    <option>RAM</option>
+		</select>
 
-			<div class="form-row">
-					<div class="col-sm">
-						<select class="custom-select" id="select_sc_site" required>
-							<option selected>Select Site: </option>
-							{% for site in sites %}
-						    	<option>{{site.site_name}}</option>
-						    {% endfor %}
-						</select>
-					</div>
-				</div>
+		<select class="custom-select m-1" id="new_reg_comp_site" required>
+			<option selected>Select Site: </option>
+			{% for site in sites %}
+			<option>{{site.site_name}}</option>
+			{% endfor %}
+		</select>
 
-			<div class="form-row">
-				<div class="col-sm">
-					<input type="number" name="sc_room" id="sc_room" placeholder="Room # (ie. 99)">
-				</div>
-			</div>
+		<label for="new_reg_comp_quantity">Order Quantity: </label>
+		<input type="number" min="1" max="50" class='m-1' name="new_reg_comp_quantity" id="new_reg_comp_quantity" placeholder="#" required>
 
-			<div class="form-row">
-				<div class="col-sm">
-					<input type="number" name="sc_shelf" id="sc_shelf" placeholder="Shelf # (ie. 99)">
-				</div>
-			</div>
-
-		
-			<div class="inner-div">
-				<input type="button" class="btn-sm btn-primary" value="Filter" onclick=addData() >
-				<input type="button" class="btn-sm btn-primary" value="Clear Filters" onclick=clearFilters() >
-			</div>
-
-			<div class='text-center'><h6>Note that each shelf in each room can store multiple regular components regardless of category or part number.</h6></div>
-		</form>
+		<input type="button" class="btn-sm btn-success m-1" value="Order New Regular Components" onclick=addData() >
 	</div>
 
+</form>
+{% endblock %}
 
-    </div>
+<!-- Header for Filter section -->
+{% block filter_header %}
+Filter Regular Components
+{% endblock %}
 
-    <div class="col-8">
-      <!-- Regular Components Results -->
+<!-- Description for Filter section -->
+{% block filter_description %}
+Note that each shelf in each room can store multiple regular components regardless of category or part number.
+{% endblock %}
 
-        <div id="results">
+<!-- Form for Filter section -->
+{% block filter_form %}
+<form id="existing-reg-comp-data-filter" action="">
 
-        	<div class="border p-1 pt-2" style="height: 35vh; overflow-y: scroll;">
+	<div class="inner-div text-center">
 
-        	{% for regular_component in regular_components %}
+		<select class="custom-select m-1" id="new_category" required>
+			<option selected>Select Category: </option>
+			<option>Case</option>
+		    <option>Graphics Card (GC)</option>
+		    <option>Hard Drive Disk (HDD)</option>
+		    <option>Motherboard (MB)</option>
+		    <option>RAM</option>
+		</select>	
+
+		<label for="existing_reg_comp_part_number">Part Number: </label>
+		<input type="number" min="10000" max="99998" class='m-1' name="existing_reg_comp_part_number" id="existing_reg_comp_part_number" placeholder="12345">		
+
+		<select class="custom-select m-1" id="existing_reg_comp_site">
+			<option selected>Select Site: </option>
+			{% for site in sites %}
+			<option>{{site.site_name}}</option>
+			{% endfor %}
+		</select>
+
+		<label for="existing_reg_comp_room_number">Room Number: </label>
+		<input type="number" min="0" max="99" class='m-1' name="existing_reg_comp_room_number" id="existing_reg_comp_room_number" placeholder="99">
+
+		<label for="existing_reg_comp_shelf_number">Shelf Number: </label>
+		<input type="number" min="0" max="99" class='m-1' name="existing_reg_comp_shelf_number" id="existing_reg_comp_shelf_number" placeholder="99">
+
+		<input type="button" class="btn-sm btn-primary m-1" value="Filter" onclick=filterData() >
+		<input type="button" class="btn-sm btn-primary m-1" value="Clear Filters" onclick=clearFilters() >
+
+
+	</div>
+
+</form>
+{% endblock %}
+
+<!-- Main results table -->
+{% block table_contents %}
+{% for regular_component in regular_components %}
         	<div class="row">
   				<div class="col text-center border-top"> 
   					Part Number: <strong>{{regular_component.rc_pn}}</strong> - Category: <strong>{{regular_component.rc_category}}</strong>
@@ -181,77 +202,12 @@
 			
 			{% endfor %}
 
-			</div>
-
-		</div>
-
-    </div>
-
-    <div class="col text-center">
-      <!-- Regular Components Add -->
-      <div class="text-center"><h6>Order New Regular Components</h6></div>
-
-      <p>If a new regular component (non-CPU/non unique) needs to be ordered and added to the inventory, use this form. </p>
-
-      <div id="data-entry-div">	
-
-			<form id="sc_entry" class="form-horizontal" action="">
-
-				<div class="form-group row">
-					<div class="inner-div">
-						<label for="new_sc_pn">New Part Number: </label>
-						<input type="number" name="new_sc_pn" id="new_sc_pn" min="10000" max="99998" placeholder="12345" required>
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<div class="inner-div">
-						<select class="custom-select" id="rc_category">
-							<option selected>Select Category</option>
-						    <option>Case</option>
-						    <option>Graphics Card (GC)</option>
-						    <option>Hard Drive Disk (HDD)</option>
-						    <option>Motherboard (MB)</option>
-						    <option>RAM</option>
-						</select>
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<div class="inner-div">
-						<label for="new_rc_quantity">Order Quantity: </label>
-						<input type="number" name="new_rc_quantity" id="new_rc_quantity" min="1" max="50" placeholder="17" required>
-					</div>
-				</div>
-
-				<div class="form-group row">
-					<div class="inner-div">
-						<select class="custom-select" id="new_rc_site" required>
-							<option selected>Select Site: </option>
-							{% for site in sites %}
-						    	<option>{{site.site_name}}</option>
-						    {% endfor %}
-						</select>
-					</div>
-				</div>
+{% endblock %}
 
 
-				<div class="form-group row">
-					<div class="inner-div">
-					<input type="button" class="btn-sm btn-success" value="Order New Regular Components" onclick=addData() >
-					</div>
-				</div>
 
-				<div class="text-justify">Note that all ordered components will be placed in the Receiving Department (Room 0, Shelf 0) at the selected site.</div>
-			</form>
-
-    	</div>
-
-    </div>
-
-  </div>
-
-
+<!-- Page-specific modals -->
+{% block page_modals %}
 <!-- Modal popup for regular component quantity Edit feature -->=
 <div id="editRegularComponentQuantity" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
@@ -312,7 +268,10 @@
         </div>
     </div>
 
+{% endblock %}
 
+<!-- Page-specific scripts -->
+{% block page_scripts %}
 <script>
 $(document).ready(function(){
     $("#editRegularComponent").on("show.bs.modal", function(event){
@@ -341,7 +300,9 @@ $(document).ready(function(){
 });
 </script>
 
-</div>
+{% endblock %}
+
 
 {% endblock %}
+
 

@@ -36,10 +36,8 @@ If new CPUs (special components with unique serial numbers) need to be added to 
 
 	<div class="inner-div text-center">
 
-		<label>Add new Special Components to Inventory: </label>
-
-		<label for="new_reg_comp_part_number">Part Number: </label>
-		<input type="number" min="10000" max="99998" class='m-1' name="new_reg_comp_part_number" id="new_reg_comp_part_number" placeholder="12345" required>
+		<label for="new_spec_comp_part_number">Part Number: </label>
+		<input type="number" min="10000" max="99998" class='m-1' name="new_spec_comp_part_number" id="new_spec_comp_part_number" placeholder="12345" required>
 
 		<select class="custom-select m-1" id="new_site" required>
 			<option selected>CPU Type: </option>
@@ -56,7 +54,7 @@ If new CPUs (special components with unique serial numbers) need to be added to 
 		</select>
 
 		<label for="new_reg_comp_quantity">Order Quantity: </label>
-		<input type="number" min="1" max="50" class='m-1' name="new_reg_comp_quantity" id="new_reg_comp_quantity" placeholder="#" required>
+		<input type="number" min="1" max="50" class='m-1' name="new_spec_comp_quantity" id="new_spec_comp_quantity" placeholder="#" required>
 
 		<input type="button" class="btn-sm btn-success m-1" value="Order New Special Components" onclick=addData() >
 	</div>
@@ -76,15 +74,15 @@ Note that each shelf in each room can store multiple special components, each wi
 
 <!-- Form for Filter section -->
 {% block filter_form %}
-<form id="existing-reg-comp-data-filter" action="">
+<form id="existing-spec-comp-data-filter" action="">
 
 	<div class="inner-div text-center">
 
-		<label for="new_reg_comp_part_number">Serial Number: </label>
-		<input type="number" min="1000000000" max="9999999998" class='m-1' name="existing_reg_comp_serial_number" id="existing_reg_comp_serial_number" placeholder="1234567890">	
+		<label for="existing_spec_comp_serial_number">Serial Number: </label>
+		<input type="number" min="1000000000" max="9999999998" class='m-1' name="existing_spec_comp_serial_number" id="existing_spec_comp_serial_number" placeholder="1234567890">	
 
-		<label for="new_reg_comp_part_number">Part Number: </label>
-		<input type="number" min="10000" max="99998" class='m-1' name="existing_reg_comp_part_number" id="existing_reg_comp_part_number" placeholder="12345">		
+		<label for="existing_spec_comp_part_number">Part Number: </label>
+		<input type="number" min="10000" max="99998" class='m-1' name="existing_reg_comp_part_number" id="existing_spec_comp_part_number" placeholder="12345">		
 
 		<select class="custom-select m-1" id="existing_reg_comp_site">
 			<option selected>Select Site: </option>
@@ -93,11 +91,11 @@ Note that each shelf in each room can store multiple special components, each wi
 			{% endfor %}
 		</select>
 
-		<label for="new_reg_comp_room_number">Room Number: </label>
-		<input type="number" min="0" max="99" class='m-1' name="existing_reg_comp_room_number" id="existing_reg_comp_room_number" placeholder="99">
+		<label for="existing_spec_comp_room_number">Room Number: </label>
+		<input type="number" min="0" max="99" class='m-1' name="existing_spec_comp_room_number" id="existing_spec_comp_room_number" placeholder="99">
 
-		<label for="new_reg_comp_shelf_number">Shelf Number: </label>
-		<input type="number" min="0" max="99" class='m-1' name="existing_reg_comp_shelf_number" id="existing_reg_comp_shelf_number" placeholder="99">
+		<label for="existing_spec_comp_shelf_number">Shelf Number: </label>
+		<input type="number" min="0" max="99" class='m-1' name="existing_spec_comp_shelf_number" id="existing_spec_comp_shelf_number" placeholder="99">
 
 		<label for="sc_is_free">Is Free: </label>
 		<input type="checkbox" name="sc_is_free" id="sc_is_free">
@@ -113,6 +111,7 @@ Note that each shelf in each room can store multiple special components, each wi
 
 <!-- Main results table -->
 {% block table_contents %}
+<table class="table table-striped " >
 <tr >
 	<th>CPU Serial Number</th>
 	<th>Part Number</th>
@@ -206,7 +205,8 @@ Note that each shelf in each room can store multiple special components, each wi
 			</div>
 		</div>
 	</div>
-	{% endblock %}
+</table>
+{% endblock %}
 
 	<!-- Page-specific scripts -->
 	{% block page_scripts %}
