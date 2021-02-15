@@ -236,6 +236,35 @@ def inventory():
 	if request.method=="GET":
 		return render_template("inventory.html", regular_components=data.get_rc(), special_components=data.get_sc(), sites=data.get_sites())
 
+
+@webapp.route('/inventory-spec', methods=['GET', 'POST'])
+@login_required
+def inventory_special_components():
+	"""The webapp's page for viewing the inventory.
+	This allows the employee to review existing stock and order new stock of standard and special components."""
+
+	# if the current user is not authenticated, redirect the user to the logged out index page
+	if not current_user.is_authenticated:
+		return redirect(url_for("cim.templates.index"))
+
+	if request.method=="GET":
+		return render_template("inventory_special_comps.html", special_components=data.get_sc(), sites=data.get_sites())
+
+
+@webapp.route('/inventory-reg', methods=['GET', 'POST'])
+@login_required
+def inventory_regular_components():
+	"""The webapp's page for viewing the inventory.
+	This allows the employee to review existing stock and order new stock of standard and special components."""
+
+	# if the current user is not authenticated, redirect the user to the logged out index page
+	if not current_user.is_authenticated:
+		return redirect(url_for("cim.templates.index"))
+
+	if request.method=="GET":
+		return render_template("inventory_regular_comps.html", regular_components=data.get_rc(), sites=data.get_sites())
+
+
 @webapp.route('/shipping', methods=['GET', 'POST'])
 @login_required
 def shipping():
