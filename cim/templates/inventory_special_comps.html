@@ -151,96 +151,95 @@ Note that each shelf in each room can store multiple special components, each wi
 	{% endfor %}
 {% endblock %}
 
-	<!-- Page-specific modals -->
-	{% block page_modals %}
-	<!-- Modal popup for special component Edit feature -->
-	<div id="editSpecialComponent" class="modal fade" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<form>
-					<div class="modal-header">
-						<h5 class="modal-title">Modal Window</h5>
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
+<!-- Page-specific modals -->
+{% block page_modals %}
+<!-- Modal popup for special component Edit feature -->
+<div id="editSpecialComponent" class="modal fade" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form>
+				<div class="modal-header">
+					<h5 class="modal-title">Modal Window</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">  
+
+					<div class="form-group p-1">
+						<label class="control-label" >Part Number:</label>
+						<input type="number" min="0" max="999" id="spec-comp-edit-part-number" class="form-control" placeholder="123456" required>
+					</div> 
+
+					<div class="form-group p-1">
+						<label class="control-label" >Site:</label>
+						<select class="custom-select" id="spec-comp-edit-site" required>
+							<option selected>Select Site: </option>
+							{% for site in sites %}
+							<option>{{site.site_name}}</option>
+							{% endfor %}
+						</select>
+					</div>                    	
+
+					<div class="form-group p-1">
+						<label class="control-label" >Room Number:</label>
+						<input type="number" min="0" max="999" id="spec-comp-edit-room-number" class="form-control"  required>
+					</div>   
+
+					<div class="form-group p-1">
+						<label class="control-label" >Shelf Number:</label>
+						<input type="number" min="0" max="999" id="spec-comp-edit-shelf-number" class="form-control" required>
+					</div>  
+
+					<div class="custom-control custom-checkbox">
+						<label class="custom-control-label" for="defaultUnchecked">Is Free:  </label>
+						<input type="checkbox" class="custom-control-input ml-2" id="spec-comp-edit-is-free" checked/>
+
 					</div>
-					<div class="modal-body">  
+					
+				</div>
 
-						<div class="form-group p-1">
-							<label class="control-label" >Part Number:</label>
-							<input type="number" min="0" max="999" id="spec-comp-edit-part-number" class="form-control" placeholder="123456" required>
-						</div> 
-
-						<div class="form-group p-1">
-							<label class="control-label" >Site:</label>
-							<select class="custom-select" id="spec-comp-edit-site" required>
-								<option selected>Select Site: </option>
-								{% for site in sites %}
-								<option>{{site.site_name}}</option>
-								{% endfor %}
-							</select>
-						</div>                    	
-
-						<div class="form-group p-1">
-							<label class="control-label" >Room Number:</label>
-							<input type="number" min="0" max="999" id="spec-comp-edit-room-number" class="form-control"  required>
-						</div>   
-
-						<div class="form-group p-1">
-							<label class="control-label" >Shelf Number:</label>
-							<input type="number" min="0" max="999" id="spec-comp-edit-shelf-number" class="form-control" required>
-						</div>  
-
-						<div class="custom-control custom-checkbox">
-							<label class="custom-control-label" for="defaultUnchecked">Is Free:  </label>
-							<input type="checkbox" class="custom-control-input ml-2" id="spec-comp-edit-is-free" checked/>
-
-						</div>
-						
-					</div>
-
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary">Update</button>
-					</div>
-				</form>
-			</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-primary">Update</button>
+				</div>
+			</form>
 		</div>
 	</div>
-</table>
+</div>
 {% endblock %}
 
-	<!-- Page-specific scripts -->
-	{% block page_scripts %}
-	<script>
-		$(document).ready(function(){
-			$("#editSpecialComponent").on("show.bs.modal", function(event){
-		// Get the button that triggered the modal
-		var button = $(event.relatedTarget);
+<!-- Page-specific scripts -->
+{% block page_scripts %}
+<script>
+	$(document).ready(function(){
+		$("#editSpecialComponent").on("show.bs.modal", function(event){
+	// Get the button that triggered the modal
+	var button = $(event.relatedTarget);
 
-		// Extract value from the custom data-* attribute
-		var titleData = button.data("title");
-		$(this).find(".modal-title").text(titleData);
+	// Extract value from the custom data-* attribute
+	var titleData = button.data("title");
+	$(this).find(".modal-title").text(titleData);
 
-		var partNumberData = parseInt(button.data("spec-comp-part-number"));
-		$(this).find("#spec-comp-edit-part-number").val(partNumberData);
+	var partNumberData = parseInt(button.data("spec-comp-part-number"));
+	$(this).find("#spec-comp-edit-part-number").val(partNumberData);
 
-		var siteNameData = button.data("spec-comp-site-name");        
-		$(this).find("#spec-comp-edit-site").val(siteNameData);
+	var siteNameData = button.data("spec-comp-site-name");        
+	$(this).find("#spec-comp-edit-site").val(siteNameData);
 
-		var roomNumberData = parseInt(button.data("spec-comp-room-number"));
-		$(this).find("#spec-comp-edit-room-number").val(roomNumberData);
+	var roomNumberData = parseInt(button.data("spec-comp-room-number"));
+	$(this).find("#spec-comp-edit-room-number").val(roomNumberData);
 
-		var shelfNumberData = parseInt(button.data("spec-comp-shelf-number"));
-		$(this).find("#spec-comp-edit-shelf-number").val(shelfNumberData);
+	var shelfNumberData = parseInt(button.data("spec-comp-shelf-number"));
+	$(this).find("#spec-comp-edit-shelf-number").val(shelfNumberData);
 
-		var specialComponentIsFreeData = button.data("spec-comp-is-free");        
-		$(this).find("#spec-comp-edit-is-free").val(specialComponentIsFreeData);
+	var specialComponentIsFreeData = button.data("spec-comp-is-free");        
+	$(this).find("#spec-comp-edit-is-free").val(specialComponentIsFreeData);
 
-		
+	
+});
 	});
-		});
-	</script>
-	{% endblock %}
+</script>
+{% endblock %}
 
 
-	{% endblock %}
+{% endblock %}
 

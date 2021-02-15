@@ -19,6 +19,7 @@ class DummyData:
         self.sites = self.load_data("sites")
         self.locations = self.load_data("locations")
         self.products = self.load_data("products")
+        self.states = self.load_data("states")
 
         #Ali
         self.products_catalog=self.load_data("products_catalog")
@@ -55,6 +56,8 @@ class DummyData:
         return self.locations
     def get_products(self):
         return self.products
+    def get_states(self):
+        return self.states
 
     #Ali
     def get_products_catalog(self):

@@ -358,7 +358,7 @@ def site_management():
 		site_results = data.get_sites()
 
 	if request.method=="GET":
-		return render_template("site_mgmt.html", sites=site_results, employees=data.get_emp())
+		return render_template("site_mgmt.html", sites=site_results, employees=data.get_emp(), states=data.get_states())
 
 # workorder details. it takes the wo_id as argument to retrive the the information from DB
 @webapp.route('/wo-details', methods=['GET', 'POST'])
