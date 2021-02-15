@@ -22,20 +22,28 @@
 </div>
 
 
-<div id="data-add" class="border">
+<div>
 
-	<div class="text-center"><h6>Order New CPUs (Special Components)</h6></div>
+	<div class="card m-3 p-2 border">
+  <div class="row">
+  	<div class="text-center"><h6>Order New CPUs (Special Components)</h6></div>
+    <div class="col-sm">
+      	
+		<p class="text-justify">If new CPUs (special components with unique serial numbers) need to be added to the inventory, use this form. Newly added CPUs will have unique serial numbers generated upon creation. Note that all ordered components will be placed in the Receiving Department (Room 0, Shelf 0) at the selected site.</p>
 
-	<p class="text-center">If new CPUs (special components with unique serial numbers) need to be added to the inventory, use this form. Newly added CPUs will have unique serial numbers generated upon creation.</p>
+    </div>
+    
 
-	<form id="add-special-components" action="">
+    <div class="col-sm">
+      
+    	<form id="add-special-components" action="">
 
 		<div class="inner-div text-center">
 
 			<label>Add new Special Components to Inventory: </label>
 
 			<label for="new_reg_comp_part_number">Part Number: </label>
-			<input type="number" min="10000" max="99998" class='m-1' name="new_reg_comp_part_number" id="new_reg_comp_part_number" placeholder="Part Number" required>
+			<input type="number" min="10000" max="99998" class='m-1' name="new_reg_comp_part_number" id="new_reg_comp_part_number" placeholder="12345" required>
 
 			<select class="custom-select m-1" id="new_site" required>
 							<option selected>CPU Type: </option>
@@ -57,18 +65,40 @@
 			<input type="button" class="btn-sm btn-success m-1" value="Order New Special Components" onclick=addData() >
 		</div>
 
-		<div class="inner-div text-center">Note that all ordered components will be placed in the Receiving Department (Room 0, Shelf 0) at the selected site.</div>
+		
         
 	</form>
+
+    </div>
+  </div>
+</div>
+
+	
+
+	
 </div>
 
 
 
-<div id="data-filtering" class="mb-0">
+<div>
+
+	<div class="card m-3 p-2 border">
 
 	<div class="text-center"><h6>Filter Existing CPUs (Special Components)</h6></div>
 
-	<form id="existing-reg-comp-data-filter" action="">
+	<div>
+  <div class="row">
+    <div class="col-sm">
+
+    	<p class="text-justify">Note that each shelf in each room can store multiple special components, each with a unique serial number.</p>
+
+    </div>
+
+
+    <div class="col-sm">
+      
+
+    	<form id="existing-reg-comp-data-filter" action="">
 
 		<div class="inner-div text-center">
 
@@ -97,10 +127,17 @@
 			<input type="button" class="btn-sm btn-primary m-1" value="Filter" onclick=filterData() >
 			<input type="button" class="btn-sm btn-primary m-1" value="Clear Filters" onclick=clearFilters() >
 
-			<div>Note that each shelf in each room can store multiple special components, each with a unique serial number.</div>
+			
 		</div>
         
 	</form>
+
+
+    </div>
+  </div>
+</div>
+
+	</div>
 </div>
 
 <!-- current special components results -->
@@ -108,7 +145,7 @@
 	<div class="border pl-1 pr-1 pb-1 mt-0" style="height: 65vh; overflow-y: scroll;">
 	<table class="table table-striped " >
 		<tr >
-			<th>Serial Number</th>
+			<th>CPU Serial Number</th>
 			<th>Part Number</th>
 			<th>Is Free</th>
 			<th>Site / Location</th>
@@ -165,7 +202,7 @@
 
                     	<div class="form-group p-1">
                             <label class="control-label" >Part Number:</label>
-                            <input type="number" min="0" max="999" id="spec-comp-edit-part-number" class="form-control"  required>
+                            <input type="number" min="0" max="999" id="spec-comp-edit-part-number" class="form-control" placeholder="123456" required>
                         </div> 
 
 						<div class="form-group p-1">
