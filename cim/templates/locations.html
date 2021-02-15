@@ -109,7 +109,15 @@
 				</td>
 
 				<!-- <th><button class="btn-sm btn-warning">Edit</button></th> -->
-				<th><button type="button" class="btn-sm btn-warning" data-toggle="modal" data-target="#editLocation" data-site-name="{% for site in sites %}{% if site.site_id == location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}" data-location-room-number="{{location.location_room_number}}" data-location-shelf-number="{{location.location_shelf_number}}" data-title="Edit Location ID {{location.location_id}}">Edit</button></th>
+				<th><button type="button" 
+					class="btn-sm btn-warning" 
+					data-toggle="modal" 
+					data-target="#editLocation" 
+					data-site-name="{% for site in sites %}{% if site.site_id == location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}" 
+					data-location-room-number="{{location.location_room_number}}" 
+					data-location-shelf-number="{{location.location_shelf_number}}" 
+					data-title="Edit Location ID {{location.location_id}}"
+					>Edit</button></th>
 				<td><button class="btn-sm btn-danger">Delete</button></td>
 			</tr>
 		{% endfor %}
@@ -118,6 +126,7 @@
 	</div>
 </div>
 
+<!-- Modal popup for location Edit feature -->
 <div id="editLocation" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -156,6 +165,9 @@
             </div>
         </div>
     </div>
+
+
+<!-- jquery script to load edit modal buttons -->
 <script>
 $(document).ready(function(){
     $("#editLocation").on("show.bs.modal", function(event){
