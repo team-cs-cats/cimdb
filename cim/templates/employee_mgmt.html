@@ -1,0 +1,127 @@
+<!-- Links to 'base_standard_layout.html' as a base template file (which inherits from the base_logged_in.html and base.html) -->
+{% extends 'base_standard_layout.html' %}
+
+<!-- Jinja2 Template Block for Head of Webpage -->
+{% block head %}
+
+{% endblock %}
+
+<!-- Jinja2 Template Block for Body of Webpage -->
+{% block body %}
+
+<!-- Overall Page Title -->
+{% block page_header %}
+2Fast4U Employee Management
+{% endblock %}
+
+<!-- Page Description -->
+{% block page_description %}
+
+{% endblock %}
+
+<!-- Header for Create New section -->
+{% block create_header %}
+Add New Employee
+{% endblock %}
+
+<!-- Description for Create New section -->
+{% block create_description %}
+
+{% endblock %}
+
+<!-- Form for Create New section -->
+{% block create_form %}
+<form id="new-employee-data-filter" action="">
+
+	<div class="text-center">
+
+		<label for="new_employee_fname">Employee First Name:</label>
+		<input type="text" class='m-1' name="new_employee_fname" id="new_employee_fname" placeholder="Jane">
+
+		<label for="new_employee_lname">Employee Last Name:</label>
+		<input type="text" class='m-1' name="new_employee_lname" id="new_employee_lname" placeholder="Doe">
+
+		<label for="new_employee_email">Employee Email:</label>
+		<input type="text" class='m-1' name="new_employee_email" id="new_employee_email" placeholder="jsmith8@2fast4you.com">
+
+		<select class="custom-select m-1" id="new_employee_site">
+			<option selected>Select Site: </option>
+			{% for site in sites %}
+			<option>{{site.site_name}}</option>
+			{% endfor %}
+		</select>
+
+		<input type="button" class="btn-sm btn-success m-1" value="Filter" onclick=addData() >
+
+
+	</div>
+
+</form>
+{% endblock %}
+
+<!-- Header for Filter section -->
+{% block filter_header %}
+Filter Existing Employees 
+{% endblock %}
+
+<!-- Description for Filter section -->
+{% block filter_description %}
+
+{% endblock %}
+
+<!-- Form for Filter section -->
+{% block filter_form %}
+<form id="existing-employee-data-filter" action="">
+
+	<div class="text-center">
+
+		<label for="existing_employee_id">Employee ID:</label>
+		<input type="number" min="11111" max="99999" class='m-1' name="existing_employee_id" id="existing_employee_id" placeholder="99">
+
+		<label for="existing_employee_fname">Employee First Name:</label>
+		<input type="text" class='m-1' name="existing_employee_fname" id="existing_employee_fname" placeholder="Jane">
+
+		<label for="existing_employee_lname">Employee Last Name:</label>
+		<input type="text" class='m-1' name="existing_employee_lname" id="existing_employee_lname" placeholder="Doe">
+
+		<label for="existing_employee_email">Employee Email:</label>
+		<input type="text" class='m-1' name="existing_employee_email" id="existing_employee_email" placeholder="jsmith8@2fast4you.com">
+
+		<select class="custom-select m-1" id="existing_employee_site">
+			<option selected>Select Site: </option>
+			{% for site in sites %}
+			<option>{{site.site_name}}</option>
+			{% endfor %}
+		</select>
+
+		<input type="button" class="btn-sm btn-primary m-1" value="Filter" onclick=filterData() >
+		<input type="button" class="btn-sm btn-primary m-1" value="Clear Filters" onclick=clearFilters() >
+
+
+	</div>
+
+</form>
+{% endblock %}
+
+<!-- Main results table -->
+{% block table_contents %}
+
+
+{% endblock %}
+
+<!-- Page-specific modals -->
+{% block page_modals %}
+<!-- Modal popup for special component Edit feature -->
+
+
+{% endblock %}
+
+<!-- Page-specific scripts -->
+{% block page_scripts %}
+
+
+{% endblock %}
+
+
+{% endblock %}
+

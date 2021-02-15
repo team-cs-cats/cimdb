@@ -1,0 +1,121 @@
+<!-- Links to 'base_standard_layout.html' as a base template file (which inherits from the base_logged_in.html and base.html) -->
+{% extends 'base_standard_layout.html' %}
+
+<!-- Jinja2 Template Block for Head of Webpage -->
+{% block head %}
+
+{% endblock %}
+
+<!-- Jinja2 Template Block for Body of Webpage -->
+{% block body %}
+
+<!-- Overall Page Title -->
+{% block page_header %}
+2Fast4U Site Management
+{% endblock %}
+
+<!-- Page Description -->
+{% block page_description %}
+
+{% endblock %}
+
+<!-- Header for Create New section -->
+{% block create_header %}
+Add New Site
+{% endblock %}
+
+<!-- Description for Create New section -->
+{% block create_description %}
+Note that adding a new site will only pre-populate the site with two locations: Receiving Department (Room 0, Shelf 0) and Shipping Department (Room 0, Shelf 1). All additional locations will need to be added by a Supervisor on the <a href="/locations">Locations</a> page.
+{% endblock %}
+
+<!-- Form for Create New section -->
+{% block create_form %}
+<form id="new-site-data-filter" action="">
+
+	<div class="text-center">
+
+		<label for="new_site_id">Site ID:</label>
+		<input type="number" min="1" max="99" class='m-1' name="new_site_id" id="new_site_id" placeholder="99" required>
+
+		<input type="text" class='m-1' name="new_site_fname" id="new_site_fname" placeholder="Address " required>
+
+		<input type="text" class='m-1' name="new_site_lname" id="new_site_lname" placeholder="Address 2">
+
+		<input type="text" class='m-1' name="new_site_city" id="new_site_city" placeholder="City" required>
+
+		<input type="text" class='m-1' name="new_site_state" id="new_site_state" placeholder="State" required>
+
+		<label for="new_site_zip">Zip: </label>
+		<input type="number" min="0" max="99999" class='m-1' name="new_site_zip" id="new_site_zip" placeholder="99999" required>
+
+		<input type="button" class="btn-sm btn-success m-1" value="Filter" onclick=addData() >
+
+
+	</div>
+
+</form>
+{% endblock %}
+
+<!-- Header for Filter section -->
+{% block filter_header %}
+Filter Existing Sites 
+{% endblock %}
+
+<!-- Description for Filter section -->
+{% block filter_description %}
+
+{% endblock %}
+
+<!-- Form for Filter section -->
+{% block filter_form %}
+<form id="existing-site-data-filter" action="">
+
+	<div class="text-center">
+
+		<label for="existing_site_id">Site ID:</label>
+		<input type="number" min="1" max="99" class='m-1' name="existing_site_id" id="existing_site_id" placeholder="99">
+
+		<input type="text" class='m-1' name="existing_site_fname" id="existing_site_fname" placeholder="Address ">
+
+		<input type="text" class='m-1' name="existing_site_lname" id="existing_site_lname" placeholder="Address 2">
+
+		<input type="text" class='m-1' name="existing_site_email" id="existing_site_email" placeholder="City">
+
+		<input type="text" class='m-1' name="existing_site_email" id="existing_site_email" placeholder="State">
+
+		<label for="existing_site_zip">Zip: </label>
+		<input type="number" min="0" max="99999" class='m-1' name="existing_site_zip" id="existing_site_zip" placeholder="99999">
+
+		<input type="button" class="btn-sm btn-primary m-1" value="Filter" onclick=filterData() >
+		<input type="button" class="btn-sm btn-primary m-1" value="Clear Filters" onclick=clearFilters() >
+
+
+	</div>
+
+</form>
+
+{% endblock %}
+
+<!-- Main results table -->
+{% block table_contents %}
+
+
+{% endblock %}
+
+<!-- Page-specific modals -->
+{% block page_modals %}
+<!-- Modal popup for special component Edit feature -->
+
+
+{% endblock %}
+
+<!-- Page-specific scripts -->
+{% block page_scripts %}
+
+
+{% endblock %}
+
+
+{% endblock %}
+
