@@ -16,9 +16,9 @@ CREATE TABLE `Products` (
   PRIMARY KEY (`product_sn`)
 );
 
-DROP TABLE IF EXISTS `Products`;
+DROP TABLE IF EXISTS `WorkOrderProducts`;
 CREATE TABLE `WorkOrderProducts` (
-  `wop_id` int,
+  `wop_id` int NOT NULL AUTO_INCREMENT,
   `wop_wo_id` int,
   `wop_product_sn` int,
   PRIMARY KEY (`wop_id`)
@@ -26,7 +26,7 @@ CREATE TABLE `WorkOrderProducts` (
 
 DROP TABLE IF EXISTS `Sites`;
 CREATE TABLE `Sites` (
-  `site_id` int,
+  `site_id` int NOT NULL AUTO_INCREMENT,
   `site_address_1` varchar(255),
   `site_address_2` varchar(255),
   `site_address_city` varchar(255),
@@ -37,7 +37,7 @@ CREATE TABLE `Sites` (
 
 DROP TABLE IF EXISTS `Locations`;
 CREATE TABLE `Locations` (
-  `location_id` int,
+  `location_id` int NOT NULL AUTO_INCREMENT,
   `location_room_number` int,
   `location_shelf_number` int,
   `location_site_id` int,
@@ -46,7 +46,7 @@ CREATE TABLE `Locations` (
 
 DROP TABLE IF EXISTS `ProductsRegularComps`;
 CREATE TABLE `ProductsRegularComps` (
-  `prc_id` int,
+  `prc_id` int NOT NULL AUTO_INCREMENT,
   `prc_product_sn` int,
   `prc_rc_pn` int,
   `prc_quantity_needed` int,
@@ -55,7 +55,7 @@ CREATE TABLE `ProductsRegularComps` (
 
 DROP TABLE IF EXISTS `Employees`;
 CREATE TABLE `Employees` (
-  `employee_id` int,
+  `employee_id` int NOT NULL AUTO_INCREMENT,
   `employee_group` varchar(255),
   `employee_first_name` varchar(255),
   `employee_last_name` varchar(255),
@@ -67,7 +67,7 @@ CREATE TABLE `Employees` (
 
 DROP TABLE IF EXISTS `WorkOrders`;
 CREATE TABLE `WorkOrders` (
-  `wo_id` int,
+  `wo_id` int NOT NULL AUTO_INCREMENT,
   `wo_open_date` date,
   `wo_close_date` date,
   `wo_status` varchar(255),
@@ -78,7 +78,7 @@ CREATE TABLE `WorkOrders` (
 
 DROP TABLE IF EXISTS `SpecialComponents`;
 CREATE TABLE `SpecialComponents` (
-  `sc_sn` int,
+  `sc_sn` int NOT NULL AUTO_INCREMENT,
   `sc_pn` char(16),
   `sc_is_free` boolean,
   `sc_product_sn` int,
@@ -88,14 +88,14 @@ CREATE TABLE `SpecialComponents` (
 
 DROP TABLE IF EXISTS `RegularComponents`;
 CREATE TABLE `RegularComponents` (
-  `rc_pn` int,
+  `rc_pn` int NOT NULL AUTO_INCREMENT,
   `rc_category` varchar(255),
   PRIMARY KEY (`rc_pn`)
 );
 
 DROP TABLE IF EXISTS `LocationsRegularComps`;
 CREATE TABLE `LocationsRegularComps` (
-  `lrc_id` int,
+  `lrc_id` int NOT NULL AUTO_INCREMENT,
   `lrc_location_id` int,
   `lrc_rc_pn` int,
   `lrc_quantity` int,
