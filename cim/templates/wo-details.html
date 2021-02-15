@@ -2,7 +2,7 @@
 {% extends 'base_logged_in.html' %}
 
 <!-- Title of the page -->
-{% block title %} Workorder Details{% endblock%}
+{% block title %} Work Order Details{% endblock%}
 
 
 {% block body %} 
@@ -12,14 +12,14 @@
 		<div class="information">
 			<h3>Manage Work Order Details</h3>
 			<h5 class="access-level">This page requires supervisor-level access permission</h5>
-			<p>Manage(View, Add , Edit and Delete) products in a WorkOrder</p>
-			<button type="button" class="btn btn-light" onclick=go_back()>Back to Workorders</button>
+			<p>Manage (View, Add, Edit and Delete) products in a Work Order</p>
+			<button type="button" class="btn btn-light" onclick=go_back()>Back to Work Orders</button>
 		</div>
 
 		<div class="process-overview">
-			<p>Workorder Process Overview</p>
+			<p>Work Order Process Overview</p>
 			<ul class="list-group">
-				<li class="list-group-item " >1. Workorder</li>
+				<li class="list-group-item " >1. Work Order</li>
 				<li class="list-group-item active" aria-current="true">2. Products list</li>
 				<li class="list-group-item">3. Components list</li>
 			</ul>
@@ -34,10 +34,10 @@
 <div class='intro-div'>
 	<div class="two-column">
 		<div id="data-entry-div">
-			<h3>Update Products in Workorder <b>{{wo_id}} </b></h3>
+			<h3>Update Products in Work Order <b>{{wo_id}} </b></h3>
 			<h4>Add a New Product</h4>
 			<p>Add new product to this order. You will be redirecterd to
-				a new page to enter componenets information for the new product</p>
+				a new page to enter components information for the new product</p>
 		
 			<form id="product-data-entry" action="">
 				<div class="inner-div">
@@ -64,12 +64,12 @@
 		</div>
 
 		<div class="information">
-			<h3>Open another workorder</h3>
-			<p>Open another workorder products list using the form below:</p>
+			<h3>Open Another Work Order</h3>
+			<p>Open the product list of another Work Order using the form below:</p>
 
 			<div class="inner-div">
 				<form action="">
-					<label for="wo_id">Workorder ID:</label>
+					<label for="wo_id">Work Order ID:</label>
 					<input type="text" name="wo_id" id="wo_id_reload" placeholder="wo_id">
 
 					<input type="button" class="btn btn-success" value="Refresh" onclick=reload_workorder()>
@@ -93,7 +93,7 @@
             <th>Status</th>
 			<th>Assembly Date</th>
 			<th>QC Date</th>
-            <th>Waranty Date</th>
+            <th>Warranty Date</th>
             <th>Employee</th>
             <th>Location</th>
             <th>Special Comp. SN</th>

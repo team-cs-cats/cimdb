@@ -343,7 +343,7 @@ def product_details(product_sn=""):
 		
 		# get components information:
 		if product_sn:
-			components_master=data.get_product_componenets()
+			components_master=data.get_product_components()
 			
 			
 			for target in components_master:
@@ -359,19 +359,19 @@ def product_details(product_sn=""):
 
 		
 		
-		#get reqular componenet catalog
-		regular_componenet_catalog=data.get_rc_catalog()
-		print(f'regular_componenet_catalog is {regular_componenet_catalog}')
+		#get reqular components catalog
+		regular_components_catalog=data.get_rc_catalog()
+		print(f'regular_components_catalog is {regular_components_catalog}')
 
-		#get special compoenent catalog
-		special_componenet_catalog=data.get_sp_catalog()
-		print(f'special_componenet_catalog is {special_componenet_catalog}')
+		#get special components catalog
+		special_components_catalog=data.get_sp_catalog()
+		print(f'special_components_catalog is {special_components_catalog}')
 		
 
 		#if product_sn not none:
 			#SQL query
 		# render the detail page
-		return render_template("product-details.html",product=product,components=components,special_componenet_catalog=special_componenet_catalog,regular_componenet_catalog=regular_componenet_catalog)
+		return render_template("product-details.html",product=product,components=components,special_components_catalog=special_components_catalog,regular_components_catalog=regular_components_catalog)
 
 # Assembly page. The page lists are assigned products ready for assembly 
 @webapp.route('/assembly', methods=['GET', 'POST'])
