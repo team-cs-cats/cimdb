@@ -38,7 +38,7 @@ Each new location will automatically be assigned a location ID upon creation.
 		<select class="custom-select m-1" id="new_location_site" required>
 			<option selected>Select Site: </option>
 			{% for site in sites %}
-			<option>{{site.site_name}}</option>
+			<option>{{site.site_address_city}}</option>
 			{% endfor %}
 		</select>
 
@@ -73,7 +73,7 @@ For all sites, Receiving Department is Room 0, Shelf 0 and Shipping Department i
 		<select class="custom-select m-1" id="existing_location_site">
 			<option selected>Select Site: </option>
 			{% for site in sites %}
-			<option>{{site.site_name}}</option>
+			<option>{{site.site_address_city}}</option>
 			{% endfor %}
 		</select>
 
@@ -110,7 +110,7 @@ For all sites, Receiving Department is Room 0, Shelf 0 and Shipping Department i
 				</td>
 
 				<td>
-					{% for site in sites %}{% if site.site_id == location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}
+					{{location.location_site_name}}
 				</td>
 				
 				<td>
@@ -125,7 +125,7 @@ For all sites, Receiving Department is Room 0, Shelf 0 and Shipping Department i
 					class="btn-sm btn-warning" 
 					data-toggle="modal" 
 					data-target="#editLocation" 
-					data-site-name="{% for site in sites %}{% if site.site_id == location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}" 
+					data-site-name="{{location.location_site_name}}" 
 					data-location-room-number="{{location.location_room_number}}" 
 					data-location-shelf-number="{{location.location_shelf_number}}" 
 					data-title="Edit Location ID {{location.location_id}}"
@@ -156,7 +156,7 @@ For all sites, Receiving Department is Room 0, Shelf 0 and Shipping Department i
                     		<select class="custom-select" id="location-site" required>
 							<option selected>Select Site: </option>
 								{% for site in sites %}
-							    	<option>{{site.site_name}}</option>
+							    	<option>{{site.site_address_city}}</option>
 							    {% endfor %}
 							</select>
 						</div>

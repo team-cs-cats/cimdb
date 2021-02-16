@@ -17,6 +17,9 @@ from cim.dummy_data import DummyData
 # connect to databse
 import cim.database.db_connector as db
 
+# import basic queries that are used in multiple routes
+import cim.database.db_queries as dbq
+
 
 #create the web application
 webapp = Flask(__name__)
@@ -111,19 +114,6 @@ def index():
 	# If the user provided bad credentials, return them to the index page (TODO: flash error)
 	return render_template("index.html")
 
-# test route for adding database conenction
-@webapp.route('/test', methods=['GET', 'POST'])
-@login_required
-def test():
-
-	# Write the query and save it to a variable
-	query = "SELECT * FROM sites;"
-	cursor = db.execute_query(db_connection=db_connection, query=query)
-	site_results = json.dumps(cursor.fetchall())
-
-	# otherwise, return the workorders page
-	if request.method=="GET":
-		return site_results
 
 # Provide a route to redirect a logged in user to the orders page web app
 @webapp.route('/login', methods=['GET', 'POST'])
@@ -310,9 +300,15 @@ def locations():
 	if not current_user.is_authenticated:
 		return redirect(url_for("cim.templates.index"))
 
+	# Load location results from the database (or the dummy data if the database doesn't work)
+	location_results = dbq.get_db_locations()
+
+	# Load site results from the database (or the dummy data if the database doesn't work)
+	site_results = dbq.get_db_sites()
+
 	if request.method=="GET":
 		return render_template("locations.html", 
-		locations=data.get_loc(), products=data.get_products(), regular_components=data.get_rc(), special_components=data.get_sc(), sites=data.get_sites())
+		locations=location_results, products=data.get_products(), regular_components=data.get_rc(), special_components=data.get_sc(), sites=site_results)
 
 @webapp.route('/management', methods=['GET', 'POST'])
 @login_required
@@ -324,15 +320,8 @@ def user_management():
 	if not current_user.is_authenticated:
 		return redirect(url_for("cim.templates.index"))
 
-
-	# Load SQL query for site data
-	query = "SELECT * FROM sites;"
-	cursor = db.execute_query(db_connection=db_connection, query=query)
-	site_results = cursor.fetchall()
-
-	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
-	if len(site_results) == 0:
-		site_results = data.get_sites()
+	# Load site results from the database (or the dummy data if the database doesn't work)
+	site_results = dbq.get_db_sites()
 
 	if request.method=="GET":
 		return render_template("user_management.html", sites=site_results, employees=data.get_emp())
@@ -346,15 +335,8 @@ def employee_management():
 	if not current_user.is_authenticated:
 		return redirect(url_for("cim.templates.index"))
 
-
-	# Load SQL query for site data
-	query = "SELECT * FROM sites;"
-	cursor = db.execute_query(db_connection=db_connection, query=query)
-	site_results = cursor.fetchall()
-
-	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
-	if len(site_results) == 0:
-		site_results = data.get_sites()
+	# Load site results from the database (or the dummy data if the database doesn't work)
+	site_results = dbq.get_db_sites()
 
 	if request.method=="GET":
 		return render_template("employee_mgmt.html", sites=site_results, employees=data.get_emp())
@@ -369,16 +351,9 @@ def site_management():
 	if not current_user.is_authenticated:
 		return redirect(url_for("cim.templates.index"))
 
-
-	# Load SQL query for site data
-	query = "SELECT * FROM sites;"
-	cursor = db.execute_query(db_connection=db_connection, query=query)
-	site_results = cursor.fetchall()
-
-	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
-	if len(site_results) == 0:
-		site_results = data.get_sites()
-
+	# Load site results from the database (or the dummy data if the database doesn't work)
+	site_results = dbq.get_db_sites()
+	
 	if request.method=="GET":
 		return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
 
