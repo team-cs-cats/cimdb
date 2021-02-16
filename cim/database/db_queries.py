@@ -38,7 +38,6 @@ def get_db_locations():
 
 	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
 	if len(location_results) == 0:
-		print('failed')
 		location_results = data.get_loc()
 
 	return location_results
