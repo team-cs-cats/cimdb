@@ -52,3 +52,15 @@
 .ali-test{
   background-color: aqua;
 }
+
+.content_center {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  width: 250px;
+  height: 150px;
+}
+
+a:hover {
+  font-weight: 500;
+}

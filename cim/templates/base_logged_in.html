@@ -16,7 +16,7 @@
             <div class="navbar-nav">
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Wororders
+                  Work Orders
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><a class="dropdown-item" href="/workorders">Manage Workorders</a></li>
@@ -27,9 +27,29 @@
               <a class="nav-link" href="/assembly">Assembly</a>
               <a class="nav-link" href="/qc">QC</a>
               <a class="nav-link" href="/shipping">Shipping</a>
-              <a class="nav-link" href="/inventory">Inventory</a>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Component Inventory
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="/inventory-reg">Regular Components</a></li>
+                  <li><a class="dropdown-item" href="/inventory-spec">CPUs (Special Components)</a></li>
+                </ul>
+              </li>
+
               <a class="nav-link" href="/locations">Locations</a>
-              <a class="nav-link" href="/management">Employee and Site Management</a>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Employee/Site Management
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="/employee-mgmt">Manage Employee Details</a></li>
+                  <li><a class="dropdown-item" href="/site-mgmt">Manage Site Details</a></li>
+                </ul>
+              </li>
+
               <a class="nav-link" href="/logout">Logout</a>
              </div>
           </div>
@@ -43,7 +63,3 @@
 {% block body %}
 {% endblock %}
 
-<div class="footer">
-	<h5>Cats Inventory and Manufacturing Database</h5>
-	<h6>CS340 Final Project | Winter 2021</h6>
-</div>a

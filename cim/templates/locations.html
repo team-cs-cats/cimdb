@@ -1,84 +1,100 @@
-<!-- Links to 'base_logged_in.html' as a base template file (which inherits from the base.html) -->
-{% extends 'base_logged_in.html' %}
+<!-- Links to 'base_standard_layout.html' as a base template file (which inherits from the base_logged_in.html and base.html) -->
+{% extends 'base_standard_layout.html' %}
 
-<!-- Title of the page -->
-{% block title %} Stock and Product Locations {% endblock%}
+<!-- Jinja2 Template Block for Head of Webpage -->
+{% block head %}
+
+{% endblock %}
+
+<!-- Jinja2 Template Block for Body of Webpage -->
+{% block body %}
+
+<!-- Overall Page Title -->
+{% block page_header %}
+Room/Shelf Storage Locations at 2Fast4U Sites
+{% endblock %}
+
+<!-- Page Description -->
+{% block page_description %}
+Each 2Fast4U site has many rooms containing shelves used for storing components and products. Each unique Room/Shelf combination is represented as a unique location ID. The following table lists storage locations at 2Fast4U production sites.
+{% endblock %}
+
+<!-- Header for Create New section -->
+{% block create_header %}
+Add New Location to Existing Site
+{% endblock %}
+
+<!-- Description for Create New section -->
+{% block create_description %}
+Each new location will automatically be assigned a location ID upon creation.
+{% endblock %}
+
+<!-- Form for Create New section -->
+{% block create_form %}
+<form id="add-location" action="">
+
+	<div class="inner-div text-center">
+
+		<select class="custom-select m-1" id="new_location_site" required>
+			<option selected>Select Site: </option>
+			{% for site in sites %}
+			<option>{{site.site_name}}</option>
+			{% endfor %}
+		</select>
+
+		<label for="add_location_room_number">Room Number: </label>
+		<input type="number" min="0" max="99" class='m-1' name="add_location_room_number" id="add_location_room_number" placeholder="99">
+
+		<label for="add_location_shelf_number">Shelf Number: </label>
+		<input type="number" min="0" max="99" class='m-1' name="add_location_shelf_number" id="add_location_shelf_number" placeholder="99">
+
+		<input type="button" class="btn-sm btn-success m-1" value="Add New Location" onclick=addData() >
+	</div>
+
+</form>
+{% endblock %}
+
+<!-- Header for Filter section -->
+{% block filter_header %}
+Filter Existing Locations
+{% endblock %}
+
+<!-- Description for Filter section -->
+{% block filter_description %}
+For all sites, Receiving Department is Room 0, Shelf 0 and Shipping Department is Room 0, Shelf 1. Please note that if a deleted location is storing products or components at the time of deletion, those products and components will be moved to the Receiving Department of that site.
+{% endblock %}
+
+<!-- Form for Filter section -->
+{% block filter_form %}
+<form id="existing-location-data-filter" action="">
+
+	<div class="text-center">
+
+		<select class="custom-select m-1" id="existing_location_site">
+			<option selected>Select Site: </option>
+			{% for site in sites %}
+			<option>{{site.site_name}}</option>
+			{% endfor %}
+		</select>
+
+		<label for="existing_location_room_number">Room Number: </label>
+		<input type="number" min="0" max="99" class='m-1' name="existing_location_room_number" id="existing_location_room_number" placeholder="99">
+
+		<label for="existing_location_shelf_number">Shelf Number: </label>
+		<input type="number" min="0" max="99" class='m-1' name="existing_location_shelf_number" id="existing_location_shelf_number" placeholder="99">
+
+		<input type="button" class="btn-sm btn-primary m-1" value="Filter" onclick=filterData() >
+		<input type="button" class="btn-sm btn-primary m-1" value="Clear Filters" onclick=clearFilters() >
 
 
-{% block body %} 
+	</div>
 
+</form>
+{% endblock %}
 
-<!-- add new form -->
-<div class="intro-div">
-    <h2>Room/Shelf Storage Locations at 2Fast4U Sites</h2>
-	
-	<p>Each 2Fast4U site has many rooms containing shelves used for storing components and products. </p>
-	<p>Each unique Room/Shelf combination is represented as a unique location ID. The following table lists storage locations at 2Fast4U production sites.</p> 
-
-</div>
-
-<div id="data-add" class="border">
-
-	<form id="assembly-data-filter" action="">
-
-		<div class="inner-div text-center">
-
-			<label>Add new location to site: </label>
-
-			<select class="custom-select" id="new_site" required>
-							<option selected>Select Site: </option>
-							{% for site in sites %}
-						    	<option>{{site.site_name}}</option>
-						    {% endfor %}
-						</select>
-
-			<input type="text" name="new_location_room_number" id="location_room_number" placeholder="Room Number">
-
-			<input type="text" name="new_location_shelf_number" id="location_shelf_number" placeholder="Shelf Number">
-		
-			<input type="button" class="btn-sm btn-success" value="Add New Location" onclick=addData() >
-		</div>
-
-		<div class="inner-div text-center">Each new location will automatically be assigned a location ID upon creation.</div>
-        
-	</form>
-</div>
-
-
-<div id="data-filtering" class="mb-0">
-
-	<form id="assembly-data-filter" action="">
-
-		<div class="inner-div text-center">
-
-			<label>Filter existing location information: </label>
-
-			<input type="text" name="location_site_id" id="location_site_id" placeholder="Site ID">
-
-			<input type="text" name="location_id" id="location_id" placeholder="Location ID">
-
-			<input type="text" name="location_room_number" id="location_room_number" placeholder="Room Number">
-
-			<input type="text" name="location_shelf_number" id="location_shelf_number" placeholder="Shelf Number">
-		
-			<input type="button" class="btn-sm btn-primary" value="Filter" onclick=filterData() >
-			<input type="button" class="btn-sm btn-primary" value="Clear Filters" onclick=clearFilters() >
-
-			<div>For all sites, Receiving Department is Room 0, Shelf 0 and Shipping Department is Room 0, Shelf 1.</div>
-			<div>Please note that if a deleted location is storing products or components at the time of deletion, those products and components will be moved to the Receiving Department of that site.</div>
-		</div>
-        
-	</form>
-</div>
-
-
-
-
-
-<!-- dummy content for demo --will be replaced -->
-<div id="results">
-	<div class="border pl-1 pr-1 pb-1 mt-0" style="height: 65vh; overflow-y: scroll;">
-	<table class="table table-striped " >
+<!-- Main results table -->
+{% block table_contents %}
+<table class="table table-striped " >
 		<tr >
 			<th>Location ID</th>
 			<th>2Fast4U Site Name</th>
@@ -104,18 +120,94 @@
 					{{location.location_shelf_number}}
 				</td>
 
-				<th><button class="btn-sm btn-warning">Edit</button></th>
+				<!-- <th><button class="btn-sm btn-warning">Edit</button></th> -->
+				<th><button type="button" 
+					class="btn-sm btn-warning" 
+					data-toggle="modal" 
+					data-target="#editLocation" 
+					data-site-name="{% for site in sites %}{% if site.site_id == location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}" 
+					data-location-room-number="{{location.location_room_number}}" 
+					data-location-shelf-number="{{location.location_shelf_number}}" 
+					data-title="Edit Location ID {{location.location_id}}"
+					>Edit</button></th>
 				<td><button class="btn-sm btn-danger">Delete</button></td>
 			</tr>
 		{% endfor %}
 		
 	</table>
-	</div>
-</div>
+
+{% endblock %}
+
+<!-- Page-specific modals -->
+{% block page_modals %}
+<!-- Modal popup for special component Edit feature -->
+<div id="editLocation" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal Window</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">  
+
+                    	<div class="form-group p-1">
+                    		<label class="control-label" >Site:</label>
+                    		<select class="custom-select" id="location-site" required>
+							<option selected>Select Site: </option>
+								{% for site in sites %}
+							    	<option>{{site.site_name}}</option>
+							    {% endfor %}
+							</select>
+						</div>
+
+                        <div class="form-group p-1">
+                            <label class="control-label" >Room Number:</label>
+                            <input type="number" min="0" max="999" id="room-number" class="form-control" value=>
+                        </div>   
+
+                        <div class="form-group p-1">
+                            <label class="control-label" >Shelf Number:</label>
+                            <input type="number" min="0" max="999" id="shelf-number" class="form-control">
+                        </div>                      
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+<!-- Page-specific scripts -->
+{% block page_scripts %}
+<script>
+$(document).ready(function(){
+    $("#editLocation").on("show.bs.modal", function(event){
+        // Get the button that triggered the modal
+        var button = $(event.relatedTarget);
+
+        // Extract value from the custom data-* attribute
+        var titleData = button.data("title");
+        $(this).find(".modal-title").text(titleData);
+
+        var roomNumberData = parseInt(button.data("location-room-number"));
+        $(this).find("#room-number").val(roomNumberData);
+
+        var shelfNumberData = parseInt(button.data("location-shelf-number"));
+        $(this).find("#shelf-number").val(shelfNumberData);
+
+        var siteNameData = button.data("site-name");        
+        $(this).find("#location-site").val(siteNameData);
+    });
+});
+</script>
+
+{% endblock %}
 
 
-{% endblock%}
-
-
-
+{% endblock %}
 

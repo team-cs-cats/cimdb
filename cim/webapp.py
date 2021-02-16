@@ -2,6 +2,9 @@
 from flask import Flask, render_template, flash
 from flask import request, redirect
 
+# add json to handle db connection
+from flask import json
+
 # import these to handle user accounts
 from flask import url_for, session
 import flask_login
@@ -11,8 +14,8 @@ from flask_login import login_user, current_user, logout_user, login_required
 # perform a local import to load the dummy data
 from cim.dummy_data import DummyData
 
-# This will eventually connect to the database, but for now it is not enabled
-# from db_connector.db_connector import connect_to_database, execute_query
+# connect to databse
+import cim.database.db_connector as db
 
 
 #create the web application
@@ -26,8 +29,8 @@ webapp.secret_key = 'Team CS Cats'
 login_manager = flask_login.LoginManager()
 login_manager.init_app(webapp)
 
-
-
+# Create a connection to the database
+db_connection = db.connect_to_database()
 
 
 # Load dummy data for the webpages to reference
@@ -46,6 +49,7 @@ for employee in data.get_emp():
 # Create a basic user class
 class User(flask_login.UserMixin):
 	pass
+
 
 # Associate the login manager with the users provided, unless the user provided isn't on the allowed dictionary
 @login_manager.user_loader
@@ -106,6 +110,20 @@ def index():
 
 	# If the user provided bad credentials, return them to the index page (TODO: flash error)
 	return render_template("index.html")
+
+# test route for adding database conenction
+@webapp.route('/test', methods=['GET', 'POST'])
+@login_required
+def test():
+
+	# Write the query and save it to a variable
+	query = "SELECT * FROM sites;"
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	site_results = json.dumps(cursor.fetchall())
+
+	# otherwise, return the workorders page
+	if request.method=="GET":
+		return site_results
 
 # Provide a route to redirect a logged in user to the orders page web app
 @webapp.route('/login', methods=['GET', 'POST'])
@@ -236,6 +254,39 @@ def inventory():
 	if request.method=="GET":
 		return render_template("inventory.html", regular_components=data.get_rc(), special_components=data.get_sc(), sites=data.get_sites())
 
+
+@webapp.route('/inventory-spec', methods=['GET', 'POST'])
+@login_required
+def inventory_special_components():
+	"""The webapp's page for viewing the inventory.
+	This allows the employee to review existing stock and order new stock of standard and special components."""
+
+	# if the current user is not authenticated, redirect the user to the logged out index page
+	if not current_user.is_authenticated:
+		return redirect(url_for("cim.templates.index"))
+
+	if request.method=="GET":
+		return render_template("inventory_special_comps.html", 
+			special_components=data.get_sc(), 
+			sites=data.get_sites(),
+			special_components_catalog=data.get_sp_catalog()
+			)
+
+
+@webapp.route('/inventory-reg', methods=['GET', 'POST'])
+@login_required
+def inventory_regular_components():
+	"""The webapp's page for viewing the inventory.
+	This allows the employee to review existing stock and order new stock of standard and special components."""
+
+	# if the current user is not authenticated, redirect the user to the logged out index page
+	if not current_user.is_authenticated:
+		return redirect(url_for("cim.templates.index"))
+
+	if request.method=="GET":
+		return render_template("inventory_regular_comps.html", regular_components=data.get_rc(), sites=data.get_sites())
+
+
 @webapp.route('/shipping', methods=['GET', 'POST'])
 @login_required
 def shipping():
@@ -273,8 +324,63 @@ def user_management():
 	if not current_user.is_authenticated:
 		return redirect(url_for("cim.templates.index"))
 
+
+	# Load SQL query for site data
+	query = "SELECT * FROM sites;"
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	site_results = cursor.fetchall()
+
+	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
+	if len(site_results) == 0:
+		site_results = data.get_sites()
+
 	if request.method=="GET":
-		return render_template("user_management.html", sites=data.get_sites(), employees=data.get_emp())
+		return render_template("user_management.html", sites=site_results, employees=data.get_emp())
+
+@webapp.route('/employee-mgmt', methods=['GET', 'POST'])
+@login_required
+def employee_management():
+	"""The webapp's page for managing current sites. This allows a manager to update information about current sites."""
+
+	# if the current user is not authenticated, redirect the user to the logged out index page
+	if not current_user.is_authenticated:
+		return redirect(url_for("cim.templates.index"))
+
+
+	# Load SQL query for site data
+	query = "SELECT * FROM sites;"
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	site_results = cursor.fetchall()
+
+	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
+	if len(site_results) == 0:
+		site_results = data.get_sites()
+
+	if request.method=="GET":
+		return render_template("employee_mgmt.html", sites=site_results, employees=data.get_emp())
+
+
+@webapp.route('/site-mgmt', methods=['GET', 'POST'])
+@login_required
+def site_management():
+	"""The webapp's page for managing current sites. This allows a manager to update information about current sites."""
+
+	# if the current user is not authenticated, redirect the user to the logged out index page
+	if not current_user.is_authenticated:
+		return redirect(url_for("cim.templates.index"))
+
+
+	# Load SQL query for site data
+	query = "SELECT * FROM sites;"
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	site_results = cursor.fetchall()
+
+	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
+	if len(site_results) == 0:
+		site_results = data.get_sites()
+
+	if request.method=="GET":
+		return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
 
 # workorder details. it takes the wo_id as argument to retrive the the information from DB
 @webapp.route('/wo-details', methods=['GET', 'POST'])
@@ -343,7 +449,7 @@ def product_details(product_sn=""):
 		
 		# get components information:
 		if product_sn:
-			components_master=data.get_product_componenets()
+			components_master=data.get_product_components()
 			
 			
 			for target in components_master:
@@ -359,19 +465,19 @@ def product_details(product_sn=""):
 
 		
 		
-		#get reqular componenet catalog
-		regular_componenet_catalog=data.get_rc_catalog()
-		print(f'regular_componenet_catalog is {regular_componenet_catalog}')
+		#get reqular components catalog
+		regular_components_catalog=data.get_rc_catalog()
+		print(f'regular_components_catalog is {regular_components_catalog}')
 
-		#get special compoenent catalog
-		special_componenet_catalog=data.get_sp_catalog()
-		print(f'special_componenet_catalog is {special_componenet_catalog}')
+		#get special components catalog
+		special_components_catalog=data.get_sp_catalog()
+		print(f'special_components_catalog is {special_components_catalog}')
 		
 
 		#if product_sn not none:
 			#SQL query
 		# render the detail page
-		return render_template("product-details.html",product=product,components=components,special_componenet_catalog=special_componenet_catalog,regular_componenet_catalog=regular_componenet_catalog)
+		return render_template("product-details.html",product=product,components=components,special_components_catalog=special_components_catalog,regular_components_catalog=regular_components_catalog)
 
 # Assembly page. The page lists are assigned products ready for assembly 
 @webapp.route('/assembly', methods=['GET', 'POST'])

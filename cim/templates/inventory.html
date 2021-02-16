@@ -9,6 +9,10 @@
 <!-- Jinja2 Template Block for Body of Webpage -->
 {% block body %}
 
+<!-- scripts to run the Edit modals -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <div class="w-100">
 	<div class='text-center'><h4>Inventory - CPUs (Special Components)</h4></div>
@@ -99,7 +103,19 @@
 									{% endfor %}
 									/ Room {{special_component.sc_location.location_room_number}}, Shelf {{special_component.sc_location.location_shelf_number}}
 								</td>
-								<td><button class="btn-sm btn-warning">Edit</button></td>
+									
+								<!-- <th><button class="btn-sm btn-warning">Edit</button></th> -->
+								<th><button type="button" 
+									class="btn-sm btn-warning" 
+									data-toggle="modal" 
+									data-target="#editSpecialComponent" 
+									data-spec-comp-part-number="{{special_component.sc_pn}}"
+									data-spec-comp-site-name="{% for site in sites %}{% if special_component.sc_location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}" 
+									data-spec-comp-room-number="{{special_component.sc_location.location_room_number}}" 
+									data-spec-comp-shelf-number="{{special_component.sc_location.location_shelf_number}}" 
+									data-spec-comp-is-free="{{special_component.sc_is_free}}" 
+									data-title="Edit Special Component ID {{special_component.sc_sn}}">Edit</button></th>
+
 								<td><button class="btn-sm btn-danger">Delete</button></td>
 						</tr>
 					{% endfor %}
@@ -283,7 +299,15 @@
 
 				<div class="col d-flex flex-row-reverse"> 
   					<button class="btn-sm btn-danger">Delete All Component {{regular_component.rc_pn}}</button>
-					<button class="btn-sm btn-warning">Edit Details for Component {{regular_component.rc_pn}}</button>
+
+					<button type="button" 
+						class="btn-sm btn-warning text-right" 
+						data-toggle="modal" 
+						data-target="#editRegularComponent" 
+						data-reg-comp-part-number="{{regular_component.rc_pn}}"
+						data-reg-comp-category="{{regular_component.rc_category}}"
+						data-title="Edit Quantity of Part Number {{regular_component.rc_pn}}">Edit Details for Component {{regular_component.rc_pn}}</button>
+
 				</div>
   			</div>
 
@@ -303,8 +327,18 @@
 					<td>Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</td>
 					<td>{{location.quantity_at_location}}</td>
 					
-					
-					<td class="text-right"><button class="btn-sm btn-warning">Edit</button></td>
+					<th><button type="button" 
+						class="btn-sm btn-warning text-right" 
+						data-toggle="modal" 
+						data-target="#editRegularComponentQuantity" 
+						data-reg-comp-part-number="{{regular_component.rc_pn}}"
+						data-reg-comp-category="{{regular_component.rc_category}}"
+						data-reg-comp-site-name="{% for site in sites %}{% if location.location_site_id == site.site_id%}{{site.site_name}}{% endif %}{% endfor %}" 
+						data-reg-comp-room-number="{{location.location_room_number}}" 
+						data-reg-comp-shelf-number="{{location.location_shelf_number}}" 
+						data-reg-comp-quantity={{location.quantity_at_location}}
+						data-title="Edit Quantity of Part Number {{regular_component.rc_pn}}">Edit</button></th>
+
 					<td><button class="btn-sm btn-danger">Delete</button></td>
 				</tr>
 				{% endfor %}
@@ -386,6 +420,181 @@
 
 
   </div>
+
+
+<!-- Modal popup for special component Edit feature -->
+<div id="editSpecialComponent" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal Window</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">  
+
+                    	<div class="form-group p-1">
+                            <label class="control-label" >Part Number:</label>
+                            <input type="number" min="0" max="999" id="spec-comp-edit-part-number" class="form-control"  required>
+                        </div> 
+
+						<div class="form-group p-1">
+							<label class="control-label" >Site:</label>
+							<select class="custom-select" id="spec-comp-edit-site" required>
+							<option selected>Select Site: </option>
+								{% for site in sites %}
+							    	<option>{{site.site_name}}</option>
+							    {% endfor %}
+							</select>
+						</div>                    	
+
+                        <div class="form-group p-1">
+                            <label class="control-label" >Room Number:</label>
+                            <input type="number" min="0" max="999" id="spec-comp-edit-room-number" class="form-control"  required>
+                        </div>   
+
+                        <div class="form-group p-1">
+                            <label class="control-label" >Shelf Number:</label>
+                            <input type="number" min="0" max="999" id="spec-comp-edit-shelf-number" class="form-control" required>
+                        </div>  
+
+						<div class="custom-control custom-checkbox">
+							<label class="custom-control-label" for="defaultUnchecked">Is Free:  </label>
+							<input type="checkbox" class="custom-control-input ml-2" id="spec-comp-edit-is-free" checked/>
+							
+						</div>
+					
+					</div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!-- Modal popup for regular component quantity Edit feature -->=
+<div id="editRegularComponentQuantity" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal Window</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">  
+
+						<div class="form-group p-1">
+                            <label class="control-label" >Quantity in <span id="reg-comp-edit-site"></span>, Room <span id="reg-comp-edit-room-number"></span>, Shelf <span id="reg-comp-edit-shelf-number"></span>:</label>
+                            <input type="number" min="0" max="999" id="reg-comp-edit-quantity" class="form-control" required>
+                        </div> 
+					
+					</div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Modal popup for regular component details Edit feature -->=
+<div id="editRegularComponentQuantity" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal Window</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">  
+
+						<div class="form-group p-1">
+                            <label class="control-label" >Part Number:</label>
+                            <input type="number" min="0" max="999" id="spec-comp-edit-part-number" class="form-control"  required>
+                        </div>
+
+                        <div class="form-group p-1">
+                            <label class="control-label" >Part Category:</label>
+                            <input type="number" min="0" max="999" id="spec-comp-edit-part-number" class="form-control"  required>
+                        </div> 
+					
+					</div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+$(document).ready(function(){
+    $("#editSpecialComponent").on("show.bs.modal", function(event){
+        // Get the button that triggered the modal
+        var button = $(event.relatedTarget);
+
+        // Extract value from the custom data-* attribute
+        var titleData = button.data("title");
+        $(this).find(".modal-title").text(titleData);
+
+        var partNumberData = parseInt(button.data("spec-comp-part-number"));
+        $(this).find("#spec-comp-edit-part-number").val(partNumberData);
+
+        var siteNameData = button.data("spec-comp-site-name");        
+        $(this).find("#spec-comp-edit-site").val(siteNameData);
+
+        var roomNumberData = parseInt(button.data("spec-comp-room-number"));
+        $(this).find("#spec-comp-edit-room-number").val(roomNumberData);
+
+        var shelfNumberData = parseInt(button.data("spec-comp-shelf-number"));
+        $(this).find("#spec-comp-edit-shelf-number").val(shelfNumberData);
+
+        var specialComponentIsFreeData = button.data("spec-comp-is-free");        
+        $(this).find("#spec-comp-edit-is-free").val(specialComponentIsFreeData);
+
+        
+    });
+});
+</script>
+
+
+<script>
+$(document).ready(function(){
+    $("#editRegularComponent").on("show.bs.modal", function(event){
+        // Get the button that triggered the modal
+        var button = $(event.relatedTarget);
+
+        // Extract value from the custom data-* attribute
+        var titleData = button.data("title");
+        $(this).find(".modal-title").text(titleData);
+
+        var partNumberData = parseInt(button.data("reg-comp-part-number"));
+        $(this).find("#reg-comp-edit-part-number").html(partNumberData);
+
+        var siteNameData = button.data("reg-comp-site-name");        
+        $(this).find("#reg-comp-edit-site").html(siteNameData);
+
+        var roomNumberData = parseInt(button.data("reg-comp-room-number"));
+        $(this).find("#reg-comp-edit-room-number").html(roomNumberData);
+
+        var shelfNumberData = parseInt(button.data("reg-comp-shelf-number"));
+        $(this).find("#reg-comp-edit-shelf-number").html(shelfNumberData);
+
+        var regularComponentQuantityData = button.data("reg-comp-quantity");        
+        $(this).find("#reg-comp-edit-quantity").val(regularComponentQuantityData);
+    });
+});
+</script>
+
 </div>
 
 {% endblock %}

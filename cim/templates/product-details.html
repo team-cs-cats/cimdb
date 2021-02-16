@@ -95,7 +95,7 @@
 	
 </div>
 
-	<h4>Update Componenet Infroamtions</h4>
+	<h4>Update Component Details</h4>
 
 	<form id="product-component-entry" action="">
 
@@ -111,21 +111,21 @@
 		<div class="inner-div">
 			<label for="motherboard">Mother Board</label>
 			<select name="motherboard" id="motherboard">
-				{% for mb in regular_componenet_catalog["MB"] %}
+				{% for mb in regular_components_catalog["MB"] %}
 					<option> {{mb}} </option>
 				{% endfor %}
 			</select>
 			
 			<label for="case">Case</label>
 			<select name="case" id="case">
-				{% for case in regular_componenet_catalog["Case"] %}
+				{% for case in regular_components_catalog["Case"] %}
 					<option> {{case}} </option>
 				{% endfor %}
 			</select>
 
 			<label for="gc">Graphic Card</label>
 			<select name="gc" id="gc">
-				{% for gc in regular_componenet_catalog["GC"] %}
+				{% for gc in regular_components_catalog["GC"] %}
 					<option> {{gc}} </option>
 				{% endfor %}
 			</select>
@@ -136,7 +136,7 @@
 		<div class="inner-div"> 
 			<label for="ram">RAM</label>
 			<select name="ram" id="ram">
-				{% for ram in regular_componenet_catalog["RAM"] %}
+				{% for ram in regular_components_catalog["RAM"] %}
 					<option> {{ram}} </option>
 				{% endfor %}
 			</select>
@@ -146,7 +146,7 @@
 			
 			<label for="hdd">HDD</label>
 			<select name="hdd" id="hdd">
-				{% for hdd in regular_componenet_catalog["HDD"] %}
+				{% for hdd in regular_components_catalog["HDD"] %}
 					<option> {{hdd}} </option>
 				{% endfor %}
 			</select>
