@@ -32,12 +32,13 @@ def get_db_sites():
 
 def get_db_locations():
 	# Load SQL query for location data
-	query = "SELECT * FROM locations;"
+	query = "SELECT locations.location_id, locations.location_room_number, locations.location_shelf_number, sites.site_address_city as location_site_name FROM locations INNER JOIN sites ON locations.location_site_id=sites.site_id;"
 	cursor = db.execute_query(db_connection=db_connection, query=query)
 	location_results = cursor.fetchall()
 
 	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
 	if len(location_results) == 0:
+		print('failed')
 		location_results = data.get_loc()
 
 	return location_results
