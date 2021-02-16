@@ -32,7 +32,17 @@ def get_db_sites():
 
 def get_db_locations():
 	# Load SQL query for location data
-	query = "SELECT locations.location_id, locations.location_room_number, locations.location_shelf_number, sites.site_address_city as location_site_name FROM locations INNER JOIN sites ON locations.location_site_id=sites.site_id;"
+
+	# select all columns from location table and site city name from site table
+	query = """SELECT 
+	locations.location_id, 
+	locations.location_room_number, 
+	locations.location_shelf_number, 
+	sites.site_address_city as location_site_name 
+	FROM locations 
+	INNER JOIN sites 
+	ON locations.location_site_id=sites.site_id;"""
+
 	cursor = db.execute_query(db_connection=db_connection, query=query)
 	location_results = cursor.fetchall()
 
