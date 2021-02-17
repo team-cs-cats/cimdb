@@ -338,8 +338,11 @@ def employee_management():
 	# Load site results from the database (or the dummy data if the database doesn't work)
 	site_results = dbq.get_db_sites()
 
+	# Load employee results from the database (or the dummy data if the database doesn't work)
+	employee_results = dbq.get_db_employees()
+
 	if request.method=="GET":
-		return render_template("employee_mgmt.html", sites=site_results, employees=data.get_emp())
+		return render_template("employee_mgmt.html", sites=site_results, employees=employee_results)
 
 
 @webapp.route('/site-mgmt', methods=['GET', 'POST'])
