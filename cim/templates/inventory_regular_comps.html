@@ -16,17 +16,17 @@ Inventory - Regular Components
 
 <!-- Page Description -->
 {% block page_description %}
-<p>Regular components do not have unique serial numbers and can be stored in multiple locations at each site.</p>
-<p>Note that new orders of existing components will be placed in the Receiving Department (Room 0, Shelf 0) of the selected site.</p>
+<p>Regular components are any components that are not CPUs. They <strong>do not have unique serial numbers</strong> and can be stored in <strong>multiple locations</strong> at each site. Each shelf in each room can store multiple regular components regardless of category or part number.</p>
 {% endblock %}
 
 <!-- Header for Create New section -->
 {% block create_header %}
-Order New Regular Components
+
 {% endblock %}
 
 <!-- Description for Create New section -->
 {% block create_description %}
+<h6>Order New Regular Components</h6> 
 If a new regular component (non-CPU/non unique) needs to be ordered and added to the inventory, use this form.
 {% endblock %}
 
@@ -34,7 +34,7 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 {% block create_form %}
 <form id="add-special-components" action="">
 
-	<div class="inner-div text-center">
+	<div class="text-center">
 
 		<label for="new_reg_comp_part_number">Part Number: </label>
 		<input type="number" min="10000" max="99998" class='m-1' name="new_reg_comp_part_number" id="new_reg_comp_part_number" placeholder="12345" required>
@@ -71,7 +71,7 @@ Filter Existing Regular Components
 
 <!-- Description for Filter section -->
 {% block filter_description %}
-Note that each shelf in each room can store multiple regular components regardless of category or part number.
+
 {% endblock %}
 
 <!-- Form for Filter section -->
