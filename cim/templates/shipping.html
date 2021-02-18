@@ -35,13 +35,7 @@
 						<div class="card-body">
 						<div>
 							<h6 class="card-title">Work Order {{work_order.wo_id}}</h6>
-
-							{% for employee in employees %}
-								{% if employee.employee_id == work_order.wo_employee_id %}
-									<p>Pending Assembly and QC by {{employee.employee_first_name}} {{employee.employee_last_name}} </p>
-								{% endif %}
-							{% endfor %}
-
+								<p>Pending Assembly and QC by {{work_order.wo_employee_full_name}}</p>
 							<a href="#" class="btn-sm btn-secondary">View Order</a>
 						</div>
 						</div>
@@ -69,11 +63,7 @@
 						<div>
 							<h6 class="card-title">Work Order {{work_order.wo_id}}</h6>
 
-							{% for employee in employees %}
-								{% if employee.employee_id == work_order.wo_employee_id %}
-									<p>Pending QC by {{employee.employee_first_name}} {{employee.employee_last_name}} </p>
-								{% endif %}
-							{% endfor %}
+							<p>Pending QC by {{work_order.wo_employee_full_name}}</p>
 
 							<a href="#" class="btn-sm btn-secondary">View Order</a>
 						</div>

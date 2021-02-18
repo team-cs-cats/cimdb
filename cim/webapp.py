@@ -287,8 +287,11 @@ def shipping():
 	if not current_user.is_authenticated:
 		return redirect(url_for("cim.templates.index"))
 
+	# Load work order results from the database (or the dummy data if the database doesn't work)
+	work_order_results = dbq.get_db_work_orders()
+
 	if request.method=="GET":
-		return render_template("shipping.html", work_orders=data.get_wo(), employees=data.get_emp())
+		return render_template("shipping.html", work_orders=work_order_results, employees=data.get_emp())
 
 @webapp.route('/locations', methods=['GET', 'POST'])
 @login_required
