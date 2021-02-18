@@ -2,9 +2,16 @@
 -- Description: provides a location for the table structure of the base entities for the CIMDB
 
 -- initialization of database
+UNLOCK tables;
+
 CREATE DATABASE IF NOT EXISTS cimdb;
 USE cimdb;
 SHOW tables;
+
+DROP TABLE IF EXISTS `WorkOrders`;
+DROP TABLE IF EXISTS `Employees`;
+DROP TABLE IF EXISTS `Locations`;
+DROP TABLE IF EXISTS `Sites`;
 
 
 -- Site table Creation query
