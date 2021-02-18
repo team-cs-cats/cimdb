@@ -37,7 +37,7 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 	<div class="text-center">
 
 		<label for="new_reg_comp_part_number">Part Number: </label>
-		<input type="number" min="10000" max="99998" class='m-1' name="new_reg_comp_part_number" id="new_reg_comp_part_number" placeholder="12345" required>
+		<input type="number" min="10000" max="99998" class='m-1 p-1' name="new_reg_comp_part_number" id="new_reg_comp_part_number" placeholder="12345" required>
 
 		<select class="custom-select m-1" id="new_category" required>
 			<option selected>Select Category: </option>
@@ -48,7 +48,7 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 		    <option>RAM</option>
 		</select>
 
-		<select class="custom-select m-1" id="new_reg_comp_site" required>
+		<select class="custom-select m-1 p-1" id="new_reg_comp_site" required>
 			<option selected>Select Site: </option>
 			{% for site in sites %}
 			<option>{{site.site_name}}</option>
@@ -56,9 +56,9 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 		</select>
 
 		<label for="new_reg_comp_quantity">Order Quantity: </label>
-		<input type="number" min="1" max="50" class='m-1' name="new_reg_comp_quantity" id="new_reg_comp_quantity" placeholder="#" required>
+		<input type="number" min="1" max="50" class='m-1 p-1' name="new_reg_comp_quantity" id="new_reg_comp_quantity" placeholder="#" required>
 
-		<input type="button" class="btn-sm btn-success m-1" data-toggle="tooltip" data-placement="auto" title="All ordered components will be placed in the Receiving Department (Room 1) at the selected site." id="order_new_reg_comps" value="Order New Regular Components" onclick=addData() >
+		<input type="button" class="btn-sm btn-success m-1 p-1" data-toggle="tooltip" data-placement="auto" title="All ordered components will be placed in the Receiving Department (Room 1) at the selected site." id="order_new_reg_comps" value="Order New Regular Components" onclick=addData() >
 	</div>
 
 </form>
@@ -132,7 +132,7 @@ Filter Existing Regular Components
 		<div class="col d-flex flex-row ml-5">
 			<p class="mt-2">Order more of component {{regular_component.rc_pn}}: </p>
 			<div>
-					<select class="custom-select mt-2 pl-2" id="new_rc_site" required>
+					<select class="custom-select mt-2 pl-2 ml-2" id="new_rc_site" required>
 					<option selected>Select Site: </option>
 					{% for site in sites %}
 					<option>{{site.site_name}}</option>
@@ -162,7 +162,7 @@ Filter Existing Regular Components
 				data-target="#editRegularComponent" 
 				data-reg-comp-part-number="{{regular_component.rc_pn}}"
 				data-reg-comp-category="{{regular_component.rc_category}}"
-				data-title="Edit Quantity of Part Number {{regular_component.rc_pn}}">Edit Details for Component {{regular_component.rc_pn}}</button>
+				data-title="Edit Details for Part Number {{regular_component.rc_pn}}">Edit Details for Component {{regular_component.rc_pn}}</button>
 
 		</div>
 		</div>
@@ -242,7 +242,7 @@ Filter Existing Regular Components
 
 
 <!-- Modal popup for regular component details Edit feature -->
-<div id="editRegularComponentQuantity" class="modal fade" tabindex="-1">
+<div id="editRegularComponent" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form>
@@ -254,12 +254,12 @@ Filter Existing Regular Components
 
 						<div class="form-group p-1">
                             <label class="control-label" >Part Number:</label>
-                            <input type="number" min="0" max="999" id="spec-comp-edit-part-number" class="form-control"  required>
+                            <input type="text" id="reg-comp-edit-part-number" class="form-control"  required>
                         </div>
 
                         <div class="form-group p-1">
                             <label class="control-label" >Part Category:</label>
-                            <input type="number" min="0" max="999" id="spec-comp-edit-part-number" class="form-control"  required>
+                            <input type="text" id="reg-comp-edit-part-number" class="form-control"  required>
                         </div> 
 					
 					</div>
@@ -308,6 +308,23 @@ $(document).ready(function(){
 
         var shelfNumberData = parseInt(button.data("reg-comp-shelf-number"));
         $(this).find("#reg-comp-edit-shelf-number").html(shelfNumberData);
+
+        var regularComponentQuantityData = button.data("reg-comp-quantity");        
+        $(this).find("#reg-comp-edit-quantity").val(regularComponentQuantityData);
+    });
+});
+</script>
+
+
+<script>
+$(document).ready(function(){
+    $("#editRegularComponentQuantity").on("show.bs.modal", function(event){
+        // Get the button that triggered the modal
+        var button = $(event.relatedTarget);
+
+        // Extract value from the custom data-* attribute
+        var titleData = button.data("title");
+        $(this).find(".modal-title").text(titleData);
 
         var regularComponentQuantityData = button.data("reg-comp-quantity");        
         $(this).find("#reg-comp-edit-quantity").val(regularComponentQuantityData);
