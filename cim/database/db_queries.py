@@ -76,3 +76,30 @@ def get_db_employees():
 		employee_results = data.get_emp()
 
 	return employee_results
+
+
+def get_db_work_orders():
+	# Load SQL query for work order data
+
+	# select all columns except employee password from employee table, and site city name from site table
+	query = """SELECT 
+	WorkOrders.wo_id, 
+	WorkOrders.wo_open_date, 
+	WorkOrders.wo_close_date, 
+	WorkOrders.wo_status, 
+	WorkOrders.wo_reference_number,
+	CONCAT(Employees.employee_first_name, ' ', Employees.employee_last_name) as wo_employee_full_name 
+	FROM WorkOrders 
+	INNER JOIN Employees 
+	ON Employees.employee_id=WorkOrders.wo_employee_id;"""
+
+	#TODO: also get the work order details (products involved)
+
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	work_order_results = cursor.fetchall()
+
+	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
+	if len(work_order_results) == 0:
+		work_order_results = data.get_wo()()
+
+	return work_order_results

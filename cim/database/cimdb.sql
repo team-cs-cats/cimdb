@@ -96,6 +96,36 @@ INSERT INTO `Employees` VALUES
 UNLOCK TABLES;
 
 
+
+-- WorkOrders table Creation query
+DROP TABLE IF EXISTS `WorkOrders`;
+CREATE TABLE `WorkOrders` (
+  `wo_id` int NOT NULL AUTO_INCREMENT,
+  `wo_open_date` date NOT NULL,
+  `wo_close_date` date,
+  `wo_status` varchar(255) NOT NULL,
+  `wo_reference_number` int NOT NULL,
+  `wo_employee_id` int,
+  PRIMARY KEY (`wo_id`),
+  FOREIGN KEY (`wo_employee_id`) REFERENCES `Employees`(`employee_id`)
+);
+
+
+-- Populate WorkOrders table with data
+LOCK TABLES `WorkOrders` WRITE;
+INSERT INTO `WorkOrders` VALUES 
+(879845, "2021-01-29", null, "assembly_pending", 84596, 77919),
+(815348, "2021-01-12", null, "qc_pending", 84325, 60126),
+(968412, "2021-01-02", null, "assembly_pending", 98125, 58873),
+(874523, "2021-01-22", null, "qc_pending", 98214, 46535),
+(845236, "2021-01-24", "2021-01-16", "completed", 23165, 17597),
+(658412, "2021-01-12", null, "qc_pending", 87462, 97633),
+(874596, "2021-01-14", null, "shipping_pending", 841256, 58873),
+(512648, "2021-01-21", null, "shipping_pending", 68451, 35477);
+UNLOCK TABLES;
+
+
+
 -- SpecialComponents table Creation query
 DROP TABLE IF EXISTS `SpecialComponents`;
 CREATE TABLE `SpecialComponents` (
@@ -108,6 +138,7 @@ CREATE TABLE `SpecialComponents` (
   FOREIGN KEY (`sc_product_sn`) REFERENCES `Products`(`product_sn`),
   FOREIGN KEY (`sc_location_id`) REFERENCES `Locations`(`location_id`)
 );
+
 
 -- RegularComponents table Creation query
 DROP TABLE IF EXISTS `RegularComponents`;
@@ -133,20 +164,6 @@ CREATE TABLE `Products` (
   FOREIGN KEY (`product_employee_id`) REFERENCES `Employees`(`employee_id`),
   FOREIGN KEY (`product_location_id`) REFERENCES `Locations`(`location_id`),
   FOREIGN KEY (`product_sc_sn`) REFERENCES `SpecialComponents`(`sc_sn`)
-);
-
-
--- WorkOrders table Creation query
-DROP TABLE IF EXISTS `WorkOrders`;
-CREATE TABLE `WorkOrders` (
-  `wo_id` int NOT NULL AUTO_INCREMENT,
-  `wo_open_date` date NOT NULL,
-  `wo_close_date` date,
-  `wo_status` varchar(255) NOT NULL,
-  `wo_reference_number` int NOT NULL,
-  `wo_employee_id` int,
-  PRIMARY KEY (`wo_id`),
-  FOREIGN KEY (`wo_employee_id`) REFERENCES `Employees`(`employee_id`)
 );
 
 -- WorkOrderProducts table Creation query
