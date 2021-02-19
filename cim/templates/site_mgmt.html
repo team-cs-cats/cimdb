@@ -26,7 +26,7 @@ Add New Site
 
 <!-- Description for Create New section -->
 {% block create_description %}
-Note that adding a new site will only pre-populate the site with two locations: Receiving Department (Room 0, Shelf 0) and Shipping Department (Room 0, Shelf 1). All additional locations will need to be added by a Supervisor on the <a href="/locations">Locations</a> page.
+Note that a newly added site will only be pre-populate with the five standard rooms (Receiving Department, Warehouse, Assembly Department, QC  Departmebt and Shipping Department). All additional locations will need to be added by a Supervisor on the <a href="/locations">Locations</a> page.
 {% endblock %}
 
 <!-- Form for Create New section -->
@@ -34,9 +34,6 @@ Note that adding a new site will only pre-populate the site with two locations: 
 <form id="new-site-data-filter" action="">
 
 	<div class="text-center">
-
-		<label for="new_site_id">Site ID:</label>
-		<input type="number" min="1" max="99" class='m-1' name="new_site_id" id="new_site_id" placeholder="99" required>
 
 		<input type="text" class='m-1' name="new_site_fname" id="new_site_fname" placeholder="Address " required>
 
@@ -49,7 +46,7 @@ Note that adding a new site will only pre-populate the site with two locations: 
 		<label for="new_site_zip">Zip: </label>
 		<input type="number" min="0" max="99999" class='m-1' name="new_site_zip" id="new_site_zip" placeholder="99999" required>
 
-		<input type="button" class="btn-sm btn-success m-1" value="Filter" onclick=addData() >
+		<input type="button" class="btn-sm btn-success m-1" value="Add New Site" onclick=addData() >
 
 
 	</div>
