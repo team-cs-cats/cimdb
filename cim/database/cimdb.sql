@@ -69,86 +69,104 @@ INSERT INTO `Locations` VALUES
 UNLOCK TABLES;
 
 
+-- Products table Creation query
+DROP TABLE IF EXISTS `Products`;
+CREATE TABLE `Products` (
+  `product_sn` int NOT NULL AUTO_INCREMENT,
+  `product_pn` char(16) NOT NULL,
+  `product_family` varchar(255) NOT NULL,
+  `product_date_assembly` date,
+  `product_qc_date` date,
+  `product_warranty_expiration_date` date,
+  `product_employee_id` int,
+  `product_location_id` int,
+  `product_sc_sn` int,
+  PRIMARY KEY (`product_sn`),
+  FOREIGN KEY (`product_employee_id`) REFERENCES `Employees`(`employee_id`),
+  FOREIGN KEY (`product_location_id`) REFERENCES `Locations`(`location_id`),
+  FOREIGN KEY (`product_sc_sn`) REFERENCES `SpecialComponents`(`sc_sn`)
+);
+
+-- WorkOrderProducts table Creation query
+DROP TABLE IF EXISTS `WorkOrderProducts`;
+CREATE TABLE `WorkOrderProducts` (
+  `wop_id` int NOT NULL AUTO_INCREMENT,
+  `wop_wo_id` int,
+  `wop_product_sn` int,
+  PRIMARY KEY (`wop_id`),
+  FOREIGN KEY (`wop_wo_id`) REFERENCES `WorkOrders`(`wo_id`),
+  FOREIGN KEY (`product_sc_sn`) REFERENCES `Products`(`product_sn`)
+);
+
+-- ProductsRegularComps table Creation query
+DROP TABLE IF EXISTS `ProductsRegularComps`;
+CREATE TABLE `ProductsRegularComps` (
+  `prc_id` int NOT NULL AUTO_INCREMENT,
+  `prc_product_sn` int,
+  `prc_rc_pn` int,
+  `prc_quantity_needed` int NOT NULL,
+  PRIMARY KEY (`prc_id`),
+  FOREIGN KEY (`prc_product_sn`) REFERENCES `Product`(`product_sn`),
+  FOREIGN KEY (`prc_rc_pn`) REFERENCES `RegularComponents`(`rc_pn`)
+);
+
+-- Employees table Creation query
+DROP TABLE IF EXISTS `Employees`;
+CREATE TABLE `Employees` (
+  `employee_id` int NOT NULL AUTO_INCREMENT,
+  `employee_group` varchar(255) NOT NULL,
+  `employee_first_name` varchar(255) NOT NULL,
+  `employee_last_name` varchar(255) NOT NULL,
+  `employee_email` varchar(255) NOT NULL,
+  `employee_password` varchar(255) NOT NULL,
+  `employee_site_id` int,
+  PRIMARY KEY (`employee_id`),
+  FOREIGN KEY (`employee_site_id`) REFERENCES `Sites`(`site_id`)
+);
+
+-- WorkOrders table Creation query
+DROP TABLE IF EXISTS `WorkOrders`;
+CREATE TABLE `WorkOrders` (
+  `wo_id` int NOT NULL AUTO_INCREMENT,
+  `wo_open_date` date NOT NULL,
+  `wo_close_date` date,
+  `wo_status` varchar(255) NOT NULL,
+  `wo_reference_number` int NOT NULL,
+  `wo_employee_id` int,
+  PRIMARY KEY (`wo_id`),
+  FOREIGN KEY (`wo_employee_id`) REFERENCES `Employees`(`employee_id`)
+);
 
 
+-- SpecialComponents table Creation query
+DROP TABLE IF EXISTS `SpecialComponents`;
+CREATE TABLE `SpecialComponents` (
+  `sc_sn` int NOT NULL AUTO_INCREMENT,
+  `sc_pn` char(16) NOT NULL,
+  `sc_is_free` boolean NOT NULL,
+  `sc_product_sn` int,
+  `sc_location_id` int,
+  PRIMARY KEY (`sc_sn`),
+  FOREIGN KEY (`sc_product_sn`) REFERENCES `Products`(`product_sn`),
+  FOREIGN KEY (`sc_location_id`) REFERENCES `Locations`(`(location_id`)
+);
 
+-- RegularComponents table Creation query
+DROP TABLE IF EXISTS `RegularComponents`;
+CREATE TABLE `RegularComponents` (
+  `rc_pn` int NOT NULL AUTO_INCREMENT,
+  `rc_category` varchar(255) NOT NULL,
+  PRIMARY KEY (`rc_pn`)
+);
 
--- DROP TABLE IF EXISTS `Products`;
--- CREATE TABLE `Products` (
---   `product_sn` int,
---   `product_pn` char(16),
---   `product_family` varchar(255),
---   `product_date_assembly` date,
---   `product_qc_date` date,
---   `product_warranty_expiration_date` date,
---   `product_employee_id` int,
---   `product_location_id` int,
---   `product_sc_sn` int,
---   PRIMARY KEY (`product_sn`)
--- );
-
--- DROP TABLE IF EXISTS `WorkOrderProducts`;
--- CREATE TABLE `WorkOrderProducts` (
---   `wop_id` int NOT NULL AUTO_INCREMENT,
---   `wop_wo_id` int,
---   `wop_product_sn` int,
---   PRIMARY KEY (`wop_id`)
--- );
-
--- DROP TABLE IF EXISTS `ProductsRegularComps`;
--- CREATE TABLE `ProductsRegularComps` (
---   `prc_id` int NOT NULL AUTO_INCREMENT,
---   `prc_product_sn` int,
---   `prc_rc_pn` int,
---   `prc_quantity_needed` int,
---   PRIMARY KEY (`prc_id`)
--- );
-
--- DROP TABLE IF EXISTS `Employees`;
--- CREATE TABLE `Employees` (
---   `employee_id` int NOT NULL AUTO_INCREMENT,
---   `employee_group` varchar(255),
---   `employee_first_name` varchar(255),
---   `employee_last_name` varchar(255),
---   `employee_email` varchar(255),
---   `employee_password` varchar(255),
---   `employee_site_id` int,
---   PRIMARY KEY (`employee_id`)
--- );
-
--- DROP TABLE IF EXISTS `WorkOrders`;
--- CREATE TABLE `WorkOrders` (
---   `wo_id` int NOT NULL AUTO_INCREMENT,
---   `wo_open_date` date,
---   `wo_close_date` date,
---   `wo_status` varchar(255),
---   `wo_reference_number` int,
---   `wo_employee_id` int,
---   PRIMARY KEY (`wo_id`)
--- );
-
--- DROP TABLE IF EXISTS `SpecialComponents`;
--- CREATE TABLE `SpecialComponents` (
---   `sc_sn` int NOT NULL AUTO_INCREMENT,
---   `sc_pn` char(16),
---   `sc_is_free` boolean,
---   `sc_product_sn` int,
---   `sc_location_id` int,
---   PRIMARY KEY (`sc_sn`)
--- );
-
--- DROP TABLE IF EXISTS `RegularComponents`;
--- CREATE TABLE `RegularComponents` (
---   `rc_pn` int NOT NULL AUTO_INCREMENT,
---   `rc_category` varchar(255),
---   PRIMARY KEY (`rc_pn`)
--- );
-
--- DROP TABLE IF EXISTS `LocationsRegularComps`;
--- CREATE TABLE `LocationsRegularComps` (
---   `lrc_id` int NOT NULL AUTO_INCREMENT,
---   `lrc_location_id` int,
---   `lrc_rc_pn` int,
---   `lrc_quantity` int,
---   PRIMARY KEY (`lrc_id`)
--- );
+-- LocationsRegularComps table Creation query
+DROP TABLE IF EXISTS `LocationsRegularComps`;
+CREATE TABLE `LocationsRegularComps` (
+  `lrc_id` int NOT NULL AUTO_INCREMENT,
+  `lrc_location_id` int ,
+  `lrc_rc_pn` int,
+  `lrc_quantity` int NOT NULL,
+  PRIMARY KEY (`lrc_id`),
+  FOREIGN KEY (`lrc_location_id`) REFERENCES `Locations`(`location_id`),
+  FOREIGN KEY (`lrc_rc_pn`) REFERENCES `RegularComponents`(`rc_pn`)
+);

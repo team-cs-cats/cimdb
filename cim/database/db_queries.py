@@ -19,7 +19,7 @@ data = DummyData()
 
 def get_db_sites():
 	# Load SQL query for site data
-	query = "SELECT * FROM sites;"
+	query = "SELECT * FROM Sites;"
 	cursor = db.execute_query(db_connection=db_connection, query=query)
 	site_results = cursor.fetchall()
 
@@ -35,13 +35,13 @@ def get_db_locations():
 
 	# select all columns from location table and site city name from site table
 	query = """SELECT 
-	locations.location_id, 
-	locations.location_room_number, 
-	locations.location_shelf_number, 
-	sites.site_address_city as location_site_name 
-	FROM locations 
-	INNER JOIN sites 
-	ON locations.location_site_id=sites.site_id;"""
+	Locations.location_id, 
+	Locations.location_room_number, 
+	Locations.location_shelf_number, 
+	Sites.site_address_city as location_site_name 
+	FROM Locations 
+	INNER JOIN Sites 
+	ON Locations.location_site_id=Sites.site_id;"""
 
 	cursor = db.execute_query(db_connection=db_connection, query=query)
 	location_results = cursor.fetchall()
