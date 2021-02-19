@@ -105,6 +105,6 @@ def get_db_work_orders():
 
 	# # Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
 	# if len(work_order_results) == 0:
-	work_order_results = data.get_wo()()
+	work_order_results = data.get_wo()
 
 	return work_order_results
