@@ -147,13 +147,60 @@ CREATE TABLE `SpecialComponents` (
 );
 
 
+-- Populate SpecialComponents table with data
+LOCK TABLES `SpecialComponents` WRITE;
+INSERT INTO `SpecialComponents` VALUES 
+(610205, "i3", 1, null, 1),
+(293039, "i5", 1, null, 1),
+(56853, "i7", 1, null, 1),
+(1046, "i5", 1, null, 1),
+(184930, "i5", 1, null, 1),
+(101711, "i7", 1, null, 1),
+(714673, "i7", 1, null, 1),
+(473446, "i3", 0, null, 1),
+(3000, "i3", 1, null, 1),
+(3001, "i3", 1, null, 1),
+(3002, "i3", 1, null, 1),
+(3003, "i3", 0, null, 1),
+(5001, "i5", 1, null, 1),
+(5002, "i5", 1, null, 1),
+(5003, "i5", 1, null, 1),
+(7001, "i7", 1, null, 1),
+(7002, "i7", 1, null, 1),
+(7003, "i7", 1, null, 1),
+(7004, "i7", 1, null, 1);
+UNLOCK TABLES;
+
+
 -- RegularComponents table Creation query
 DROP TABLE IF EXISTS `RegularComponents`;
 CREATE TABLE `RegularComponents` (
   `rc_pn` int NOT NULL AUTO_INCREMENT,
+  `rc_pn_desc` varchar(16) NOT NULL ,
   `rc_category` varchar(255) NOT NULL,
   PRIMARY KEY (`rc_pn`)
 );
+
+-- Populate RegularComponents table with data
+LOCK TABLES `RegularComponents` WRITE;
+INSERT INTO `RegularComponents` VALUES 
+(1,"MB 1", "MB"),
+(2,"MB 2", "MB"),
+(3,"MB 3", "MB"),
+(50,"RAM 1", "RAM"),
+(51,"RAM 2", "RAM"),
+(52,"RAM 3", "RAM"),
+(100,"Case 1", "Case"),
+(101,"Case 2", "Case"),
+(102,"Case 3", "Case"),
+(150,"HDD 1", "HDD"),
+(151,"HDD 2", "HDD"),
+(152,"HDD 3", "HDD"),
+(200,"NO GC", "GC"),
+(201,"GC 1", "GC"),
+(202,"GC 2", "GC");
+UNLOCK TABLES;
+
 
 -- Products table Creation query
 DROP TABLE IF EXISTS `Products`;
@@ -173,6 +220,23 @@ CREATE TABLE `Products` (
   FOREIGN KEY (`product_sc_sn`) REFERENCES `SpecialComponents`(`sc_sn`)
 );
 
+-- Populate RegularComponents table with data
+LOCK TABLES `Products` WRITE;
+INSERT INTO `Products` VALUES 
+(1,"Pro-i3", "Pro","2020-12-20","2020-12-12","2021-12-21",77919,20,3001),
+(2,"Pro-i3", "Pro","2020-12-20","2020-12-12","2021-12-21",77919,20,3002),
+(3,"Basic-i3", "Basic","2020-12-20","2020-12-12","2021-12-21",77919,20,3003),
+(4,"Pro-i5", "Pro","2020-12-20","2020-12-12","2021-12-21",77919,20,5001),
+(5,"Pro-i5", "Pro","2020-12-20","2020-12-12","2021-12-21",77919,20,5002),
+(6,"Basic-i5", "Basic","2020-12-20","2020-12-12","2021-12-21",77919,20,5003),
+(7,"Pro-i7", "Pro","2020-12-20","2020-12-12","2021-12-21",77919,20,7001),
+(8,"Basic-i7", "Basic","2020-12-20","2020-12-12","2021-12-21",77919,20,7002),
+(9,"Basic-i7", "Basic","2020-12-20","2020-12-12","2021-12-21",77919,20,7003),
+(10,"Pro-i7", "Pro","2020-12-20","2020-12-12","2021-12-21",77919,20,7004);
+UNLOCK TABLES;
+
+
+
 -- WorkOrderProducts table Creation query
 DROP TABLE IF EXISTS `WorkOrderProducts`;
 CREATE TABLE `WorkOrderProducts` (
@@ -183,6 +247,20 @@ CREATE TABLE `WorkOrderProducts` (
   FOREIGN KEY (`wop_wo_id`) REFERENCES `WorkOrders`(`wo_id`),
   FOREIGN KEY (`wop_product_sn`) REFERENCES `Products`(`product_sn`)
 );
+
+-- Populate WorkOrderProducts table with data
+LOCK TABLES `WorkOrderProducts` WRITE;
+INSERT INTO `WorkOrderProducts` VALUES 
+(1,879845,1),
+(2,879845,5),
+(3,879845,8),
+(4,815348,3),
+(5,968412,2),
+(6,874523,4),
+(7,845236,6),
+(8,845236,7);
+UNLOCK TABLES;
+
 
 -- ProductsRegularComps table Creation query
 DROP TABLE IF EXISTS `ProductsRegularComps`;
@@ -196,6 +274,31 @@ CREATE TABLE `ProductsRegularComps` (
   FOREIGN KEY (`prc_rc_pn`) REFERENCES `RegularComponents`(`rc_pn`)
 );
 
+-- Populate ProductsRegularComps table with data
+LOCK TABLES `ProductsRegularComps` WRITE;
+INSERT INTO `ProductsRegularComps` VALUES 
+(1,1,1,1),
+(2,1,50,2),
+(3,1,100,1),
+(4,1,150,2),
+(5,1,200,1),
+(6,2,3,1),
+(7,2,51,3),
+(8,2,102,1),
+(9,2,152,1),
+(10,2,200,1),
+(11,3,3,1),
+(12,3,52,3),
+(13,3,100,1),
+(14,3,151,3),
+(15,3,202,1),
+(16,4,3,1),
+(17,4,50,2),
+(18,4,100,1),
+(19,4,150,2),
+(20,4,200,1);
+UNLOCK TABLES;
+
 
 -- LocationsRegularComps table Creation query
 DROP TABLE IF EXISTS `LocationsRegularComps`;
@@ -208,5 +311,20 @@ CREATE TABLE `LocationsRegularComps` (
   FOREIGN KEY (`lrc_location_id`) REFERENCES `Locations`(`location_id`),
   FOREIGN KEY (`lrc_rc_pn`) REFERENCES `RegularComponents`(`rc_pn`)
 );
+
+
+-- Populate LocationsRegularComps table with data
+LOCK TABLES `LocationsRegularComps` WRITE;
+INSERT INTO `LocationsRegularComps` VALUES 
+(2,1,2,36),
+(3,1,51,8),
+(4,2,100,11),
+(5,3,100,136),
+(6,4,200,15),
+(7,4,152,45),
+(8,5,200,36),
+(9,5,201,74),
+(10,5,51,2);
+UNLOCK TABLES;
 
 SET FOREIGN_KEY_CHECKS = 1;

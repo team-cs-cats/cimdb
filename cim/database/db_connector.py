@@ -12,10 +12,17 @@ load_dotenv(find_dotenv())
 # db = os.environ.get("340DB")
 
 # For Local Development
+# host = 'localhost'
+# user = 'root'                                   # can be different if you set up another username in your MySQL installation
+# passwd = '1qaz2wsx!QAZ@WSX'                        # set accordingly
+# db = 'cimdb'
+
+# Ali
 host = 'localhost'
-user = 'root'                                   # can be different if you set up another username in your MySQL installation
+user = 'user'                                   # can be different if you set up another username in your MySQL installation
 passwd = '1qaz2wsx!QAZ@WSX'                        # set accordingly
 db = 'cimdb'
+
 
 def connect_to_database(host = host, user = user, passwd = passwd, db = db):
     '''
