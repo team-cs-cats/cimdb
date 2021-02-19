@@ -52,9 +52,11 @@ Employee ID numbers are automatically generated upon employee addition.
 
 		<select class="custom-select m-1" id="new_employee_site">
 			<option selected>Select Site: </option>
-			{% for site in sites %}
-			<option>{{site.site_address_city}}</option>
-			{% endfor %}
+				{% for site in sites %}
+					{% if site.site_id != 1 %}
+			    	<option>{{site.site_address_city}}</option>
+					{% endif %}
+			    {% endfor %}
 		</select>
 
 		<input type="button" class="btn-sm btn-success m-1" value="Add New Employee" onclick=addData() >
@@ -101,9 +103,11 @@ Filter Existing Employees
 
 		<select class="custom-select m-1" id="existing_employee_site">
 			<option selected>Select Site: </option>
-			{% for site in sites %}
-			<option>{{site.site_address_city}}</option>
-			{% endfor %}
+				{% for site in sites %}
+					{% if site.site_id != 1 %}
+			    	<option>{{site.site_address_city}}</option>
+					{% endif %}
+			    {% endfor %}
 		</select>
 
 		<input type="button" class="btn-sm btn-primary m-1" value="Filter" onclick=filterData() >
@@ -135,7 +139,7 @@ Filter Existing Employees
 	<td>{{employee.employee_first_name}}</td>
 	<td>{{employee.employee_last_name}}</td>
 	<td>{% if employee.employee_group == 'production' %}Production{% else %}Supervisor{% endif %}</td>
-	<td>{%for site in sites%}{% if site.site_id == employee.employee_site_id %}{{site.site_address_city}}{% endif %}{% endfor %}</td>
+	<td>{{employee.employee_site_name}}</td>
 	<td>{{employee.employee_email}}</td>
 
 	<!-- <th><button class="btn-sm btn-warning">Edit</button></th> -->
@@ -147,7 +151,7 @@ Filter Existing Employees
 		data-employee-first-name="{{employee.employee_first_name}}"
 		data-employee-last-name="{{employee.employee_last_name}}"
 		data-employee-group="{% if employee.employee_group == 'production' %}Production{% else %}Supervisor{% endif %}"
-		data-employee-site="{%for site in sites%}{% if site.site_id == employee.employee_site_id %}{{site.site_address_city}}{% endif %}{% endfor %}"
+		data-employee-site="{{employee.employee_site_name}}"
 		data-employee-email="{{employee.employee_email}}"
 		data-title="Edit Details of Employee {{employee.employee_id}}">Edit</button></th>
 
@@ -192,8 +196,10 @@ Filter Existing Employees
 						<select class="custom-select" id="edit-employee-site" required>
 							<option selected>Select Site: </option>
 							{% for site in sites %}
-							<option>{{site.site_address_city}}</option>
-							{% endfor %}
+								{% if site.site_id != 1 %}
+						    	<option>{{site.site_address_city}}</option>
+								{% endif %}
+						    {% endfor %}
 						</select>
 					</div>  
 
