@@ -18,8 +18,9 @@ data = DummyData()
 
 
 def get_db_sites():
-	# Load SQL query for site data
-	query = """SELECT * FROM Sites;"""
+	# Load SQL query for site data (except for 'customer' site ie shipped products/work orders)
+	query = """SELECT * FROM Sites
+	WHERE site_id <> 1;"""
 	cursor = db.execute_query(db_connection=db_connection, query=query)
 	site_results = cursor.fetchall()
 
@@ -34,6 +35,7 @@ def get_db_locations():
 	# Load SQL query for location data
 
 	# select all columns from location table and site city name from site table
+	# do not select sites or locations where 
 	query = """SELECT 
 	Locations.location_id, 
 	Locations.location_room_number, 
@@ -41,7 +43,10 @@ def get_db_locations():
 	Sites.site_address_city as location_site_name 
 	FROM Locations 
 	INNER JOIN Sites 
-	ON Locations.location_site_id=Sites.site_id;"""
+	ON Locations.location_site_id=Sites.site_id
+	WHERE Locations.location_id <> 1 # ignore location 1 (shipped to customer)
+	OR Sites.site_id <> 1 # ignore site 1 (shipped to customer)
+	;"""
 
 	cursor = db.execute_query(db_connection=db_connection, query=query)
 	location_results = cursor.fetchall()
