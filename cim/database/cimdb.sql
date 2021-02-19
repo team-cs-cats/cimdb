@@ -2,9 +2,16 @@
 -- Description: provides a location for the table structure of the base entities for the CIMDB
 
 -- initialization of database
+UNLOCK tables;
+
 CREATE DATABASE IF NOT EXISTS cimdb;
 USE cimdb;
 SHOW tables;
+
+DROP TABLE IF EXISTS `WorkOrders`;
+DROP TABLE IF EXISTS `Employees`;
+DROP TABLE IF EXISTS `Locations`;
+DROP TABLE IF EXISTS `Sites`;
 
 
 -- Site table Creation query
@@ -22,12 +29,11 @@ CREATE TABLE `Sites` (
 
 -- Populate Sites table with data
 LOCK TABLES `Sites` WRITE;
-/*!40000 ALTER TABLE `Sites` DISABLE KEYS */;
 INSERT INTO `Sites` VALUES 
+(1, 'Customer', 'Customer', 'Customer', 'CA', '99999'),
 (12, '12745 Lampwood Road', 'Suite 612', 'Los Angeles', 'CA', '90023'),
 (14, '26262 Shoreline Drive', NULL, 'San Francisco', 'CA', '94125'),
 (16, '1984 Washoe Street', NULL, 'Reno', 'CA', '89523');
-/*!40000 ALTER TABLE `Sites` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -45,110 +51,162 @@ CREATE TABLE `Locations` (
 
 -- Populate Locations table with data
 LOCK TABLES `Locations` WRITE;
-/*!40000 ALTER TABLE `Sites` DISABLE KEYS */;
 INSERT INTO `Locations` VALUES 
-(82584, 10, 20, 14), (84208, 16, 9, 16),(19515, 8, 3, 12), (58103, 10, 19, 12),(72147, 11, 5, 16), (72178, 3, 20, 16),
-(52343, 19, 14, 12), (33248, 1, 12, 14),(39124, 7, 3, 14),(51656, 11, 1, 12),(21798, 3, 8, 16),
-(46492, 5, 10, 16),(50921, 16, 7, 14),(17815, 19, 14, 14), (37588, 6, 11, 12), (32852, 5, 7, 12),(14369, 16, 18, 14), 
-(23157, 18, 2, 12), (44176, 9, 7, 16), (99084, 9, 9, 16),(37394, 20, 3, 16), (17954, 11, 8, 16),(40009, 5, 5, 12),
-(64808, 17, 10, 16), (43726, 16, 5, 16),(40717, 13, 5, 14), (19383, 10, 1, 12), (45806, 20, 6, 12),
-(80056, 2, 8, 12),(79633, 10, 18, 14), (40258,1,19,12),(16656, 12, 13, 16), (46156, 6, 4, 14), (59739, 10, 5, 12), 
-(56478, 11, 6, 16), (98569, 12, 19, 12),(95781, 14, 19, 14), (92746, 5, 10, 16), (75228, 6, 4, 16), (36790, 2, 2, 12), 
-(18036, 1, 17, 12),(34207, 2, 8, 16), (57666, 10, 2, 14),(82694, 20, 8, 16), (27442, 9, 13, 16),
-(41309, 11, 15, 14),(27956, 8, 2, 12), (26311, 15, 6, 12), (69472, 5, 19, 12), (16168, 12, 5, 16), (99862, 19, 15, 16), 
-(82571, 14, 12, 16), (11190, 8, 20, 16),(72595, 5, 8, 14), (75255, 5, 9, 12), (81951, 13, 4, 12),(59740, 17, 4, 14),
-(25712, 18, 2, 16), (15037, 5, 5, 14), (17407, 11, 17, 12), (72530, 4, 13, 14), (38684, 9, 18, 16),(49892, 6, 17, 14), 
-(33837, 8, 18, 16), (13915, 18, 20, 12),(73322, 2, 4, 14), (49834, 18, 17, 12), (27929, 12, 8, 14),
-(83281, 6, 1, 16), (58582, 19, 13, 12), (79122, 2, 11, 16), (77314, 3, 15, 16),(61913, 11, 14, 12), (54962, 14, 19, 12), 
-(35589, 19, 17, 14), (25373, 15, 10, 12), (45162, 3, 9, 16), (29310, 12, 13, 16),(54924, 20, 11, 14), (10683, 2, 10, 16), 
-(25525, 11, 3, 12), (71275, 12, 6, 16), (74877, 5, 10, 16), (11301, 16, 16, 12),(62446, 16, 13, 16), (54058, 1, 19, 16), 
-(14777, 15, 1, 16), (58048, 8, 9, 14), (11340, 2, 17, 16), (17445, 10, 3, 16), (35047, 19, 13, 14), (63001, 16, 1, 14), 
-(49051, 20, 5, 16), (13506, 19, 9, 16), (47385, 5, 14, 12),
-(47933, 0, 0, 12), (90843, 0, 0, 14), (13505, 0, 0, 16), (71619, 0, 1, 12),(72624, 0, 1, 14), (55634, 0, 1, 16); 
-/*!40000 ALTER TABLE `Sites` ENABLE KEYS */;
+(1, 0, 0, 1),
+(2, 1, 1, 12), (3, 1, 2, 12), (4, 1, 3, 12), (5, 1, 4, 12), (6, 1, 5, 12), 
+(7, 2, 1, 12), (8, 2, 2, 12), (9, 2, 3, 12), (10, 2, 4, 12), (11, 2, 5, 12), 
+(12, 3, 1, 12), (13, 3, 2, 12), (14, 3, 3, 12), (15, 3, 4, 12), (16, 3, 5, 12), 
+(17, 4, 1, 12), (18, 4, 2, 12), (19, 4, 3, 12), (20, 4, 4, 12), (21, 4, 5, 12), 
+(22, 5, 1, 12), (23, 5, 2, 12), (24, 5, 3, 12), (25, 5, 4, 12), (26, 5, 5, 12), 
+(27, 1, 1, 14), (28, 1, 2, 14), (29, 1, 3, 14), (30, 1, 4, 14), (31, 1, 5, 14), 
+(32, 2, 1, 14), (33, 2, 2, 14), (34, 2, 3, 14), (35, 2, 4, 14), (36, 2, 5, 14), 
+(37, 3, 1, 14), (38, 3, 2, 14), (39, 3, 3, 14), (40, 3, 4, 14), (41, 3, 5, 14), 
+(42, 4, 1, 14), (43, 4, 2, 14), (44, 4, 3, 14), (45, 4, 4, 14), (46, 4, 5, 14), 
+(47, 5, 1, 14), (48, 5, 2, 14), (49, 5, 3, 14), (50, 5, 4, 14), (51, 5, 5, 14), 
+(52, 1, 1, 16), (53, 1, 2, 16), (54, 1, 3, 16), (55, 1, 4, 16), (56, 1, 5, 16), 
+(57, 2, 1, 16), (58, 2, 2, 16), (59, 2, 3, 16), (60, 2, 4, 16), (61, 2, 5, 16), 
+(62, 3, 1, 16), (63, 3, 2, 16), (64, 3, 3, 16), (65, 3, 4, 16), (66, 3, 5, 16), 
+(67, 4, 1, 16), (68, 4, 2, 16), (69, 4, 3, 16), (70, 4, 4, 16), (71, 4, 5, 16), 
+(72, 5, 1, 16), (73, 5, 2, 16), (74, 5, 3, 16), (75, 5, 4, 16), (76, 5, 5, 16);
+UNLOCK TABLES;
+
+
+-- Employees table Creation query
+DROP TABLE IF EXISTS `Employees`;
+CREATE TABLE `Employees` (
+  `employee_id` int NOT NULL AUTO_INCREMENT,
+  `employee_group` varchar(255),
+  `employee_first_name` varchar(255),
+  `employee_last_name` varchar(255),
+  `employee_email` varchar(255),
+  `employee_password` varchar(255),
+  `employee_site_id` int,
+  PRIMARY KEY (`employee_id`),
+  FOREIGN KEY (`employee_site_id`) REFERENCES `Sites`(`site_id`)
+);
+
+-- Populate Employees table with data
+LOCK TABLES `Employees` WRITE;
+INSERT INTO `Employees` VALUES 
+(74253,"supervisor","Karlan","Lepard","klepard1@2fast4you.com","L32nLN0", 12),
+(77644,"supervisor","Hayes","Leades","hleades2@2fast4you.com","7nRJect", 14),
+(14324,"supervisor","Pam","Luddy","pluddy6@2fast4you.com","CcBwnjq", 16),
+(77919,"production","Ursulina","Aikin","uaikin0@2fast4you.com","UMTJP38H", 12),
+(60126,"production","Hervey","Wykes","hwykes3@2fast4you.com","yEKKJA", 14),
+(61764,"production","Kaiser","Reina","kreina4@2fast4you.com","KnrAKdA", 16),
+(58873,"production","Trudie","Calvie","tcalvie2@2fast4you.com","DUw9pMv6mgc", 12),
+(46535,"production","Melodee","Duff","mduff5@2fast4you.com","xj91eB93aHEf", 14),
+(35477,"production","Giulia","Comberbeach","gcomberbeach7@2fast4you.com","oxAFg4t", 16),
+(17597,"production","Antonie","Gepp","agepp6@2fast4you.com","4MHKqvgRahlu", 12),
+(97633,"production","Shawn","Boxell","sboxell7@2fast4you.com","GEFXwPR", 14),
+(39816,"production","Kalindi","Shulem","kshulem0@2fast4you.com","DJi02w0oV2", 16);
 UNLOCK TABLES;
 
 
 
+-- WorkOrders table Creation query
+DROP TABLE IF EXISTS `WorkOrders`;
+CREATE TABLE `WorkOrders` (
+  `wo_id` int NOT NULL AUTO_INCREMENT,
+  `wo_open_date` date NOT NULL,
+  `wo_close_date` date,
+  `wo_status` varchar(255) NOT NULL,
+  `wo_reference_number` int NOT NULL,
+  `wo_employee_id` int,
+  PRIMARY KEY (`wo_id`),
+  FOREIGN KEY (`wo_employee_id`) REFERENCES `Employees`(`employee_id`)
+);
+
+
+-- Populate WorkOrders table with data
+LOCK TABLES `WorkOrders` WRITE;
+INSERT INTO `WorkOrders` VALUES 
+(879845, "2021-01-29", null, "assembly_pending", 84596, 77919),
+(815348, "2021-01-12", null, "qc_pending", 84325, 60126),
+(968412, "2021-01-02", null, "assembly_pending", 98125, 58873),
+(874523, "2021-01-22", null, "qc_pending", 98214, 46535),
+(845236, "2021-01-24", "2021-01-16", "completed", 23165, 17597),
+(658412, "2021-01-12", null, "qc_pending", 87462, 97633),
+(874596, "2021-01-14", null, "shipping_pending", 841256, 58873),
+(512648, "2021-01-21", null, "shipping_pending", 68451, 35477);
+UNLOCK TABLES;
 
 
 
--- DROP TABLE IF EXISTS `Products`;
--- CREATE TABLE `Products` (
---   `product_sn` int,
---   `product_pn` char(16),
---   `product_family` varchar(255),
---   `product_date_assembly` date,
---   `product_qc_date` date,
---   `product_warranty_expiration_date` date,
---   `product_employee_id` int,
---   `product_location_id` int,
---   `product_sc_sn` int,
---   PRIMARY KEY (`product_sn`)
--- );
+-- SpecialComponents table Creation query
+DROP TABLE IF EXISTS `SpecialComponents`;
+CREATE TABLE `SpecialComponents` (
+  `sc_sn` int NOT NULL AUTO_INCREMENT,
+  `sc_pn` char(16) NOT NULL,
+  `sc_is_free` boolean NOT NULL,
+  `sc_product_sn` int,
+  `sc_location_id` int,
+  PRIMARY KEY (`sc_sn`),
+  FOREIGN KEY (`sc_product_sn`) REFERENCES `Products`(`product_sn`),
+  FOREIGN KEY (`sc_location_id`) REFERENCES `Locations`(`location_id`)
+);
 
--- DROP TABLE IF EXISTS `WorkOrderProducts`;
--- CREATE TABLE `WorkOrderProducts` (
---   `wop_id` int NOT NULL AUTO_INCREMENT,
---   `wop_wo_id` int,
---   `wop_product_sn` int,
---   PRIMARY KEY (`wop_id`)
--- );
 
--- DROP TABLE IF EXISTS `ProductsRegularComps`;
--- CREATE TABLE `ProductsRegularComps` (
---   `prc_id` int NOT NULL AUTO_INCREMENT,
---   `prc_product_sn` int,
---   `prc_rc_pn` int,
---   `prc_quantity_needed` int,
---   PRIMARY KEY (`prc_id`)
--- );
+-- RegularComponents table Creation query
+DROP TABLE IF EXISTS `RegularComponents`;
+CREATE TABLE `RegularComponents` (
+  `rc_pn` int NOT NULL AUTO_INCREMENT,
+  `rc_category` varchar(255) NOT NULL,
+  PRIMARY KEY (`rc_pn`)
+);
 
--- DROP TABLE IF EXISTS `Employees`;
--- CREATE TABLE `Employees` (
---   `employee_id` int NOT NULL AUTO_INCREMENT,
---   `employee_group` varchar(255),
---   `employee_first_name` varchar(255),
---   `employee_last_name` varchar(255),
---   `employee_email` varchar(255),
---   `employee_password` varchar(255),
---   `employee_site_id` int,
---   PRIMARY KEY (`employee_id`)
--- );
+-- Products table Creation query
+DROP TABLE IF EXISTS `Products`;
+CREATE TABLE `Products` (
+  `product_sn` int NOT NULL AUTO_INCREMENT,
+  `product_pn` char(16) NOT NULL,
+  `product_family` varchar(255) NOT NULL,
+  `product_date_assembly` date,
+  `product_qc_date` date,
+  `product_warranty_expiration_date` date,
+  `product_employee_id` int,
+  `product_location_id` int,
+  `product_sc_sn` int,
+  PRIMARY KEY (`product_sn`),
+  FOREIGN KEY (`product_employee_id`) REFERENCES `Employees`(`employee_id`),
+  FOREIGN KEY (`product_location_id`) REFERENCES `Locations`(`location_id`),
+  FOREIGN KEY (`product_sc_sn`) REFERENCES `SpecialComponents`(`sc_sn`)
+);
 
--- DROP TABLE IF EXISTS `WorkOrders`;
--- CREATE TABLE `WorkOrders` (
---   `wo_id` int NOT NULL AUTO_INCREMENT,
---   `wo_open_date` date,
---   `wo_close_date` date,
---   `wo_status` varchar(255),
---   `wo_reference_number` int,
---   `wo_employee_id` int,
---   PRIMARY KEY (`wo_id`)
--- );
+-- WorkOrderProducts table Creation query
+DROP TABLE IF EXISTS `WorkOrderProducts`;
+CREATE TABLE `WorkOrderProducts` (
+  `wop_id` int NOT NULL AUTO_INCREMENT,
+  `wop_wo_id` int,
+  `wop_product_sn` int,
+  PRIMARY KEY (`wop_id`),
+  FOREIGN KEY (`wop_wo_id`) REFERENCES `WorkOrders`(`wo_id`),
+  FOREIGN KEY (`wop_product_sn`) REFERENCES `Products`(`product_sn`)
+);
 
--- DROP TABLE IF EXISTS `SpecialComponents`;
--- CREATE TABLE `SpecialComponents` (
---   `sc_sn` int NOT NULL AUTO_INCREMENT,
---   `sc_pn` char(16),
---   `sc_is_free` boolean,
---   `sc_product_sn` int,
---   `sc_location_id` int,
---   PRIMARY KEY (`sc_sn`)
--- );
+-- ProductsRegularComps table Creation query
+DROP TABLE IF EXISTS `ProductsRegularComps`;
+CREATE TABLE `ProductsRegularComps` (
+  `prc_id` int NOT NULL AUTO_INCREMENT,
+  `prc_product_sn` int,
+  `prc_rc_pn` int,
+  `prc_quantity_needed` int NOT NULL,
+  PRIMARY KEY (`prc_id`),
+  FOREIGN KEY (`prc_product_sn`) REFERENCES `Product`(`product_sn`),
+  FOREIGN KEY (`prc_rc_pn`) REFERENCES `RegularComponents`(`rc_pn`)
+);
 
--- DROP TABLE IF EXISTS `RegularComponents`;
--- CREATE TABLE `RegularComponents` (
---   `rc_pn` int NOT NULL AUTO_INCREMENT,
---   `rc_category` varchar(255),
---   PRIMARY KEY (`rc_pn`)
--- );
 
--- DROP TABLE IF EXISTS `LocationsRegularComps`;
--- CREATE TABLE `LocationsRegularComps` (
---   `lrc_id` int NOT NULL AUTO_INCREMENT,
---   `lrc_location_id` int,
---   `lrc_rc_pn` int,
---   `lrc_quantity` int,
---   PRIMARY KEY (`lrc_id`)
--- );
+-- LocationsRegularComps table Creation query
+DROP TABLE IF EXISTS `LocationsRegularComps`;
+CREATE TABLE `LocationsRegularComps` (
+  `lrc_id` int NOT NULL AUTO_INCREMENT,
+  `lrc_location_id` int ,
+  `lrc_rc_pn` int,
+  `lrc_quantity` int NOT NULL,
+  PRIMARY KEY (`lrc_id`),
+  FOREIGN KEY (`lrc_location_id`) REFERENCES `Locations`(`location_id`),
+  FOREIGN KEY (`lrc_rc_pn`) REFERENCES `RegularComponents`(`rc_pn`)
+);
+
+SET FOREIGN_KEY_CHECKS = 1;

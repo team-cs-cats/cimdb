@@ -37,9 +37,11 @@ Each new location will automatically be assigned a location ID upon creation.
 
 		<select class="custom-select m-1" id="new_location_site" required>
 			<option selected>Select Site: </option>
-			{% for site in sites %}
-			<option>{{site.site_address_city}}</option>
-			{% endfor %}
+				{% for site in sites %}
+					{% if site.site_id != 1 %}
+			    	<option>{{site.site_address_city}}</option>
+					{% endif %}
+			    {% endfor %}
 		</select>
 
 		<label for="add_location_room_number">Room Number: </label>
@@ -72,9 +74,12 @@ For all sites, Receiving Department is Room 0, Shelf 0 and Shipping Department i
 
 		<select class="custom-select m-1" id="existing_location_site">
 			<option selected>Select Site: </option>
-			{% for site in sites %}
-			<option>{{site.site_address_city}}</option>
-			{% endfor %}
+				{% for site in sites %}
+					{% if site.site_id != 1 %}
+			    	<option>{{site.site_address_city}}</option>
+					{% endif %}
+			    {% endfor %}
+			</select>
 		</select>
 
 		<label for="existing_location_room_number">Room Number: </label>
@@ -104,34 +109,36 @@ For all sites, Receiving Department is Room 0, Shelf 0 and Shipping Department i
 			<th>Delete</th>
 		</tr>
 		{% for location in locations %}
-			<tr>
-				<td>
-					{{location.location_id}}
-				</td>
+				{% if location.location_id != 1 %}
+				<tr>
+					<td>
+						{{location.location_id}}
+					</td>
 
-				<td>
-					{{location.location_site_name}}
-				</td>
-				
-				<td>
-					{{location.location_room_number}}
-				</td>
-				<td>
-					{{location.location_shelf_number}}
-				</td>
+					<td>
+						{{location.location_site_name}}
+					</td>
+					
+					<td>
+						{{location.location_room_number}}
+					</td>
+					<td>
+						{{location.location_shelf_number}}
+					</td>
 
-				<!-- <th><button class="btn-sm btn-warning">Edit</button></th> -->
-				<th><button type="button" 
-					class="btn-sm btn-warning" 
-					data-toggle="modal" 
-					data-target="#editLocation" 
-					data-site-name="{{location.location_site_name}}" 
-					data-location-room-number="{{location.location_room_number}}" 
-					data-location-shelf-number="{{location.location_shelf_number}}" 
-					data-title="Edit Location ID {{location.location_id}}"
-					>Edit</button></th>
-				<td><button class="btn-sm btn-danger">Delete</button></td>
-			</tr>
+					<!-- <th><button class="btn-sm btn-warning">Edit</button></th> -->
+					<th><button type="button" 
+						class="btn-sm btn-warning" 
+						data-toggle="modal" 
+						data-target="#editLocation" 
+						data-site-name="{{location.location_site_name}}" 
+						data-location-room-number="{{location.location_room_number}}" 
+						data-location-shelf-number="{{location.location_shelf_number}}" 
+						data-title="Edit Location ID {{location.location_id}}"
+						>Edit</button></th>
+					<td><button class="btn-sm btn-danger">Delete</button></td>
+				</tr>
+			{% endif %}	
 		{% endfor %}
 		
 	</table>
@@ -156,7 +163,9 @@ For all sites, Receiving Department is Room 0, Shelf 0 and Shipping Department i
                     		<select class="custom-select" id="location-site" required>
 							<option selected>Select Site: </option>
 								{% for site in sites %}
+									{% if site.site_id != 1 %}
 							    	<option>{{site.site_address_city}}</option>
+									{% endif %}
 							    {% endfor %}
 							</select>
 						</div>
