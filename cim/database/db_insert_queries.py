@@ -28,7 +28,10 @@ def insert(insert_query_to_run):
 def insert_site():
 
 	# Load SQL query for INSERTing new site data
-	add_site_query = """"""
+	add_site_query = """
+	INSERT INTO Sites (site_address_1, site_address_2, site_address_city, site_address_state, site_address_postal_code)
+	VALUES (:site_address_1_input, :site_address_2_input, :site_address_city_input, :site_address_state_input, :site_address_postal_code_input);
+	"""
 	insert(insert_query_to_run=add_site_query)
 
 
