@@ -16,6 +16,7 @@ def update(update_query_to_run):
 	
 	# Attempt to update. If successful, return True
 	try:
+		db_connection = db.connect_to_database()
 		cursor = db.execute_query(db_connection=db_connection, query=query_to_run)
 		return True
 	
