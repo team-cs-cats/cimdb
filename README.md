@@ -9,15 +9,18 @@ Web-based CRUD database.
 
 This class project was built for Oregon State's CS340 Databases class in Winter 2021.
 
-The project is hosted live on Heroku at https://team-cs-cats.herokuapp.com/
+<!-- The project is hosted live on Heroku at https://team-cs-cats.herokuapp.com/ -->
+The project is hosted live at http://flip2.engr.oregonstate.edu:5147/
 
-**Note: When loading the hosted website, please be patient as it takes several seconds for the Heroku server to spin up and load the site files.**
+
+<!-- **Note: When loading the hosted website, please be patient as it takes several seconds for the Heroku server to spin up and load the site files.** -->
 
 
 <!-- ### Built With -->
 ### Built With
-* [Flask](https://flask.palletsprojects.com/en/1.1.x/): a Python framework for developing web applications. 
-
+* [Flask](https://flask.palletsprojects.com/en/1.1.x/): a backend framework for Python used to develop web applications. 
+* [Bootstrap](https://getbootstrap.com/docs/4.0/getting-started/introduction/): a Python framework for responsive web styling.
+* [MySQL](https://dev.mysql.com/doc/): a relational database management system.
 
 
 <!-- GETTING STARTED -->
@@ -62,7 +65,7 @@ pip install -r requirements.txt
 ```sh
 python run.py
 ```
-7. On your browser, navigate to `http://localhost:5000/`. This will update to saved changes in your local directory upon refresh.
+7. On your browser, navigate to `http://localhost:5147/`. This will update to saved changes in your local directory upon refresh.
 8. Occasionally, some of the built-in resources (particularly the javascript scripts) of this project do not update when reloading changes made to files. To bypass these errors, reload the web page and bypass the cache. This can be done using the `Shift + left click Reload button` on Firefox or by entering developer mode on Google Chrome and selecting the `Empty Cache and Hard Reload` option.
 
 <!-- USAGE EXAMPLES -->

@@ -4,8 +4,9 @@
 -- initialization of database
 UNLOCK tables;
 
-CREATE DATABASE IF NOT EXISTS cimdb;
-USE cimdb;
+-- Commented this out to run correctly on PHPMyAdmin
+-- CREATE DATABASE IF NOT EXISTS cs340_hollaasa_cimdb;
+-- USE cimdb;
 SHOW tables;
 
 DROP TABLE IF EXISTS `WorkOrders`;
@@ -132,6 +133,26 @@ INSERT INTO `WorkOrders` VALUES
 UNLOCK TABLES;
 
 
+-- RegularComponents table Creation query
+DROP TABLE IF EXISTS `RegularComponents`;
+CREATE TABLE `RegularComponents` (
+  `rc_pn` int NOT NULL AUTO_INCREMENT,
+  `rc_category` varchar(255) NOT NULL,
+  PRIMARY KEY (`rc_pn`)
+);
+
+
+-- LocationsRegularComps table Creation query
+DROP TABLE IF EXISTS `LocationsRegularComps`;
+CREATE TABLE `LocationsRegularComps` (
+  `lrc_id` int NOT NULL AUTO_INCREMENT,
+  `lrc_location_id` int ,
+  `lrc_rc_pn` int,
+  `lrc_quantity` int NOT NULL,
+  PRIMARY KEY (`lrc_id`),
+  FOREIGN KEY (`lrc_location_id`) REFERENCES `Locations`(`location_id`),
+  FOREIGN KEY (`lrc_rc_pn`) REFERENCES `RegularComponents`(`rc_pn`)
+);
 
 -- SpecialComponents table Creation query
 DROP TABLE IF EXISTS `SpecialComponents`;
@@ -142,7 +163,9 @@ CREATE TABLE `SpecialComponents` (
   `sc_product_sn` int,
   `sc_location_id` int,
   PRIMARY KEY (`sc_sn`),
-  FOREIGN KEY (`sc_product_sn`) REFERENCES `Products`(`product_sn`),
+  -- FOREIGN KEY (`sc_product_sn`) REFERENCES `Products`(`product_sn`), 
+  -- commented out because the Special Component does not care about the product it is in.
+  -- We need to add Special Components to the database first, then link them to Products.
   FOREIGN KEY (`sc_location_id`) REFERENCES `Locations`(`location_id`)
 );
 
@@ -181,6 +204,7 @@ CREATE TABLE `RegularComponents` (
   PRIMARY KEY (`rc_pn`)
 );
 
+
 -- Populate RegularComponents table with data
 LOCK TABLES `RegularComponents` WRITE;
 INSERT INTO `RegularComponents` VALUES 
@@ -217,6 +241,8 @@ CREATE TABLE `Products` (
   PRIMARY KEY (`product_sn`),
   FOREIGN KEY (`product_employee_id`) REFERENCES `Employees`(`employee_id`),
   FOREIGN KEY (`product_location_id`) REFERENCES `Locations`(`location_id`),
+
+  -- Here, this links to existing Special Components, which have to be in the database first.
   FOREIGN KEY (`product_sc_sn`) REFERENCES `SpecialComponents`(`sc_sn`)
 );
 
@@ -270,7 +296,7 @@ CREATE TABLE `ProductsRegularComps` (
   `prc_rc_pn` int,
   `prc_quantity_needed` int NOT NULL,
   PRIMARY KEY (`prc_id`),
-  FOREIGN KEY (`prc_product_sn`) REFERENCES `Product`(`product_sn`),
+  FOREIGN KEY (`prc_product_sn`) REFERENCES `Products`(`product_sn`),
   FOREIGN KEY (`prc_rc_pn`) REFERENCES `RegularComponents`(`rc_pn`)
 );
 
@@ -300,17 +326,6 @@ INSERT INTO `ProductsRegularComps` VALUES
 UNLOCK TABLES;
 
 
--- LocationsRegularComps table Creation query
-DROP TABLE IF EXISTS `LocationsRegularComps`;
-CREATE TABLE `LocationsRegularComps` (
-  `lrc_id` int NOT NULL AUTO_INCREMENT,
-  `lrc_location_id` int ,
-  `lrc_rc_pn` int,
-  `lrc_quantity` int NOT NULL,
-  PRIMARY KEY (`lrc_id`),
-  FOREIGN KEY (`lrc_location_id`) REFERENCES `Locations`(`location_id`),
-  FOREIGN KEY (`lrc_rc_pn`) REFERENCES `RegularComponents`(`rc_pn`)
-);
 
 
 -- Populate LocationsRegularComps table with data
