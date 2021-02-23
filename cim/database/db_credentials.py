@@ -6,9 +6,17 @@
 # the following will be used by the webapp.py to interact with the database
 # You can also use environment variables
 
+# # For Local Development
+# host = 'localhost'
+# user = 'root'                                   # can be different if you set up another username in your MySQL installation
+# passwd = '1qaz2wsx!QAZ@WSX'                        # set accordingly
+# db = 'cimdb'
+
+
+#Ali
 # For Local Development
 host = 'localhost'
-user = 'root'                                   # can be different if you set up another username in your MySQL installation
+user = 'user'                                   # can be different if you set up another username in your MySQL installation
 passwd = '1qaz2wsx!QAZ@WSX'                        # set accordingly
 db = 'cimdb'
 
