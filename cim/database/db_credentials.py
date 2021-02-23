@@ -22,8 +22,8 @@
 
 
 # For OSU Flip Servers
-
-host = 'classmysql.engr.oregonstate.edu'      # MUST BE THIS
-user = 'cs340_hollaasa'       # don't forget the CS_340 prefix
-passwd = '9908'               # should only be 4 digits if default
-db = 'cs340_hollaasa'   
+# This currenttly 
+# host = 'classmysql.engr.oregonstate.edu'      # MUST BE THIS
+# user = 'cs340_hollaasa'       # don't forget the CS_340 prefix
+# passwd = '9908'               # should only be 4 digits if default
+# db = 'cs340_hollaasa'   
