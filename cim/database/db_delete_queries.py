@@ -14,7 +14,7 @@ def delete(delete_query_to_run):
 	this is just a validation wrapper that handles whether a delete was successful or not.
 	"""
 	
-	# Attempt to insert. If successful, return True
+	# Attempt to delete. If successful, return True
 	try:
 		cursor = db.execute_query(db_connection=db_connection, query=query_to_run)
 		return True
