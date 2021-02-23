@@ -15,15 +15,15 @@
 
 #Ali
 # For Local Development
-host = 'localhost'
-user = 'user'                                   # can be different if you set up another username in your MySQL installation
-passwd = '1qaz2wsx!QAZ@WSX'                        # set accordingly
-db = 'cimdb'
+# host = 'localhost'
+# user = 'user'                                   # can be different if you set up another username in your MySQL installation
+# passwd = '1qaz2wsx!QAZ@WSX'                        # set accordingly
+# db = 'cimdb'
 
 
 # For OSU Flip Servers
 
-# host = 'classmysql.engr.oregonstate.edu'      # MUST BE THIS
-# user = '<your-cs-340-db-username-here>'       # don't forget the CS_340 prefix
-# passwd = '<your-password-here>'               # should only be 4 digits if default
-# db = '<name-of-database-on-osu-server>'   
+host = 'classmysql.engr.oregonstate.edu'      # MUST BE THIS
+user = 'cs340_hollaasa'       # don't forget the CS_340 prefix
+passwd = '9908'               # should only be 4 digits if default
+db = 'cs340_hollaasa'   
