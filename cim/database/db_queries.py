@@ -26,7 +26,7 @@ def get_db_sites():
 
 	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
 	if len(site_results) == 0:
-	site_results = data.get_sites()
+		site_results = data.get_sites()
 
 	return site_results
 
@@ -53,7 +53,7 @@ def get_db_locations():
 
 	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
 	if len(location_results) == 0:
-	location_results = data.get_loc()
+		location_results = data.get_loc()
 
 	return location_results
 
@@ -78,7 +78,7 @@ def get_db_employees():
 
 	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
 	if len(employee_results) == 0:
-	employee_results = data.get_emp()
+		employee_results = data.get_emp()
 
 	return employee_results
 
@@ -105,6 +105,6 @@ def get_db_work_orders():
 
 	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
 	if len(work_order_results) == 0:
-	work_order_results = data.get_wo()
+		work_order_results = data.get_wo()
 
 	return work_order_results
