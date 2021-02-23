@@ -1,5 +1,5 @@
 # filename: run.py
-# description: When executed, imports the CIM webapp and runs it on local host, port 5000 
+# description: When executed, imports the CIM webapp and runs it on local host, port 5147 
 
 
 # imports the os
@@ -13,7 +13,7 @@ from cim.webapp import webapp
 
 
 if __name__ == "__main__":
-	port_number = 5000
+	port_number = 5147
 	print(f'Local server running on port {port_number}.')
 	port = int(os.environ.get("PORT", port_number))
 	webapp.run(debug=True, host='0.0.0.0', port=port)
