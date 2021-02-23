@@ -18,9 +18,18 @@ data = DummyData()
 
 
 def get_db_sites():
+<<<<<<< HEAD
+	# Load SQL query for site data
+<<<<<<< HEAD
+	query = "SELECT * FROM Sites;"
+=======
+	query = """SELECT * FROM Sites;"""
+>>>>>>> upstream/main
+=======
 	# Load SQL query for site data (except for 'customer' site ie shipped products/work orders)
 	query = """SELECT * FROM Sites
 	WHERE site_id <> 1;"""
+>>>>>>> upstream/main
 	cursor = db.execute_query(db_connection=db_connection, query=query)
 	site_results = cursor.fetchall()
 
