@@ -11,6 +11,11 @@ load_dotenv(find_dotenv())
 # passwd = os.environ.get("340DBPW")
 # db = os.environ.get("340DB")
 
+host = 'classmysql.engr.oregonstate.edu'      # MUST BE THIS
+user = 'cs340_hollaasa'       # don't forget the CS_340 prefix
+passwd = '9908'               # should only be 4 digits if default
+db = 'cs340_hollaasa' 
+
 # For Local Development
 # host = 'localhost'
 # user = 'root'                                   # can be different if you set up another username in your MySQL installation
@@ -18,10 +23,10 @@ load_dotenv(find_dotenv())
 # db = 'cimdb'
 
 # Ali
-host = 'localhost'
-user = 'user'                                   # can be different if you set up another username in your MySQL installation
-passwd = '1qaz2wsx!QAZ@WSX'                        # set accordingly
-db = 'cimdb'
+# host = 'localhost'
+# user = 'user'                                   # can be different if you set up another username in your MySQL installation
+# passwd = '1qaz2wsx!QAZ@WSX'                        # set accordingly
+# db = 'cimdb'
 
 
 def connect_to_database(host = host, user = user, passwd = passwd, db = db):
