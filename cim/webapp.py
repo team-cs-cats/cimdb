@@ -31,9 +31,13 @@ import cim.database.db_update_queries as dbuq
 # import DELETE queries as dbdq
 import cim.database.db_delete_queries as dbdq
 
+# resolve CORS issues for local development
+from flask_cors import CORS, cross_origin
+
 
 #create the web application
 webapp = Flask(__name__)
+CORS(webapp)
 
 # added a 'secret' key for user management
 webapp.secret_key = 'Team CS Cats'
@@ -202,7 +206,23 @@ def workorders():
 
 	# otherwise, return the workorders page
 	if request.method=="GET":
-		return render_template("workorders.html",employees=data.get_emp(),workorders=data.get_wo())
+
+		# get information from DB
+		workorder_results=dbq.get_db_work_orders()
+		employee_results=dbq.get_db_employees()
+	
+
+		return render_template("workorders.html",employees=employee_results ,workorders=workorder_results)
+
+	if request.method=="POST":
+		id=request.json["id"]
+		date=request.json["date"]
+		reference=request.json["reference"]
+		dbiq.insert_work_order(id,date,reference)
+		print(f'got a post request! id is: {id} and date is: {date} and reference is{reference}')
+		return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+		
+
 
 @webapp.route('/landing', methods=['GET', 'POST'])
 @login_required

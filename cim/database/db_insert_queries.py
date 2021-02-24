@@ -41,11 +41,16 @@ def insert_site(new_site_address_1, new_site_address_2, new_site_city, new_site_
 	insert(insert_query_to_run=add_site_query, data_to_insert=new_site_data)
 
 
-def insert_work_order():
+def insert_work_order(new_workorder_employee_id,new_workorder_opendate,new_workorder_reference_number):
 
 	# Load SQL query for INSERTing new work order data
-	add_work_order_query = """"""
-	insert(insert_query_to_run=add_work_order_query)
+	add_work_order_query = """
+	INSERT INTO WorkOrders (wo_open_date, wo_close_date, wo_status, wo_reference_number, wo_employee_id)
+	VALUES (%s, %s, %s, %s, %s);
+	"""
+	new_workorder_data=(new_workorder_opendate,None,"assembly_pending",int(new_workorder_reference_number),new_workorder_employee_id)
+	print(f'new work order data is: {new_workorder_data}')
+	insert(insert_query_to_run=add_work_order_query,data_to_insert=new_workorder_data)
 
 
 def insert_work_order_products():
