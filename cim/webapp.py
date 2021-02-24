@@ -11,7 +11,7 @@ import flask_login
 from flask_login import login_user, current_user, logout_user, login_required
 
 # import a local python script to generate new passwords
-import cim.static.py.password_generator
+import cim.static.py.password_generator as pw_gen
 
 # perform a local import to load the dummy data
 from cim.dummy_data import DummyData
@@ -350,23 +350,20 @@ def employee_management():
 		provided_employee_lname = request.form['new_employee_lname']
 		provided_employee_email = request.form['new_employee_email']
 		provided_employee_group = request.form['new_employee_group']
-		provided_employee_site = request.form['new_employee_site']
+		provided_employee_site_id = request.form['new_employee_site']	
 
 		# generate a password
-		generated_password = password_generator.new_password(size=8)
+		generated_password = pw_gen.new_password(size=8)
 
 		# perform the insertion
-		dbiq.insert_site(new_employee_first_name=provided_employee_fname, 
+		dbiq.insert_employee(new_employee_first_name=provided_employee_fname, 
 			new_employee_last_name=provided_employee_lname, 
 			new_employee_email=provided_employee_email, 
 			new_employee_group=provided_employee_group, 
 			new_employee_password=generated_password,
-			new_employee_site_id=provided_employee_site)
+			new_employee_site_id=provided_employee_site_id)
 
-		return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
-
-	insert_employee(new_employee_group, new_employee_first_name, new_employee_last_name, 
-	new_employee_email, new_employee_password, new_employee_site_id)
+		return render_template("employee_mgmt.html", sites=site_results, employees=employee_results)
 
 
 @webapp.route('/site-mgmt', methods=['GET', 'POST'])

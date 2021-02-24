@@ -31,35 +31,35 @@ Employee ID numbers are automatically generated upon employee addition.
 
 <!-- Form for Create New section -->
 {% block create_form %}
-<form id="new-employee-data-filter" action="">
+<form id="new-employee-data-filter" action="" method="POST">
 
 	<div class="text-center">
 
 		<label for="new_employee_fname">Employee First Name:</label>
-		<input type="text" class='m-1' name="new_employee_fname" id="new_employee_fname" placeholder="Jane">
+		<input type="text" class='m-1' name="new_employee_fname" id="new_employee_fname" placeholder="Jane" required>
 
 		<label for="new_employee_lname">Employee Last Name:</label>
-		<input type="text" class='m-1' name="new_employee_lname" id="new_employee_lname" placeholder="Doe">
+		<input type="text" class='m-1' name="new_employee_lname" id="new_employee_lname" placeholder="Doe" required>
 
 		<label for="new_employee_email">Employee Email:</label>
-		<input type="text" class='m-1' name="new_employee_email" id="new_employee_email" placeholder="jsmith8@2fast4you.com">
+		<input type="text" class='m-1' name="new_employee_email" id="new_employee_email" placeholder="jsmith8@2fast4you.com" required>
 
-		<select class="custom-select m-1" id="new_employee_group" required>
+		<select class="custom-select m-1" id="new_employee_group" name="new_employee_group" required>
 			<option selected>Select Group: </option>
 		    <option value='Production'>Production</option>
 		    <option value='Supervisor'>Supervisor</option>
 		</select>
 
-		<select class="custom-select m-1" id="new_employee_site">
+		<select class="custom-select m-1" id="new_employee_site" name="new_employee_site" required>
 			<option selected>Select Site: </option>
 				{% for site in sites %}
 					{% if site.site_id != 1 %}
-			    	<option>{{site.site_address_city}}</option>
+			    	<option value={{site.site_id}}>{{site.site_address_city}}</option>
 					{% endif %}
 			    {% endfor %}
 		</select>
 
-		<input type="button" class="btn-sm btn-success m-1" value="Add New Employee" onclick=addData() >
+		<input type="submit" class="btn-sm btn-success m-1" value="Add New Employee" >
 
 
 	</div>
