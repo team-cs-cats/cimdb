@@ -20,6 +20,15 @@ import cim.database.db_connector as db
 # import basic queries that are used in multiple routes
 import cim.database.db_queries as dbq
 
+# import INSERT queries as dbiq
+import cim.database.db_insert_queries as dbiq
+
+# import UPDATE queries as dbiq
+import cim.database.db_update_queries as dbuq
+
+# import DELETE queries as dbdq
+import cim.database.db_delete_queries as dbdq
+
 
 #create the web application
 webapp = Flask(__name__)
@@ -313,21 +322,6 @@ def locations():
 		return render_template("locations.html", 
 		locations=location_results, products=data.get_products(), regular_components=data.get_rc(), special_components=data.get_sc(), sites=site_results)
 
-@webapp.route('/management', methods=['GET', 'POST'])
-@login_required
-def user_management():
-	"""The webapp's page for managing current users.
-	This allows a manager to update information about current users."""
-
-	# if the current user is not authenticated, redirect the user to the logged out index page
-	if not current_user.is_authenticated:
-		return redirect(url_for("cim.templates.index"))
-
-	# Load site results from the database (or the dummy data if the database doesn't work)
-	site_results = dbq.get_db_sites()
-
-	if request.method=="GET":
-		return render_template("user_management.html", sites=site_results, employees=data.get_emp())
 
 @webapp.route('/employee-mgmt', methods=['GET', 'POST'])
 @login_required
@@ -361,6 +355,26 @@ def site_management():
 	site_results = dbq.get_db_sites()
 	
 	if request.method=="GET":
+		return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
+
+	if request.method=="POST":
+
+		# obtain data from new site form
+		provided_site_address_1 = request.form['new_site_address_1']
+		provided_site_address_2 = request.form['new_site_address_2']
+		provided_site_city = request.form['new_site_city']
+		provided_site_state = request.form['new_site_state']
+		provided_site_zip = request.form['new_site_zip']
+
+		print('provided_site_address_2 is', provided_site_address_2)
+
+		# perform the insertion
+		dbiq.insert_site(new_site_address_1=provided_site_address_1, 
+			new_site_address_2=provided_site_address_2, 
+			new_site_city=provided_site_city, 
+			new_site_state=provided_site_state, 
+			new_site_zip=provided_site_zip)
+
 		return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
 
 # workorder details. it takes the wo_id as argument to retrive the the information from DB
