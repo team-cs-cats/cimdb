@@ -16,6 +16,15 @@ db_connection = db.connect_to_database()
 data = DummyData()
 
 
+def get_site_id(city_name):
+
+	# provided a site city name, return the site ID instead
+	query = """SELECT site_id from Sites WHERE site_city_name == %s"""
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(city_name))
+	site_id = cursor.fetchall()
+	return site_id
+
 
 def get_db_sites():
 

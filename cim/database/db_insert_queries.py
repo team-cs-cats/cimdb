@@ -16,7 +16,11 @@ def insert(insert_query_to_run, data_to_insert):
 	
 	# Attempt to insert. If successful, return True
 	try:
+
+		# Connect to the database. If we don't do this each time, MySQL Will Go Away
 		db_connection = db.connect_to_database()
+
+		# Execute the provided query using the provided data
 		cursor = db.execute_query(db_connection=db_connection, query=insert_query_to_run, query_params=data_to_insert)
 		return True
 	
@@ -51,11 +55,17 @@ def insert_work_order_products():
 	insert(insert_query_to_run=add_work_order_products_query)
 
 
-def insert_employee():
+def insert_employee(new_employee_group, new_employee_first_name, new_employee_last_name, 
+	new_employee_email, new_employee_password, new_employee_site_id):
 
 	# Load SQL query for INSERTing new employee data
-	add_employee_query = """"""
-	insert(insert_query_to_run=add_employee_query)
+	add_employee_query = """
+	INSERT INTO Employees (employee_group, employee_first_name, employee_last_name, employee_email, employee_password, employee_site_id)
+	VALUES (%s, %s, %s, %s, %s, %s);
+	"""
+	new_employee_data = (new_employee_group, new_employee_first_name, new_employee_last_name, 
+		new_employee_email, new_employee_password, new_employee_site_id)
+	insert(insert_query_to_run=add_employee_query, data_to_insert=new_employee_data)
 
 
 def insert_location():
