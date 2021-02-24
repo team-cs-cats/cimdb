@@ -8,7 +8,7 @@ import cim.database.db_connector as db
 db_connection = db.connect_to_database()
 
 
-def insert(insert_query_to_run):
+def insert(insert_query_to_run, data_to_insert):
 	"""
 	Since all insertion queries will share the same steps, 
 	this is just a validation wrapper that handles whether an insertion was successful or not.
@@ -16,8 +16,12 @@ def insert(insert_query_to_run):
 	
 	# Attempt to insert. If successful, return True
 	try:
+
+		# Connect to the database. If we don't do this each time, MySQL Will Go Away
 		db_connection = db.connect_to_database()
-		cursor = db.execute_query(db_connection=db_connection, query=query_to_run)
+
+		# Execute the provided query using the provided data
+		cursor = db.execute_query(db_connection=db_connection, query=insert_query_to_run, query_params=data_to_insert)
 		return True
 	
 	# If unsuccessful, print the error to the server log and return False
@@ -26,14 +30,15 @@ def insert(insert_query_to_run):
 		return False
 
 
-def insert_site():
+def insert_site(new_site_address_1, new_site_address_2, new_site_city, new_site_state, new_site_zip):
 
 	# Load SQL query for INSERTing new site data
 	add_site_query = """
 	INSERT INTO Sites (site_address_1, site_address_2, site_address_city, site_address_state, site_address_postal_code)
-	VALUES (:site_address_1_input, :site_address_2_input, :site_address_city_input, :site_address_state_input, :site_address_postal_code_input);
+	VALUES (%s, %s, %s, %s, %s);
 	"""
-	insert(insert_query_to_run=add_site_query)
+	new_site_data = (new_site_address_1, new_site_address_2, new_site_city, new_site_state, new_site_zip)
+	insert(insert_query_to_run=add_site_query, data_to_insert=new_site_data)
 
 
 def insert_work_order():
@@ -50,11 +55,17 @@ def insert_work_order_products():
 	insert(insert_query_to_run=add_work_order_products_query)
 
 
-def insert_employee():
+def insert_employee(new_employee_group, new_employee_first_name, new_employee_last_name, 
+	new_employee_email, new_employee_password, new_employee_site_id):
 
 	# Load SQL query for INSERTing new employee data
-	add_employee_query = """"""
-	insert(insert_query_to_run=add_employee_query)
+	add_employee_query = """
+	INSERT INTO Employees (employee_group, employee_first_name, employee_last_name, employee_email, employee_password, employee_site_id)
+	VALUES (%s, %s, %s, %s, %s, %s);
+	"""
+	new_employee_data = (new_employee_group, new_employee_first_name, new_employee_last_name, 
+		new_employee_email, new_employee_password, new_employee_site_id)
+	insert(insert_query_to_run=add_employee_query, data_to_insert=new_employee_data)
 
 
 def insert_location():

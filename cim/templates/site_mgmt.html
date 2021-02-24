@@ -31,22 +31,28 @@ Note that a newly added site will only be pre-populate with the five standard ro
 
 <!-- Form for Create New section -->
 {% block create_form %}
-<form id="new-site-data-filter" action="">
+<form id="new-site-data" action="" method="POST">
 
 	<div class="text-center">
 
-		<input type="text" class='m-1' name="new_site_fname" id="new_site_fname" placeholder="Address " required>
+		<input type="text" class='m-1' name="new_site_address_1" id="new_site_address_1" placeholder="Address " required>
 
-		<input type="text" class='m-1' name="new_site_lname" id="new_site_lname" placeholder="Address 2">
+		<input type="text" class='m-1' name="new_site_address_2" id="new_site_address_2" placeholder="Address 2">
 
 		<input type="text" class='m-1' name="new_site_city" id="new_site_city" placeholder="City" required>
 
-		<input type="text" class='m-1' name="new_site_state" id="new_site_state" placeholder="State" required>
+		<select class="custom-select" name="new_site_state" id="new_site_state" required>
+			<option selected>Select State: </option>
+			{% for state in states %}
+			<option>{{state.Code}}</option>
+			{% endfor %}
+		</select>
 
 		<label for="new_site_zip">Zip: </label>
 		<input type="number" min="0" max="99999" class='m-1' name="new_site_zip" id="new_site_zip" placeholder="99999" required>
 
-		<input type="button" class="btn-sm btn-success m-1" value="Add New Site" onclick=addData() >
+		<input type="submit" class="btn-sm btn-success m-1" id="addNewSiteBtn" value="Add New Site" >
+
 
 
 	</div>
@@ -79,7 +85,12 @@ Filter Existing Sites
 
 		<input type="text" class='m-1' name="existing_site_email" id="existing_site_email" placeholder="City">
 
-		<input type="text" class='m-1' name="existing_site_email" id="existing_site_email" placeholder="State">
+		<select class="custom-select m-1" name="existing_site_email" id="existing_site_email" required>
+			<option selected>Filter State: </option>
+			{% for state in states %}
+			<option>{{state.Code}}</option>
+			{% endfor %}
+		</select>
 
 		<label for="existing_site_zip">Zip: </label>
 		<input type="number" min="0" max="99999" class='m-1' name="existing_site_zip" id="existing_site_zip" placeholder="99999">
@@ -194,35 +205,9 @@ Filter Existing Sites
 
 <!-- Page-specific scripts -->
 {% block page_scripts %}
-<script>
-	$(document).ready(function(){
-		$("#editSite").on("show.bs.modal", function(event){
-	// Get the button that triggered the modal
-	var button = $(event.relatedTarget);
 
-	// Extract value from the custom data-* attribute
-	var titleData = button.data("title");
-	$(this).find(".modal-title").text(titleData);
-
-	var siteAddress1Data = button.data("site-address-1");
-	$(this).find("#site-edit-address-1").val(siteAddress1Data);
-
-	var siteAddress2Data = button.data("site-address-2");        
-	$(this).find("#site-edit-address-2").val(siteAddress2Data);
-
-	var siteCityData = button.data("site-address-city");
-	$(this).find("#site-edit-city").val(siteCityData);
-
-	var siteStateData = button.data("site-address-state");
-	$(this).find("#site-edit-state").val(siteStateData);
-
-	var siteZipData = button.data("site-address-postal-code");        
-	$(this).find("#site-edit-zip").val(siteZipData);
-
-	
-});
-	});
-</script>
+<!-- Connect to sites.js in order to extract the data from the webpages -->
+<script type="text/javascript" src="{{ url_for('static', filename='js/sites.js') }}"></script>
 {% endblock %}
 
 
