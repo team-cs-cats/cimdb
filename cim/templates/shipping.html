@@ -189,35 +189,12 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+
+<!-- Include moment to reformat the date fields -->
 <script src="moment.js"></script>
+<script>moment().format("MMM Do YYYY");</script>
 
-
-<script>
-	moment().format("MMM Do YYYY");
-</script>
-
-
-<script type="text/javascript">
-$(document).ready(function(){
-    $("#viewWorkOrder").on("show.bs.modal", function(event){
-        // Get the button that triggered the modal
-        var button = $(event.relatedTarget);
-
-        // Extract value from the custom data-* attribute
-        var titleData = button.data("title");
-        $(this).find(".modal-title").text(titleData);
-
-        var woIDdata = parseInt(button.data("work_order_id"));
-        $(this).find("#view-work-order-id").val(woIDdata);
-
-        var woOpenDate = button.data("work-order-open-date");        
-        $(this).find("#view-work-order-open-date").val(woOpenDate);
-
-        var woRefNumData = button.data("work-order-reference-number");
-        $(this).find("#view-work-order-reference-number").val(woRefNumData);
-
-    });
-});
-</script>
+<!-- load shipping JS for View Work Order modal -->
+<script type="text/javascript" src="{{ url_for('static', filename='js/shipping.js') }}"></script>
 
 {% endblock %}

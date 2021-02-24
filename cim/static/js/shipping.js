@@ -1,9 +1,23 @@
-$('#exampleModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget) // Button that triggered the modal
-  var recipient = button.data('whatever') // Extract info from data-* attributes
-  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-  var modal = $(this)
-  modal.find('.modal-title').text('New message to ' + recipient)
-  modal.find('.modal-body input').val(recipient)
-})
+
+
+// shipping modal (View Work Order)
+$(document).ready(function(){
+    $("#viewWorkOrder").on("show.bs.modal", function(event){
+        // Get the button that triggered the modal
+        var button = $(event.relatedTarget);
+
+        // Extract value from the custom data-* attribute
+        var titleData = button.data("title");
+        $(this).find(".modal-title").text(titleData);
+
+        var woIDdata = parseInt(button.data("work_order_id"));
+        $(this).find("#view-work-order-id").val(woIDdata);
+
+        var woOpenDate = button.data("work-order-open-date");        
+        $(this).find("#view-work-order-open-date").val(woOpenDate);
+
+        var woRefNumData = button.data("work-order-reference-number");
+        $(this).find("#view-work-order-reference-number").val(woRefNumData);
+
+    });
+});
