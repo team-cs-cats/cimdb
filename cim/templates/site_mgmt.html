@@ -205,6 +205,8 @@ Filter Existing Sites
 
 <!-- Page-specific scripts -->
 {% block page_scripts %}
+<!-- Connect to jquery (first) in order to open modals -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
 <!-- Connect to sites.js in order to extract the data from the webpages -->
 <script type="text/javascript" src="{{ url_for('static', filename='js/sites.js') }}"></script>
