@@ -265,19 +265,6 @@ def products():
 	if request.method=="GET":
 		return render_template("products.html")
 
-@webapp.route('/inventory', methods=['GET', 'POST'])
-@login_required
-def inventory():
-	"""The webapp's page for viewing the inventory.
-	This allows the employee to review existing stock and order new stock of standard and special components."""
-
-	# if the current user is not authenticated, redirect the user to the logged out index page
-	if not current_user.is_authenticated:
-		return redirect(url_for("cim.templates.index"))
-
-	if request.method=="GET":
-		return render_template("inventory.html", regular_components=data.get_rc(), special_components=data.get_sc(), sites=data.get_sites())
-
 
 @webapp.route('/inventory-spec', methods=['GET', 'POST'])
 @login_required
