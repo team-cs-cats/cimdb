@@ -87,6 +87,7 @@ def insert_location(new_location_room_number, new_location_shelf_number, new_loc
 	VALUES (%s, %s, %s);
 	"""
 	new_location_data = (new_location_room_number, new_location_shelf_number, new_location_site_id)
+	print('new_location_data', new_location_data)
 	insert(insert_query_to_run=add_location_query, data_to_insert=new_location_data)
 
 

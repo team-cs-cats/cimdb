@@ -347,6 +347,26 @@ def locations():
 		return render_template("locations.html", 
 		locations=location_results, products=data.get_products(), regular_components=data.get_rc(), special_components=data.get_sc(), sites=site_results)
 
+	# if post request perform insertion of new location
+	if request.method=="POST":
+
+		# obtain data from new location form
+		provided_add_new_location_site = request.form['add_new_location_site']
+		provided_add_location_room_number = request.form['add_location_room_number']
+		provided_add_location_shelf_number = request.form['add_location_shelf_number']	
+
+		# perform the insertion
+		dbiq.insert_location(
+			new_location_room_number=provided_add_location_room_number, 
+			new_location_shelf_number=provided_add_location_shelf_number, 
+			new_location_site_id=provided_add_new_location_site)
+
+		return render_template("locations.html", 
+			locations=location_results, 
+			products=data.get_products(), 
+			regular_components=data.get_rc(), 
+			special_components=data.get_sc(), 
+			sites=site_results)
 
 @webapp.route('/employee-mgmt', methods=['GET', 'POST'])
 @login_required
