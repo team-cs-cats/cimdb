@@ -324,8 +324,11 @@ def shipping():
 	# Load work order results from the database (or the dummy data if the database doesn't work)
 	work_order_results = dbq.get_db_work_orders()
 
+	# Load work order results from the database (or the dummy data if the database doesn't work)
+	employee_results = dbq.get_db_employees()
+
 	if request.method=="GET":
-		return render_template("shipping.html", work_orders=work_order_results, employees=data.get_emp())
+		return render_template("shipping.html", work_orders=work_order_results, employees=employee_results)
 
 @webapp.route('/locations', methods=['GET', 'POST'])
 @login_required
