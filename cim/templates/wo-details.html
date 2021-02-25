@@ -48,7 +48,8 @@
 							<option>{{product}}</option>
 						{% endfor %}
 					</select>
-			
+					
+					<label for="product_pn">Product PN:</label>
 					<select class="custom-select" id="product_pn">
 						<option selected>Select Family First:</option>
 						{% for product in products_catalog %}
@@ -58,7 +59,7 @@
 				</div>
 		
 				<div class="inner-div">
-					<input type="button" class="btn btn-success" value="Add New Product" onclick=addData() >
+					<input type="button" class="btn btn-success" value="Add New Product" onclick=add_new_product({{workorder_information.wo_id}},{{workorder_information.wo_employee_id}}) >
 				</div>
 			</form>
 		</div>
@@ -83,8 +84,20 @@
 	</div>
 </div>
 
+
+
 <!-- dummy content for demo --will be replaced -->
 <div id="results">
+
+	<div>
+		<h4>Work order information</h4>
+		<p>{{workorder_information}}</p>
+		<p><b>Work Order id:</b> {{workorder_information.wo_id}}</p>
+		<p><b>Open Date:</b> {{workorder_information.wo_open_date}} </p>
+		<p><b>Employee in Charge:</b> {{workorder_information.wo_employee_full_name}} </p>
+	
+	</div>
+
 	<table class="table table-striped" >
 		<tr>
 			<th>Serial Number</th>
@@ -107,7 +120,7 @@
 					<td>{{product.product_family}}</td>
 					<td>{{product.product_pn}}</td>
 					<td>{{product.product_status}}</td>
-					<td>{{product.product_date_of_assembly}}</td>
+					<td>{{product.product_date_assembly}}</td>
 					<td>{{product.product_qc_date}}</td>
 					<td>{{product.product_warranty_expiration_date}}</td>
 					<td>{{product.product_employee_id}}</td>

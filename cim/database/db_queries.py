@@ -120,3 +120,131 @@ def get_db_work_orders():
 		work_order_results = data.get_wo()
 
 	return work_order_results
+
+def get_a_work_order(workorder_id):
+	# returns a sinlge worker information
+
+	query = """SELECT 
+	WorkOrders.wo_id, 
+	WorkOrders.wo_open_date, 
+	WorkOrders.wo_close_date, 
+	WorkOrders.wo_status, 
+	WorkOrders.wo_reference_number,
+	WorkOrders.wo_employee_id,
+	CONCAT(Employees.employee_first_name, ' ', Employees.employee_last_name) as wo_employee_full_name 
+	FROM WorkOrders 
+	INNER JOIN Employees 
+	ON Employees.employee_id=WorkOrders.wo_employee_id
+	where WorkOrders.wo_id="""+workorder_id+""";"""
+		
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	work_order_result = cursor.fetchall()
+
+	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
+	# if len(work_order_result) == 0:
+	# 	work_order_result = data.get_wo()
+
+	return work_order_result[0]
+
+
+
+
+def get_db_workorder_details(workorder_id):
+	# Load SQL query for work order details
+
+	query = """select * from Products inner join
+	WorkOrderProducts on WorkOrderProducts.wop_product_sn=Products.product_sn
+	where WorkOrderProducts.wop_wo_id="""+workorder_id+""";"""
+
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	workorder_details_result = cursor.fetchall()
+
+	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
+	if len(workorder_details_result) == 0:
+		workorder_details_result = data.get_wo()
+
+	return workorder_details_result
+
+def get_free_sc_sn(sc_pn):
+	# returns SN of the free special compoenents of a family
+	query = """select sc_sn from SpecialComponents 
+	where sc_is_free=1 AND sc_pn='"""+sc_pn+"""' ORDER BY sc_sn DESC;"""
+
+	print(f'querry is {query}')
+
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	free_sc_sn_results = cursor.fetchall()
+
+	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
+	if len(free_sc_sn_results) == 0:
+		print("EROOR in FREE SC!!!")
+
+	return free_sc_sn_results
+
+
+
+def get_product_sn(sc_sn):
+	# returns SN of the product using its SC SN, if SC is not used, returns False
+
+	# if get_is_free(sc_sn) is True:
+	# 	return False
+
+	query = """select product_sn from Products 
+	where product_sc_sn="""+str(sc_sn)+""";"""
+	
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	get_product_sn_result = cursor.fetchall()
+
+	# print(f'get_product_sn_result is: {get_product_sn_result[0]["product_sn"]}')
+
+	if len(get_product_sn_result) == 0:
+		return -1
+	
+	else:
+		return get_product_sn_result[0]["product_sn"]
+	
+
+
+
+
+
+def update_is_free(sc_sn):
+	# should be added to upate queries later
+	# updates is_free attr of a SC once it's assigned to a product
+
+	query = """UPDATE SpecialComponents SET sc_is_free=0 WHERE sc_sn ="""+str(sc_sn)+""" ;"""
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	
+	
+
+def get_is_free(sc_sn):
+	# returns True if a SC is free otherwise flase
+	query = """select sc_is_free from SpecialComponents 
+	where sc_sn="""+str(sc_sn)+""";"""
+
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	is_free_result = cursor.fetchall()
+	# print(f'is_free_result is: {is_free_result[0]["sc_is_free"]}')
+
+	if is_free_result[0]["sc_is_free"]==1:
+		return True
+	
+	else:
+		return False
+
+
+def rev_update_is_free(sc_sn):
+	# will be deleted--- only for dev purposes
+	
+	query = """UPDATE SpecialComponents SET sc_is_free=1 WHERE sc_sn ="""+str(sc_sn)+""" ;"""
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+
+	
+
