@@ -79,11 +79,16 @@ def insert_employee(new_employee_group, new_employee_first_name, new_employee_la
 	insert(insert_query_to_run=add_employee_query, data_to_insert=new_employee_data)
 
 
-def insert_location():
+def insert_location(new_location_room_number, new_location_shelf_number, new_location_site_id):
 
 	# Load SQL query for INSERTing new location data
-	add_location_query = """"""
-	insert(insert_query_to_run=add_location_query)
+	add_location_query = """
+	INSERT INTO Locations (location_room_number, location_shelf_number, location_site_id)
+	VALUES (%s, %s, %s);
+	"""
+	new_location_data = (new_location_room_number, new_location_shelf_number, new_location_site_id)
+	print('new_location_data', new_location_data)
+	insert(insert_query_to_run=add_location_query, data_to_insert=new_location_data)
 
 
 def insert_location_regular_comps():
