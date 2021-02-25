@@ -1,4 +1,4 @@
-console.log("I am  connected!")
+console.log("JS functions are connected!")
 
 
 
@@ -33,4 +33,30 @@ function delete_workorder(workorder_number){
 };
 
 
+//add a new work order
+function add_new_workorder(){
+  employee_id=this.wo_employee_name_assign.value
+  reference_number=this.wo_reference_number_assign.value
+  date=this.wo_open_date_assign.value
+  console.log("a new work order for ",employee_id," created on ",date," and ref number is: ",reference_number)
+
+  const data = { id: employee_id, reference:reference_number, date:date };
+  console.log(data)
+
+  fetch('/workorders', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+    location.reload()
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+}
 

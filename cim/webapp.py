@@ -31,9 +31,13 @@ import cim.database.db_update_queries as dbuq
 # import DELETE queries as dbdq
 import cim.database.db_delete_queries as dbdq
 
+# resolve CORS issues for local development
+from flask_cors import CORS, cross_origin
+
 
 #create the web application
 webapp = Flask(__name__)
+CORS(webapp)
 
 # added a 'secret' key for user management
 webapp.secret_key = 'Team CS Cats'
@@ -202,7 +206,26 @@ def workorders():
 
 	# otherwise, return the workorders page
 	if request.method=="GET":
-		return render_template("workorders.html",employees=data.get_emp(),workorders=data.get_wo())
+
+		# get information from DB
+		workorder_results=dbq.get_db_work_orders()
+		employee_results=dbq.get_db_employees()
+	
+
+		return render_template("workorders.html",
+								employees=employee_results ,
+								workorders=workorder_results
+								)
+
+	if request.method=="POST":
+		id=request.json["id"]
+		date=request.json["date"]
+		reference=request.json["reference"]
+		dbiq.insert_work_order(date,None,"assembly_pending",int(reference),id)
+		print(f'got a post request! id is: {id} and date is: {date} and reference is{reference}')
+		return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+		
+
 
 @webapp.route('/landing', methods=['GET', 'POST'])
 @login_required
@@ -415,24 +438,91 @@ def wo_details(wo_id=""):
 
 		if request.args.get("wo_id"):
 			wo_id=request.args.get("wo_id")
-		
+				
 
-		# get wo products information:
-		if wo_id:
-			products=data.get_workorderproducts()[wo_id]
-		else:
-			products={}
+		# # get wo products information:
+		# if wo_id:
+		# 	products=data.get_workorderproducts()[wo_id]
+		# else:
+		# 	products={}
 		
 
 		#get products catalog
 		products_catalog=data.get_products_catalog()
 		
-		print(f'############ wo_id is : {wo_id}')
-		print(f'############ products are is : {products}')
-		#if wo_id not none:
-			#SQL query
+		# print(f'############ wo_id is : {wo_id}')
+		# print(f'############ products are is : {products}')
+
+		
+		if wo_id !="":
+			products=dbq.get_db_workorder_details(str(wo_id))
+			workorder_information=dbq.get_a_work_order(wo_id)
+			# print("***************************************")
+			# print(f'workorder_id is: {wo_id}')
+			# print(f'products is: {products}')
+			# print(f'workorder_information is: {workorder_information}')
+		
+			
+		else:
+			products={}
+			workorder_information={}
+
+		# products=dbq.get_db_workorder_details(str(879845))
+
 		# render the detail page
-		return render_template("wo-details.html",wo_id=wo_id, products_catalog=products_catalog , products=products)
+		return render_template("wo-details.html",
+								wo_id=wo_id,
+								products_catalog=products_catalog ,
+								products=products,
+								workorder_information=workorder_information
+								)
+
+	if request.method=="POST":
+
+		# for development 
+		#  dbq.rev_update_is_free(101711)
+		# return
+
+		print(f'got a post request! and request.json is: {request.json}')
+				
+		# make a new product with the first avaible product and assign it to this work order
+		# the default location is assembly department
+
+		free_sc=dbq.get_free_sc_sn(request.json["sc_pn"])
+		product_sc_sn=free_sc[0]["sc_sn"]
+				
+		product_pn=request.json["product_pn"]
+		product_family=request.json["product_family"]
+		employee_id=request.json["employee_id"]
+		product_location=10
+
+		
+		# dates are set to None
+		product_assmebly_date=None
+		product_qc_date=None
+		product_warranty_date=None
+
+		# insert product
+		dbiq.insert_product(product_pn,product_family,product_assmebly_date,product_qc_date,
+		product_warranty_date,employee_id,product_location,product_sc_sn)
+
+		# update is_free attr
+		dbq.update_is_free(product_sc_sn)
+				
+
+		# get product_sn using its SC_sn
+		product_sn=dbq.get_product_sn(product_sc_sn)
+
+		if product_sn==-1:
+			# TODO: return error
+			pass
+
+		else:
+			# add to work order
+			wo_id=request.json["wo_id"]
+			dbiq.insert_work_order_products(wo_id,product_sn)
+
+		return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
 
 
 # products details. it takes the product_sn as argument to retrive the the information from DB

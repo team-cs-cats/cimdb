@@ -41,18 +41,29 @@ def insert_site(new_site_address_1, new_site_address_2, new_site_city, new_site_
 	insert(insert_query_to_run=add_site_query, data_to_insert=new_site_data)
 
 
-def insert_work_order():
+def insert_work_order(new_wo_open_date,new_wo_close_date, new_wo_status, new_wo_reference_number, new_wo_employee_id):
 
 	# Load SQL query for INSERTing new work order data
-	add_work_order_query = """"""
-	insert(insert_query_to_run=add_work_order_query)
+	add_work_order_query = """
+	INSERT INTO WorkOrders (wo_open_date, wo_close_date, wo_status, wo_reference_number, wo_employee_id)
+	VALUES (%s, %s, %s, %s, %s);
+	"""
+	new_workorder_data=(new_wo_open_date,new_wo_close_date, new_wo_status, new_wo_reference_number, new_wo_employee_id)
+	print(f'new work order data is: {new_workorder_data}')
+	insert(insert_query_to_run=add_work_order_query,data_to_insert=new_workorder_data)
 
 
-def insert_work_order_products():
-
+def insert_work_order_products(new_wop_wo_id,new_wop_product_sn):
 	# Load SQL query for INSERTing new work order/products data
-	add_work_order_products_query = """"""
-	insert(insert_query_to_run=add_work_order_products_query)
+
+	add_work_order_products="""INSERT INTO WorkOrderProducts (wop_wo_id, wop_product_sn)
+	VALUES (%s,%s);"""
+
+	new_work_order_products_data=(new_wop_wo_id,new_wop_product_sn)
+	insert(insert_query_to_run=add_work_order_products,data_to_insert=new_work_order_products_data)
+
+	
+	
 
 
 def insert_employee(new_employee_group, new_employee_first_name, new_employee_last_name, 
@@ -96,12 +107,19 @@ def insert_products_special_comps():
 	insert(insert_query_to_run=add_product_special_comps_query)
 
 
-def insert_product():
+def insert_product(new_product_pn,new_product_family,new_product_date_assmebly,new_product_qc_date,
+new_product_warranty_expiration_date,new_product_employee_id,new_product_location_id,new_product_sc_sn):
 
 	# Load SQL query for INSERTing new product data
-	add_product_query = """"""
-	insert(insert_query_to_run=add_product_query)
-
+	add_product_query = """INSERT INTO Products (product_pn , product_family , product_date_assembly , product_qc_date,
+product_warranty_expiration_date, product_employee_id, product_location_id, product_sc_sn )
+VALUES (%s,%s,%s,%s,%s,%s,%s,%s)
+	"""
+	new_product_data=(new_product_pn,new_product_family,new_product_date_assmebly,new_product_qc_date,
+new_product_warranty_expiration_date,new_product_employee_id,new_product_location_id,new_product_sc_sn)
+	insert(insert_query_to_run=add_product_query,data_to_insert=new_product_data)
+	
+	
 
 def insert_regular_component():
 
@@ -114,3 +132,4 @@ def insert_special_component():
 	# Load SQL query for INSERTing new regular component data
 	add_special_component_query = """"""
 	insert(insert_query_to_run=add_special_component_query)
+
