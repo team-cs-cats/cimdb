@@ -600,14 +600,19 @@ def assembly():
 
 	if request.method=="GET":
 
-		assembly_list=data.get_assembly()
+		# get employee ID
+
+		employee_id=None
+
+		# assembly_list=data.get_assembly()
+
+		assembly_list=dbq.get_assembly_list(employee_id)
 
 		print(f'assembly is: {assembly_list}')
 
 		products_catalog=data.get_products_catalog()
 		
-		#SQL query
-
+		
 		# render the assembly page
 		return render_template("assembly.html",assembly_list=assembly_list,products_catalog=products_catalog)
 
@@ -623,15 +628,18 @@ def QC():
 		return redirect(url_for("cim.templates.index"))
 
 	if request.method=="GET":
+		# get employee ID
 
-		qc_list=data.get_qc()
+		employee_id=None
 
-		print(f'assembly is: {qc_list}')
+		# assembly_list=data.get_assembly()
+
+		qc_list=dbq.get_qc_list(employee_id)
+
+		print(f'qc is: {qc_list}')
 
 		products_catalog=data.get_products_catalog()
 		
-		#SQL query
-
 		# render the assembly page
 		return render_template("qc.html",qc_list=qc_list,products_catalog=products_catalog)
 
