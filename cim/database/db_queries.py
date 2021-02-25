@@ -37,7 +37,7 @@ def regular_component_locations(regular_component_id):
 	LocationsRegularComps.lrc_quantity AS quantity_at_location
 	FROM Locations
 	INNER JOIN LocationsRegularComps ON Locations.location_id=LocationsRegularComps.lrc_location_id
-	WHERE LocationsRegularComps.lrc_rc_pn == %s"""
+	WHERE LocationsRegularComps.lrc_rc_pn == %s;"""
 	db_connection = db.connect_to_database()
 	cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(regular_component_id))
 	reg_comp_location_results = cursor.fetchall()
@@ -61,7 +61,7 @@ def get_db_regular_components():
 	Locations.location_room_number,
 	Locations.location_shelf_number,
 	Sites.site_address_city
-	(SELECT) AS rc_locations
+	
 	FROM RegularComponents 
 	INNER JOIN LocationsRegularComps ON RegularComponents.rc_pn=LocationsRegularComps.lrc_rc_pn
 	INNER JOIN Locations ON Locations.location_id=LocationsRegularComps.lrc_location_id
