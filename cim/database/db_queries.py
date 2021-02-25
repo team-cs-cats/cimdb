@@ -25,6 +25,15 @@ def get_site_id(city_name):
 	site_id = cursor.fetchall()
 	return site_id
 
+def get_db_regular_components():
+
+	# Load SQL query for regular component data
+	query = """SELECT * FROM RegularComponents"""
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	reg_comp_results = cursor.fetchall()
+	return reg_comp_results
+
 
 def get_db_sites():
 
