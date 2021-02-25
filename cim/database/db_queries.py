@@ -37,7 +37,7 @@ def get_db_regular_components():
 	Locations.location_shelf_number,
 	Sites.site_address_city
 	FROM RegularComponents 
-	LEFT JOIN LocationsRegularComps ON RegularComponents.rc_pn=LocationsRegularComps.lrc_rc_pn
+	INNER JOIN LocationsRegularComps ON RegularComponents.rc_pn=LocationsRegularComps.lrc_rc_pn
 	INNER JOIN Locations ON Locations.location_id=LocationsRegularComps.lrc_location_id
 	INNER JOIN Sites ON Locations.location_site_id=Sites.site_id
 	"""
