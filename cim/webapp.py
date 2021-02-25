@@ -350,15 +350,15 @@ def locations():
 	# if post request perform insertion of new location
 	if request.method=="POST":
 
-		# refactored to pull from json
-		provided_add_new_location_site = request.json['add_new_location_site']
-		provided_add_location_room_number = request.json['add_location_room_number']
-		provided_add_location_shelf_number = request.json['add_location_shelf_number']
+		# refactored to pull from json TODO
+		# provided_add_new_location_site = request.json['add_new_location_site']
+		# provided_add_location_room_number = request.json['add_location_room_number']
+		# provided_add_location_shelf_number = request.json['add_location_shelf_number']
 
 		# # obtain data from new location form
-		# provided_add_new_location_site = request.form['add_new_location_site']
-		# provided_add_location_room_number = request.form['add_location_room_number']
-		# provided_add_location_shelf_number = request.form['add_location_shelf_number']	
+		provided_add_new_location_site = request.form['add_new_location_site']
+		provided_add_location_room_number = request.form['add_location_room_number']
+		provided_add_location_shelf_number = request.form['add_location_shelf_number']	
 
 		# perform the insertion
 		dbiq.insert_location(
@@ -366,9 +366,11 @@ def locations():
 			new_location_shelf_number=provided_add_location_shelf_number, 
 			new_location_site_id=provided_add_new_location_site)
 
-		return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
-		# return render_template("locations.html", 
-		# locations=location_results, products=data.get_products(), regular_components=data.get_rc(), special_components=data.get_sc(), sites=site_results)
+		# Ali's json method
+		# return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+		
+		return render_template("locations.html", 
+		locations=location_results, products=data.get_products(), regular_components=data.get_rc(), special_components=data.get_sc(), sites=site_results)
 
 @webapp.route('/employee-mgmt', methods=['GET', 'POST'])
 @login_required
