@@ -179,7 +179,7 @@ Filter Existing Regular Components
 		</tr>
 		{% for location in regular_component.rc_locations %}
 		<tr>
-			<td>{% for site in sites %}{% if site.site_id == location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}</td>
+			<td>{% for site in sites %}{% endfor %}</td>
 			<td>Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</td>
 			<td>{{location.quantity_at_location}}</td>
 			

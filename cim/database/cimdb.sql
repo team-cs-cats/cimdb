@@ -58,7 +58,8 @@ CREATE TABLE `Locations` (
 
 -- Populate Locations table with data
 LOCK TABLES `Locations` WRITE;
-INSERT INTO `Locations` VALUES 
+INSERT INTO `Locations` 
+VALUES (location_id, location_room_number, location_shelf_number, location_site_id)
 (1, 0, 0, 1),
 (2, 1, 1, 12), (3, 1, 2, 12), (4, 1, 3, 12), (5, 1, 4, 12), (6, 1, 5, 12), 
 (7, 2, 1, 12), (8, 2, 2, 12), (9, 2, 3, 12), (10, 2, 4, 12), (11, 2, 5, 12), 
@@ -187,11 +188,12 @@ CREATE TABLE `LocationsRegularComps` (
 
 -- Populate LocationsRegularComps table with data
 LOCK TABLES `LocationsRegularComps` WRITE;
-INSERT INTO `LocationsRegularComps` VALUES 
-(2,1,2,36),
-(3,1,51,8),
-(4,2,100,11),
-(5,3,100,136),
+INSERT INTO `LocationsRegularComps` 
+(lrc_id, lrc_location_id, lrc_rc_pn, lrc_quantity) VALUES 
+(2,1,2,36), --
+(3,1,51,8), --
+(4,2,100,11), --
+(5,3,100,136), --
 (6,4,200,15),
 (7,4,152,45),
 (8,5,200,36),
