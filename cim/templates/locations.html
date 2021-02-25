@@ -76,7 +76,7 @@ Each new location will automatically be assigned a location ID upon creation.
 		<label for="add_location_shelf_number">Shelf Number: </label>
 		<input type="number" min="0" max="99" class='m-1' name="add_location_shelf_number" id="add_location_shelf_number" placeholder="99">
 
-		<input type="submit" class="btn-sm btn-success m-1" value="Add New Location" onclick=add_new_location() >
+		<input type="submit" class="btn-sm btn-success m-1" value="Add New Location" onClick=add_new_location() >
 	</div>
 
 </form>
@@ -218,6 +218,7 @@ Filter Existing Locations
 
 <!-- Page-specific scripts -->
 {% block page_scripts %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="{{ url_for('static', filename='js/locations.js') }}"></script>
 {% endblock %}
 
