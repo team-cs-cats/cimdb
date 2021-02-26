@@ -42,10 +42,10 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 		<select class="custom-select m-1" id="new_category" required>
 			<option selected>Select Category: </option>
 			<option>Case</option>
-		    <option>Graphics Card (GC)</option>
-		    <option>Hard Drive Disk (HDD)</option>
-		    <option>Motherboard (MB)</option>
-		    <option>RAM</option>
+			<option>Graphics Card (GC)</option>
+			<option>Hard Drive Disk (HDD)</option>
+			<option>Motherboard (MB)</option>
+			<option>RAM</option>
 		</select>
 
 		<select class="custom-select m-1 p-1" id="new_reg_comp_site" required>
@@ -83,10 +83,10 @@ Filter Existing Regular Components
 		<select class="custom-select m-1" id="new_category" required>
 			<option selected>Select Category: </option>
 			<option>Case</option>
-		    <option>Graphics Card (GC)</option>
-		    <option>Hard Drive Disk (HDD)</option>
-		    <option>Motherboard (MB)</option>
-		    <option>RAM</option>
+			<option>Graphics Card (GC)</option>
+			<option>Hard Drive Disk (HDD)</option>
+			<option>Motherboard (MB)</option>
+			<option>RAM</option>
 		</select>	
 
 		<label for="existing_reg_comp_part_number">Part Number: </label>
@@ -120,167 +120,175 @@ Filter Existing Regular Components
 <div class="m-5">
 
 	{% for regular_component in regular_components %}
-	<div class="row">
-			<div class="col text-center border-top"> 
-				Part Number: <strong>{{regular_component.rc_part_name}}</strong> - Category: <strong>{{regular_component.rc_category}}</strong>
+
+		<!-- don't select 'no graphics card' as a location -->
+		{% if regular_component.rc_pn != 200 %} 
+			<div class="row">
+				<div class="col text-center border-top"> 
+					Part Number: <strong>{{regular_component.rc_part_name}}</strong> - Category: <strong>{{regular_component.rc_category}}</strong>
+				</div>
+
 			</div>
 
-		</div>
+			<div class="row ml-5 mr-5">
 
-	<div class="row ml-5 mr-5">
+				<div class="col d-flex flex-row ml-5 ml-2 p-2">
+					<p class="mt-2 mr-2">Order more of component {{regular_component.rc_part_name}}: </p>
+					<div>
+						<select class="custom-select mt-2 pl-2 ml-2" id="new_rc_site" required>
+							<option selected>Select Site: </option>
+							{% for site in sites %}
+							<option>{{site.site_name}}</option>
+							{% endfor %}
+						</select>
+					</div>
 
-		<div class="col d-flex flex-row ml-5 ml-2 p-2">
-			<p class="mt-2 mr-2">Order more of component {{regular_component.rc_part_name}}: </p>
-			<div>
-					<select class="custom-select mt-2 pl-2 ml-2" id="new_rc_site" required>
-					<option selected>Select Site: </option>
-					{% for site in sites %}
-					<option>{{site.site_name}}</option>
+					<div >
+						<select class="custom-select mt-2" id="new_rc_site" required>
+							<option selected>Select Quantity: </option>
+							<option>10</option>
+							<option>25</option>
+							<option>50</option>
+							<option>100</option>
+						</select>
+					</div>
+
+					<div><button class="btn-sm btn-info m-1">Order More</button></div>
+				</div>
+
+				<div class="col d-flex flex-row-reverse"> 
+					<button class="btn-sm btn-danger">Delete All {{regular_component.rc_part_name}}</button>
+
+					<button type="button" 
+					class="btn-sm btn-warning text-right" 
+					data-toggle="modal" 
+					data-target="#editRegularComponent" 
+					data-reg-comp-part-number="{{regular_component.rc_pn}}"
+					data-reg-comp-category="{{regular_component.rc_category}}"
+					data-title="Edit Details for Part Number {{regular_component.rc_pn}}">Edit Details for {{regular_component.rc_part_name}}</button>
+
+				</div>
+			</div>
+
+			<div class="row ml-5 mr-5">
+
+				<table class="table table-striped ml-5 mr-5">
+					<tr>
+						<th>Site</th>
+						<th>Location</th>
+						<th>Quantity</th>
+						<th>Edit Quantity</th>
+						<th>Delete from Location</th>
+					</tr>
+
+					{% for location in regular_component.rc_locations %}
+					<tr>
+						<td>{% for site in sites %}{% endfor %}</td>
+						<td>Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</td>
+						<td>{{location.quantity_at_location}}</td>
+
+						<th><button type="button" 
+							class="btn-sm btn-warning text-right" 
+							data-toggle="modal" 
+							data-target="#editRegularComponentQuantity" 
+							data-reg-comp-part-number="{{regular_component.rc_pn}}"
+							data-reg-comp-category="{{regular_component.rc_category}}"
+							data-reg-comp-site-name="{% for site in sites %}{% if location.location_site_id == site.site_id%}{{site.site_name}}{% endif %}{% endfor %}" 
+							data-reg-comp-room-number="{{location.location_room_number}}" 
+							data-reg-comp-shelf-number="{{location.location_shelf_number}}" 
+							data-reg-comp-quantity={{location.quantity_at_location}}
+							data-title="Edit Quantity of Part Number {{regular_component.rc_pn}}">Edit</button></th>
+
+							<td><button class="btn-sm btn-danger">Delete</button></td>
+					</tr>
 					{% endfor %}
-					</select>
-				</div>
-
-				<div >
-					<select class="custom-select mt-2" id="new_rc_site" required>
-					<option selected>Select Quantity: </option>
-					<option>10</option>
-					<option>25</option>
-					<option>50</option>
-					<option>100</option>
-					</select>
-				</div>
-
-				<div><button class="btn-sm btn-info m-1">Order More</button></div>
-		</div>
-
-		<div class="col d-flex flex-row-reverse"> 
-				<button class="btn-sm btn-danger">Delete All Component {{regular_component.rc_pn}}</button>
-
-			<button type="button" 
-				class="btn-sm btn-warning text-right" 
-				data-toggle="modal" 
-				data-target="#editRegularComponent" 
-				data-reg-comp-part-number="{{regular_component.rc_pn}}"
-				data-reg-comp-category="{{regular_component.rc_category}}"
-				data-title="Edit Details for Part Number {{regular_component.rc_pn}}">Edit Details for Component {{regular_component.rc_pn}}</button>
-
-		</div>
-		</div>
-
-		<div class="row ml-5 mr-5">
-			
-	<table class="table table-striped ml-5 mr-5">
-		<tr>
-			<th>Site</th>
-			<th>Location</th>
-			<th>Quantity</th>
-			<th>Edit Quantity</th>
-			<th>Delete from Location</th>
-		</tr>
-		{% for location in regular_component.rc_locations %}
-		<tr>
-			<td>{% for site in sites %}{% endfor %}</td>
-			<td>Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</td>
-			<td>{{location.quantity_at_location}}</td>
-			
-			<th><button type="button" 
-				class="btn-sm btn-warning text-right" 
-				data-toggle="modal" 
-				data-target="#editRegularComponentQuantity" 
-				data-reg-comp-part-number="{{regular_component.rc_pn}}"
-				data-reg-comp-category="{{regular_component.rc_category}}"
-				data-reg-comp-site-name="{% for site in sites %}{% if location.location_site_id == site.site_id%}{{site.site_name}}{% endif %}{% endfor %}" 
-				data-reg-comp-room-number="{{location.location_room_number}}" 
-				data-reg-comp-shelf-number="{{location.location_shelf_number}}" 
-				data-reg-comp-quantity={{location.quantity_at_location}}
-				data-title="Edit Quantity of Part Number {{regular_component.rc_pn}}">Edit</button></th>
-
-			<td><button class="btn-sm btn-danger">Delete</button></td>
-		</tr>
-		{% endfor %}
-
-	</div>
-</table>
-
-	</div>
 
 
-{% endfor %}
+				</table>
 
+			</div>
+
+		{% endif %}
+	{% endfor %}
+
+	
+</div>
 {% endblock %}
 
 
 
-<!-- Page-specific modals -->
-{% block page_modals %}
-<!-- Modal popup for regular component quantity Edit feature -->
-<div id="editRegularComponentQuantity" class="modal fade" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form>
-                    <div class="modal-header">
-                        <h5 class="modal-title">Modal Window</h5>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">  
+	<!-- Page-specific modals -->
+	{% block page_modals %}
+	<!-- Modal popup for regular component quantity Edit feature -->
+	<div id="editRegularComponentQuantity" class="modal fade" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form>
+					<div class="modal-header">
+						<h5 class="modal-title">Modal Window</h5>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">  
 
 						<div class="form-group p-1">
-                            <label class="control-label" >Quantity in <span id="reg-comp-edit-site"></span>, Room <span id="reg-comp-edit-room-number"></span>, Shelf <span id="reg-comp-edit-shelf-number"></span>:</label>
-                            <input type="number" min="0" max="999" id="reg-comp-edit-quantity" class="form-control" required>
-                        </div> 
-					
+							<label class="control-label" >Quantity in <span id="reg-comp-edit-site"></span>, Room <span id="reg-comp-edit-room-number"></span>, Shelf <span id="reg-comp-edit-shelf-number"></span>:</label>
+							<input type="number" min="0" max="999" id="reg-comp-edit-quantity" class="form-control" required>
+						</div> 
+
 					</div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary">Update</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary">Update</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
 
-<!-- Modal popup for regular component details Edit feature -->
-<div id="editRegularComponent" class="modal fade" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form>
-                    <div class="modal-header">
-                        <h5 class="modal-title">Modal Window</h5>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">  
+	<!-- Modal popup for regular component details Edit feature -->
+	<div id="editRegularComponent" class="modal fade" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form>
+					<div class="modal-header">
+						<h5 class="modal-title">Modal Window</h5>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">  
 
 						<div class="form-group p-1">
-                            <label class="control-label" >Part Number:</label>
-                            <input type="text" id="reg-comp-edit-part-number" class="form-control"  required>
-                        </div>
+							<label class="control-label" >Part Number:</label>
+							<input type="text" id="reg-comp-edit-part-number" class="form-control"  required>
+						</div>
 
-                        <div class="form-group p-1">
-                            <label class="control-label" >Part Category:</label>
-                            <input type="text" id="reg-comp-edit-part-number" class="form-control"  required>
-                        </div> 
-					
+						<div class="form-group p-1">
+							<label class="control-label" >Part Category:</label>
+							<input type="text" id="reg-comp-edit-part-number" class="form-control"  required>
+						</div> 
+
 					</div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary">Update</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn btn-primary">Update</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
 
 
 
 <!-- Generated markup by the plugin -->
 <div class="tooltip bs-tooltip-auto" role="tooltip">
-  <div class="arrow"></div>
-  <div class="tooltip-inner">
-    Some tooltip text!
-  </div>
+	<div class="arrow"></div>
+	<div class="tooltip-inner">
+		Some tooltip text!
+	</div>
 </div>
 
 {% endblock %}
