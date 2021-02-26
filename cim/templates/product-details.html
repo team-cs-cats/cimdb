@@ -33,9 +33,15 @@
 		<div class="information">
 			<h3>Product Details</h3>
 			
-			<h6>Family: <i>{{product.product_family}}</i> </h6>
-			<h6>PN: <i>{{product.product_pn}}</i> </h6>
-			<h6>SN: <i>{{product.product_sn}}</i> </h6>
+			<h6>Product Serial Number: <i>{{product.product_sn}}</i> </h6>
+			<h6>Product Family: <i>{{product.product_family}}</i> </h6>
+			<h6 id="product_pn">Product Part Number: <i>{{product.product_pn}}</i> </h6>
+			<h6>Product Assembly Date: <i>{{product.product_date_assembly}}</i> </h6>
+			<h6>Product QC Date: <i>{{product.product_qc_date}}</i> </h6>
+			<h6>Product Waranty Validation: <i>{{product.product_warranty_expiration_date}}</i> </h6>
+			<h6>Product Location: <i>{{product.product_location_id}}</i> </h6>
+			<h6>Product Employee in Charge: <i>{{product.product_employee_full_name}}</i> </h6>
+
 		</div>
 
 		<div class="information">
@@ -44,14 +50,13 @@
 
 			<div class="inner-div">
 				<label for="wo_id">product Serial Number:</label>
-				<input type="text" name="product_sn" id="product_sn_reload" placeholder="product_sn">
+				<input type="number" name="product_sn" id="product_sn_reload" placeholder="product_sn">
 
 				<input type="button" class="btn btn-success" value="Refresh" onclick=reload_product()>
 								
 			</div>
 
-			<p>for now, only "P7125","P8766" are valid</p>
-						
+									
 		</div>
 
 	</div>
@@ -62,6 +67,7 @@
 <div id="data-entry-div">
 	<h3>Product components</h3>
 
+	
 	<!-- dummy content for demo --will be replaced -->
 <div id="results">
 	<table class="table table-striped" >
@@ -80,14 +86,15 @@
 		
 
 		<tr>
-			<td>{{components.sc_sn}}</td>
+			
+			<td>{{product.product_sc_sn}}</td>
 			<td>{{components.MB}}</td>
             <td>{{components.RAM}}</td>
-            <td>{{components.RAM_Q}}</td>
+            <td>{{components.RAM_quant}}</td>
 			<td>{{components.GC}}</td>
 			<td>{{components.HDD}}</td>
-            <td>{{components.HDD_Q}}</td>
-            <td>{{components.CASE}}</td>
+            <td>{{components.HDD_quant}}</td>
+            <td>{{components.Case}}</td>
             
 		</tr>
 				
@@ -101,30 +108,30 @@
 
 		<div class="inner-div">
 			<label for="product_sc_sn">CPU SN: </label>
-			<input type="text" name="product_sc_sn" id="product_sc_sn" placeholder="Enter Serial Number">
-			<input type="button" class="btn btn-primary " value="random">
-			<input type="button" class="btn btn-secondary " value="FIFO">
-			<input type="button" class="btn btn-info " value="LILO">
+			<input type="text"   name="product_sc_sn" id="product_sc_sn" placeholder="{{product.product_sc_sn}}" required>
+			<input type="button" class="btn btn-primary "   value="random" onclick=get_cpu_sn("{{product.product_pn}}","random")>
+			<input type="button" class="btn btn-secondary " value="FIFO"   onclick=get_cpu_sn("{{product.product_pn}}","FIFO")>
+			<input type="button" class="btn btn-info "      value="LIFO"   onclick=get_cpu_sn("{{product.product_pn}}","LIFO")>
 		</div>
 
 		
 		<div class="inner-div">
 			<label for="motherboard">Mother Board</label>
-			<select name="motherboard" id="motherboard">
+			<select name="motherboard" id="motherboard" required>
 				{% for mb in regular_components_catalog["MB"] %}
 					<option> {{mb}} </option>
 				{% endfor %}
 			</select>
 			
 			<label for="case">Case</label>
-			<select name="case" id="case">
+			<select name="case" id="case" required>
 				{% for case in regular_components_catalog["Case"] %}
 					<option> {{case}} </option>
 				{% endfor %}
 			</select>
 
 			<label for="gc">Graphic Card</label>
-			<select name="gc" id="gc">
+			<select name="gc" id="gc" required>
 				{% for gc in regular_components_catalog["GC"] %}
 					<option> {{gc}} </option>
 				{% endfor %}
@@ -135,30 +142,31 @@
 		
 		<div class="inner-div"> 
 			<label for="ram">RAM</label>
-			<select name="ram" id="ram">
+			<select name="ram" id="ram" required>
 				{% for ram in regular_components_catalog["RAM"] %}
 					<option> {{ram}} </option>
 				{% endfor %}
 			</select>
 
 			<label for="ram-quant">RAM Quantity: </label>
-			<input type="number" value="" id="ram-quant">
+			<input type="number" value="" id="ram_quant" placeholder="{{components.RAM_quant}}" required>
 			
 			<label for="hdd">HDD</label>
-			<select name="hdd" id="hdd">
+			<select name="hdd" id="hdd" required>
 				{% for hdd in regular_components_catalog["HDD"] %}
 					<option> {{hdd}} </option>
 				{% endfor %}
 			</select>
 
 			<label for="hdd-quant">HDD Quantity: </label>
-			<input type="number" value="" id="hdd-quant">
+			<input type="number" value="" id="hdd_quant" placeholder="{{components.HDD_quant}}" required>
 		</div>
         
 		<div class="inner-div">
-			<input type="button" class="btn btn-warning" value="Update" onclick=addData() >
+			<input type="button" class="btn btn-warning" value="Update/Add" onclick=update_product_compoennets("{{product.product_sn}}") >
 		</div>
-		
+
+				
 	 
 	</form>
 

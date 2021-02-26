@@ -63,9 +63,6 @@ def insert_work_order_products(new_wop_wo_id,new_wop_product_sn):
 	insert(insert_query_to_run=add_work_order_products,data_to_insert=new_work_order_products_data)
 
 	
-	
-
-
 def insert_employee(new_employee_group, new_employee_first_name, new_employee_last_name, 
 	new_employee_email, new_employee_password, new_employee_site_id):
 
@@ -98,11 +95,15 @@ def insert_location_regular_comps():
 	insert(insert_query_to_run=add_location_regular_comps_query)
 
 
-def insert_products_regular_comps():
+def insert_products_regular_comps(new_prc_product_sn,new_prc_rc_pn,new_prc_quantity_needed):
 
 	# Load SQL query for INSERTing new products/regular components data
-	add_product_regular_comps_query = """"""
-	insert(insert_query_to_run=add_product_regular_comps_query)
+	add_product_regular_comps_query = """
+	INSERT INTO ProductsRegularComps (prc_product_sn, prc_rc_pn, prc_quantity_needed)
+	VALUES (%s,%s,%s);"""
+	new_product_regular_comps_data = (new_prc_product_sn, new_prc_rc_pn,new_prc_quantity_needed)
+
+	insert(insert_query_to_run=add_product_regular_comps_query,data_to_insert=new_product_regular_comps_data)
 
 
 def insert_products_special_comps():

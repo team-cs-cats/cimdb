@@ -34,6 +34,8 @@ import cim.database.db_delete_queries as dbdq
 # resolve CORS issues for local development
 from flask_cors import CORS, cross_origin
 
+# for backend processes
+import random
 
 #create the web application
 webapp = Flask(__name__)
@@ -566,52 +568,70 @@ def product_details(product_sn=""):
 		
 
 		# get product information:
-		if product_sn:
-			products=data.get_products()
-		
-			
-			for target in products:
-				
-				if target["product_sn"]==product_sn:
-					product=target
-					break
-				else:
-					product={}
+		if product_sn != "":
+			product=dbq.get_db_product_details(product_sn)
+								
 		else:
 			product={}
 		
+		
 		# get components information:
-		if product_sn:
-			components_master=data.get_product_components()
-			
-			
-			for target in components_master:
-			
-				if target["product_sn"]==product_sn:
-					components=target["components"]
-					break
-				else:
-					components={}
+		if product_sn != "":
+			components_from_db=dbq.get_db_product_components(product_sn)
+
+			# make a custom object from query result
+			components={}
+			for item in components_from_db:
+				# print(f'item is: {item}')
+				components[item["rc_category"]]=item["rc_pn_desc"]
+				components[item["rc_category"]+"_quant"]=item["prc_quantity_needed"]
+
+			print(f'temp is {components}')
+								
 		else:
 			components={}
 		
-
-		
-		
+					
 		#get reqular components catalog
 		regular_components_catalog=data.get_rc_catalog()
-		print(f'regular_components_catalog is {regular_components_catalog}')
 
 		#get special components catalog
 		special_components_catalog=data.get_sp_catalog()
-		print(f'special_components_catalog is {special_components_catalog}')
 		
-
-		#if product_sn not none:
-			#SQL query
+	
 		# render the detail page
 		return render_template("product-details.html",product=product,components=components,special_components_catalog=special_components_catalog,regular_components_catalog=regular_components_catalog)
 
+	if request.method=="POST":
+
+		# dbiq.insert_products_regular_comps(10,2000,500)
+
+		print(f'got a post request! and request.json is: {request.json}')
+
+		# create correct object using post data
+		product_sn=request.json['product_sn']
+		regular_componenets=[
+			{'rc_pn':dbq.get_db_regular_component_pn(request.json['MB'])[0]['rc_pn'],'quant':1}, # MB Data
+			{'rc_pn':dbq.get_db_regular_component_pn(request.json['Case'])[0]['rc_pn'],'quant':1}, # Case Data
+			{'rc_pn':dbq.get_db_regular_component_pn(request.json['GC'])[0]['rc_pn'],'quant':1}, # GC Data
+			{'rc_pn':dbq.get_db_regular_component_pn(request.json['RAM'])[0]['rc_pn'],'quant':request.json['RAM_quant']}, # RAM Data
+			{'rc_pn':dbq.get_db_regular_component_pn(request.json['HDD'])[0]['rc_pn'],'quant':request.json['HDD_quant']}, # HDD Data
+		]
+
+
+		
+		# add compoenents into table
+
+		for component in regular_componenets:
+			dbiq.insert_products_regular_comps(product_sn,component['rc_pn'],component['quant'])
+
+		 		
+		# TODO: adjust RC quantity
+		
+		return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+				
+
+		
 # Assembly page. The page lists are assigned products ready for assembly 
 @webapp.route('/assembly', methods=['GET', 'POST'])
 @login_required
@@ -670,7 +690,56 @@ def QC():
 @webapp.route('/data/product_catalog', methods=['GET', 'POST'])
 @login_required
 def get_products_catalog_r():
+	# returns products catalog
 	if request.method=="GET":
 		print(data.get_products_catalog())
 		return data.get_products_catalog()
+
+
+@webapp.route('/data/free_sn', methods=['GET', 'POST'])
+@login_required
+def get_free_sc_sn():
+	# Returns a valid free SC_SN based on the given PN and Method
+
+	if request.method=="POST":
 		
+		print(f'got a post request! and request.json is: {request.json}')
+		
+		method=request.json["method"]
+		part_number=request.json["product_pn"]
+		free_sc_sn=[]
+		for sn in dbq.get_free_sc_sn(part_number):
+			free_sc_sn.append(sn["sc_sn"])
+			
+		if method=="FIFO":
+			result=free_sc_sn[-1]
+
+		if method=="LIFO":
+			result=free_sc_sn[0]
+
+		if method=="random":
+			result=random.choice(free_sc_sn)
+
+
+		print(f'free sc are: {free_sc_sn}')
+		print(f'result is: {result}')
+		return json.dumps({'sn':result}), 200, {'ContentType':'application/json'}
+
+
+@webapp.route('/data/product_components_exist', methods=['GET', 'POST'])
+@login_required
+def get_product_components():
+	# returns True if a product has Regular Compoenents otherwise returns False
+
+	if request.method=="POST":
+		
+		print(f'got a post request! and request.json is: {request.json}')
+		
+		product_compoenents=dbq.get_db_product_components(request.json["product_sn"])
+
+		if len(product_compoenents)==0:
+			return json.dumps({'result':False}), 200, {'ContentType':'application/json'}
+
+		else:
+			return json.dumps({'result':True}), 200, {'ContentType':'application/json'}
+	

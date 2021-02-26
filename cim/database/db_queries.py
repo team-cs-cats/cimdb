@@ -121,6 +121,7 @@ def get_db_work_orders():
 
 	return work_order_results
 
+
 def get_a_work_order(workorder_id):
 	# returns a sinlge worker information
 
@@ -148,8 +149,6 @@ def get_a_work_order(workorder_id):
 	return work_order_result[0]
 
 
-
-
 def get_db_workorder_details(workorder_id):
 	# Load SQL query for work order details
 
@@ -167,6 +166,7 @@ def get_db_workorder_details(workorder_id):
 
 	return workorder_details_result
 
+
 def get_free_sc_sn(sc_pn):
 	# returns SN of the free special compoenents of a family
 	query = """select sc_sn from SpecialComponents 
@@ -183,7 +183,6 @@ def get_free_sc_sn(sc_pn):
 		print("EROOR in FREE SC!!!")
 
 	return free_sc_sn_results
-
 
 
 def get_product_sn(sc_sn):
@@ -208,10 +207,6 @@ def get_product_sn(sc_sn):
 		return get_product_sn_result[0]["product_sn"]
 	
 
-
-
-
-
 def update_is_free(sc_sn):
 	# should be added to upate queries later
 	# updates is_free attr of a SC once it's assigned to a product
@@ -221,7 +216,6 @@ def update_is_free(sc_sn):
 	cursor = db.execute_query(db_connection=db_connection, query=query)
 	
 	
-
 def get_is_free(sc_sn):
 	# returns True if a SC is free otherwise flase
 	query = """select sc_is_free from SpecialComponents 
@@ -293,3 +287,76 @@ def get_qc_list(employee_id=None):
 	assmebly_line_results=cursor.fetchall()
 
 	return assmebly_line_results
+
+
+def get_db_product_details(product_sn):
+	
+	# returns a product infroamtion based on it's SN. returns an empty dictionary if the sn does not exists
+
+	query = """SELECT
+	Products.product_sn , Products.product_pn , Products.product_family , Products.product_date_assembly ,
+	Products.product_qc_date,Products.product_warranty_expiration_date, Products.product_employee_id,
+	Products.product_location_id, Products.product_sc_sn,
+	CONCAT(Employees.employee_first_name, ' ', Employees.employee_last_name) as product_employee_full_name 
+	FROM Products 
+	INNER JOIN Employees 
+	ON Employees.employee_id=Products.product_employee_id
+	where Products.product_sn="""+str(product_sn)+""";"""
+		
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	product_result = cursor.fetchall()
+
+	if len(product_result) == 0:
+		return {}
+	
+	return product_result[0]
+
+
+def get_db_product_components(product_sn):
+
+	# returns products compoenent based on it's SN. returns an empty dictionary if the sn does not exists
+
+	if len(get_db_product_details(product_sn)) == 0:
+		print("product is not found") 
+		product_compoenent_result={}
+	
+	else:
+		query = """select ProductsRegularComps.prc_rc_pn , ProductsRegularComps.prc_quantity_needed,
+		RegularComponents.rc_pn_desc , RegularComponents.rc_category
+		FROM ProductsRegularComps inner join RegularComponents on 
+		ProductsRegularComps.prc_rc_pn = RegularComponents.rc_pn 
+		where ProductsRegularComps.prc_product_sn="""+str(product_sn)+""";"""
+		
+		db_connection = db.connect_to_database()
+		cursor = db.execute_query(db_connection=db_connection, query=query)
+		product_compoenent_result = cursor.fetchall()
+	
+		
+	return list(product_compoenent_result)
+
+def get_db_regular_component_desc(rc_pn):
+	# returns a regular compoenent desc of a given rc_pn
+	
+	query = """select RegularComponents.rc_pn_desc from RegularComponents where
+	RegularComponents.rc_pn="""+str(rc_pn)+""";"""
+		
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	regular_component_desc_result = cursor.fetchall()
+	
+		
+	return regular_component_desc_result
+
+def get_db_regular_component_pn(rc_pn_desc):
+	# returns a regular compoenent part number of a given rc_pn_desc
+	
+	query = """select RegularComponents.rc_pn from RegularComponents where
+	RegularComponents.rc_pn_desc='"""+rc_pn_desc+"""';"""
+		
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	regular_component_pn_result = cursor.fetchall()
+	
+		
+	return regular_component_pn_result
