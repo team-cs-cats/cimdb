@@ -68,11 +68,16 @@ def filter_work_order(filter_wo_open_date,filter_wo_close_date, filter_wo_status
 
 
 def filter_work_order_products(filter_wop_wo_id,filter_wop_product_sn):
-	# Load SQL query for filtering filter work order/products data
+	# Load SQL query for filtering work order/products data
 
-	filter_work_order_products="""filter INTO WorkOrderProducts (wop_wo_id, wop_product_sn)
-	VALUES (%s,%s);"""
-
+	filter_work_order_products="""
+	SELECT * 
+	FROM WorkOrderProducts
+	WHERE
+	wop_wo_id = %s OR
+	wop_product_sn = %s
+	;
+	"""
 	filter_work_order_products_data=(filter_wop_wo_id,filter_wop_product_sn)
 	filter(filter_query_to_run=filter_work_order_products,data_to_filter=filter_work_order_products_data)
 
@@ -80,70 +85,107 @@ def filter_work_order_products(filter_wop_wo_id,filter_wop_product_sn):
 	
 
 
-def filter_employee(filter_employee_group, filter_employee_first_name, filter_employee_last_name, 
-	filter_employee_email, filter_employee_password, filter_employee_site_id):
+def filter_employees(filter_employee_group, filter_employee_first_name, filter_employee_last_name, 
+	filter_employee_email, filter_employee_site_id):
 
 	# Load SQL query for filtering filter employee data
 	filter_employee_query = """
+	SELECT * 
+	FROM Employees
+	WHERE
+	employee_group = %s OR
+	employee_first_name = %s OR
+	employee_last_name = %s OR
+	employee_email = %s OR
+	employee_site_id = %s
+	;
 	"""
 	filter_employee_data = (filter_employee_group, filter_employee_first_name, filter_employee_last_name, 
-		filter_employee_email, filter_employee_password, filter_employee_site_id)
+		filter_employee_email, filter_employee_site_id)
 	filter(filter_query_to_run=filter_employee_query, data_to_filter=filter_employee_data)
 
 
-def filter_location(filter_location_room_number, filter_location_shelf_number, filter_location_site_id):
+def filter_locations(filter_location_room_number, filter_location_shelf_number, filter_location_site_id):
 
 	# Load SQL query for filtering filter location data
 	filter_location_query = """
-	filter INTO Locations (location_room_number, location_shelf_number, location_site_id)
-	VALUES (%s, %s, %s);
+	SELECT * 
+	FROM Locations
+	WHERE
+	location_room_number = %s OR
+	location_shelf_number = %s OR
+	location_site_id
+	;
 	"""
 	filter_location_data = (filter_location_room_number, filter_location_shelf_number, filter_location_site_id)
 	print('filter_location_data', filter_location_data)
 	filter(filter_query_to_run=filter_location_query, data_to_filter=filter_location_data)
 
 
-def filter_location_regular_comps():
+# def filter_location_regular_comps():
 
-	# Load SQL query for filtering filter locations/regular components data
-	filter_location_regular_comps_query = """"""
-	filter(filter_query_to_run=filter_location_regular_comps_query)
-
-
-def filter_products_regular_comps():
-
-	# Load SQL query for filtering filter products/regular components data
-	filter_product_regular_comps_query = """"""
-	filter(filter_query_to_run=filter_product_regular_comps_query)
+# 	# Load SQL query for filtering filter locations/regular components data
+# 	filter_location_regular_comps_query = """"""
+# 	filter(filter_query_to_run=filter_location_regular_comps_query)
 
 
-def filter_products_special_comps():
+# def filter_products_regular_comps():
 
-	# Load SQL query for filtering filter products/special components data
-	filter_product_special_comps_query = """"""
-	filter(filter_query_to_run=filter_product_special_comps_query)
+# 	# Load SQL query for filtering filter products/regular components data
+# 	filter_product_regular_comps_query = """"""
+# 	filter(filter_query_to_run=filter_product_regular_comps_query)
 
 
-def filter_product(filter_product_pn,filter_product_family,filter_product_date_assmebly,filter_product_qc_date,
-filter_product_warranty_expiration_date,filter_product_employee_id,filter_product_location_id,filter_product_sc_sn):
+# def filter_products_special_comps():
+
+# 	# Load SQL query for filtering filter products/special components data
+# 	filter_product_special_comps_query = """"""
+# 	filter(filter_query_to_run=filter_product_special_comps_query)
+
+
+def filter_product(filter_product_pn, filter_product_family, filter_product_date_assmebly, filter_product_qc_date,
+filter_product_warranty_expiration_date, filter_product_employee_id, filter_product_location_id, filter_product_sc_sn):
 
 	# Load SQL query for filtering filter product data
 	filter_product_query = """
-
+	SELECT * 
+	FROM Products
+	WHERE
+	filter_product_pn = %s OR
+	filter_product_family = %s OR
+	filter_product_date_assmebly = %s OR
+	filter_product_qc_date = %s OR
+	filter_product_warranty_expiration_date = %s OR
+	filter_product_employee_id = %s OR
+	filter_product_location_id = %s OR
+	filter_product_sc_sn = %s
+	;
 	"""
-	filter_product_data=(filter_product_pn,filter_product_family,filter_product_date_assmebly,filter_product_qc_date,
-filter_product_warranty_expiration_date,filter_product_employee_id,filter_product_location_id,filter_product_sc_sn)
+	filter_product_data = (filter_product_pn, filter_product_family, filter_product_date_assmebly, filter_product_qc_date,
+filter_product_warranty_expiration_date, filter_product_employee_id, filter_product_location_id, filter_product_sc_sn)
 	filter(filter_query_to_run=filter_product_query,data_to_filter=filter_product_data)
 	
 	
 
-def filter_regular_component():
+def filter_regular_components():
 
 	# Load SQL query for filtering filter regular component data
-	filter_regular_component_query = """"""
+	filter_regular_component_query = """
+	SELECT * 
+	FROM RegularComponents
+	INNER JOIN LocationsRegularComps ON RegularComponents.rc_pn = LocationsRegularComps.lrc_rc_pn
+	INNER JOIN Locations ON Locations.location_id = LocationsRegularComps.lrc_location_id
+	WHERE
+	RegularComponents.rc_part_name = %s OR
+	RegularComponents.rc_category = %s OR
+	Locations.location_room_number = %s OR
+	Locations.location_shelf_number = %s OR
+	Locations.location_site_id
+	;
+	"""
 	filter(filter_query_to_run=filter_regular_component_query)
 
-def filter_special_component():
+def filter_special_components():
 
 	# Load SQL query for filtering filter regular component data
 	filter_special_component_query = """"""
