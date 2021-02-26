@@ -86,23 +86,24 @@ def filter_work_order_products(filter_wop_wo_id,filter_wop_product_sn):
 	
 
 
-def filter_employees(filter_employee_group, filter_employee_first_name, filter_employee_last_name, 
-	filter_employee_email, filter_employee_site_id):
+def filter_employees(filter_employee_id, filter_employee_first_name, filter_employee_last_name,  
+	filter_employee_email, filter_employee_group, filter_employee_site_id):
 
 	# Load SQL query for filtering filter employee data
 	filter_employee_query = """
 	SELECT * 
 	FROM Employees
 	WHERE
-	employee_group = %s OR
+	employee_id = %s OR
 	employee_first_name = %s OR
 	employee_last_name = %s OR
 	employee_email = %s OR
+	employee_group = %s OR
 	employee_site_id = %s
 	;
 	"""
-	filter_employee_data = (filter_employee_group, filter_employee_first_name, filter_employee_last_name, 
-		filter_employee_email, filter_employee_site_id)
+	filter_employee_data = (filter_employee_id, filter_employee_first_name, filter_employee_last_name,  
+	filter_employee_email, filter_employee_group, filter_employee_site_id)
 	filter(filter_query_to_run=filter_employee_query, data_to_filter=filter_employee_data)
 
 
