@@ -208,8 +208,8 @@ def get_db_workorder_details(workorder_id):
 	workorder_details_result = cursor.fetchall()
 
 	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
-	if len(workorder_details_result) == 0:
-		workorder_details_result = data.get_wo()
+	# if len(workorder_details_result) == 0:
+	# 	workorder_details_result = data.get_wo()
 
 	return workorder_details_result
 
