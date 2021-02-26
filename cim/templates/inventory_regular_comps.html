@@ -180,6 +180,7 @@ Filter Existing Regular Components
 						<th>Edit Quantity</th>
 						<th>Delete from Location</th>
 					</tr>
+
 					{% for location in regular_component.rc_locations %}
 					<tr>
 						<td>{% for site in sites %}{% endfor %}</td>
@@ -199,8 +200,8 @@ Filter Existing Regular Components
 							data-title="Edit Quantity of Part Number {{regular_component.rc_pn}}">Edit</button></th>
 
 							<td><button class="btn-sm btn-danger">Delete</button></td>
-						</tr>
-						{% endfor %}
+					</tr>
+					{% endfor %}
 
 
 				</table>
