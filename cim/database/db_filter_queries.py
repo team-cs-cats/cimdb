@@ -30,21 +30,22 @@ def filter(filter_query_to_run, data_to_filter):
 		return False
 
 
-def filter_site(filter_site_address_1, filter_site_address_2, filter_site_city, filter_site_state, filter_site_zip):
+def filter_site(filter_site_id, filter_site_address_1, filter_site_address_2, filter_site_city, filter_site_state, filter_site_zip):
 
 	# Load SQL query for filtering filter site data
 	filter_site_query = """
 	SELECT * 
 	FROM Sites
 	WHERE 
+	site_id = %s OR
 	site_address_1 = %s OR
 	site_address_2 = %s OR
 	site_address_city = %s OR
 	site_address_state = %s OR
-	site_address_postal_code = %s
+	site_address_postal_code
 	;
 	"""
-	filter_site_data = (filter_site_address_1, filter_site_address_2, filter_site_city, filter_site_state, filter_site_zip)
+	filter_site_data = (filter_site_id, filter_site_address_1, filter_site_address_2, filter_site_city, filter_site_state, filter_site_zip)
 	filter(filter_query_to_run=filter_site_query, data_to_filter=filter_site_data)
 
 
@@ -112,9 +113,9 @@ def filter_locations(filter_location_room_number, filter_location_shelf_number, 
 	SELECT * 
 	FROM Locations
 	WHERE
+	location_site_id = %s OR
 	location_room_number = %s OR
-	location_shelf_number = %s OR
-	location_site_id
+	location_shelf_number
 	;
 	"""
 	filter_location_data = (filter_location_room_number, filter_location_shelf_number, filter_location_site_id)
@@ -176,8 +177,8 @@ def filter_regular_components(filter_rc_category, filter_rc_part_name, filter_si
 	INNER JOIN LocationsRegularComps ON RegularComponents.rc_pn = LocationsRegularComps.lrc_rc_pn
 	INNER JOIN Locations ON Locations.location_id = LocationsRegularComps.lrc_location_id
 	WHERE
-	RegularComponents.rc_part_name = %s OR
 	RegularComponents.rc_category = %s OR
+	RegularComponents.rc_part_name = %s OR
 	Locations.location_room_number = %s OR
 	Locations.location_shelf_number = %s OR
 	Locations.location_site_id
