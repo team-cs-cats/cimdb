@@ -25,6 +25,53 @@ def get_site_id(city_name):
 	site_id = cursor.fetchall()
 	return site_id
 
+def regular_component_locations(regular_component_id):
+
+	# provided a regular component ID, return the locations of all regular components with that ID
+	query = """
+	SELECT 
+	Locations.location_site_id AS location_site_id ,
+	Locations.location_id AS location_id ,
+	Locations.location_room_number AS location_room_number ,
+	Locations.location_shelf_number AS location_shelf_number ,
+	LocationsRegularComps.lrc_quantity AS quantity_at_location
+	FROM Locations
+	INNER JOIN LocationsRegularComps ON Locations.location_id=LocationsRegularComps.lrc_location_id
+	WHERE LocationsRegularComps.lrc_rc_pn == %s;"""
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(regular_component_id))
+	reg_comp_location_results = cursor.fetchall()
+	return reg_comp_location_results
+
+# [
+#       {"location_site_id": 12, "location_id": 50921, "location_room_number": 4, "location_shelf_number": 18, "quantity_at_location": 45},
+#       {"location_site_id": 12, "location_id": 17815, "location_room_number": 8, "location_shelf_number": 2, "quantity_at_location": 23}, 
+#       {"location_site_id": 12, "location_id": 37588, "location_room_number": 4, "location_shelf_number": 15, "quantity_at_location": 48}, 
+#       {"location_site_id": 12, "location_id": 14369, "location_room_number": 3, "location_shelf_number": 2, "quantity_at_location": 12}
+#     ]
+
+def get_db_regular_components():
+
+	# Load SQL query for regular component data
+	query = """SELECT
+	RegularComponents.rc_pn,
+	RegularComponents.rc_part_name,
+	RegularComponents.rc_category,
+	LocationsRegularComps.lrc_quantity,
+	Locations.location_room_number,
+	Locations.location_shelf_number,
+	Sites.site_address_city
+	
+	FROM RegularComponents 
+	INNER JOIN LocationsRegularComps ON RegularComponents.rc_pn=LocationsRegularComps.lrc_rc_pn
+	INNER JOIN Locations ON Locations.location_id=LocationsRegularComps.lrc_location_id
+	INNER JOIN Sites ON Locations.location_site_id=Sites.site_id
+	"""
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	reg_comp_results = cursor.fetchall()
+	return reg_comp_results
+
 
 def get_db_sites():
 

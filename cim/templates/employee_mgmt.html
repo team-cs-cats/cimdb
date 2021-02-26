@@ -223,6 +223,9 @@ Filter Existing Employees
 
 <!-- Page-specific scripts -->
 {% block page_scripts %}
+<!-- Connect to jquery (first) in order to open modals -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
 <script src="{{ url_for('static', filename='js/employee_mgmt.js') }}"></script>
 {% endblock %}
 

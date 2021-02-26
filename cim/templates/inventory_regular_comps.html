@@ -122,15 +122,15 @@ Filter Existing Regular Components
 	{% for regular_component in regular_components %}
 	<div class="row">
 			<div class="col text-center border-top"> 
-				Part Number: <strong>{{regular_component.rc_pn}}</strong> - Category: <strong>{{regular_component.rc_category}}</strong>
+				Part Number: <strong>{{regular_component.rc_part_name}}</strong> - Category: <strong>{{regular_component.rc_category}}</strong>
 			</div>
 
 		</div>
 
 	<div class="row ml-5 mr-5">
 
-		<div class="col d-flex flex-row ml-5">
-			<p class="mt-2">Order more of component {{regular_component.rc_pn}}: </p>
+		<div class="col d-flex flex-row ml-5 ml-2 p-2">
+			<p class="mt-2 mr-2">Order more of component {{regular_component.rc_part_name}}: </p>
 			<div>
 					<select class="custom-select mt-2 pl-2 ml-2" id="new_rc_site" required>
 					<option selected>Select Site: </option>
@@ -179,7 +179,7 @@ Filter Existing Regular Components
 		</tr>
 		{% for location in regular_component.rc_locations %}
 		<tr>
-			<td>{% for site in sites %}{% if site.site_id == location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}</td>
+			<td>{% for site in sites %}{% endfor %}</td>
 			<td>Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</td>
 			<td>{{location.quantity_at_location}}</td>
 			
@@ -287,6 +287,9 @@ Filter Existing Regular Components
 
 <!-- Page-specific scripts -->
 {% block page_scripts %}
+<!-- Connect to jquery (first) in order to open modals -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
 <script src="{{ url_for('static', filename='js/inventory_regular_component.js') }}"></script>
 {% endblock %}
 

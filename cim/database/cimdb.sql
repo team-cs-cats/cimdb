@@ -9,6 +9,12 @@ UNLOCK tables;
 -- USE cimdb;
 SHOW tables;
 
+DROP TABLE IF EXISTS `ProductsRegularComps`;
+DROP TABLE IF EXISTS `WorkOrderProducts`;
+DROP TABLE IF EXISTS `Products`;
+DROP TABLE IF EXISTS `LocationsRegularComps`;
+DROP TABLE IF EXISTS `SpecialComponents`;
+DROP TABLE IF EXISTS `RegularComponents`;
 DROP TABLE IF EXISTS `WorkOrders`;
 DROP TABLE IF EXISTS `Employees`;
 DROP TABLE IF EXISTS `Locations`;
@@ -52,7 +58,8 @@ CREATE TABLE `Locations` (
 
 -- Populate Locations table with data
 LOCK TABLES `Locations` WRITE;
-INSERT INTO `Locations` VALUES 
+INSERT INTO `Locations` 
+VALUES (location_id, location_room_number, location_shelf_number, location_site_id)
 (1, 0, 0, 1),
 (2, 1, 1, 12), (3, 1, 2, 12), (4, 1, 3, 12), (5, 1, 4, 12), (6, 1, 5, 12), 
 (7, 2, 1, 12), (8, 2, 2, 12), (9, 2, 3, 12), (10, 2, 4, 12), (11, 2, 5, 12), 
@@ -137,9 +144,32 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `RegularComponents`;
 CREATE TABLE `RegularComponents` (
   `rc_pn` int NOT NULL AUTO_INCREMENT,
+  `rc_part_name` varchar(255) NOT NULL,  -- Needed to add this attribute in order to add the regular components
   `rc_category` varchar(255) NOT NULL,
   PRIMARY KEY (`rc_pn`)
 );
+
+
+-- Populate RegularComponents table with data
+LOCK TABLES `RegularComponents` WRITE;
+INSERT INTO `RegularComponents` VALUES 
+(1,"MB 1", "MB"),
+(2,"MB 2", "MB"),
+(3,"MB 3", "MB"),
+(50,"RAM 1", "RAM"),
+(51,"RAM 2", "RAM"),
+(52,"RAM 3", "RAM"),
+(100,"Case 1", "Case"),
+(101,"Case 2", "Case"),
+(102,"Case 3", "Case"),
+(150,"HDD 1", "HDD"),
+(151,"HDD 2", "HDD"),
+(152,"HDD 3", "HDD"),
+(200,"NO GC", "GC"),
+(201,"GC 1", "GC"),
+(202,"GC 2", "GC");
+UNLOCK TABLES;
+
 
 
 -- LocationsRegularComps table Creation query
@@ -153,6 +183,23 @@ CREATE TABLE `LocationsRegularComps` (
   FOREIGN KEY (`lrc_location_id`) REFERENCES `Locations`(`location_id`),
   FOREIGN KEY (`lrc_rc_pn`) REFERENCES `RegularComponents`(`rc_pn`)
 );
+
+
+
+-- Populate LocationsRegularComps table with data
+LOCK TABLES `LocationsRegularComps` WRITE;
+INSERT INTO `LocationsRegularComps` 
+(lrc_id, lrc_location_id, lrc_rc_pn, lrc_quantity) VALUES 
+(2,1,2,36), --
+(3,1,51,8), --
+(4,2,100,11), --
+(5,3,100,136), --
+(6,4,200,15),
+(7,4,152,45),
+(8,5,200,36),
+(9,5,201,74),
+(10,5,51,2);
+UNLOCK TABLES;
 
 -- SpecialComponents table Creation query
 DROP TABLE IF EXISTS `SpecialComponents`;
@@ -194,36 +241,6 @@ INSERT INTO `SpecialComponents` VALUES
 (7004, "i7", 1, null, 1);
 UNLOCK TABLES;
 
-
--- RegularComponents table Creation query
-DROP TABLE IF EXISTS `RegularComponents`;
-CREATE TABLE `RegularComponents` (
-  `rc_pn` int NOT NULL AUTO_INCREMENT,
-  `rc_pn_desc` varchar(16) NOT NULL ,
-  `rc_category` varchar(255) NOT NULL,
-  PRIMARY KEY (`rc_pn`)
-);
-
-
--- Populate RegularComponents table with data
-LOCK TABLES `RegularComponents` WRITE;
-INSERT INTO `RegularComponents` VALUES 
-(1,"MB 1", "MB"),
-(2,"MB 2", "MB"),
-(3,"MB 3", "MB"),
-(50,"RAM 1", "RAM"),
-(51,"RAM 2", "RAM"),
-(52,"RAM 3", "RAM"),
-(100,"Case 1", "Case"),
-(101,"Case 2", "Case"),
-(102,"Case 3", "Case"),
-(150,"HDD 1", "HDD"),
-(151,"HDD 2", "HDD"),
-(152,"HDD 3", "HDD"),
-(200,"NO GC", "GC"),
-(201,"GC 1", "GC"),
-(202,"GC 2", "GC");
-UNLOCK TABLES;
 
 
 -- Products table Creation query
@@ -327,19 +344,5 @@ UNLOCK TABLES;
 
 
 
-
--- Populate LocationsRegularComps table with data
-LOCK TABLES `LocationsRegularComps` WRITE;
-INSERT INTO `LocationsRegularComps` VALUES 
-(2,1,2,36),
-(3,1,51,8),
-(4,2,100,11),
-(5,3,100,136),
-(6,4,200,15),
-(7,4,152,45),
-(8,5,200,36),
-(9,5,201,74),
-(10,5,51,2);
-UNLOCK TABLES;
 
 SET FOREIGN_KEY_CHECKS = 1;
