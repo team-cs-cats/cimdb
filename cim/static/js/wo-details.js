@@ -13,7 +13,7 @@ function reload_workorder(){
   var wo=document.getElementById("wo_id_reload").value;
   
   valid=["879845","815348"]
-  if(valid.includes(wo)){
+  if(true){
       
     var url='/wo-details?'+'wo_id='+wo
         
@@ -32,7 +32,7 @@ function reload_workorder(){
 function components_info(serial_number){
       
   valid=["P7125","P8766"]
-if(valid.includes(serial_number)){
+if(true){
   var url='/product-details?'+'product_sn='+serial_number
     
   window.location.href=url

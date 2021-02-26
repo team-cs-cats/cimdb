@@ -6,8 +6,8 @@ console.log("JS functions are connected!")
 function products_info(workorder_number){
   console.log("clicked")
  // validate the workorder via SQL
-valid=["879845","815348"]
-if(valid.includes(workorder_number)){
+
+if(true){
     var url='/wo-details?'+'wo_id='+workorder_number
     console.log("URL IS: ",url)
     
