@@ -209,6 +209,9 @@ Note that each shelf in each room can store multiple special components, each wi
 
 <!-- Page-specific scripts -->
 {% block page_scripts %}
+<!-- Connect to jquery (first) in order to open modals -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
 <script src="{{ url_for('static', filename='js/inventory_special_component.js') }}"></script>
 {% endblock %}
 

@@ -265,19 +265,6 @@ def products():
 	if request.method=="GET":
 		return render_template("products.html")
 
-@webapp.route('/inventory', methods=['GET', 'POST'])
-@login_required
-def inventory():
-	"""The webapp's page for viewing the inventory.
-	This allows the employee to review existing stock and order new stock of standard and special components."""
-
-	# if the current user is not authenticated, redirect the user to the logged out index page
-	if not current_user.is_authenticated:
-		return redirect(url_for("cim.templates.index"))
-
-	if request.method=="GET":
-		return render_template("inventory.html", regular_components=data.get_rc(), special_components=data.get_sc(), sites=data.get_sites())
-
 
 @webapp.route('/inventory-spec', methods=['GET', 'POST'])
 @login_required
@@ -307,8 +294,14 @@ def inventory_regular_components():
 	if not current_user.is_authenticated:
 		return redirect(url_for("cim.templates.index"))
 
+	# Load location results from the database (or the dummy data if the database doesn't work)
+	regular_component_results = dbq.get_db_regular_components()
+
+	# Load site results from the database (or the dummy data if the database doesn't work)
+	site_results = dbq.get_db_sites()
+
 	if request.method=="GET":
-		return render_template("inventory_regular_comps.html", regular_components=data.get_rc(), sites=data.get_sites())
+		return render_template("inventory_regular_comps.html", regular_components=regular_component_results, sites=site_results)
 
 
 @webapp.route('/shipping', methods=['GET', 'POST'])
@@ -324,8 +317,11 @@ def shipping():
 	# Load work order results from the database (or the dummy data if the database doesn't work)
 	work_order_results = dbq.get_db_work_orders()
 
+	# Load work order results from the database (or the dummy data if the database doesn't work)
+	employee_results = dbq.get_db_employees()
+
 	if request.method=="GET":
-		return render_template("shipping.html", work_orders=work_order_results, employees=data.get_emp())
+		return render_template("shipping.html", work_orders=work_order_results, employees=employee_results)
 
 @webapp.route('/locations', methods=['GET', 'POST'])
 @login_required
