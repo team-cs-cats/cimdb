@@ -167,7 +167,7 @@ filter_product_warranty_expiration_date, filter_product_employee_id, filter_prod
 	
 	
 
-def filter_regular_components():
+def filter_regular_components(filter_rc_category, filter_rc_part_name, filter_site_id, filter_room_number, filter_shelf_number):
 
 	# Load SQL query for filtering filter regular component data
 	filter_regular_component_query = """
@@ -183,11 +183,25 @@ def filter_regular_components():
 	Locations.location_site_id
 	;
 	"""
-	filter(filter_query_to_run=filter_regular_component_query)
+	filter_regular_component_data = (filter_rc_category, filter_rc_part_name, filter_site_id, filter_room_number, filter_shelf_number)
+	filter(filter_query_to_run=filter_regular_component_query, data_to_filter=filter_regular_component_data)
 
-def filter_special_components():
+def filter_special_components(filter_sc_sn, filter_sc_pn, filter_site_id, filter_room_number, filter_shelf_number, filter_sc_is_free):
 
 	# Load SQL query for filtering filter regular component data
-	filter_special_component_query = """"""
-	filter(filter_query_to_run=filter_special_component_query)
+	filter_special_component_query = = """
+	SELECT * 
+	FROM SpecialComponents
+	INNER JOIN Locations ON Locations.location_id = SpecialComponents.sc_location_id
+	WHERE
+	SpecialComponents.sc_sn = %s OR
+	SpecialComponents.sc_pn = %s OR
+	Locations.location_site_id
+	Locations.location_room_number = %s OR
+	Locations.location_shelf_number = %s OR
+	SpecialComponents.sc_is_free = %s
+	;
+	"""
+	filter_special_component_data = (filter_sc_sn, filter_sc_pn, filter_site_id, filter_room_number, filter_shelf_number, filter_sc_is_free)
+	filter(filter_query_to_run=filter_special_component_query, data_to_filter=filter_special_component_data)
 
