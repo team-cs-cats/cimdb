@@ -26,7 +26,7 @@ Add New Site
 
 <!-- Description for Create New section -->
 {% block create_description %}
-Note that a newly added site will only be pre-populate with the five standard rooms (Receiving Department, Warehouse, Assembly Department, QC  Departmebt and Shipping Department). All additional locations will need to be added by a Supervisor on the <a href="/locations">Locations</a> page.
+Note that a newly added site will only be pre-populate with the five standard rooms (Warehouse and Receiving, Assembly, QC and Shipping Departments). All additional locations will need to be added by a Supervisor on the <a href="/locations">Locations</a> page.
 {% endblock %}
 
 <!-- Form for Create New section -->
@@ -51,7 +51,7 @@ Note that a newly added site will only be pre-populate with the five standard ro
 		<label for="new_site_zip">Zip: </label>
 		<input type="number" min="11111" max="99999" class='m-1' name="new_site_zip" id="new_site_zip" placeholder="99999" required>
 
-		<input type="submit" class="btn-sm btn-success m-1" id="addNewSiteBtn" value="Add New Site" >
+		<input type="submit" class="btn-sm btn-success m-1" id="addNewSiteBtn" name="btn" value="Add New Site" >
 
 
 
@@ -79,13 +79,13 @@ Filter Existing Sites
 		<label for="existing_site_id">Site ID:</label>
 		<input type="number" min="1" max="99" class='m-1' name="existing_site_id" id="existing_site_id" placeholder="99">
 
-		<input type="text" class='m-1' name="existing_site_fname" id="existing_site_fname" placeholder="Address ">
+		<input type="text" class='m-1' name="existing_site_address_1" id="existing_site_address_1" placeholder="Address ">
 
-		<input type="text" class='m-1' name="existing_site_lname" id="existing_site_lname" placeholder="Address 2">
+		<input type="text" class='m-1' name="existing_site_address_2" id="existing_site_address_2" placeholder="Address 2">
 
-		<input type="text" class='m-1' name="existing_site_email" id="existing_site_email" placeholder="City">
+		<input type="text" class='m-1' name="existing_site_city" id="existing_site_city" placeholder="City">
 
-		<select class="custom-select m-1" name="existing_site_email" id="existing_site_email" required>
+		<select class="custom-select m-1" name="existing_site_state" id="existing_site_state" required>
 			<option selected>Filter State: </option>
 			{% for state in states %}
 			<option>{{state.Code}}</option>
@@ -103,6 +103,22 @@ Filter Existing Sites
 
 </form>
 
+<!-- <form id="existing-site-data-filter" action="" method="POST">
+	<div class="input-group">
+	  <div class="form-outline w-75">
+	    <input type="search" id="filterSearch" class="form-control" name='filterSearch' placeholder="Filter by Site Name, Address, City, State or Zip Code" />
+	  </div>
+	  <button type="submit" id="filterExistingSitesBtn" name="btn" class="btn btn-primary">
+	    <i class="fas fa-search">Filter</i>
+	  </button>
+	  <button type="button" class="btn btn-primary">
+	    <i class="fas fa-search">Clear Filters</i>
+	  </button>
+	</div>
+</form>
+ -->
+
+<p id="datalist"></p>
 {% endblock %}
 
 <!-- Main results table -->

@@ -2,9 +2,6 @@
 from flask import Flask, render_template, flash
 from flask import request, redirect
 
-# add jsonify to handle converting filter search results to html
-from flask import jsonify 
-
 # add json to handle db connection
 from flask import json
 
@@ -33,9 +30,6 @@ import cim.database.db_update_queries as dbuq
 
 # import DELETE queries as dbdq
 import cim.database.db_delete_queries as dbdq
-
-# import filter SELECT queries as dbfq
-import cim.database.db_filter_queries as dbfq
 
 # resolve CORS issues for local development
 from flask_cors import CORS, cross_origin
@@ -311,17 +305,11 @@ def inventory_regular_components():
 	# Load site results from the database (or the dummy data if the database doesn't work)
 	site_results = dbq.get_db_sites()
 
-
 	if request.method=="GET":
 		return render_template("inventory_regular_comps.html", 
 			regular_components=regular_component_results, 
 			reg_comp_locations=reg_comp_location_details, 
 			sites=site_results)
-
-	if request.method == "POST":
-		filter_search_box = request.form.get("text")
-		filtered_reg_comp_results = dbfq.get_filtered_regular_components(filter_search_box)
-		return jsonify(filtered_reg_comp_results)
 
 
 @webapp.route('/shipping', methods=['GET', 'POST'])
