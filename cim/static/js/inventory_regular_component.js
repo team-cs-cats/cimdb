@@ -1,5 +1,5 @@
 
-<!-- Edit Regular Component Detail Popup -->
+//Edit Regular Component Detail Popup
 $(document).ready(function(){
     $("#editRegularComponent").on("show.bs.modal", function(event){
         // Get the button that triggered the modal
@@ -27,7 +27,7 @@ $(document).ready(function(){
 });
 
 
-<!-- Edit Regular Quantity Modal Popup -->
+// Edit Regular Quantity Modal Popup
 $(document).ready(function(){
     $("#editRegularComponentQuantity").on("show.bs.modal", function(event){
         // Get the button that triggered the modal
@@ -52,18 +52,16 @@ $(document).ready(function(){
         var regularComponentShelfData = button.data("reg-comp-shelf-number");
         $(this).find("reg-comp-view-shelf-number").val(regularComponentShelfData)
 
-
-
     });
 });
 
 
 
-<!-- Tooltip Toggle -->
+// Tooltip Toggle
 	
-$('[data-toggle="tooltip"]').tooltip({
-   container: 'body'
-});
+// $('[data-toggle="tooltip"]').tooltip({
+//    container: 'body'
+// });
 
 
 
@@ -72,6 +70,7 @@ $(document).ready(function(){
 
     // select 
     $("#filterSearch").on("input",function(e){
+        console.log('working');
         $("#datalist").empty();
         $.ajax({
             method:"post",

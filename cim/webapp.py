@@ -2,6 +2,9 @@
 from flask import Flask, render_template, flash
 from flask import request, redirect
 
+# add jsonify to handle converting filter search results to html
+from flask import jsonify 
+
 # add json to handle db connection
 from flask import json
 

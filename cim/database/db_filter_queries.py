@@ -47,11 +47,10 @@ def get_filtered_regular_components(filtered_terms):
     INNER JOIN LocationsRegularComps ON RegularComponents.rc_pn=LocationsRegularComps.lrc_rc_pn
     INNER JOIN Locations ON Locations.location_id=LocationsRegularComps.lrc_location_id
     INNER JOIN Sites ON Locations.location_site_id=Sites.site_id
-    GROUP BY RegularComponents.rc_pn 
     WHERE RegularComponents.rc_part_name 
     LIKE '{}%' 
     ORDER BY RegularComponents.rc_part_name;
-    """.format()
+    """
     filter(filter_query_to_run=filter_query, data_to_filter=filtered_terms)
 
 
