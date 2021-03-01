@@ -172,6 +172,8 @@ Filter Existing Regular Components
 
 			<div class="row ml-5 mr-5">
 
+				{% if regular_component.TotalQuantity > 0 %}
+
 				<table class="table table-striped ml-5 mr-5">
 					<tr>
 						<th>Site/Location</th>
@@ -205,6 +207,10 @@ Filter Existing Regular Components
 
 
 				</table>
+
+				{% else %}
+				<div>This regular component is currently out of stock in all Sites.</div>
+				{% endif %}
 
 			</div>
 

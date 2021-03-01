@@ -59,7 +59,7 @@ CREATE TABLE `Locations` (
 -- Populate Locations table with data
 LOCK TABLES `Locations` WRITE;
 INSERT INTO `Locations` 
-VALUES (location_id, location_room_number, location_shelf_number, location_site_id)
+VALUES 
 (1, 0, 0, 1),
 (2, 1, 1, 12), (3, 1, 2, 12), (4, 1, 3, 12), (5, 1, 4, 12), (6, 1, 5, 12), 
 (7, 2, 1, 12), (8, 2, 2, 12), (9, 2, 3, 12), (10, 2, 4, 12), (11, 2, 5, 12), 
@@ -189,16 +189,44 @@ CREATE TABLE `LocationsRegularComps` (
 -- Populate LocationsRegularComps table with data
 LOCK TABLES `LocationsRegularComps` WRITE;
 INSERT INTO `LocationsRegularComps` 
-(lrc_id, lrc_location_id, lrc_rc_pn, lrc_quantity) VALUES 
-(2,1,2,36), --
-(3,1,51,8), --
-(4,2,100,11), --
-(5,3,100,136), --
-(6,4,200,15),
-(7,4,152,45),
-(8,5,200,36),
-(9,5,201,74),
-(10,5,51,2);
+(lrc_id,  lrc_location_id,  lrc_rc_pn,  lrc_quantity) VALUES 
+(1, 4,                        1,        0),  
+(2, 64,                     2,        1),  
+(3, 69,                     3,        3),  
+(4, 43,                     50,       14),  
+(5, 14,                      51,       25),  
+(6, 35,                     52,       0),  
+(7, 45,                     150,        234),  
+(8, 15,                     151,        62),  
+(9, 30,                     152,        73),  
+(10, 68,                     1,        25),  
+(11, 34,                     2,        74),  
+(12, 31,                     3,        95),  
+(13, 13,                     50,       4),  
+(14, 24,                     51,       0),  
+(15, 72,                     52,       0),  
+(16, 57,                     150,        234),  
+(17, 29,                     151,        7),  
+(18, 58,                     152,        33),  
+(19, 67,                     1,        0),  
+(20, 5,                      2,        237),  
+(21, 61,                     3,        88),  
+(22, 65,                     50,       81),  
+(23, 59,                     51,       26),  
+(24, 54,                      52,       0),  
+(25, 11,                     150,        42),  
+(26, 25,                     151,        27),  
+(27, 71,                    152,        25),  
+(28, 38,                    1,        238),  
+(29, 7,                      2,        42),  
+(30, 53,                   3,        265),  
+(31, 40,                   50,       23),  
+(32, 26,                      51,       8),  
+(33, 63,                   52,       0),  
+(34, 48,                   150,        0),  
+(35, 16,                   151,        2),  
+(36, 22,                   152,        4)  
+;
 UNLOCK TABLES;
 
 -- SpecialComponents table Creation query
