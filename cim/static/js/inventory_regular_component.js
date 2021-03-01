@@ -39,6 +39,21 @@ $(document).ready(function(){
 
         var regularComponentQuantityData = button.data("reg-comp-quantity");        
         $(this).find("#reg-comp-edit-quantity").val(regularComponentQuantityData);
+
+        // add data for site
+        var regularComponentSiteData = button.data("reg-comp-site-name");
+        $(this).find("reg-comp-view-site").val(regularComponentSiteData)
+
+        // add data for room number
+        var regularComponentRoomData = button.data("reg-comp-room-number");
+        $(this).find("reg-comp-view-room-number").val(regularComponentRoomData)
+
+        // add data for shelf number
+        var regularComponentShelfData = button.data("reg-comp-shelf-number");
+        $(this).find("reg-comp-view-shelf-number").val(regularComponentShelfData)
+
+
+
     });
 });
 

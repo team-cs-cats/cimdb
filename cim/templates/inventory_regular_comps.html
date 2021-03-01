@@ -194,11 +194,11 @@ Filter Existing Regular Components
 							data-target="#editRegularComponentQuantity" 
 							data-reg-comp-part-number="{{regular_component.rc_pn}}"
 							data-reg-comp-category="{{regular_component.rc_category}}"
-							data-reg-comp-site-name="{% for site in sites %}{% if location.location_site_id == site.site_id%}{{site.site_name}}{% endif %}{% endfor %}" 
-							data-reg-comp-room-number="{{location.location_room_number}}" 
-							data-reg-comp-shelf-number="{{location.location_shelf_number}}" 
-							data-reg-comp-quantity={{location.quantity_at_location}}
-							data-title="Edit Quantity of Part Number {{regular_component.rc_pn}}">Edit</button></th>
+							data-reg-comp-site-name="{{location.SiteCity}}" 
+							data-reg-comp-room-number="{{location.RoomNumber}}" 
+							data-reg-comp-shelf-number="{{location.ShelfNumber}}" 
+							data-reg-comp-quantity={{location.Quantity}}
+							data-title="Edit Quantity of {{regular_component.rc_part_name}}">Edit</button></th>
 
 							<td><button class="btn-sm btn-danger">Delete</button></td>
 					</tr>
@@ -237,7 +237,7 @@ Filter Existing Regular Components
 					<div class="modal-body">  
 
 						<div class="form-group p-1">
-							<label class="control-label" >Quantity in <span id="reg-comp-edit-site"></span>, Room <span id="reg-comp-edit-room-number"></span>, Shelf <span id="reg-comp-edit-shelf-number"></span>:</label>
+							<label class="control-label" >Quantity in <span id="reg-comp-view-site"></span>, Room <span id="reg-comp-view-room-number"></span>, Shelf <span id="reg-comp-view-shelf-number"></span>:</label>
 							<input type="number" min="0" max="999" id="reg-comp-edit-quantity" class="form-control" required>
 						</div> 
 
