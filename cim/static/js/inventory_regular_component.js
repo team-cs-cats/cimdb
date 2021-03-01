@@ -65,3 +65,26 @@ $('[data-toggle="tooltip"]').tooltip({
    container: 'body'
 });
 
+
+
+// Live Search Filter
+$(document).ready(function(){
+
+    // select 
+    $("#filterSearch").on("input",function(e){
+        $("#datalist").empty();
+        $.ajax({
+            method:"post",
+            url:"/inventory-reg",
+            data:{text:$("#filterSearch").val()},
+            success:function(res){
+                var data = "<ul>";
+                $.each(res,function(index,value){
+                    data += "<li>"+value.RegularComponents.rc_pn+"</li>";
+                });
+                data += "</ul>";
+                $("#datalist").html(data);
+            }
+        });
+    });
+});

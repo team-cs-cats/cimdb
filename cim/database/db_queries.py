@@ -73,6 +73,9 @@ def get_db_regular_components():
 	return reg_comp_results
 
 
+
+
+
 def get_db_regular_components_by_location():
 
 	# Load SQL query for regular component data
