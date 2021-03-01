@@ -183,7 +183,7 @@ Filter Existing Regular Components
 					</tr>
 
 					{% for location in reg_comp_locations %}
-						{% if (location.PartNumber==regular_component.rc_pn) and (location.SiteCity != 'Customer')%}
+						{% if (location.PartNumber==regular_component.rc_pn) and (location.SiteCity != 'Customer') and (location.Quantity > 0) %}
 					<tr>
 						<td>{{location.SiteCity}}/Room {{location.RoomNumber}}, Shelf {{location.ShelfNumber}}</td>
 						<td>{{location.Quantity}}</td>
