@@ -51,7 +51,7 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 		<select class="custom-select m-1 p-1" id="new_reg_comp_site" required>
 			<option selected>Select Site: </option>
 			{% for site in sites %}
-			<option>{{site.site_name}}</option>
+			<option>{{site.site_address_city}}</option>
 			{% endfor %}
 		</select>
 
@@ -95,7 +95,7 @@ Filter Existing Regular Components
 		<select class="custom-select m-1" id="existing_reg_comp_site">
 			<option selected>Select Site: </option>
 			{% for site in sites %}
-			<option>{{site.site_name}}</option>
+			<option>{{site.site_address_city}}</option>
 			{% endfor %}
 		</select>
 
@@ -138,7 +138,7 @@ Filter Existing Regular Components
 						<select class="custom-select mt-2 pl-2 ml-2" id="new_rc_site" required>
 							<option selected>Select Site: </option>
 							{% for site in sites %}
-							<option>{{site.site_name}}</option>
+							<option>{{site.site_address_city}}</option>
 							{% endfor %}
 						</select>
 					</div>
@@ -174,18 +174,17 @@ Filter Existing Regular Components
 
 				<table class="table table-striped ml-5 mr-5">
 					<tr>
-						<th>Site</th>
-						<th>Location</th>
+						<th>Site/Location</th>
 						<th>Quantity</th>
 						<th>Edit Quantity</th>
 						<th>Delete from Location</th>
 					</tr>
 
-					{% for location in regular_component.rc_locations %}
+					{% for location in reg_comp_locations %}
+						{% if (location.PartNumber==regular_component.rc_pn) and (location.SiteCity != 'Customer')%}
 					<tr>
-						<td>{% for site in sites %}{% endfor %}</td>
-						<td>Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</td>
-						<td>{{location.quantity_at_location}}</td>
+						<td>{{location.SiteCity}}/Room {{location.RoomNumber}}, Shelf {{location.ShelfNumber}}</td>
+						<td>{{location.Quantity}}</td>
 
 						<th><button type="button" 
 							class="btn-sm btn-warning text-right" 
@@ -201,6 +200,7 @@ Filter Existing Regular Components
 
 							<td><button class="btn-sm btn-danger">Delete</button></td>
 					</tr>
+						{% endif %}
 					{% endfor %}
 
 

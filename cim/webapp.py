@@ -299,11 +299,17 @@ def inventory_regular_components():
 	# Load location results from the database (or the dummy data if the database doesn't work)
 	regular_component_results = dbq.get_db_regular_components()
 
+	# regular comps by location 
+	reg_comp_location_details = dbq.get_db_regular_components_by_location()
+
 	# Load site results from the database (or the dummy data if the database doesn't work)
 	site_results = dbq.get_db_sites()
 
 	if request.method=="GET":
-		return render_template("inventory_regular_comps.html", regular_components=regular_component_results, sites=site_results)
+		return render_template("inventory_regular_comps.html", 
+			regular_components=regular_component_results, 
+			reg_comp_locations=reg_comp_location_details, 
+			sites=site_results)
 
 
 @webapp.route('/shipping', methods=['GET', 'POST'])
