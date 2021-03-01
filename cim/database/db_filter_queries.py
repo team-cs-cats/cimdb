@@ -9,7 +9,7 @@ db_connection = db.connect_to_database()
 
 
 
-def filter(filter_query_to_run, data_to_filter):
+def filter(filter_query_to_run):
     """
     Since all filter queries will share the same steps, 
     this is just a validation wrapper that handles whether an filterion was successful or not.
@@ -22,7 +22,7 @@ def filter(filter_query_to_run, data_to_filter):
         db_connection = db.connect_to_database()
 
         # Execute the provided query using the provided data
-        cursor = db.execute_query(db_connection=db_connection, query=filter_query_to_run, query_params=data_to_filter)
+        cursor = db.execute_query(db_connection=db_connection, query=filter_query_to_run)
         return True
 
     # If unsuccessful, print the error to the server log and return False
@@ -34,7 +34,7 @@ def filter(filter_query_to_run, data_to_filter):
 
 def get_filtered_regular_components(filtered_terms):
 
-    filter_query = """
+    filter_query = ("""
     SELECT 
     RegularComponents.rc_pn,
     RegularComponents.rc_part_name,
@@ -47,11 +47,11 @@ def get_filtered_regular_components(filtered_terms):
     INNER JOIN LocationsRegularComps ON RegularComponents.rc_pn=LocationsRegularComps.lrc_rc_pn
     INNER JOIN Locations ON Locations.location_id=LocationsRegularComps.lrc_location_id
     INNER JOIN Sites ON Locations.location_site_id=Sites.site_id
-    WHERE RegularComponents.rc_part_name 
-    LIKE '{}%' 
+    WHERE RegularComponents.rc_category 
+    LIKE '%s' 
     ORDER BY RegularComponents.rc_part_name;
-    """
-    filter(filter_query_to_run=filter_query, data_to_filter=filtered_terms)
+    """)%(filtered_terms)
+    filter(filter_query_to_run=filter_query)
 
 
 

@@ -70,15 +70,18 @@ $(document).ready(function(){
 
     // select 
     $("#filterSearch").on("input",function(e){
-        console.log('working');
+        
         $("#datalist").empty();
         $.ajax({
             method:"post",
             url:"/inventory-reg",
             data:{text:$("#filterSearch").val()},
+
             success:function(res){
                 var data = "<ul>";
+                console.log('res is' + res);
                 $.each(res,function(index,value){
+                    console.log(value.RegularComponents.rc_pn);
                     data += "<li>"+value.RegularComponents.rc_pn+"</li>";
                 });
                 data += "</ul>";
