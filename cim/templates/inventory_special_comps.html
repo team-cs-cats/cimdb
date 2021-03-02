@@ -36,27 +36,28 @@ If new CPUs (special components with unique serial numbers) need to be added to 
 
 	<div class="inner-div text-center">
 
-		<label for="new_spec_comp_part_number">Part Number: </label>
+		<!-- <label for="new_spec_comp_part_number">Part Number: </label>
 		<input type="number" min="10000" max="99998" class='m-1' name="new_spec_comp_part_number" id="new_spec_comp_part_number" placeholder="12345" required>
-
-		<select class="custom-select m-1" id="new_site" required>
-			<option selected>CPU Type: </option>
+ -->
+		<select class="custom-select m-1" id="new_spec_comp_part_number" name="new_spec_comp_part_number" required>
+			<optgroup label="CPU Type: ">
 			{% for sc_category in special_components_catalog.CPU %}
 			<option>{{sc_category}}</option>
 			{% endfor %}
+			</optgroup>
 		</select>
 
-		<select class="custom-select m-1" id="new_reg_comp_site" required>
+		<select class="custom-select m-1" id="new_spec_comp_site" name="new_spec_comp_site" required>
 			<option selected>Select Site: </option>
 			{% for site in sites %}
-			<option>{{site.site_address_name}}</option>
+			<option value={{site.site_id}}>{{site.site_address_city}}</option>
 			{% endfor %}
 		</select>
 
 		<label for="new_reg_comp_quantity">Order Quantity: </label>
 		<input type="number" min="1" max="50" class='m-1' name="new_spec_comp_quantity" id="new_spec_comp_quantity" placeholder="#" required>
 
-		<input type="button" class="btn-sm btn-success m-1" value="Order New Special Components" onclick=addData() >
+		<input type="submit" class="btn-sm btn-success m-1" id="btnAddSpecComp" name="btnAddSpecComp" value="Order New Special Components">
 	</div>
 
 </form>

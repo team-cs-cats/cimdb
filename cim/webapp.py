@@ -286,7 +286,30 @@ def inventory_special_components():
 			)
 
 	# handle POST requests from Order New and Edit
-	pass
+	if request.method=="POST":
+
+		# Handle Order New Special Component (INSERT)
+		provided_new_sc_pn = request.form['new_spec_comp_part_number']
+		provided_new_sc_site = request.form['new_spec_comp_site']
+		provided_new_sc_quantity = int(request.form['new_spec_comp_quantity'])
+
+		# perform the insertion
+		for insertion in range(int(provided_new_sc_quantity)):
+			dbiq.insert_special_component(
+				new_sc_pn=provided_new_sc_pn, 
+				new_sc_location_id=provided_new_sc_site)
+
+
+		# Update the location results since they have changed
+		location_results = dbq.get_db_locations()
+		
+		return render_template("inventory_special_comps.html", 
+			special_components=dbq.get_db_special_components(), 
+			sites=dbq.get_db_sites(),
+			special_components_catalog=data.get_sp_catalog()
+			)
+
+		# Handle Edit Existing Special Component (UPDATE)
 
 @webapp.route('/inventory-reg', methods=['GET', 'POST'])
 @login_required

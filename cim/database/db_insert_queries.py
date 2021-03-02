@@ -133,9 +133,21 @@ def insert_regular_component():
 	add_regular_component_query = """"""
 	insert(insert_query_to_run=add_regular_component_query)
 
-def insert_special_component():
+def insert_special_component(new_sc_pn, new_sc_location_id):
 
 	# Load SQL query for INSERTing new regular component data
-	add_special_component_query = """"""
-	insert(insert_query_to_run=add_special_component_query)
+	add_special_component_query = """
+	INSERT INTO SpecialComponents (sc_pn, sc_is_free, sc_product_sn, sc_location_id)
+	VALUES (%s, 'false', null, (
+		SELECT
+		location_id
+		FROM Locations
+		WHERE Locations.location_site_id = %s
+		AND Locations.location_room_number = 1
+		LIMIT 1;)
+		)
+	;
+	"""
+	new_special_component_data = (new_sc_pn, new_sc_location_id)
+	insert(insert_query_to_run=add_special_component_query, data_to_insert=new_special_component_data)
 
