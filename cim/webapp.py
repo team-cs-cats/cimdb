@@ -282,7 +282,8 @@ def inventory_special_components():
 		return render_template("inventory_special_comps.html", 
 			special_components=dbq.get_db_special_components(), 
 			sites=dbq.get_db_sites(),
-			special_components_catalog=data.get_sp_catalog()
+			special_components_catalog=data.get_sp_catalog(),
+			locations=dbq.get_db_locations()
 			)
 
 	# handle POST requests from Order New and Edit
@@ -304,7 +305,8 @@ def inventory_special_components():
 			return render_template("inventory_special_comps.html", 
 				special_components=dbq.get_db_special_components(), 
 				sites=dbq.get_db_sites(),
-				special_components_catalog=data.get_sp_catalog()
+				special_components_catalog=data.get_sp_catalog(),
+				locations=dbq.get_db_locations()
 				)
 
 		# Handle Edit Existing Special Component (UPDATE)
@@ -312,17 +314,13 @@ def inventory_special_components():
 
 			# obtain data from new special component form
 			updated_spec_comp_part_number = request.form['spec-comp-edit-part-number']
-			updated_spec_comp_site = request.form['spec-comp-edit-site']
-			updated_spec_comp_room_number = int(request.form['spec-comp-edit-room-number'])
-			updated_spec_comp_shelf_number = int(request.form['spec-comp-edit-shelf-number'])
+			updated_spec_comp_location = int(request.form['spec-comp-edit-location'])
 			updated_spec_comp_is_free = request.form['spec-comp-edit-is-free']
 			sc_id_to_update = request.form['sc-id-to-edit']
 
 			# perform the update
 			dbuq.update_special_component(updated_spec_comp_part_number=updated_spec_comp_part_number, 
-				updated_spec_comp_site=updated_spec_comp_site, 
-				updated_spec_comp_room_number=updated_spec_comp_room_number, 
-				updated_spec_comp_shelf_number=updated_spec_comp_shelf_number, 
+				updated_spec_comp_location=updated_spec_comp_location,
 				updated_spec_comp_is_free=updated_spec_comp_is_free,
 				sc_id_to_update=sc_id_to_update)
 
@@ -330,7 +328,8 @@ def inventory_special_components():
 			return render_template("inventory_special_comps.html", 
 				special_components=dbq.get_db_special_components(), 
 				sites=dbq.get_db_sites(),
-				special_components_catalog=data.get_sp_catalog()
+				special_components_catalog=data.get_sp_catalog(),
+				locations=dbq.get_db_locations()
 				)
 
 		# If it isn't anything, return the old site

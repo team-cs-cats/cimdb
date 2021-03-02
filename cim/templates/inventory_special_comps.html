@@ -89,7 +89,7 @@ Note that each shelf in each room can store multiple special components, each wi
 		<select class="custom-select m-1" id="existing_reg_comp_site">
 			<option selected>Select Site: </option>
 			{% for site in sites %}
-			<option>{{site.site_address_name}}</option>
+			<option>{{site.site_address_city}}</option>
 			{% endfor %}
 		</select>
 
@@ -178,6 +178,15 @@ Note that each shelf in each room can store multiple special components, each wi
 					</div>  -->
 
 					<div class="form-group p-1">
+						<label class="control-label" >Selection Location:</label>
+						<select class="custom-select" id="spec-comp-edit-location" name="spec-comp-edit-location"  required>
+							{% for location in locations %}
+								<option value={{location.location_id}}>{{location.location_site_name}}, Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</option>
+							{% endfor %}
+						</select>
+					</div>
+
+					<!-- <div class="form-group p-1">
 						<label class="control-label" >Site:</label>
 						<select class="custom-select" id="spec-comp-edit-site" name="spec-comp-edit-site"  required>
 							<optgroup label="Select Site: ">
@@ -196,7 +205,7 @@ Note that each shelf in each room can store multiple special components, each wi
 					<div class="form-group p-1">
 						<label class="control-label" >Shelf Number:</label>
 						<input type="number" min="0" max="999" id="spec-comp-edit-shelf-number" name="spec-comp-edit-shelf-number" class="form-control" required>
-					</div>  
+					</div>   -->
 
 					<div class="custom-control custom-checkbox">
 						<label class="custom-control-label" for="defaultUnchecked">Is Free:  </label>

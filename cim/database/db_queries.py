@@ -127,12 +127,8 @@ def get_db_sites():
 	cursor = db.execute_query(db_connection=db_connection, query=query)
 	site_results = cursor.fetchall()
 
-	print(site_results)
-
 	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
 	if len(site_results) == 0:
-
-		
 		site_results = data.get_sites()
 
 	return site_results
