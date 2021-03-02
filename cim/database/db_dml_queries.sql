@@ -158,7 +158,7 @@ WHERE prc_id = :prc_id_from_update_button;
 
 
 -- DML Selection query for SpecialComponents
-SELECT * FROM ProductsRegularComps WHERE sc_sn = :sc_sn_input;
+SELECT * FROM SpecialComponents WHERE sc_sn = :sc_sn_input;
 
 -- Query for add a new special component with : being used to 
 -- denote the variables that will have data from the backend programming language

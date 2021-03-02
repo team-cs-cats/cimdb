@@ -32,7 +32,7 @@ If new CPUs (special components with unique serial numbers) need to be added to 
 
 <!-- Form for Create New section -->
 {% block create_form %}
-<form id="add-special-components" action="">
+<form id="add-special-components" action="" method="POST">
 
 	<div class="inner-div text-center">
 
@@ -49,7 +49,7 @@ If new CPUs (special components with unique serial numbers) need to be added to 
 		<select class="custom-select m-1" id="new_reg_comp_site" required>
 			<option selected>Select Site: </option>
 			{% for site in sites %}
-			<option>{{site.site_name}}</option>
+			<option>{{site.site_address_name}}</option>
 			{% endfor %}
 		</select>
 
@@ -87,7 +87,7 @@ Note that each shelf in each room can store multiple special components, each wi
 		<select class="custom-select m-1" id="existing_reg_comp_site">
 			<option selected>Select Site: </option>
 			{% for site in sites %}
-			<option>{{site.site_name}}</option>
+			<option>{{site.site_address_name}}</option>
 			{% endfor %}
 		</select>
 
@@ -124,15 +124,8 @@ Note that each shelf in each room can store multiple special components, each wi
 <tr>
 	<td>{{special_component.sc_sn}}</td>
 	<td>{{special_component.sc_pn}}</td>
-	<td> {% if special_component.sc_is_free %} Yes {% else %} No {% endif %}</td>
-	<td>
-		{% for site in sites %}
-		{% if site.site_id == special_component.sc_location.location_site_id %}
-		{{site.site_name}}  
-		{% endif %}
-		{% endfor %}
-		/ Room {{special_component.sc_location.location_room_number}}, Shelf {{special_component.sc_location.location_shelf_number}}
-	</td>
+	<td>{% if special_component.sc_free %} Yes {% else %} No {% endif %}</td>
+	<td>{{special_component.sc_site_city}} / Room {{special_component.sc_room}}, Shelf {{special_component.sc_shelf}}</td>
 
 	<!-- <th><button class="btn-sm btn-warning">Edit</button></th> -->
 	<th><button type="button" 
@@ -140,10 +133,10 @@ Note that each shelf in each room can store multiple special components, each wi
 		data-toggle="modal" 
 		data-target="#editSpecialComponent" 
 		data-spec-comp-part-number="{{special_component.sc_pn}}"
-		data-spec-comp-site-name="{% for site in sites %}{% if special_component.sc_location.location_site_id %}{{site.site_name}}{% endif %}{% endfor %}" 
-		data-spec-comp-room-number="{{special_component.sc_location.location_room_number}}" 
-		data-spec-comp-shelf-number="{{special_component.sc_location.location_shelf_number}}" 
-		data-spec-comp-is-free="{{special_component.sc_is_free}}" 
+		data-spec-comp-site-name="{{special_component.sc_site_city}}" 
+		data-spec-comp-room-number="{{special_component.sc_room}}" 
+		data-spec-comp-shelf-number="{{special_component.sc_shelf}}" 
+		data-spec-comp-is-free="{{special_component.sc_free}}" 
 		data-title="Edit Special Component ID {{special_component.sc_sn}}">Edit</button></th>
 
 		<td><button class="btn-sm btn-danger">Delete</button></td>

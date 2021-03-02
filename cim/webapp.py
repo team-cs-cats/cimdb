@@ -280,7 +280,7 @@ def inventory_special_components():
 
 	if request.method=="GET":
 		return render_template("inventory_special_comps.html", 
-			special_components=data.get_sc(), 
+			special_components=dbq.get_db_special_components(), 
 			sites=dbq.get_db_sites(),
 			special_components_catalog=data.get_sp_catalog()
 			)
