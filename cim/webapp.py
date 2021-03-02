@@ -285,6 +285,11 @@ def inventory_special_components():
 			special_components_catalog=data.get_sp_catalog()
 			)
 
+	# handle POST requests from Order New and Edit
+	if request.method == "POST":
+
+
+
 
 @webapp.route('/inventory-reg', methods=['GET', 'POST'])
 @login_required
@@ -432,8 +437,6 @@ def site_management():
 
 	if request.method=="POST":
 
-		print('recevied post req')
-
 		if "addNewSiteBtn" in request.form:
 
 			# obtain data from new site form
@@ -455,17 +458,7 @@ def site_management():
 			site_results = dbq.get_db_sites()
 			return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
 
-		else:
-			print('checked and is not add new site')
-
-		print('\n')
-		print(request.form)
-		print('\n')
-
-
 		if "btnUpdate" in request.form:
-
-			print('update')
 
 			# obtain data from new site form
 			update_site_address_1 = request.form['site-edit-address-1']
@@ -486,9 +479,6 @@ def site_management():
 			site_results = dbq.get_db_sites()
 
 			return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
-
-		else:
-			print('checked and is not Update site')
 
 		# If it isn't anything, return the old site
 		return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
