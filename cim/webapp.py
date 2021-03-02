@@ -454,6 +454,7 @@ def site_management():
 				new_site_state=provided_site_state, 
 				new_site_zip=provided_site_zip)
 
+			site_results = dbq.get_db_sites()
 			return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
 
 		else:
