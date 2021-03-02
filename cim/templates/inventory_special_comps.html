@@ -82,6 +82,7 @@ Note that each shelf in each room can store multiple special components, each wi
 		<label for="existing_spec_comp_serial_number">Serial Number: </label>
 		<input type="number" min="1000000000" max="9999999998" class='m-1' name="existing_spec_comp_serial_number" id="existing_spec_comp_serial_number" placeholder="1234567890">	
 
+		<!-- TODO: update to CPU type -->
 		<label for="existing_spec_comp_part_number">Part Number: </label>
 		<input type="number" min="10000" max="99998" class='m-1' name="existing_reg_comp_part_number" id="existing_spec_comp_part_number" placeholder="12345">		
 
@@ -160,15 +161,26 @@ Note that each shelf in each room can store multiple special components, each wi
 
 					<div class="form-group p-1">
 						<label class="control-label" >Part Number:</label>
+							<select class="custom-select m-1" id="spec-comp-edit-part-number" name="spec-comp-edit-part-number" required>
+								<optgroup label="CPU Type: ">
+								{% for sc_category in special_components_catalog.CPU %}
+								<option>{{sc_category}}</option>
+								{% endfor %}
+								</optgroup>
+							</select>
+					</div>
+
+					<!-- <div class="form-group p-1">
+						<label class="control-label" >Part Number:</label>
 						<input type="number" min="0" max="999" id="spec-comp-edit-part-number" class="form-control" placeholder="123456" required>
-					</div> 
+					</div>  -->
 
 					<div class="form-group p-1">
 						<label class="control-label" >Site:</label>
 						<select class="custom-select" id="spec-comp-edit-site" required>
 							<option selected>Select Site: </option>
 							{% for site in sites %}
-							<option>{{site.site_name}}</option>
+							<option>{{site.site_address_city}}</option>
 							{% endfor %}
 						</select>
 					</div>                    	

@@ -1,6 +1,7 @@
 
-	$(document).ready(function(){
-		$("#editSpecialComponent").on("show.bs.modal", function(event){
+$(document).ready(function(){
+
+	$("#editSpecialComponent").on("show.bs.modal", function(event){
 	// Get the button that triggered the modal
 	var button = $(event.relatedTarget);
 
@@ -8,7 +9,7 @@
 	var titleData = button.data("title");
 	$(this).find(".modal-title").text(titleData);
 
-	var partNumberData = parseInt(button.data("spec-comp-part-number"));
+	var partNumberData = button.data("spec-comp-part-number");
 	$(this).find("#spec-comp-edit-part-number").val(partNumberData);
 
 	var siteNameData = button.data("spec-comp-site-name");        
@@ -23,5 +24,6 @@
 	var specialComponentIsFreeData = button.data("spec-comp-is-free");        
 	$(this).find("#spec-comp-edit-is-free").val(specialComponentIsFreeData);
 
+	});
 	
 });
