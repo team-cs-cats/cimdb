@@ -313,8 +313,8 @@ def inventory_special_components():
 			# obtain data from new special component form
 			updated_spec_comp_part_number = request.form['spec-comp-edit-part-number']
 			updated_spec_comp_site = request.form['spec-comp-edit-site']
-			updated_spec_comp_room_number = request.form['spec-comp-edit-room-number']
-			updated_spec_comp_shelf_number = request.form['spec-comp-edit-shelf-number']
+			updated_spec_comp_room_number = int(request.form['spec-comp-edit-room-number'])
+			updated_spec_comp_shelf_number = int(request.form['spec-comp-edit-shelf-number'])
 			updated_spec_comp_is_free = request.form['spec-comp-edit-is-free']
 			sc_id_to_update = request.form['sc-id-to-edit']
 

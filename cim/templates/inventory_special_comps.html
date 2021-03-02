@@ -180,10 +180,11 @@ Note that each shelf in each room can store multiple special components, each wi
 					<div class="form-group p-1">
 						<label class="control-label" >Site:</label>
 						<select class="custom-select" id="spec-comp-edit-site" name="spec-comp-edit-site"  required>
-							<option selected>Select Site: </option>
+							<optgroup label="Select Site: ">
 							{% for site in sites %}
 							<option>{{site.site_address_city}}</option>
 							{% endfor %}
+							</optgroup>
 						</select>
 					</div>                    	
 
