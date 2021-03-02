@@ -21,9 +21,11 @@ $(document).ready(function(){
 	var shelfNumberData = parseInt(button.data("spec-comp-shelf-number"));
 	$(this).find("#spec-comp-edit-shelf-number").val(shelfNumberData);
 
+	// Referenced this StackOverflow discussion to determine how to adject the checked property using jquery
+	// https://stackoverflow.com/questions/426258/setting-checked-for-a-checkbox-with-jquery/426276#426276 
 	var specialComponentIsFreeData = button.data("spec-comp-is-free");        
-	$(this).find("#spec-comp-edit-is-free").val(specialComponentIsFreeData);
+	$(this).find("#spec-comp-edit-is-free").prop('checked', specialComponentIsFreeData);
 
 	});
-	
+
 });
