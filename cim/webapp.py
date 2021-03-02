@@ -289,25 +289,52 @@ def inventory_special_components():
 	if request.method=="POST":
 
 		# Handle Order New Special Component (INSERT)
-		provided_new_sc_pn = request.form['new_spec_comp_part_number']
-		provided_new_sc_site = int(request.form['new_spec_comp_site'])
-		provided_new_sc_quantity = int(request.form['new_spec_comp_quantity'])
+		if "btnAddSpecComp" in request.form:
 
-		print('posting ~~~~~~~', provided_new_sc_pn, provided_new_sc_site, provided_new_sc_quantity)
+			provided_new_sc_pn = request.form['new_spec_comp_part_number']
+			provided_new_sc_site = int(request.form['new_spec_comp_site'])
+			provided_new_sc_quantity = int(request.form['new_spec_comp_quantity'])
 
-		# perform the insertion
-		for insertion in range(provided_new_sc_quantity):
-			dbiq.insert_special_component(
-				new_sc_pn=provided_new_sc_pn, 
-				new_sc_location_id=provided_new_sc_site)
-		
-		return render_template("inventory_special_comps.html", 
-			special_components=dbq.get_db_special_components(), 
-			sites=dbq.get_db_sites(),
-			special_components_catalog=data.get_sp_catalog()
-			)
+			# perform the insertion
+			for insertion in range(provided_new_sc_quantity):
+				dbiq.insert_special_component(
+					new_sc_pn=provided_new_sc_pn, 
+					new_sc_location_id=provided_new_sc_site)
+			
+			return render_template("inventory_special_comps.html", 
+				special_components=dbq.get_db_special_components(), 
+				sites=dbq.get_db_sites(),
+				special_components_catalog=data.get_sp_catalog()
+				)
 
 		# Handle Edit Existing Special Component (UPDATE)
+		if "btnSpecCompUpdate" in request.form:
+
+			# obtain data from new special component form
+			updated_spec_comp_part_number = request.form['spec-comp-edit-part-number']
+			updated_spec_comp_site = request.form['spec-comp-edit-site']
+			updated_spec_comp_room_number = request.form['spec-comp-edit-room-number']
+			updated_spec_comp_shelf_number = request.form['spec-comp-edit-shelf-number']
+			updated_spec_comp_is_free = request.form['spec-comp-edit-is-free']
+			sc_id_to_update = request.form['sc-id-to-edit']
+
+			# perform the update
+			dbuq.update_special_component(updated_spec_comp_part_number=updated_spec_comp_part_number, 
+				updated_spec_comp_site=updated_spec_comp_site, 
+				updated_spec_comp_room_number=updated_spec_comp_room_number, 
+				updated_spec_comp_shelf_number=updated_spec_comp_shelf_number, 
+				updated_spec_comp_is_free=updated_spec_comp_is_free,
+				sc_id_to_update=sc_id_to_update)
+
+			# re-render the html using the updated information for special components
+			return render_template("inventory_special_comps.html", 
+				special_components=dbq.get_db_special_components(), 
+				sites=dbq.get_db_sites(),
+				special_components_catalog=data.get_sp_catalog()
+				)
+
+		# If it isn't anything, return the old site
+		return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
 
 @webapp.route('/inventory-reg', methods=['GET', 'POST'])
 @login_required
