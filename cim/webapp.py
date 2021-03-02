@@ -281,15 +281,12 @@ def inventory_special_components():
 	if request.method=="GET":
 		return render_template("inventory_special_comps.html", 
 			special_components=data.get_sc(), 
-			sites=data.get_sites(),
+			sites=dbq.get_db_sites(),
 			special_components_catalog=data.get_sp_catalog()
 			)
 
 	# handle POST requests from Order New and Edit
-	if request.method == "POST":
-
-
-
+	pass
 
 @webapp.route('/inventory-reg', methods=['GET', 'POST'])
 @login_required
