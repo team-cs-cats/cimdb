@@ -17,7 +17,7 @@ def update(update_query_to_run):
 	# Attempt to update. If successful, return True
 	try:
 		db_connection = db.connect_to_database()
-		cursor = db.execute_query(db_connection=db_connection, query=query_to_run)
+		cursor = db.execute_query(db_connection=db_connection, query=update_query_to_run)
 		return True
 	
 	# If unsuccessful, print the error to the server log and return False
@@ -26,10 +26,19 @@ def update(update_query_to_run):
 		return False
 
 
-def update_site():
+def update_site(update_site_address_1, update_site_address_2, update_site_city, update_site_state, update_site_zip, site_id_to_update):
 
 	# Load SQL query for updating the data for a selected site 
-	update_site_query = """"""
+	update_site_query = """
+	UPDATE Sites SET 
+	site_address_1 = %s, 
+	site_address_2 = %s, 
+	site_address_city = %s, 
+	site_address_state = %s, 
+	site_address_postal_code = %s
+	WHERE site_id = %s
+	;
+	""" % (update_site_address_1, update_site_address_2, update_site_city, update_site_state, update_site_zip, site_id_to_update)
 	update(update_query_to_run=update_site_query)
 
 

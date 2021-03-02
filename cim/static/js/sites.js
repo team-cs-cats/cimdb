@@ -9,6 +9,9 @@
 	var titleData = button.data("title");
 	$(this).find(".modal-title").text(titleData);
 
+	var siteIDData = button.data("site-id-to-edit");
+	$(this).find("#site-id-to-edit").val(siteIDData);
+
 	var siteAddress1Data = button.data("site-address-1");
 	$(this).find("#site-edit-address-1").val(siteAddress1Data);
 

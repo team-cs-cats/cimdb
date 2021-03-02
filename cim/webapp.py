@@ -434,7 +434,9 @@ def site_management():
 
 	if request.method=="POST":
 
-		if request.form["btn"]=="Add New Site":
+		print('recevied post req')
+
+		if "addNewSiteBtn" in request.form:
 
 			# obtain data from new site form
 			provided_site_address_1 = request.form['new_site_address_1']
@@ -454,8 +456,17 @@ def site_management():
 
 			return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
 
+		else:
+			print('checked and is not add new site')
 
-		if request.form["btn"]=="Update":
+		print('\n')
+		print(request.form)
+		print('\n')
+
+
+		if "btnUpdate" in request.form:
+
+			print('update')
 
 			# obtain data from new site form
 			update_site_address_1 = request.form['site-edit-address-1']
@@ -463,15 +474,26 @@ def site_management():
 			update_site_city = request.form['site-edit-city']
 			update_site_state = request.form['site-edit-state']
 			update_site_zip = request.form['site-edit-zip']
+			site_id_to_update = request.form['site-id-to-edit']
 
 			# perform the update
 			dbuq.update_site(update_site_address_1=update_site_address_1, 
 				update_site_address_2=update_site_address_2, 
 				update_site_city=update_site_city, 
 				update_site_state=update_site_state, 
-				update_site_zip=update_site_zip)
+				update_site_zip=update_site_zip,
+				site_id_to_update=site_id_to_update)
+
+			site_results = dbq.get_db_sites()
 
 			return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
+
+		else:
+			print('checked and is not Update site')
+
+		# If it isn't anything, return the old site
+		return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
+
 
 
 
