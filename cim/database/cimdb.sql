@@ -247,26 +247,28 @@ CREATE TABLE `SpecialComponents` (
 
 -- Populate SpecialComponents table with data
 LOCK TABLES `SpecialComponents` WRITE;
-INSERT INTO `SpecialComponents` VALUES 
-(610205, "i3", 1, null, 1),
-(293039, "i5", 1, null, 1),
-(56853, "i7", 1, null, 1),
-(1046, "i5", 1, null, 1),
-(184930, "i5", 1, null, 1),
-(101711, "i7", 1, null, 1),
-(714673, "i7", 1, null, 1),
-(473446, "i3", 0, null, 1),
-(3000, "i3", 1, null, 1),
-(3001, "i3", 1, null, 1),
-(3002, "i3", 1, null, 1),
-(3003, "i3", 0, null, 1),
-(5001, "i5", 1, null, 1),
-(5002, "i5", 1, null, 1),
-(5003, "i5", 1, null, 1),
-(7001, "i7", 1, null, 1),
-(7002, "i7", 1, null, 1),
-(7003, "i7", 1, null, 1),
-(7004, "i7", 1, null, 1);
+INSERT INTO `SpecialComponents` 
+(`sc_sn`, `sc_pn`, `sc_is_free`, `sc_product_sn`, `sc_location_id`)
+VALUES 
+(610205, "i3", 1, null, 3),
+(293039, "i5", 1, null, 5),
+(56853, "i7", 1, null, 7),
+(1046, "i5", 1, null, 8),
+(184930, "i5", 1, null, 12),
+(101711, "i7", 1, null, 45),
+(714673, "i7", 1, null, 23),
+(473446, "i3", 0, null, 67),
+(3000, "i3", 1, null, 4),
+(3001, "i3", 1, null, 58),
+(3002, "i3", 1, null, 58),
+(3003, "i3", 0, null, 34),
+(5001, "i5", 1, null, 55),
+(5002, "i5", 1, null, 65),
+(5003, "i5", 1, null, 23),
+(7001, "i7", 1, null, 22),
+(7002, "i7", 1, null, 22),
+(7003, "i7", 1, null, 22),
+(7004, "i7", 1, null, 56);
 UNLOCK TABLES;
 
 
