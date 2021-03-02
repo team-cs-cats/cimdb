@@ -52,7 +52,7 @@ CREATE TABLE `Locations` (
   `location_shelf_number` int NOT NULL,
   `location_site_id` int NOT NULL,
   PRIMARY KEY (`location_id`),
-  FOREIGN KEY (`location_site_id`) REFERENCES `Sites`(`site_id`) 
+  FOREIGN KEY (`location_site_id`) REFERENCES `Sites`(`site_id`) ON UPDATE CASCADE
 )ENGINE=INNODB;
 
 
@@ -90,7 +90,7 @@ CREATE TABLE `Employees` (
   `employee_password` varchar(255),
   `employee_site_id` int,
   PRIMARY KEY (`employee_id`),
-  FOREIGN KEY (`employee_site_id`) REFERENCES `Sites`(`site_id`)
+  FOREIGN KEY (`employee_site_id`) REFERENCES `Sites`(`site_id`) ON UPDATE CASCADE
 );
 
 -- Populate Employees table with data
@@ -122,7 +122,7 @@ CREATE TABLE `WorkOrders` (
   `wo_reference_number` int NOT NULL,
   `wo_employee_id` int,
   PRIMARY KEY (`wo_id`),
-  FOREIGN KEY (`wo_employee_id`) REFERENCES `Employees`(`employee_id`)
+  FOREIGN KEY (`wo_employee_id`) REFERENCES `Employees`(`employee_id`) ON UPDATE CASCADE
 );
 
 
@@ -180,8 +180,8 @@ CREATE TABLE `LocationsRegularComps` (
   `lrc_rc_pn` int,
   `lrc_quantity` int NOT NULL,
   PRIMARY KEY (`lrc_id`),
-  FOREIGN KEY (`lrc_location_id`) REFERENCES `Locations`(`location_id`),
-  FOREIGN KEY (`lrc_rc_pn`) REFERENCES `RegularComponents`(`rc_pn`)
+  FOREIGN KEY (`lrc_location_id`) REFERENCES `Locations`(`location_id`) ON UPDATE CASCADE,
+  FOREIGN KEY (`lrc_rc_pn`) REFERENCES `RegularComponents`(`rc_pn`) ON UPDATE CASCADE
 );
 
 
@@ -241,7 +241,7 @@ CREATE TABLE `SpecialComponents` (
   -- FOREIGN KEY (`sc_product_sn`) REFERENCES `Products`(`product_sn`), 
   -- commented out because the Special Component does not care about the product it is in.
   -- We need to add Special Components to the database first, then link them to Products.
-  FOREIGN KEY (`sc_location_id`) REFERENCES `Locations`(`location_id`)
+  FOREIGN KEY (`sc_location_id`) REFERENCES `Locations`(`location_id`) ON UPDATE CASCADE
 );
 
 
@@ -284,11 +284,11 @@ CREATE TABLE `Products` (
   `product_location_id` int,
   `product_sc_sn` int,
   PRIMARY KEY (`product_sn`),
-  FOREIGN KEY (`product_employee_id`) REFERENCES `Employees`(`employee_id`),
-  FOREIGN KEY (`product_location_id`) REFERENCES `Locations`(`location_id`),
+  FOREIGN KEY (`product_employee_id`) REFERENCES `Employees`(`employee_id`) ON UPDATE CASCADE,
+  FOREIGN KEY (`product_location_id`) REFERENCES `Locations`(`location_id`) ON UPDATE CASCADE,
 
   -- Here, this links to existing Special Components, which have to be in the database first.
-  FOREIGN KEY (`product_sc_sn`) REFERENCES `SpecialComponents`(`sc_sn`)
+  FOREIGN KEY (`product_sc_sn`) REFERENCES `SpecialComponents`(`sc_sn`) ON UPDATE CASCADE
 );
 
 -- Populate RegularComponents table with data
@@ -315,8 +315,8 @@ CREATE TABLE `WorkOrderProducts` (
   `wop_wo_id` int,
   `wop_product_sn` int,
   PRIMARY KEY (`wop_id`),
-  FOREIGN KEY (`wop_wo_id`) REFERENCES `WorkOrders`(`wo_id`),
-  FOREIGN KEY (`wop_product_sn`) REFERENCES `Products`(`product_sn`)
+  FOREIGN KEY (`wop_wo_id`) REFERENCES `WorkOrders`(`wo_id`) ON UPDATE CASCADE,
+  FOREIGN KEY (`wop_product_sn`) REFERENCES `Products`(`product_sn`) ON UPDATE CASCADE
 );
 
 -- Populate WorkOrderProducts table with data
@@ -341,8 +341,8 @@ CREATE TABLE `ProductsRegularComps` (
   `prc_rc_pn` int,
   `prc_quantity_needed` int NOT NULL,
   PRIMARY KEY (`prc_id`),
-  FOREIGN KEY (`prc_product_sn`) REFERENCES `Products`(`product_sn`),
-  FOREIGN KEY (`prc_rc_pn`) REFERENCES `RegularComponents`(`rc_pn`)
+  FOREIGN KEY (`prc_product_sn`) REFERENCES `Products`(`product_sn`) ON UPDATE CASCADE,
+  FOREIGN KEY (`prc_rc_pn`) REFERENCES `RegularComponents`(`rc_pn`) ON UPDATE CASCADE
 );
 
 -- Populate ProductsRegularComps table with data
