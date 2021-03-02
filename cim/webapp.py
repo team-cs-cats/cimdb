@@ -434,23 +434,46 @@ def site_management():
 
 	if request.method=="POST":
 
-		# obtain data from new site form
-		provided_site_address_1 = request.form['new_site_address_1']
-		provided_site_address_2 = request.form['new_site_address_2']
-		provided_site_city = request.form['new_site_city']
-		provided_site_state = request.form['new_site_state']
-		provided_site_zip = request.form['new_site_zip']
+		if request.form["btn"]=="Add New Site":
 
-		print('provided_site_address_2 is', provided_site_address_2)
+			# obtain data from new site form
+			provided_site_address_1 = request.form['new_site_address_1']
+			provided_site_address_2 = request.form['new_site_address_2']
+			provided_site_city = request.form['new_site_city']
+			provided_site_state = request.form['new_site_state']
+			provided_site_zip = request.form['new_site_zip']
 
-		# perform the insertion
-		dbiq.insert_site(new_site_address_1=provided_site_address_1, 
-			new_site_address_2=provided_site_address_2, 
-			new_site_city=provided_site_city, 
-			new_site_state=provided_site_state, 
-			new_site_zip=provided_site_zip)
+			print('provided_site_address_2 is', provided_site_address_2)
 
-		return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
+			# perform the insertion
+			dbiq.insert_site(new_site_address_1=provided_site_address_1, 
+				new_site_address_2=provided_site_address_2, 
+				new_site_city=provided_site_city, 
+				new_site_state=provided_site_state, 
+				new_site_zip=provided_site_zip)
+
+			return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
+
+
+		if request.form["btn"]=="Update":
+
+			# obtain data from new site form
+			update_site_address_1 = request.form['site-edit-address-1']
+			update_site_address_2 = request.form['site-edit-address-2']
+			update_site_city = request.form['site-edit-city']
+			update_site_state = request.form['site-edit-state']
+			update_site_zip = request.form['site-edit-zip']
+
+			# perform the update
+			dbuq.update_site(update_site_address_1=update_site_address_1, 
+				update_site_address_2=update_site_address_2, 
+				update_site_city=update_site_city, 
+				update_site_state=update_site_state, 
+				update_site_zip=update_site_zip)
+
+			return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
+
+
 
 # workorder details. it takes the wo_id as argument to retrive the the information from DB
 @webapp.route('/wo-details', methods=['GET', 'POST'])
