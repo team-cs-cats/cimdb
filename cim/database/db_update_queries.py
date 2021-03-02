@@ -31,10 +31,10 @@ def update_site(update_site_address_1, update_site_address_2, update_site_city, 
 	# Load SQL query for updating the data for a selected site 
 	update_site_query = """
 	UPDATE Sites SET 
-	site_address_1 = %s, 
-	site_address_2 = %s, 
-	site_address_city = %s, 
-	site_address_state = %s, 
+	site_address_1 = '%s', 
+	site_address_2 = '%s', 
+	site_address_city = '%s', 
+	site_address_state = '%s', 
 	site_address_postal_code = %s
 	WHERE site_id = %s
 	;
