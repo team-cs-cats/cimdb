@@ -157,7 +157,17 @@ Filter Existing Sites
 		data-site-address-postal-code="{{site.site_address_postal_code}}"
 		data-title="Edit Site ID {{site.site_id}}">Edit</button></th>
 
-		<td><button class="btn-sm btn-danger">Delete</button></td>
+		<td><button type="button"
+		class="btn-sm btn-danger" 
+		data-toggle="modal" 
+		data-target="#deleteSite"
+		data-site-id-to-delete="{{site.site_id}}"
+		data-site-address-1="{{site.site_address_1}}"
+		data-site-address-2="{{site.site_address_2}}"
+		data-site-address-city="{{site.site_address_city}}"
+		data-site-address-state="{{site.site_address_state}}"
+		data-site-address-postal-code="{{site.site_address_postal_code}}"
+		data-title="Delete Site: {{site.site_address_city}}">Delete</button></td>
 	</tr>
 	{% endfor %}
 
@@ -215,6 +225,84 @@ Filter Existing Sites
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 					<button type="submit" class="btn btn-primary" id="btnUpdate" name="btnUpdate">Update</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal popup for site Delete feature -->
+<div id="deleteSite" class="modal fade" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id="update-site-data" action="" method="POST" onsubmit="">
+				<div class="modal-header">
+					<h5 class="modal-title">Modal Window</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+
+					 <input type="hidden" id="site-id-to-delete" name="site-id-to-delete" value=""> 
+
+					 <div class="form-group p-1">
+
+						<p class='text-justify'><strong>Note:</strong> A 2Fast4U site associated with any current Employees, Inventory, or Locations <strong>cannot</strong> be removed from the CIMDB. To continue:</p>
+
+						<ul>
+							<li>delete or transfer all employees currently assigned to this site to another 2Fast4U site </li>
+							<li>delete or relocate all component inventory located at this site to another 2Fast4U site </li>
+							<li>delete all storage locations associated with this site</li>
+							<!-- <li>reassign any Work Orders currently assigned to them to their </li> -->
+						</ul>
+
+						<p>Are you <strong>sure</strong> you want to delete 2Fast4U site located in <span id="site-delete-city" name="site-delete-city"></span>?</p>
+
+						<p>This will: </p>
+						<ul>
+							<li>remove this site as an option for receiving new components </li>
+							<li>remove the ability to assign employees to this site</li>
+							<!-- <li>reassign any Work Orders currently assigned to them to their </li> -->
+						</ul>
+					</div>                    	
+
+					<!-- <div class="form-group p-1">
+						<label class="control-label" >Address 1:</label>
+						<input type="text" id="site-delete-address-1" name="site-delete-address-1" class="form-control" placeholder="123 Main Street" required>
+					</div>  
+
+					<div class="form-group p-1">
+						<label class="control-label" >Address 2:</label>
+						<input type="text" id="site-delete-address-2" name="site-delete-address-2" class="form-control" placeholder='Unit 500'>
+					</div>  
+
+
+					<div class="form-group p-1">
+						<label class="control-label" >City:</label>
+						<input type="text" id="site-delete-city" name="site-delete-city" class="form-control" placeholder="San Jose" required>
+					</div>  
+
+
+					<div class="form-group p-1">
+						<label class="control-label" >State:</label>
+						<select class="custom-select" name="site-delete-state" id="site-delete-state" required>
+							<option selected>Select State: </option>
+							{% for state in states %}
+							<option>{{state.Code}}</option>
+							{% endfor %}
+						</select>
+					</div>  
+
+					<div class="form-group p-1">
+						<label class="control-label" >Zip Code:</label>
+						<input type="number" min="00000" max="99999" id="site-delete-zip" name="site-delete-zip" class="form-control" placeholder="99999" required>
+					</div>   -->
+					
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">No/Cancel</button>
+					<button type="submit" class="btn btn-danger" id="btnSiteDelete" name="btnSiteDelete">Yes/Delete</button>
 				</div>
 			</form>
 		</div>

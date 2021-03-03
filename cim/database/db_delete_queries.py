@@ -26,10 +26,12 @@ def delete(delete_query_to_run):
 		return False
 
 
-def delete_site():
+def delete_site(site_id_from_delete_button):
 
 	# Load SQL query for DELETEing the data for a selected site 
-	delete_site_query = """"""
+	delete_site_query = """
+	DELETE FROM Sites WHERE site_id='%s';
+	"""%(site_id_from_delete_button)
 	delete(delete_query_to_run=delete_site_query)
 
 

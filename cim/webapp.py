@@ -484,9 +484,9 @@ def employee_management():
 			# obtain data from the Delete Employee Modal
 			employee_id_to_delete = request.form['employee-id-to-delete']
 
-			# Perform the update
+			# Perform the deletion
 			dbdq.delete_employee(employee_id_to_delete=employee_id_to_delete)
-			
+
 		# Reload the employee details since they have been updated
 		employee_results = dbq.get_db_employees()
 		return render_template("employee_mgmt.html", sites=site_results, employees=employee_results)
@@ -528,9 +528,6 @@ def site_management():
 				new_site_state=provided_site_state, 
 				new_site_zip=provided_site_zip)
 
-			site_results = dbq.get_db_sites()
-			return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
-
 		if "btnUpdate" in request.form:
 
 			# obtain data from new site form
@@ -549,11 +546,17 @@ def site_management():
 				update_site_zip=update_site_zip,
 				site_id_to_update=site_id_to_update)
 
-			site_results = dbq.get_db_sites()
+		# Lastly, check if the POST was a DELETE for a site
+		if "btnSiteDelete" in request.form:
 
-			return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
+			# obtain data from the Delete Site Modal
+			site_id_to_delete = request.form['site-id-to-delete']
 
-		# If it isn't anything, return the old site
+			# Perform the deletion
+			dbdq.delete_site(site_id_to_delete=site_id_to_delete)
+
+		# Reload the site results, and refresh the page
+		site_results = dbq.get_db_sites()
 		return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
 
 
