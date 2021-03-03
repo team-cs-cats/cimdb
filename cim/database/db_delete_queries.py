@@ -17,7 +17,7 @@ def delete(delete_query_to_run):
 	# Attempt to delete. If successful, return True
 	try:
 		db_connection = db.connect_to_database()
-		cursor = db.execute_query(db_connection=db_connection, query=query_to_run)
+		cursor = db.execute_query(db_connection=db_connection, query=delete_query_to_run)
 		return True
 	
 	# If unsuccessful, print the error to the server log and return False
@@ -26,10 +26,12 @@ def delete(delete_query_to_run):
 		return False
 
 
-def delete_site():
+def delete_site(site_id_to_delete):
 
 	# Load SQL query for DELETEing the data for a selected site 
-	delete_site_query = """"""
+	delete_site_query = """
+	DELETE FROM Sites WHERE site_id='%s';
+	"""%(site_id_to_delete)
 	delete(delete_query_to_run=delete_site_query)
 
 
@@ -47,10 +49,12 @@ def delete_work_order_products():
 	delete(delete_query_to_run=delete_work_order_products_query)
 
 
-def delete_employee():
+def delete_employee(employee_id_to_delete):
 
 	# Load SQL query for DELETEing the data for a selected employee 
-	delete_employee_query = """"""
+	delete_employee_query = """
+	DELETE FROM Employees WHERE employee_id='%s';
+	"""%(employee_id_to_delete)
 	delete(delete_query_to_run=delete_employee_query)
 
 
@@ -95,8 +99,10 @@ def delete_regular_component():
 	delete_regular_component_query = """"""
 	delete(delete_query_to_run=delete_regular_component_query)
 
-def delete_special_component():
+def delete_special_component(spec_comp_sn_to_delete):
 
 	# Load SQL query for DELETEing the data for a selected regular component
-	delete_special_component_query = """"""
+	delete_special_component_query = """
+	DELETE FROM SpecialComponents WHERE sc_sn='%s';
+	"""%(spec_comp_sn_to_delete)
 	delete(delete_query_to_run=delete_special_component_query)

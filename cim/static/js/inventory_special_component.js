@@ -1,4 +1,6 @@
 
+
+// jQuery function for populating the Edit Special Component modal
 $(document).ready(function(){
 
 	$("#editSpecialComponent").on("show.bs.modal", function(event){
@@ -8,6 +10,9 @@ $(document).ready(function(){
 	// Extract value from the custom data-* attribute
 	var titleData = button.data("title");
 	$(this).find(".modal-title").text(titleData);
+
+	var specCompSnData = button.data("spec-comp-serial-number");
+	$(this).find("#spec-comp-serial-number").val(specCompSnData);
 
 	var partNumberData = button.data("spec-comp-part-number");
 	$(this).find("#spec-comp-edit-part-number").val(partNumberData);
@@ -20,6 +25,29 @@ $(document).ready(function(){
 	var specialComponentIsFreeData = button.data("spec-comp-is-free");        
 	$(this).find("#spec-comp-edit-is-free").prop('checked', specialComponentIsFreeData);
 
+	});
+
+});
+
+
+
+// jQuery function for populating the Delete Special Component modal
+$(document).ready(function(){
+
+	$("#deleteSpecialComponent").on("show.bs.modal", function(event){
+	// Get the button that triggered the modal
+	var button = $(event.relatedTarget);
+
+	// Extract value from the custom data-* attribute
+	var titleData = button.data("title");
+	$(this).find(".modal-title").text(titleData);
+
+	var specCompSnData = button.data("spec-comp-delete-serial-number");
+	$(this).find("#spec-comp-delete-serial-number").val(specCompSnData);
+
+	var partNumberData = button.data("spec-comp-delete-part-number");
+	$(this).find("#spec-comp-delete-part-number").html(partNumberData);
+	
 	});
 
 });
