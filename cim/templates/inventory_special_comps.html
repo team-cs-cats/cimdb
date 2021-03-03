@@ -134,8 +134,9 @@ Note that each shelf in each room can store multiple special components, each wi
 		class="btn-sm btn-warning" 
 		data-toggle="modal" 
 		data-target="#editSpecialComponent" 
+		data-spec-comp-serial-number="{{special_component.sc_sn}}"
 		data-spec-comp-part-number="{{special_component.sc_pn}}"
-		data-spec-comp-edit-location="{{special_component.sc_site_city}}: Room {{special_component.sc_room}}, Shelf {{special_component.sc_shelf}}" 
+		data-spec-comp-edit-location="{{special_component.sc_loc_id}}" 
 		data-spec-comp-is-free="{{special_component.sc_free}}" 
 		data-title="Edit Special Component ID {{special_component.sc_sn}}">Edit</button></th>
 
@@ -157,7 +158,7 @@ Note that each shelf in each room can store multiple special components, each wi
 				</div>
 				<div class="modal-body">  
 
-					<input type="hidden" id="site-id-to-edit" name="sc-id-to-edit" value="">   
+					<input type="hidden" id="spec-comp-serial-number" name="spec-comp-serial-number" value="">   
 
 					<div class="form-group p-1">
 						<label class="control-label" >Part Number:</label>
@@ -180,7 +181,7 @@ Note that each shelf in each room can store multiple special components, each wi
 						</select>
 					</div>
 
-					<div class="custom-control custom-checkbox">
+					<div class="form-group custom-checkbox">
 						<label class="custom-control-label" for="defaultUnchecked">Is Free:  </label>
 						<input type="checkbox" class="custom-control-input ml-2" id="spec-comp-edit-is-free" name="spec-comp-edit-is-free" checked/>
 

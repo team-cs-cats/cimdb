@@ -9,6 +9,9 @@ $(document).ready(function(){
 	var titleData = button.data("title");
 	$(this).find(".modal-title").text(titleData);
 
+	var specCompSnData = button.data("spec-comp-serial-number");
+	$(this).find("#spec-comp-serial-number").val(specCompSnData);
+
 	var partNumberData = button.data("spec-comp-part-number");
 	$(this).find("#spec-comp-edit-part-number").val(partNumberData);
 

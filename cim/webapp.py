@@ -315,8 +315,14 @@ def inventory_special_components():
 			# obtain data from new special component form
 			updated_spec_comp_part_number = request.form['spec-comp-edit-part-number']
 			updated_spec_comp_location = int(request.form['spec-comp-edit-location'])
-			updated_spec_comp_is_free = request.form['spec-comp-edit-is-free']
-			sc_id_to_update = request.form['sc-id-to-edit']
+
+			# for the 'Is Free' checkbox, we first assume it is False (not checked). Then, if it is found to be checked, we update.
+			updated_spec_comp_is_free = False
+			if request.form.get('spec-comp-edit-is-free'):
+				updated_spec_comp_is_free = True
+			
+			print('updated_spec_comp_is_free', updated_spec_comp_is_free)
+			sc_id_to_update = request.form['spec-comp-serial-number']
 
 			# perform the update
 			dbuq.update_special_component(updated_spec_comp_part_number=updated_spec_comp_part_number, 
