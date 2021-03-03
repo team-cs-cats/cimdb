@@ -188,8 +188,8 @@ Filter Existing Employees
 						<label class="control-label" >Group:</label>
 						<select class="custom-select" id="edit-employee-group" name="edit-employee-group" required>
 							<option selected>Select Group: </option>
-							<option>Supervisor</option>
-							<option>Production</option>
+							<option value='supervisor'>Supervisor</option>
+							<option value='production'>Production</option>
 						</select>
 					</div>
 
@@ -199,7 +199,7 @@ Filter Existing Employees
 							<option selected>Select Site: </option>
 							{% for site in sites %}
 								{% if site.site_id != 1 %}
-						    	<option>{{site.site_address_city}}</option>
+						    	<option value={{site.site_id}}>{{site.site_address_city}}</option>
 								{% endif %}
 						    {% endfor %}
 						</select>
