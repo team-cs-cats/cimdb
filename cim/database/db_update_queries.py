@@ -56,10 +56,21 @@ def update_work_order_products():
 	update(update_query_to_run=update_work_order_products_query)
 
 
-def update_employee():
+def update_employee(employee_group_input, employee_first_name_input, employee_last_name_input, 
+	employee_email_input, employee_site_id_dropdown_input, employee_id_from_update_button):
 
 	# Load SQL query for updating the data for a selected employee 
-	update_employee_query = """"""
+	update_employee_query = """
+	UPDATE Employees SET 
+	employee_group = '%s',
+	employee_first_name = '%s',
+	employee_last_name = '%s',
+	employee_email = '%s',
+	employee_site_id = '%s'
+	WHERE employee_id = '%s';
+	;
+	""" % (employee_group_input, employee_first_name_input, employee_last_name_input, 
+		employee_email_input, employee_site_id_dropdown_input, employee_id_from_update_button)
 	update(update_query_to_run=update_employee_query)
 
 
