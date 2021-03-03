@@ -99,8 +99,10 @@ def delete_regular_component():
 	delete_regular_component_query = """"""
 	delete(delete_query_to_run=delete_regular_component_query)
 
-def delete_special_component():
+def delete_special_component(spec_comp_sn_to_delete):
 
 	# Load SQL query for DELETEing the data for a selected regular component
-	delete_special_component_query = """"""
+	delete_special_component_query = """
+	DELETE FROM SpecialComponents WHERE sc_sn='%s';
+	"""%(spec_comp_sn_to_delete)
 	delete(delete_query_to_run=delete_special_component_query)

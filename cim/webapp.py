@@ -330,16 +330,24 @@ def inventory_special_components():
 				updated_spec_comp_is_free=updated_spec_comp_is_free,
 				sc_id_to_update=sc_id_to_update)
 
-			# re-render the html using the updated information for special components
-			return render_template("inventory_special_comps.html", 
-				special_components=dbq.get_db_special_components(), 
-				sites=dbq.get_db_sites(),
-				special_components_catalog=data.get_sp_catalog(),
-				locations=dbq.get_db_locations()
-				)
+		# Handle Delete Existing Special Component (DELETE)
+		if "btnSpecCompDelete" in request.form:
 
-		# If it isn't anything, return the old site
-		return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
+			# obtain data from new special component form
+			sc_id_to_delete = request.form['spec-comp-serial-number']
+
+			# perform the update
+			dbdq.delete_special_component(sc_id_to_delete=sc_id_to_delete)
+
+
+
+		# regardless, refresh the page with any changes to the data
+		return render_template("site_mgmt.html", 
+			sites=dbq.get_db_sites(), 
+			states=data.get_states(), 
+			special_components_catalog=data.get_sp_catalog(),
+			locations=dbq.get_db_locations()
+			)
 
 @webapp.route('/inventory-reg', methods=['GET', 'POST'])
 @login_required
