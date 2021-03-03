@@ -55,14 +55,8 @@ $(document).ready(function(){
 	var employeeLastNameData = button.data("employee-last-name");        
 	$(this).find("#delete-employee-last-name").html(employeeLastNameData);
 
-	// var employeeGroupData = button.data("employee-group");
-	// $(this).find("#delete-employee-group").val(employeeGroupData);
-
 	var employeeSiteData = button.data("employee-site");
 	$(this).find("#delete-employee-site").html(employeeSiteData);
-
-	// var employeeEmailData = button.data("employee-email");
-	// $(this).find("#delete-employee-email").val(employeeEmailData);
 
 	});
 });
