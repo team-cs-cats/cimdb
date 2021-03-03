@@ -155,7 +155,17 @@ Filter Existing Employees
 		data-employee-email="{{employee.employee_email}}"
 		data-title="Edit Details of Employee {{employee.employee_id}}">Edit</button></th>
 
-		<td><button class="btn-sm btn-danger">Delete</button></td>
+		<td><button type="button"
+		class="btn-sm btn-danger"
+		data-toggle="modal" 
+		data-target="#deleteEmployee"
+		data-employee-id="{{employee.employee_id}}"
+		data-employee-first-name="{{employee.employee_first_name}}"
+		data-employee-last-name="{{employee.employee_last_name}}"
+		data-employee-group="{{employee.employee_group}}"
+		data-employee-site="{{employee.employee_site_id}}"
+		data-employee-email="{{employee.employee_email}}"
+		data-title="Delete of Employee {{employee.employee_id}}?">Delete</button></td>
 	</tr>
 	{% endfor %}
 {% endblock %}
@@ -221,6 +231,74 @@ Filter Existing Employees
 	</div>
 </div>
 
+
+<div id="deleteEmployee" class="modal fade" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form method="POST">
+				<div class="modal-header">
+					<h5 class="modal-title">Modal Window</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">    
+
+					<input type="hidden" id="employee-id-to-delete" name="employee-id-to-delete" value="">                 	
+
+					<div class="form-group p-1">
+
+						<p class='text-justify'><strong>Note:</strong> If you need to remove an employee with outstanding Work Orders, reassign their Work Orders before continuing. Employees assigned to Work Orders <strong>cannot</strong> be removed from the 2Fast4U CIMDB.</p>
+
+						<p>Are you <strong>sure</strong> you want to delete <span id="delete-employee-first-name" name="delete-employee-first-name"></span> <span id="delete-employee-last-name" name="delete-employee-last-name"></span>?</p>
+
+						<p>This will: </p>
+						<ul>
+							<li>remove them from the <span id="delete-employee-site" name="delete-employee-site"></span> 2Fast4U Site</li>
+							<li>remove their web access to the CIMDB web application</li>
+							<!-- <li>reassign any Work Orders currently assigned to them to their </li> -->
+						</ul>
+					</div>  
+
+					<!-- <div class="form-group p-1">
+						<label class="control-label" >Last Name:</label>
+						<input type="text" id="delete-employee-last-name" name="delete-employee-last-name" class="form-control" placeholder='Doe' required>
+					</div>  
+
+					<div class="form-group p-1">
+						<label class="control-label" >Group:</label>
+						<select class="custom-select" id="delete-employee-group" name="delete-employee-group" required>
+							<option selected>Select Group: </option>
+							<option value='supervisor'>Supervisor</option>
+							<option value='production'>Production</option>
+						</select>
+					</div>
+
+					<div class="form-group p-1">
+						<label class="control-label" >Site:</label>
+						<select class="custom-select" id="delete-employee-site" name="delete-employee-site" required>
+							<option selected>Select Site: </option>
+							{% for site in sites %}
+								{% if site.site_id != 1 %}
+						    	<option value={{site.site_id}}>{{site.site_address_city}}</option>
+								{% endif %}
+						    {% endfor %}
+						</select>
+					</div>  
+
+					<div class="form-group p-1">
+						<label class="control-label" >Email:</label>
+						<input type="text" id="edit-employee-email" name="edit-employee-email" class="form-control" placeholder="jsmith8@2fast4you.com" required>
+					</div>    -->
+					
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">No/Cancel</button>
+					<button type="submit" class="btn btn-danger" id="deleteExistingEmployeeBtn" name="deleteExistingEmployeeBtn">Yes/Delete</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 {% endblock %}
 
 <!-- Page-specific scripts -->

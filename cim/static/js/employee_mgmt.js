@@ -31,3 +31,38 @@ $(document).ready(function(){
 	
 });
 	});
+
+
+
+// Loads the Delete Modal popup for the employee DELETE function
+$(document).ready(function(){
+	
+	$("#deleteEmployee").on("show.bs.modal", function(event){
+
+	// Get the button that triggered the modal
+	var button = $(event.relatedTarget);
+
+	// Extract value from the custom data-* attribute
+	var titleData = button.data("title");
+	$(this).find(".modal-title").text(titleData);
+
+	var employeeIdData = parseInt(button.data("employee-id"));
+	$(this).find("#employee-id-to-delete").val(employeeIdData);
+
+	var employeeFirstNameData = button.data("employee-first-name");
+	$(this).find("#delete-employee-first-name").val(employeeFirstNameData);
+
+	var employeeLastNameData = button.data("employee-last-name");        
+	$(this).find("#delete-employee-last-name").val(employeeLastNameData);
+
+	var employeeGroupData = button.data("employee-group");
+	$(this).find("#delete-employee-group").val(employeeGroupData);
+
+	var employeeSiteData = button.data("employee-site");
+	$(this).find("#delete-employee-site").val(employeeSiteData);
+
+	var employeeEmailData = button.data("employee-email");
+	$(this).find("#delete-employee-email").val(employeeEmailData);
+
+	});
+});

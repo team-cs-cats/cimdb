@@ -465,8 +465,6 @@ def employee_management():
 		# Then, check to handle Edit exisitng employee UPDATE
 		if "editExistingEmployeeBtn" in request.form:
 
-			print('\nattempting to update employee\n')
-
 			# obtain data from the Edit Employee Details Modal
 			updated_employee_fname = request.form['edit-employee-first-name']
 			updated_employee_lname = request.form['edit-employee-last-name']
@@ -476,10 +474,19 @@ def employee_management():
 			employee_id_to_update = request.form['employee-id-to-update']
 
 			# Perform the update
-			dbuq.update_employee(employee_group_input=updated_employee_group, employee_first_name_input=updated_employee_fname, employee_last_name_input=updated_employee_lname, 
-	employee_email_input=updated_employee_email, employee_site_id_dropdown_input=updated_employee_site_id, employee_id_from_update_button=employee_id_to_update)
+			dbuq.update_employee(employee_group_input=updated_employee_group, employee_first_name_input=updated_employee_fname, 
+				employee_last_name_input=updated_employee_lname, employee_email_input=updated_employee_email, 
+				employee_site_id_dropdown_input=updated_employee_site_id, employee_id_from_update_button=employee_id_to_update)
 
+		# Lastly, check if the POST was a DELETE for an employee
+		if "deleteExistingEmployeeBtn" in request.form:
 
+			# obtain data from the Delete Employee Modal
+			employee_id_to_delete = request.form['employee-id-to-delete']
+
+			# Perform the update
+			dbdq.delete_employee(employee_id_to_delete=employee_id_to_delete)
+			
 		# Reload the employee details since they have been updated
 		employee_results = dbq.get_db_employees()
 		return render_template("employee_mgmt.html", sites=site_results, employees=employee_results)
