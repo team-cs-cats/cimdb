@@ -317,9 +317,9 @@ def inventory_special_components():
 			updated_spec_comp_location = int(request.form['spec-comp-edit-location'])
 
 			# for the 'Is Free' checkbox, we first assume it is False (not checked). Then, if it is found to be checked, we update.
-			updated_spec_comp_is_free = False
+			updated_spec_comp_is_free = 0
 			if request.form.get('spec-comp-edit-is-free'):
-				updated_spec_comp_is_free = True
+				updated_spec_comp_is_free = 1
 			
 			print('updated_spec_comp_is_free', updated_spec_comp_is_free)
 			sc_id_to_update = request.form['spec-comp-serial-number']
