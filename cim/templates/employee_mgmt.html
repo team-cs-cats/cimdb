@@ -163,9 +163,9 @@ Filter Existing Employees
 		data-employee-first-name="{{employee.employee_first_name}}"
 		data-employee-last-name="{{employee.employee_last_name}}"
 		data-employee-group="{{employee.employee_group}}"
-		data-employee-site="{{employee.employee_site_id}}"
+		data-employee-site="{{employee.employee_site_name}}"
 		data-employee-email="{{employee.employee_email}}"
-		data-title="Delete of Employee {{employee.employee_id}}?">Delete</button></td>
+		data-title="Delete Employee: {{employee.employee_first_name}} {{employee.employee_last_name}}?">Delete</button></td>
 	</tr>
 	{% endfor %}
 {% endblock %}

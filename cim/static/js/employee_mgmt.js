@@ -36,7 +36,7 @@ $(document).ready(function(){
 
 // Loads the Delete Modal popup for the employee DELETE function
 $(document).ready(function(){
-	
+
 	$("#deleteEmployee").on("show.bs.modal", function(event){
 
 	// Get the button that triggered the modal
@@ -50,19 +50,19 @@ $(document).ready(function(){
 	$(this).find("#employee-id-to-delete").val(employeeIdData);
 
 	var employeeFirstNameData = button.data("employee-first-name");
-	$(this).find("#delete-employee-first-name").val(employeeFirstNameData);
+	$(this).find("#delete-employee-first-name").html(employeeFirstNameData);
 
 	var employeeLastNameData = button.data("employee-last-name");        
-	$(this).find("#delete-employee-last-name").val(employeeLastNameData);
+	$(this).find("#delete-employee-last-name").html(employeeLastNameData);
 
-	var employeeGroupData = button.data("employee-group");
-	$(this).find("#delete-employee-group").val(employeeGroupData);
+	// var employeeGroupData = button.data("employee-group");
+	// $(this).find("#delete-employee-group").val(employeeGroupData);
 
 	var employeeSiteData = button.data("employee-site");
-	$(this).find("#delete-employee-site").val(employeeSiteData);
+	$(this).find("#delete-employee-site").html(employeeSiteData);
 
-	var employeeEmailData = button.data("employee-email");
-	$(this).find("#delete-employee-email").val(employeeEmailData);
+	// var employeeEmailData = button.data("employee-email");
+	// $(this).find("#delete-employee-email").val(employeeEmailData);
 
 	});
 });
