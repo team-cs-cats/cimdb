@@ -51,7 +51,7 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 		<select class="custom-select m-1 p-1" id="new_reg_comp_site" required>
 			<option selected>Select Site: </option>
 			{% for site in sites %}
-			<option>{{site.site_name}}</option>
+			<option>{{site.site_address_city}}</option>
 			{% endfor %}
 		</select>
 
@@ -80,7 +80,7 @@ Filter Existing Regular Components
 
 	<div class="text-center">
 
-		<select class="custom-select m-1" id="new_category" required>
+		<select class="custom-select m-1" id="filter_category" required>
 			<option selected>Select Category: </option>
 			<option>Case</option>
 			<option>Graphics Card (GC)</option>
@@ -95,7 +95,7 @@ Filter Existing Regular Components
 		<select class="custom-select m-1" id="existing_reg_comp_site">
 			<option selected>Select Site: </option>
 			{% for site in sites %}
-			<option>{{site.site_name}}</option>
+			<option>{{site.site_address_city}}</option>
 			{% endfor %}
 		</select>
 
@@ -112,6 +112,21 @@ Filter Existing Regular Components
 	</div>
 
 </form>
+
+
+<div class="input-group">
+  <div class="form-outline w-75">
+    <input type="search" id="filterSearch" class="form-control" placeholder="Filter by Category, Part Number, Site Name, Room Number or Shelf Number" />
+  </div>
+  <button type="button" class="btn btn-primary">
+    <i class="fas fa-search">Filter</i>
+  </button>
+  <button type="button" class="btn btn-primary">
+    <i class="fas fa-search">Clear Filters</i>
+  </button>
+</div>
+
+<p id="datalist"></p>
 {% endblock %}
 
 <!-- Main results table -->
@@ -138,7 +153,7 @@ Filter Existing Regular Components
 						<select class="custom-select mt-2 pl-2 ml-2" id="new_rc_site" required>
 							<option selected>Select Site: </option>
 							{% for site in sites %}
-							<option>{{site.site_name}}</option>
+							<option>{{site.site_address_city}}</option>
 							{% endfor %}
 						</select>
 					</div>
@@ -172,20 +187,21 @@ Filter Existing Regular Components
 
 			<div class="row ml-5 mr-5">
 
+				{% if regular_component.TotalQuantity > 0 %}
+
 				<table class="table table-striped ml-5 mr-5">
 					<tr>
-						<th>Site</th>
-						<th>Location</th>
+						<th>Site/Location</th>
 						<th>Quantity</th>
 						<th>Edit Quantity</th>
 						<th>Delete from Location</th>
 					</tr>
 
-					{% for location in regular_component.rc_locations %}
+					{% for location in reg_comp_locations %}
+						{% if (location.PartNumber==regular_component.rc_pn) and (location.SiteCity != 'Customer') and (location.Quantity > 0) %}
 					<tr>
-						<td>{% for site in sites %}{% endfor %}</td>
-						<td>Room {{location.location_room_number}}, Shelf {{location.location_shelf_number}}</td>
-						<td>{{location.quantity_at_location}}</td>
+						<td>{{location.SiteCity}}/Room {{location.RoomNumber}}, Shelf {{location.ShelfNumber}}</td>
+						<td>{{location.Quantity}}</td>
 
 						<th><button type="button" 
 							class="btn-sm btn-warning text-right" 
@@ -193,18 +209,23 @@ Filter Existing Regular Components
 							data-target="#editRegularComponentQuantity" 
 							data-reg-comp-part-number="{{regular_component.rc_pn}}"
 							data-reg-comp-category="{{regular_component.rc_category}}"
-							data-reg-comp-site-name="{% for site in sites %}{% if location.location_site_id == site.site_id%}{{site.site_name}}{% endif %}{% endfor %}" 
-							data-reg-comp-room-number="{{location.location_room_number}}" 
-							data-reg-comp-shelf-number="{{location.location_shelf_number}}" 
-							data-reg-comp-quantity={{location.quantity_at_location}}
-							data-title="Edit Quantity of Part Number {{regular_component.rc_pn}}">Edit</button></th>
+							data-reg-comp-site-name="{{location.SiteCity}}" 
+							data-reg-comp-room-number="{{location.RoomNumber}}" 
+							data-reg-comp-shelf-number="{{location.ShelfNumber}}" 
+							data-reg-comp-quantity={{location.Quantity}}
+							data-title="Edit Quantity of {{regular_component.rc_part_name}}">Edit</button></th>
 
 							<td><button class="btn-sm btn-danger">Delete</button></td>
 					</tr>
+						{% endif %}
 					{% endfor %}
 
 
 				</table>
+
+				{% else %}
+				<div class="text-danger text-center mb-5">{{regular_component.rc_part_name}} is currently out of stock in all Sites.</div>
+				{% endif %}
 
 			</div>
 
@@ -231,7 +252,7 @@ Filter Existing Regular Components
 					<div class="modal-body">  
 
 						<div class="form-group p-1">
-							<label class="control-label" >Quantity in <span id="reg-comp-edit-site"></span>, Room <span id="reg-comp-edit-room-number"></span>, Shelf <span id="reg-comp-edit-shelf-number"></span>:</label>
+							<label class="control-label" >Quantity in <span id="reg-comp-view-site"></span>, Room <span id="reg-comp-view-room-number"></span>, Shelf <span id="reg-comp-view-shelf-number"></span>:</label>
 							<input type="number" min="0" max="999" id="reg-comp-edit-quantity" class="form-control" required>
 						</div> 
 
@@ -265,7 +286,7 @@ Filter Existing Regular Components
 
 						<div class="form-group p-1">
 							<label class="control-label" >Part Category:</label>
-							<input type="text" id="reg-comp-edit-part-number" class="form-control"  required>
+							<input type="text" id="reg-comp-edit-part-category" class="form-control"  required>
 						</div> 
 
 					</div>

@@ -280,11 +280,60 @@ def inventory_special_components():
 
 	if request.method=="GET":
 		return render_template("inventory_special_comps.html", 
-			special_components=data.get_sc(), 
-			sites=data.get_sites(),
-			special_components_catalog=data.get_sp_catalog()
+			special_components=dbq.get_db_special_components(), 
+			sites=dbq.get_db_sites(),
+			special_components_catalog=data.get_sp_catalog(),
+			locations=dbq.get_db_locations()
 			)
 
+	# handle POST requests from Order New and Edit
+	if request.method=="POST":
+
+		# Handle Order New Special Component (INSERT)
+		if "btnAddSpecComp" in request.form:
+
+			provided_new_sc_pn = request.form['new_spec_comp_part_number']
+			provided_new_sc_site = int(request.form['new_spec_comp_site'])
+			provided_new_sc_quantity = int(request.form['new_spec_comp_quantity'])
+
+			# perform the insertion
+			for insertion in range(provided_new_sc_quantity):
+				dbiq.insert_special_component(
+					new_sc_pn=provided_new_sc_pn, 
+					new_sc_location_id=provided_new_sc_site)
+			
+			return render_template("inventory_special_comps.html", 
+				special_components=dbq.get_db_special_components(), 
+				sites=dbq.get_db_sites(),
+				special_components_catalog=data.get_sp_catalog(),
+				locations=dbq.get_db_locations()
+				)
+
+		# Handle Edit Existing Special Component (UPDATE)
+		if "btnSpecCompUpdate" in request.form:
+
+			# obtain data from new special component form
+			updated_spec_comp_part_number = request.form['spec-comp-edit-part-number']
+			updated_spec_comp_location = int(request.form['spec-comp-edit-location'])
+			updated_spec_comp_is_free = request.form['spec-comp-edit-is-free']
+			sc_id_to_update = request.form['sc-id-to-edit']
+
+			# perform the update
+			dbuq.update_special_component(updated_spec_comp_part_number=updated_spec_comp_part_number, 
+				updated_spec_comp_location=updated_spec_comp_location,
+				updated_spec_comp_is_free=updated_spec_comp_is_free,
+				sc_id_to_update=sc_id_to_update)
+
+			# re-render the html using the updated information for special components
+			return render_template("inventory_special_comps.html", 
+				special_components=dbq.get_db_special_components(), 
+				sites=dbq.get_db_sites(),
+				special_components_catalog=data.get_sp_catalog(),
+				locations=dbq.get_db_locations()
+				)
+
+		# If it isn't anything, return the old site
+		return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
 
 @webapp.route('/inventory-reg', methods=['GET', 'POST'])
 @login_required
@@ -299,11 +348,17 @@ def inventory_regular_components():
 	# Load location results from the database (or the dummy data if the database doesn't work)
 	regular_component_results = dbq.get_db_regular_components()
 
+	# regular comps by location 
+	reg_comp_location_details = dbq.get_db_regular_components_by_location()
+
 	# Load site results from the database (or the dummy data if the database doesn't work)
 	site_results = dbq.get_db_sites()
 
 	if request.method=="GET":
-		return render_template("inventory_regular_comps.html", regular_components=regular_component_results, sites=site_results)
+		return render_template("inventory_regular_comps.html", 
+			regular_components=regular_component_results, 
+			reg_comp_locations=reg_comp_location_details, 
+			sites=site_results)
 
 
 @webapp.route('/shipping', methods=['GET', 'POST'])
@@ -348,11 +403,6 @@ def locations():
 	# if post request perform insertion of new location
 	if request.method=="POST":
 
-		# refactored to pull from json TODO
-		# provided_add_new_location_site = request.json['add_new_location_site']
-		# provided_add_location_room_number = request.json['add_location_room_number']
-		# provided_add_location_shelf_number = request.json['add_location_shelf_number']
-
 		# # obtain data from new location form
 		provided_add_new_location_site = request.form['add_new_location_site']
 		provided_add_location_room_number = request.form['add_location_room_number']
@@ -364,8 +414,9 @@ def locations():
 			new_location_shelf_number=provided_add_location_shelf_number, 
 			new_location_site_id=provided_add_new_location_site)
 
-		# Ali's json method
-		# return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+
+		# Update the location results since they have changed
+		location_results = dbq.get_db_locations()
 		
 		return render_template("locations.html", 
 		locations=location_results, products=data.get_products(), regular_components=data.get_rc(), special_components=data.get_sc(), sites=site_results)
@@ -408,6 +459,8 @@ def employee_management():
 			new_employee_password=generated_password,
 			new_employee_site_id=provided_employee_site_id)
 
+		# Reload the employee details since they have been updated
+		employee_results = dbq.get_db_employees()
 		return render_template("employee_mgmt.html", sites=site_results, employees=employee_results)
 
 
@@ -428,23 +481,54 @@ def site_management():
 
 	if request.method=="POST":
 
-		# obtain data from new site form
-		provided_site_address_1 = request.form['new_site_address_1']
-		provided_site_address_2 = request.form['new_site_address_2']
-		provided_site_city = request.form['new_site_city']
-		provided_site_state = request.form['new_site_state']
-		provided_site_zip = request.form['new_site_zip']
+		if "addNewSiteBtn" in request.form:
 
-		print('provided_site_address_2 is', provided_site_address_2)
+			# obtain data from new site form
+			provided_site_address_1 = request.form['new_site_address_1']
+			provided_site_address_2 = request.form['new_site_address_2']
+			provided_site_city = request.form['new_site_city']
+			provided_site_state = request.form['new_site_state']
+			provided_site_zip = request.form['new_site_zip']
 
-		# perform the insertion
-		dbiq.insert_site(new_site_address_1=provided_site_address_1, 
-			new_site_address_2=provided_site_address_2, 
-			new_site_city=provided_site_city, 
-			new_site_state=provided_site_state, 
-			new_site_zip=provided_site_zip)
+			print('provided_site_address_2 is', provided_site_address_2)
 
+			# perform the insertion
+			dbiq.insert_site(new_site_address_1=provided_site_address_1, 
+				new_site_address_2=provided_site_address_2, 
+				new_site_city=provided_site_city, 
+				new_site_state=provided_site_state, 
+				new_site_zip=provided_site_zip)
+
+			site_results = dbq.get_db_sites()
+			return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
+
+		if "btnUpdate" in request.form:
+
+			# obtain data from new site form
+			update_site_address_1 = request.form['site-edit-address-1']
+			update_site_address_2 = request.form['site-edit-address-2']
+			update_site_city = request.form['site-edit-city']
+			update_site_state = request.form['site-edit-state']
+			update_site_zip = request.form['site-edit-zip']
+			site_id_to_update = request.form['site-id-to-edit']
+
+			# perform the update
+			dbuq.update_site(update_site_address_1=update_site_address_1, 
+				update_site_address_2=update_site_address_2, 
+				update_site_city=update_site_city, 
+				update_site_state=update_site_state, 
+				update_site_zip=update_site_zip,
+				site_id_to_update=site_id_to_update)
+
+			site_results = dbq.get_db_sites()
+
+			return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
+
+		# If it isn't anything, return the old site
 		return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
+
+
+
 
 # workorder details. it takes the wo_id as argument to retrive the the information from DB
 @webapp.route('/wo-details', methods=['GET', 'POST'])

@@ -57,20 +57,65 @@ def get_db_regular_components():
 	RegularComponents.rc_pn,
 	RegularComponents.rc_part_name,
 	RegularComponents.rc_category,
-	LocationsRegularComps.lrc_quantity,
+	SUM(LocationsRegularComps.lrc_quantity) AS TotalQuantity,
 	Locations.location_room_number,
 	Locations.location_shelf_number,
 	Sites.site_address_city
-	
 	FROM RegularComponents 
 	INNER JOIN LocationsRegularComps ON RegularComponents.rc_pn=LocationsRegularComps.lrc_rc_pn
 	INNER JOIN Locations ON Locations.location_id=LocationsRegularComps.lrc_location_id
 	INNER JOIN Sites ON Locations.location_site_id=Sites.site_id
+    GROUP BY RegularComponents.rc_pn;
 	"""
 	db_connection = db.connect_to_database()
 	cursor = db.execute_query(db_connection=db_connection, query=query)
 	reg_comp_results = cursor.fetchall()
 	return reg_comp_results
+
+
+def get_db_special_components():
+
+	# Load SQL query for regular component data
+	query = """SELECT
+	SpecialComponents.sc_sn AS sc_sn,
+	SpecialComponents.sc_pn AS sc_pn,
+	SpecialComponents.sc_is_free AS sc_free,
+	SpecialComponents.sc_product_sn AS sc_product_sn,
+	SpecialComponents.sc_location_id AS sc_loc_id,
+	Locations.location_room_number AS sc_room,
+	Locations.location_shelf_number AS sc_shelf,
+	Sites.site_address_city AS sc_site_city
+	FROM SpecialComponents 
+	INNER JOIN Locations ON Locations.location_id=SpecialComponents.sc_location_id
+	INNER JOIN Sites ON Locations.location_site_id=Sites.site_id
+	"""
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	spec_comp_results = cursor.fetchall()
+	return spec_comp_results
+
+
+def get_db_regular_components_by_location():
+
+	# Load SQL query for regular component data
+	query = """SELECT
+	LocationsRegularComps.lrc_rc_pn AS PartNumber,
+	Sites.site_address_city AS SiteCity,
+	Locations.location_room_number AS RoomNumber,
+	Locations.location_shelf_number AS ShelfNumber,
+	LocationsRegularComps.lrc_quantity AS Quantity
+	FROM RegularComponents 
+	INNER JOIN LocationsRegularComps ON RegularComponents.rc_pn=LocationsRegularComps.lrc_rc_pn
+	INNER JOIN Locations ON Locations.location_id=LocationsRegularComps.lrc_location_id
+	INNER JOIN Sites ON Locations.location_site_id=Sites.site_id
+	ORDER BY SiteCity, Quantity DESC
+	;
+	"""
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	reg_comp_results = cursor.fetchall()
+	return reg_comp_results
+
 
 
 def get_db_sites():

@@ -52,14 +52,14 @@ CREATE TABLE `Locations` (
   `location_shelf_number` int NOT NULL,
   `location_site_id` int NOT NULL,
   PRIMARY KEY (`location_id`),
-  FOREIGN KEY (`location_site_id`) REFERENCES `Sites`(`site_id`) 
+  FOREIGN KEY (`location_site_id`) REFERENCES `Sites`(`site_id`) ON UPDATE CASCADE
 )ENGINE=INNODB;
 
 
 -- Populate Locations table with data
 LOCK TABLES `Locations` WRITE;
 INSERT INTO `Locations` 
-VALUES (location_id, location_room_number, location_shelf_number, location_site_id)
+VALUES 
 (1, 0, 0, 1),
 (2, 1, 1, 12), (3, 1, 2, 12), (4, 1, 3, 12), (5, 1, 4, 12), (6, 1, 5, 12), 
 (7, 2, 1, 12), (8, 2, 2, 12), (9, 2, 3, 12), (10, 2, 4, 12), (11, 2, 5, 12), 
@@ -90,7 +90,7 @@ CREATE TABLE `Employees` (
   `employee_password` varchar(255),
   `employee_site_id` int,
   PRIMARY KEY (`employee_id`),
-  FOREIGN KEY (`employee_site_id`) REFERENCES `Sites`(`site_id`)
+  FOREIGN KEY (`employee_site_id`) REFERENCES `Sites`(`site_id`) ON UPDATE CASCADE
 );
 
 -- Populate Employees table with data
@@ -122,7 +122,7 @@ CREATE TABLE `WorkOrders` (
   `wo_reference_number` int NOT NULL,
   `wo_employee_id` int,
   PRIMARY KEY (`wo_id`),
-  FOREIGN KEY (`wo_employee_id`) REFERENCES `Employees`(`employee_id`)
+  FOREIGN KEY (`wo_employee_id`) REFERENCES `Employees`(`employee_id`) ON UPDATE CASCADE
 );
 
 
@@ -180,8 +180,8 @@ CREATE TABLE `LocationsRegularComps` (
   `lrc_rc_pn` int,
   `lrc_quantity` int NOT NULL,
   PRIMARY KEY (`lrc_id`),
-  FOREIGN KEY (`lrc_location_id`) REFERENCES `Locations`(`location_id`),
-  FOREIGN KEY (`lrc_rc_pn`) REFERENCES `RegularComponents`(`rc_pn`)
+  FOREIGN KEY (`lrc_location_id`) REFERENCES `Locations`(`location_id`) ON UPDATE CASCADE,
+  FOREIGN KEY (`lrc_rc_pn`) REFERENCES `RegularComponents`(`rc_pn`) ON UPDATE CASCADE
 );
 
 
@@ -189,16 +189,44 @@ CREATE TABLE `LocationsRegularComps` (
 -- Populate LocationsRegularComps table with data
 LOCK TABLES `LocationsRegularComps` WRITE;
 INSERT INTO `LocationsRegularComps` 
-(lrc_id, lrc_location_id, lrc_rc_pn, lrc_quantity) VALUES 
-(2,1,2,36), --
-(3,1,51,8), --
-(4,2,100,11), --
-(5,3,100,136), --
-(6,4,200,15),
-(7,4,152,45),
-(8,5,200,36),
-(9,5,201,74),
-(10,5,51,2);
+(lrc_id,  lrc_location_id,  lrc_rc_pn,  lrc_quantity) VALUES 
+(1, 4,                        1,        0),  
+(2, 64,                     2,        1),  
+(3, 69,                     3,        3),  
+(4, 43,                     50,       14),  
+(5, 14,                      51,       25),  
+(6, 35,                     52,       0),  
+(7, 45,                     150,        234),  
+(8, 15,                     151,        62),  
+(9, 30,                     152,        73),  
+(10, 68,                     1,        25),  
+(11, 34,                     2,        74),  
+(12, 31,                     3,        95),  
+(13, 13,                     50,       4),  
+(14, 24,                     51,       0),  
+(15, 72,                     52,       0),  
+(16, 57,                     150,        234),  
+(17, 29,                     151,        7),  
+(18, 58,                     152,        33),  
+(19, 67,                     1,        0),  
+(20, 5,                      2,        237),  
+(21, 61,                     3,        88),  
+(22, 65,                     50,       81),  
+(23, 59,                     51,       26),  
+(24, 54,                      52,       0),  
+(25, 11,                     150,        42),  
+(26, 25,                     151,        27),  
+(27, 71,                    152,        25),  
+(28, 38,                    1,        238),  
+(29, 7,                      2,        42),  
+(30, 53,                   3,        265),  
+(31, 40,                   50,       23),  
+(32, 26,                      51,       8),  
+(33, 63,                   52,       0),  
+(34, 48,                   150,        0),  
+(35, 16,                   151,        2),  
+(36, 22,                   152,        4)  
+;
 UNLOCK TABLES;
 
 -- SpecialComponents table Creation query
@@ -213,32 +241,34 @@ CREATE TABLE `SpecialComponents` (
   -- FOREIGN KEY (`sc_product_sn`) REFERENCES `Products`(`product_sn`), 
   -- commented out because the Special Component does not care about the product it is in.
   -- We need to add Special Components to the database first, then link them to Products.
-  FOREIGN KEY (`sc_location_id`) REFERENCES `Locations`(`location_id`)
+  FOREIGN KEY (`sc_location_id`) REFERENCES `Locations`(`location_id`) ON UPDATE CASCADE
 );
 
 
 -- Populate SpecialComponents table with data
 LOCK TABLES `SpecialComponents` WRITE;
-INSERT INTO `SpecialComponents` VALUES 
-(610205, "i3", 1, null, 1),
-(293039, "i5", 1, null, 1),
-(56853, "i7", 1, null, 1),
-(1046, "i5", 1, null, 1),
-(184930, "i5", 1, null, 1),
-(101711, "i7", 1, null, 1),
-(714673, "i7", 1, null, 1),
-(473446, "i3", 0, null, 1),
-(3000, "i3", 1, null, 1),
-(3001, "i3", 1, null, 1),
-(3002, "i3", 1, null, 1),
-(3003, "i3", 0, null, 1),
-(5001, "i5", 1, null, 1),
-(5002, "i5", 1, null, 1),
-(5003, "i5", 1, null, 1),
-(7001, "i7", 1, null, 1),
-(7002, "i7", 1, null, 1),
-(7003, "i7", 1, null, 1),
-(7004, "i7", 1, null, 1);
+INSERT INTO `SpecialComponents` 
+(`sc_sn`, `sc_pn`, `sc_is_free`, `sc_product_sn`, `sc_location_id`)
+VALUES 
+(610205, "i3", 1, null, 3),
+(293039, "i5", 1, null, 5),
+(56853, "i7", 1, null, 7),
+(1046, "i5", 1, null, 8),
+(184930, "i5", 1, null, 12),
+(101711, "i7", 1, null, 45),
+(714673, "i7", 1, null, 23),
+(473446, "i3", 0, null, 67),
+(3000, "i3", 1, null, 4),
+(3001, "i3", 1, null, 58),
+(3002, "i3", 1, null, 58),
+(3003, "i3", 0, null, 34),
+(5001, "i5", 1, null, 55),
+(5002, "i5", 1, null, 65),
+(5003, "i5", 1, null, 23),
+(7001, "i7", 1, null, 22),
+(7002, "i7", 1, null, 22),
+(7003, "i7", 1, null, 22),
+(7004, "i7", 1, null, 56);
 UNLOCK TABLES;
 
 
@@ -256,11 +286,11 @@ CREATE TABLE `Products` (
   `product_location_id` int,
   `product_sc_sn` int,
   PRIMARY KEY (`product_sn`),
-  FOREIGN KEY (`product_employee_id`) REFERENCES `Employees`(`employee_id`),
-  FOREIGN KEY (`product_location_id`) REFERENCES `Locations`(`location_id`),
+  FOREIGN KEY (`product_employee_id`) REFERENCES `Employees`(`employee_id`) ON UPDATE CASCADE,
+  FOREIGN KEY (`product_location_id`) REFERENCES `Locations`(`location_id`) ON UPDATE CASCADE,
 
   -- Here, this links to existing Special Components, which have to be in the database first.
-  FOREIGN KEY (`product_sc_sn`) REFERENCES `SpecialComponents`(`sc_sn`)
+  FOREIGN KEY (`product_sc_sn`) REFERENCES `SpecialComponents`(`sc_sn`) ON UPDATE CASCADE
 );
 
 -- Populate RegularComponents table with data
@@ -287,8 +317,8 @@ CREATE TABLE `WorkOrderProducts` (
   `wop_wo_id` int,
   `wop_product_sn` int,
   PRIMARY KEY (`wop_id`),
-  FOREIGN KEY (`wop_wo_id`) REFERENCES `WorkOrders`(`wo_id`),
-  FOREIGN KEY (`wop_product_sn`) REFERENCES `Products`(`product_sn`)
+  FOREIGN KEY (`wop_wo_id`) REFERENCES `WorkOrders`(`wo_id`) ON UPDATE CASCADE,
+  FOREIGN KEY (`wop_product_sn`) REFERENCES `Products`(`product_sn`) ON UPDATE CASCADE
 );
 
 -- Populate WorkOrderProducts table with data
@@ -313,8 +343,8 @@ CREATE TABLE `ProductsRegularComps` (
   `prc_rc_pn` int,
   `prc_quantity_needed` int NOT NULL,
   PRIMARY KEY (`prc_id`),
-  FOREIGN KEY (`prc_product_sn`) REFERENCES `Products`(`product_sn`),
-  FOREIGN KEY (`prc_rc_pn`) REFERENCES `RegularComponents`(`rc_pn`)
+  FOREIGN KEY (`prc_product_sn`) REFERENCES `Products`(`product_sn`) ON UPDATE CASCADE,
+  FOREIGN KEY (`prc_rc_pn`) REFERENCES `RegularComponents`(`rc_pn`) ON UPDATE CASCADE
 );
 
 -- Populate ProductsRegularComps table with data

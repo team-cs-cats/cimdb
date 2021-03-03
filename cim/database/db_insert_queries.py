@@ -133,9 +133,31 @@ def insert_regular_component():
 	add_regular_component_query = """"""
 	insert(insert_query_to_run=add_regular_component_query)
 
-def insert_special_component():
+
+def get_receiving_id(site_id):
+
+	# provided a site id, return the location ID of the Receiving Room (Room 1) of that site
+	query = "SELECT location_id FROM Locations WHERE Locations.location_site_id = '%s' AND Locations.location_room_number = 1 LIMIT 1"
+	db_connection = db.connect_to_database()
+	params = (site_id, )
+	cursor = db.execute_query(db_connection=db_connection, query=query, query_params=params)
+	site_id = cursor.fetchall()
+	return site_id[0]['location_id']
+
+def insert_special_component(new_sc_pn, new_sc_location_id):
 
 	# Load SQL query for INSERTing new regular component data
-	add_special_component_query = """"""
-	insert(insert_query_to_run=add_special_component_query)
+	add_special_component_query = """
+	INSERT INTO SpecialComponents (sc_pn, sc_is_free, sc_product_sn, sc_location_id)
+	VALUES (%s, 1, null, %s);
+	"""
+
+	# obtain the location ID for the Receiving Room using the provided Site id
+	receiving_id = get_receiving_id(site_id=new_sc_location_id)
+
+	# package the newly selected part number and the receiving room location ID
+	new_special_component_data = (new_sc_pn, receiving_id)
+
+	# insert the new special component into the database
+	insert(insert_query_to_run=add_special_component_query, data_to_insert=new_special_component_data)
 

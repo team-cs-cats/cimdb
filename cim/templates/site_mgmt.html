@@ -26,7 +26,7 @@ Add New Site
 
 <!-- Description for Create New section -->
 {% block create_description %}
-Note that a newly added site will only be pre-populate with the five standard rooms (Receiving Department, Warehouse, Assembly Department, QC  Departmebt and Shipping Department). All additional locations will need to be added by a Supervisor on the <a href="/locations">Locations</a> page.
+Note that a newly added site will only be pre-populate with the five standard rooms (Warehouse and Receiving, Assembly, QC and Shipping Departments). All additional locations will need to be added by a Supervisor on the <a href="/locations">Locations</a> page.
 {% endblock %}
 
 <!-- Form for Create New section -->
@@ -51,7 +51,7 @@ Note that a newly added site will only be pre-populate with the five standard ro
 		<label for="new_site_zip">Zip: </label>
 		<input type="number" min="11111" max="99999" class='m-1' name="new_site_zip" id="new_site_zip" placeholder="99999" required>
 
-		<input type="submit" class="btn-sm btn-success m-1" id="addNewSiteBtn" value="Add New Site" >
+		<input type="submit" class="btn-sm btn-success m-1" id="addNewSiteBtn" name="addNewSiteBtn" value="Add New Site" >
 
 
 
@@ -79,13 +79,13 @@ Filter Existing Sites
 		<label for="existing_site_id">Site ID:</label>
 		<input type="number" min="1" max="99" class='m-1' name="existing_site_id" id="existing_site_id" placeholder="99">
 
-		<input type="text" class='m-1' name="existing_site_fname" id="existing_site_fname" placeholder="Address ">
+		<input type="text" class='m-1' name="existing_site_address_1" id="existing_site_address_1" placeholder="Address ">
 
-		<input type="text" class='m-1' name="existing_site_lname" id="existing_site_lname" placeholder="Address 2">
+		<input type="text" class='m-1' name="existing_site_address_2" id="existing_site_address_2" placeholder="Address 2">
 
-		<input type="text" class='m-1' name="existing_site_email" id="existing_site_email" placeholder="City">
+		<input type="text" class='m-1' name="existing_site_city" id="existing_site_city" placeholder="City">
 
-		<select class="custom-select m-1" name="existing_site_email" id="existing_site_email" required>
+		<select class="custom-select m-1" name="existing_site_state" id="existing_site_state" required>
 			<option selected>Filter State: </option>
 			{% for state in states %}
 			<option>{{state.Code}}</option>
@@ -103,6 +103,22 @@ Filter Existing Sites
 
 </form>
 
+<!-- <form id="existing-site-data-filter" action="" method="POST">
+	<div class="input-group">
+	  <div class="form-outline w-75">
+	    <input type="search" id="filterSearch" class="form-control" name='filterSearch' placeholder="Filter by Site Name, Address, City, State or Zip Code" />
+	  </div>
+	  <button type="submit" id="filterExistingSitesBtn" name="btn" class="btn btn-primary">
+	    <i class="fas fa-search">Filter</i>
+	  </button>
+	  <button type="button" class="btn btn-primary">
+	    <i class="fas fa-search">Clear Filters</i>
+	  </button>
+	</div>
+</form>
+ -->
+
+<p id="datalist"></p>
 {% endblock %}
 
 <!-- Main results table -->
@@ -129,16 +145,17 @@ Filter Existing Sites
 	<td>{{site.site_address_postal_code}}</td>
 
 	<!-- <th><button class="btn-sm btn-warning">Edit</button></th> -->
-	<th><button type="button" 
+	<th><button type="button"
 		class="btn-sm btn-warning" 
 		data-toggle="modal" 
 		data-target="#editSite"
+		data-site-id-to-edit="{{site.site_id}}"
 		data-site-address-1="{{site.site_address_1}}"
 		data-site-address-2="{{site.site_address_2}}"
 		data-site-address-city="{{site.site_address_city}}"
 		data-site-address-state="{{site.site_address_state}}"
 		data-site-address-postal-code="{{site.site_address_postal_code}}"
-		data-title="Edit Side ID {{site.site_id}}">Edit</button></th>
+		data-title="Edit Site ID {{site.site_id}}">Edit</button></th>
 
 		<td><button class="btn-sm btn-danger">Delete</button></td>
 	</tr>
@@ -152,33 +169,35 @@ Filter Existing Sites
 <div id="editSite" class="modal fade" tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form>
+			<form id="update-site-data" action="" method="POST" onsubmit="">
 				<div class="modal-header">
 					<h5 class="modal-title">Modal Window</h5>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
-				<div class="modal-body">                    	
+				<div class="modal-body">
+
+					 <input type="hidden" id="site-id-to-edit" name="site-id-to-edit" value="">                    	
 
 					<div class="form-group p-1">
 						<label class="control-label" >Address 1:</label>
-						<input type="text" id="site-edit-address-1" class="form-control" placeholder="123 Main Street" required>
+						<input type="text" id="site-edit-address-1" name="site-edit-address-1" class="form-control" placeholder="123 Main Street" required>
 					</div>  
 
 					<div class="form-group p-1">
 						<label class="control-label" >Address 2:</label>
-						<input type="text" id="site-edit-address-2" class="form-control" placeholder='Unit 500'>
+						<input type="text" id="site-edit-address-2" name="site-edit-address-2" class="form-control" placeholder='Unit 500'>
 					</div>  
 
 
 					<div class="form-group p-1">
 						<label class="control-label" >City:</label>
-						<input type="text" id="site-edit-city" class="form-control" placeholder="San Jose" required>
+						<input type="text" id="site-edit-city" name="site-edit-city" class="form-control" placeholder="San Jose" required>
 					</div>  
 
 
 					<div class="form-group p-1">
 						<label class="control-label" >State:</label>
-						<select class="custom-select" id="site-edit-state" required>
+						<select class="custom-select" name="site-edit-state" id="site-edit-state" required>
 							<option selected>Select State: </option>
 							{% for state in states %}
 							<option>{{state.Code}}</option>
@@ -188,14 +207,14 @@ Filter Existing Sites
 
 					<div class="form-group p-1">
 						<label class="control-label" >Zip Code:</label>
-						<input type="number" min="00000" max="99999" id="site-edit-zip" class="form-control" placeholder="99999" required>
+						<input type="number" min="00000" max="99999" id="site-edit-zip" name="site-edit-zip" class="form-control" placeholder="99999" required>
 					</div>  
 					
 				</div>
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-					<button type="button" class="btn btn-primary">Update</button>
+					<button type="submit" class="btn btn-primary" id="btnUpdate" name="btnUpdate">Update</button>
 				</div>
 			</form>
 		</div>

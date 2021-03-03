@@ -1,5 +1,5 @@
 
-<!-- Edit Regular Component Detail Popup -->
+//Edit Regular Component Detail Popup
 $(document).ready(function(){
     $("#editRegularComponent").on("show.bs.modal", function(event){
         // Get the button that triggered the modal
@@ -27,7 +27,7 @@ $(document).ready(function(){
 });
 
 
-<!-- Edit Regular Quantity Modal Popup -->
+// Edit Regular Quantity Modal Popup
 $(document).ready(function(){
     $("#editRegularComponentQuantity").on("show.bs.modal", function(event){
         // Get the button that triggered the modal
@@ -39,14 +39,54 @@ $(document).ready(function(){
 
         var regularComponentQuantityData = button.data("reg-comp-quantity");        
         $(this).find("#reg-comp-edit-quantity").val(regularComponentQuantityData);
+
+        // add data for site
+        var regularComponentSiteData = button.data("reg-comp-site-name");
+        $(this).find("reg-comp-view-site").val(regularComponentSiteData)
+
+        // add data for room number
+        var regularComponentRoomData = button.data("reg-comp-room-number");
+        $(this).find("reg-comp-view-room-number").val(regularComponentRoomData)
+
+        // add data for shelf number
+        var regularComponentShelfData = button.data("reg-comp-shelf-number");
+        $(this).find("reg-comp-view-shelf-number").val(regularComponentShelfData)
+
     });
 });
 
 
 
-<!-- Tooltip Toggle -->
+// Tooltip Toggle
 	
-$('[data-toggle="tooltip"]').tooltip({
-   container: 'body'
-});
+// $('[data-toggle="tooltip"]').tooltip({
+//    container: 'body'
+// });
 
+
+
+// Live Search Filter
+$(document).ready(function(){
+
+    // select 
+    $("#filterSearch").on("input",function(e){
+        
+        $("#datalist").empty();
+        $.ajax({
+            method:"post",
+            url:"/inventory-reg",
+            data:{text:$("#filterSearch").val()},
+
+            success:function(res){
+                var data = "<ul>";
+                console.log('res is' + res);
+                $.each(res,function(index,value){
+                    console.log(value.RegularComponents.rc_pn);
+                    data += "<li>"+value.RegularComponents.rc_pn+"</li>";
+                });
+                data += "</ul>";
+                $("#datalist").html(data);
+            }
+        });
+    });
+});
