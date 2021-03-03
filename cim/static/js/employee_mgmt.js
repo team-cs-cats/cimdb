@@ -23,7 +23,6 @@ $(document).ready(function(){
 	$(this).find("#edit-employee-group").val(employeeGroupData);
 
 	var employeeSiteData = button.data("employee-site");
-	console.log('employeeSiteData is', employeeSiteData);
 	$(this).find("#edit-employee-site").val(employeeSiteData);
 
 	var employeeEmailData = button.data("employee-email");

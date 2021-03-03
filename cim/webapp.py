@@ -462,12 +462,10 @@ def employee_management():
 				new_employee_password=generated_password,
 				new_employee_site_id=provided_employee_site_id)
 
-			# Reload the employee details since they have been updated
-			employee_results = dbq.get_db_employees()
-			return render_template("employee_mgmt.html", sites=site_results, employees=employee_results)
-
 		# Then, check to handle Edit exisitng employee UPDATE
 		if "editExistingEmployeeBtn" in request.form:
+
+			print('\nattempting to update employee\n')
 
 			# obtain data from the Edit Employee Details Modal
 			updated_employee_fname = request.form['edit-employee-first-name']
@@ -481,9 +479,11 @@ def employee_management():
 			dbuq.update_employee(employee_group_input=updated_employee_group, employee_first_name_input=updated_employee_fname, employee_last_name_input=updated_employee_lname, 
 	employee_email_input=updated_employee_email, employee_site_id_dropdown_input=updated_employee_site_id, employee_id_from_update_button=employee_id_to_update)
 
-			# Reload the employee details since they have been updated
-			employee_results = dbq.get_db_employees()
-			return render_template("employee_mgmt.html", sites=site_results, employees=employee_results)
+
+		# Reload the employee details since they have been updated
+		employee_results = dbq.get_db_employees()
+		return render_template("employee_mgmt.html", sites=site_results, employees=employee_results)
+
 
 
 @webapp.route('/site-mgmt', methods=['GET', 'POST'])
