@@ -150,8 +150,8 @@ Filter Existing Employees
 		data-employee-id="{{employee.employee_id}}"
 		data-employee-first-name="{{employee.employee_first_name}}"
 		data-employee-last-name="{{employee.employee_last_name}}"
-		data-employee-group="{% if employee.employee_group == 'production' %}Production{% else %}Supervisor{% endif %}"
-		data-employee-site="{{employee.employee_site_name}}"
+		data-employee-group="{{employee.employee_group}}"
+		data-employee-site="{{employee.employee_site_id}}"
 		data-employee-email="{{employee.employee_email}}"
 		data-title="Edit Details of Employee {{employee.employee_id}}">Edit</button></th>
 
@@ -172,7 +172,7 @@ Filter Existing Employees
 				</div>
 				<div class="modal-body">    
 
-					<input type="hidden" id="employee-id_to-update" name="employee-id_to-update" value="">                 	
+					<input type="hidden" id="employee-id-to-update" name="employee-id-to-update" value="">                 	
 
 					<div class="form-group p-1">
 						<label class="control-label" >First Name:</label>

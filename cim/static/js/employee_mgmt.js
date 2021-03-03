@@ -10,7 +10,7 @@ $(document).ready(function(){
 	var titleData = button.data("title");
 	$(this).find(".modal-title").text(titleData);
 
-	var employeeIdData = button.data("employee-id");
+	var employeeIdData = parseInt(button.data("employee-id"));
 	$(this).find("#employee-id-to-update").val(employeeIdData);
 
 	var employeeFirstNameData = button.data("employee-first-name");
@@ -23,6 +23,7 @@ $(document).ready(function(){
 	$(this).find("#edit-employee-group").val(employeeGroupData);
 
 	var employeeSiteData = button.data("employee-site");
+	console.log('employeeSiteData is', employeeSiteData);
 	$(this).find("#edit-employee-site").val(employeeSiteData);
 
 	var employeeEmailData = button.data("employee-email");

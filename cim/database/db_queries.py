@@ -171,6 +171,7 @@ def get_db_employees():
 	Employees.employee_first_name, 
 	Employees.employee_last_name, 
 	Employees.employee_email, 
+	Employees.employee_site_id,
 	Sites.site_address_city as employee_site_name 
 	FROM Employees 
 	INNER JOIN Sites 
