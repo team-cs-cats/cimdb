@@ -337,7 +337,7 @@ def inventory_special_components():
 			sc_id_to_delete = request.form['spec-comp-serial-number']
 
 			# perform the update
-			dbdq.delete_special_component(sc_id_to_delete=sc_id_to_delete)
+			dbdq.delete_special_component(spec_comp_sn_to_delete=sc_id_to_delete)
 
 
 
