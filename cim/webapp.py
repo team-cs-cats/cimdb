@@ -475,7 +475,7 @@ def employee_management():
 			updated_employee_group = request.form['edit-employee-group']
 			updated_employee_site_id = request.form['edit-employee-site']
 			updated_employee_email = request.form['edit-employee-email']
-			employee_id_to_update = request.form['employee-id_to-update']
+			employee_id_to_update = request.form['employee-id-to-update']
 
 			# Perform the update
 			dbuq.update_employee(employee_group_input=updated_employee_group, employee_first_name_input=updated_employee_fname, employee_last_name_input=updated_employee_lname, 

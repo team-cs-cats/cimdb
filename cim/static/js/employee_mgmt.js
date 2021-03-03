@@ -10,6 +10,9 @@ $(document).ready(function(){
 	var titleData = button.data("title");
 	$(this).find(".modal-title").text(titleData);
 
+	var employeeIdData = button.data("employee-id");
+	$(this).find("#employee-id-to-update").val(employeeIdData);
+
 	var employeeFirstNameData = button.data("employee-first-name");
 	$(this).find("#edit-employee-first-name").val(employeeFirstNameData);
 
