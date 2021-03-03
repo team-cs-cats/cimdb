@@ -334,7 +334,7 @@ def inventory_special_components():
 		if "btnSpecCompDelete" in request.form:
 
 			# obtain data from new special component form
-			sc_id_to_delete = request.form['spec-comp-serial-number']
+			sc_id_to_delete = request.form['spec-comp-delete-serial-number']
 
 			# perform the update
 			dbdq.delete_special_component(spec_comp_sn_to_delete=sc_id_to_delete)
@@ -342,9 +342,9 @@ def inventory_special_components():
 
 
 		# regardless, refresh the page with any changes to the data
-		return render_template("site_mgmt.html", 
-			sites=dbq.get_db_sites(), 
-			states=data.get_states(), 
+		return render_template("inventory_special_comps.html", 
+			special_components=dbq.get_db_special_components(), 
+			sites=dbq.get_db_sites(),
 			special_components_catalog=data.get_sp_catalog(),
 			locations=dbq.get_db_locations()
 			)
