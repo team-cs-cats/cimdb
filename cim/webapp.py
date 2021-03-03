@@ -315,8 +315,14 @@ def inventory_special_components():
 			# obtain data from new special component form
 			updated_spec_comp_part_number = request.form['spec-comp-edit-part-number']
 			updated_spec_comp_location = int(request.form['spec-comp-edit-location'])
-			updated_spec_comp_is_free = request.form['spec-comp-edit-is-free']
-			sc_id_to_update = request.form['sc-id-to-edit']
+
+			# for the 'Is Free' checkbox, we first assume it is False (not checked). Then, if it is found to be checked, we update.
+			updated_spec_comp_is_free = 0
+			if request.form.get('spec-comp-edit-is-free'):
+				updated_spec_comp_is_free = 1
+			
+			print('updated_spec_comp_is_free', updated_spec_comp_is_free)
+			sc_id_to_update = request.form['spec-comp-serial-number']
 
 			# perform the update
 			dbuq.update_special_component(updated_spec_comp_part_number=updated_spec_comp_part_number, 
@@ -324,16 +330,24 @@ def inventory_special_components():
 				updated_spec_comp_is_free=updated_spec_comp_is_free,
 				sc_id_to_update=sc_id_to_update)
 
-			# re-render the html using the updated information for special components
-			return render_template("inventory_special_comps.html", 
-				special_components=dbq.get_db_special_components(), 
-				sites=dbq.get_db_sites(),
-				special_components_catalog=data.get_sp_catalog(),
-				locations=dbq.get_db_locations()
-				)
+		# Handle Delete Existing Special Component (DELETE)
+		if "btnSpecCompDelete" in request.form:
 
-		# If it isn't anything, return the old site
-		return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
+			# obtain data from new special component form
+			sc_id_to_delete = request.form['spec-comp-delete-serial-number']
+
+			# perform the update
+			dbdq.delete_special_component(spec_comp_sn_to_delete=sc_id_to_delete)
+
+
+
+		# regardless, refresh the page with any changes to the data
+		return render_template("inventory_special_comps.html", 
+			special_components=dbq.get_db_special_components(), 
+			sites=dbq.get_db_sites(),
+			special_components_catalog=data.get_sp_catalog(),
+			locations=dbq.get_db_locations()
+			)
 
 @webapp.route('/inventory-reg', methods=['GET', 'POST'])
 @login_required
@@ -441,27 +455,56 @@ def employee_management():
 
 	if request.method=="POST":
 
-		# obtain data from new site form
-		provided_employee_fname = request.form['new_employee_fname']
-		provided_employee_lname = request.form['new_employee_lname']
-		provided_employee_email = request.form['new_employee_email']
-		provided_employee_group = request.form['new_employee_group']
-		provided_employee_site_id = request.form['new_employee_site']	
+		# first, handle a POST from the Add New Employee INSERT
+		if "addNewEmployeeBtn" in request.form:
 
-		# generate a password
-		generated_password = pw_gen.new_password(size=8)
+			# obtain data from new site form
+			provided_employee_fname = request.form['new_employee_fname']
+			provided_employee_lname = request.form['new_employee_lname']
+			provided_employee_email = request.form['new_employee_email']
+			provided_employee_group = request.form['new_employee_group']
+			provided_employee_site_id = request.form['new_employee_site']	
 
-		# perform the insertion
-		dbiq.insert_employee(new_employee_first_name=provided_employee_fname, 
-			new_employee_last_name=provided_employee_lname, 
-			new_employee_email=provided_employee_email, 
-			new_employee_group=provided_employee_group, 
-			new_employee_password=generated_password,
-			new_employee_site_id=provided_employee_site_id)
+			# generate a password
+			generated_password = pw_gen.new_password(size=8)
+
+			# perform the insertion
+			dbiq.insert_employee(new_employee_first_name=provided_employee_fname, 
+				new_employee_last_name=provided_employee_lname, 
+				new_employee_email=provided_employee_email, 
+				new_employee_group=provided_employee_group, 
+				new_employee_password=generated_password,
+				new_employee_site_id=provided_employee_site_id)
+
+		# Then, check to handle Edit exisitng employee UPDATE
+		if "editExistingEmployeeBtn" in request.form:
+
+			# obtain data from the Edit Employee Details Modal
+			updated_employee_fname = request.form['edit-employee-first-name']
+			updated_employee_lname = request.form['edit-employee-last-name']
+			updated_employee_group = request.form['edit-employee-group']
+			updated_employee_site_id = request.form['edit-employee-site']
+			updated_employee_email = request.form['edit-employee-email']
+			employee_id_to_update = request.form['employee-id-to-update']
+
+			# Perform the update
+			dbuq.update_employee(employee_group_input=updated_employee_group, employee_first_name_input=updated_employee_fname, 
+				employee_last_name_input=updated_employee_lname, employee_email_input=updated_employee_email, 
+				employee_site_id_dropdown_input=updated_employee_site_id, employee_id_from_update_button=employee_id_to_update)
+
+		# Lastly, check if the POST was a DELETE for an employee
+		if "deleteExistingEmployeeBtn" in request.form:
+
+			# obtain data from the Delete Employee Modal
+			employee_id_to_delete = request.form['employee-id-to-delete']
+
+			# Perform the deletion
+			dbdq.delete_employee(employee_id_to_delete=employee_id_to_delete)
 
 		# Reload the employee details since they have been updated
 		employee_results = dbq.get_db_employees()
 		return render_template("employee_mgmt.html", sites=site_results, employees=employee_results)
+
 
 
 @webapp.route('/site-mgmt', methods=['GET', 'POST'])
@@ -499,9 +542,6 @@ def site_management():
 				new_site_state=provided_site_state, 
 				new_site_zip=provided_site_zip)
 
-			site_results = dbq.get_db_sites()
-			return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
-
 		if "btnUpdate" in request.form:
 
 			# obtain data from new site form
@@ -520,11 +560,17 @@ def site_management():
 				update_site_zip=update_site_zip,
 				site_id_to_update=site_id_to_update)
 
-			site_results = dbq.get_db_sites()
+		# Lastly, check if the POST was a DELETE for a site
+		if "btnSiteDelete" in request.form:
 
-			return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
+			# obtain data from the Delete Site Modal
+			site_id_to_delete = request.form['site-id-to-delete']
 
-		# If it isn't anything, return the old site
+			# Perform the deletion
+			dbdq.delete_site(site_id_to_delete=site_id_to_delete)
+
+		# Reload the site results, and refresh the page
+		site_results = dbq.get_db_sites()
 		return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
 
 

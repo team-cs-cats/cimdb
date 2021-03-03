@@ -56,10 +56,21 @@ def update_work_order_products():
 	update(update_query_to_run=update_work_order_products_query)
 
 
-def update_employee():
+def update_employee(employee_group_input, employee_first_name_input, employee_last_name_input, 
+	employee_email_input, employee_site_id_dropdown_input, employee_id_from_update_button):
 
 	# Load SQL query for updating the data for a selected employee 
-	update_employee_query = """"""
+	update_employee_query = """
+	UPDATE Employees SET 
+	employee_group = '%s',
+	employee_first_name = '%s',
+	employee_last_name = '%s',
+	employee_email = '%s',
+	employee_site_id = '%s'
+	WHERE employee_id = '%s';
+	;
+	""" % (employee_group_input, employee_first_name_input, employee_last_name_input, 
+		employee_email_input, employee_site_id_dropdown_input, employee_id_from_update_button)
 	update(update_query_to_run=update_employee_query)
 
 
@@ -109,40 +120,13 @@ def update_special_component(updated_spec_comp_part_number,
 					updated_spec_comp_is_free,
 					sc_id_to_update):
 
-	# # First, use the provided Site city and Location room number and shelf number to obtain a new location id where the special component should be moved to
-	# new_location_query = """
-	# SELECT location_id
-	# FROM Locations
-	# INNER JOIN Sites ON Locations.location_site_id = Sites.site_id
-	# WHERE Sites.site_address_city = '%s' 
-	# AND Locations.location_room_number = '%s'
-	# AND Locations.location_shelf_number = '%s'
-	# LIMIT 1
-	# """
-	# db_connection = db.connect_to_database()
-	# params = (updated_spec_comp_site, updated_spec_comp_room_number, updated_spec_comp_shelf_number, )
-	# cursor = db.execute_query(db_connection=db_connection, query=new_location_query, query_params=params)
-	# location_id_results = cursor.fetchall()
-
-	# print('location_id_results:', location_id_results)
-
-	# # check if there are no results (ie, the special component was moved to a non-existent location)
-	# if len(location_id_results) == 0:
-	# 	print('~~~~~~~~~~ No location exists with these details')
-
-	# new_location_id = location_id_results[0]['location_id']
-
-
-
-
 	# Load SQL query for updating the data for a selected regular component
 	update_special_component_query = """
 	UPDATE SpecialComponents SET 
 	sc_pn = '%s',
 	sc_is_free = '%s',
 	sc_location_id = '%s'
-	WHERE sc_sn = %s
-	;
+	WHERE sc_sn = '%s';
 	""" % (updated_spec_comp_part_number, updated_spec_comp_is_free, updated_spec_comp_location, sc_id_to_update)
 	update(update_query_to_run=update_special_component_query)
 
