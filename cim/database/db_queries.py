@@ -362,13 +362,13 @@ def get_qc_list(employee_id=None):
 
 	if employee_id is None:
 		query="""select WorkOrders.wo_id, WorkOrders.wo_open_date , Products.product_sn,
-		Products.product_family, Products.product_pn from WorkOrders
+		Products.product_family, Products.product_pn, Products.product_date_assembly from WorkOrders
 		inner join WorkOrderProducts on WorkOrders.wo_id=WorkOrderProducts.wop_wo_id
 		inner join Products on Products.product_sn = WorkOrderProducts.wop_product_sn
 		where Products.product_qc_date is Null and Products.product_date_assembly is not Null;"""
 	else:
 		query='''select WorkOrders.wo_id, WorkOrders.wo_open_date , Products.product_sn,
-		Products.product_family, Products.product_pn from WorkOrders
+		Products.product_family, Products.product_pn, Products.product_date_assembly from WorkOrders
 		inner join WorkOrderProducts on WorkOrders.wo_id=WorkOrderProducts.wop_wo_id
 		inner join Products on Products.product_sn = WorkOrderProducts.wop_product_sn
 		where WorkOrders.wo_employee_id='''+str(employee_id)+''' and Products.product_qc_date is Null and

@@ -9,6 +9,7 @@ UNLOCK tables;
 -- USE cimdb;
 SHOW tables;
 
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `ProductsRegularComps`;
 DROP TABLE IF EXISTS `WorkOrderProducts`;
 DROP TABLE IF EXISTS `Products`;

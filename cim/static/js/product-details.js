@@ -1,5 +1,4 @@
-console.log("I am  connected!")
-
+// reload the page
 function reload_product(){
   console.log("clicked")
   var sn=document.getElementById("product_sn_reload").value;
@@ -19,7 +18,7 @@ function reload_product(){
     
 };
 
-
+//reload previous page
 function go_back() {
   window.history.back();
 }
@@ -62,19 +61,31 @@ function get_cpu_sn(pn,method){
   
 }
 
+
+// reads data from from and call add/edit requests
 function update_product_compoennets(product_sn){
 
   const product_data={
-  sc_sn:this.product_sc_sn.value || this.product_sc_sn.placeholder ,
+  sc_sn:this.product_sc_sn.value,
   MB:this.motherboard.value,
   Case:this.case.value,
   GC:this.gc.value,
   RAM:this.ram.value,
-  RAM_quant:this.ram_quant.value || this.ram_quant.placeholder ,
+  RAM_quant:this.ram_quant.value,
   HDD:this.hdd.value,
-  HDD_quant:this.hdd_quant.value || this.hdd_quant.placeholder,
+  HDD_quant:this.hdd_quant.value,
   product_sn:product_sn
   }
+
+//validate input -- no empty field
+for (const [key, value] of Object.entries(product_data)) {
+  // console.log(`${key}: ${value}`);
+  if(value==""){
+    error="Invalid Input! "+key+" can not be empty!"
+    alert(error)
+    return
+  }
+}
 
   console.log("data is: ",product_data)
 
@@ -106,6 +117,7 @@ function update_product_compoennets(product_sn){
 
 }
 
+//sends add requests to server to add new components for a product
 function add_compoenents(input_data){
 
   console.log("adding new componets with the data: ",input_data)
@@ -129,6 +141,20 @@ function add_compoenents(input_data){
 
 }
 
+
+//sends edit requests to server to edit components of a product
 // function update_compoenents(){
 
 // }
+
+//parse data into the update form
+window.addEventListener('DOMContentLoaded', (event) => {
+  document.getElementById("product_sc_sn").value=document.getElementById("table_product_sc_sn").innerText
+  document.getElementById("motherboard").value=document.getElementById("table_MB").innerText
+  document.getElementById("case").value=document.getElementById("table_Case").innerText
+  document.getElementById("gc").value=document.getElementById("table_GC").innerText
+  document.getElementById("ram").value=document.getElementById("table_RAM").innerText
+  document.getElementById("ram_quant").value=document.getElementById("table_RAM_quant").innerText
+  document.getElementById("hdd").value=document.getElementById("table_HDD").innerText
+  document.getElementById("hdd_quant").value=document.getElementById("table_HDD_quant").innerText
+ });
