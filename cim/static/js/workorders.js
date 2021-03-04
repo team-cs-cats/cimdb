@@ -1,3 +1,4 @@
+
 console.log("JS functions are connected!")
 
 
@@ -21,15 +22,62 @@ if(true){
 };
 
 //edit workorder information 
-function edit_workorder_info(workorder_number){
-  console.log("clicked")
-  alert("Workorder: "+workorder_number+" will be editted later!")
+function edit_workorder_info(){
+  
+  const data={
+    wo_id: this.wo_id_to_edit.value,
+    wo_open_date: this.wo_open_date_to_edit.value,
+    wo_close_date: this.wo_close_date_to_edit.value,
+    wo_status: this.wo_status_to_edit.value,
+    wo_reference_number: this.wo_refrence_number_to_edit.value,
+    wo_employee_name: this.wo_employee_to_edit.value
+  }
+  console.log("edit clicked",data)
+
+  //make an Update request to server
+  fetch('/workorders', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+    // location.reload()
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+  
 };
 
 //delete workorder 
-function delete_workorder(workorder_number){
+function delete_workorder_info(workorder_number){
   console.log("clicked")
-  alert("Workorder: "+workorder_number+" will be DELETED later!")
+  const data={
+    wo_id: this.delete_WorkOrder_title.innerText,
+  }
+  console.log("delete clicked",data)
+
+  //make a Delete request to server
+  fetch('/workorders', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+    // location.reload()
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+
 };
 
 
@@ -60,3 +108,36 @@ function add_new_workorder(){
   });
 }
 
+
+
+
+$(document).ready(function() {
+  $('#editWorkOrder').on('shown.bs.modal', function (event) {
+    	// Get the button that triggered the modal
+		var button = $(event.relatedTarget);
+
+    //Extract value from the custom data-* attribute and update modal attr
+    document.getElementById("editWorkOrder-title").innerText=button.attr("data-wo-id")
+    document.getElementById("wo_id_to_edit").value=button.attr("data-wo-id")
+    document.getElementById("wo_open_date_to_edit").value=button.attr("data-wo-open-date")
+    document.getElementById("wo_close_date_to_edit").value=button.attr("data-wo-close-date")
+    document.getElementById("wo_status_to_edit").value=button.attr("data-wo-status")
+    document.getElementById("wo_refrence_number_to_edit").value=button.attr("data-wo-refrence-number")
+    document.getElementById("wo_employee_to_edit").value=button.attr("data-wo-employee-full-name")
+   		
+	});
+    
+});
+
+
+$(document).ready(function() {
+  $('#deleteWorkOrder').on('shown.bs.modal', function (event) {
+    	// Get the button that triggered the modal
+		var button = $(event.relatedTarget);
+
+    //Extract value from the custom data-* attribute and update modal attr
+    document.getElementById("delete_WorkOrder_title").innerText=button.attr("data-wo-id")
+       		
+	});
+    
+});
