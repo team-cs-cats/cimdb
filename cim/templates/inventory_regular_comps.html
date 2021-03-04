@@ -32,33 +32,35 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 
 <!-- Form for Create New section -->
 {% block create_form %}
-<form id="add-special-components" action="">
+<form id="add-regular-components" action="" method="POST">
 
 	<div class="text-center">
 
 		<label for="new_reg_comp_part_number">Part Number: </label>
-		<input type="number" min="10000" max="99998" class='m-1 p-1' name="new_reg_comp_part_number" id="new_reg_comp_part_number" placeholder="12345" required>
+		<input type="text" class='m-1 p-1' name="new_reg_comp_part_description" id="new_reg_comp_part_description" placeholder="HDD 12 (ex)" required>
 
-		<select class="custom-select m-1" id="new_category" required>
-			<option selected>Select Category: </option>
-			<option>Case</option>
-			<option>Graphics Card (GC)</option>
-			<option>Hard Drive Disk (HDD)</option>
-			<option>Motherboard (MB)</option>
-			<option>RAM</option>
+		<select class="custom-select m-1" id="new_reg_comp_part_category" name="new_reg_comp_part_category" required>
+			<option value="" selected disabled hidden >Select Component Category: </option>
+			<option value='Case'>Case</option>
+			<option value='GC'>Graphics Card (GC)</option>
+			<option value='HDD'>Hard Drive Disk (HDD)</option>
+			<option value='MB'>Motherboard (MB)</option>
+			<option value='RAM'>RAM</option>
 		</select>
 
-		<select class="custom-select m-1 p-1" id="new_reg_comp_site" required>
+		<select class="custom-select m-1 p-1" id="new_reg_comp_part_site_id" name="new_reg_comp_part_site_id" value="new_reg_comp_part_site_id" required>
 			<option selected>Select Site: </option>
 			{% for site in sites %}
-			<option>{{site.site_address_city}}</option>
+			<option value={{site.site_id}}>{{site.site_address_city}}</option>
 			{% endfor %}
 		</select>
 
 		<label for="new_reg_comp_quantity">Order Quantity: </label>
-		<input type="number" min="1" max="50" class='m-1 p-1' name="new_reg_comp_quantity" id="new_reg_comp_quantity" placeholder="#" required>
+		<input type="number" min="1" max="50" class='m-1 p-1' name="new_reg_comp_part_quantity" id="new_reg_comp_part_quantity" placeholder="#" required>
 
-		<input type="button" class="btn-sm btn-success m-1 p-1" data-toggle="tooltip" data-placement="auto" title="All ordered components will be placed in the Receiving Department (Room 1) at the selected site." id="order_new_reg_comps" value="Order New Regular Components" onclick=addData() >
+		<input type="submit" class="btn-sm btn-success m-1 p-1" data-toggle="tooltip" data-placement="auto" 
+		title="All ordered components will be placed in the Receiving Department (Room 1) at the selected site." 
+		name="btnAddRegComp" id="btnAddRegComp" value="Order New Regular Components" >
 	</div>
 
 </form>
@@ -113,7 +115,7 @@ Filter Existing Regular Components
 
 </form>
 
-
+<!-- 
 <div class="input-group">
   <div class="form-outline w-75">
     <input type="search" id="filterSearch" class="form-control" placeholder="Filter by Category, Part Number, Site Name, Room Number or Shelf Number" />
@@ -124,7 +126,7 @@ Filter Existing Regular Components
   <button type="button" class="btn btn-primary">
     <i class="fas fa-search">Clear Filters</i>
   </button>
-</div>
+</div> -->
 
 <p id="datalist"></p>
 {% endblock %}

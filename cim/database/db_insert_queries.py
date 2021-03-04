@@ -88,13 +88,6 @@ def insert_location(new_location_room_number, new_location_shelf_number, new_loc
 	insert(insert_query_to_run=add_location_query, data_to_insert=new_location_data)
 
 
-def insert_location_regular_comps():
-
-	# Load SQL query for INSERTing new locations/regular components data
-	add_location_regular_comps_query = """"""
-	insert(insert_query_to_run=add_location_regular_comps_query)
-
-
 def insert_products_regular_comps(new_prc_product_sn,new_prc_rc_pn,new_prc_quantity_needed):
 
 	# Load SQL query for INSERTing new products/regular components data
@@ -125,12 +118,24 @@ VALUES (%s,%s,%s,%s,%s,%s,%s,%s)
 new_product_warranty_expiration_date,new_product_employee_id,new_product_location_id,new_product_sc_sn)
 	insert(insert_query_to_run=add_product_query,data_to_insert=new_product_data)
 	
-	
 
-def insert_regular_component():
+def insert_location_regular_comps(new_regular_component_quantity, location_id_from_dropdown_Input, regular_component_id_from_dropdown_Input):
+
+	# Load SQL query for INSERTing new locations/regular components data
+	add_location_regular_comps_query = """
+	INSERT INTO LocationsRegularComps (lrc_quantity, lrc_location_id, lrc_rc_pn)
+	VALUES ('%s', '%s', '%s');
+	"""%(new_regular_component_quantity, location_id_from_dropdown_Input, regular_component_id_from_dropdown_Input)
+	insert(insert_query_to_run=add_location_regular_comps_query)
+
+
+def insert_regular_component(new_rc_pn_desc , new_rc_category):
 
 	# Load SQL query for INSERTing new regular component data
-	add_regular_component_query = """"""
+	add_regular_component_query = """
+	INSERT INTO RegularComponents (rc_pn_desc , rc_category)
+	VALUES ('%s', '%s')
+	"""%(new_rc_pn_desc , new_rc_category)
 	insert(insert_query_to_run=add_regular_component_query)
 
 
