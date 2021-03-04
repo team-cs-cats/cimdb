@@ -144,7 +144,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `RegularComponents`;
 CREATE TABLE `RegularComponents` (
   `rc_pn` int NOT NULL AUTO_INCREMENT,
-  `rc_part_name` varchar(255) NOT NULL,  -- Needed to add this attribute in order to add the regular components
+  `rc_pn_desc` varchar(16) NOT NULL, 
   `rc_category` varchar(255) NOT NULL,
   PRIMARY KEY (`rc_pn`)
 );
