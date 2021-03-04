@@ -1,0 +1,7 @@
+[
+    {"value":"assembly_pending"},
+    {"value":"qc_pending"},
+    {"value":"shipping_pending"},
+    {"value":"completed"}
+
+]

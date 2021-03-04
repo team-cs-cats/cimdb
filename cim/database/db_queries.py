@@ -342,13 +342,13 @@ def get_assembly_list(employee_id=None):
 		Products.product_family, Products.product_pn from WorkOrders
 		inner join WorkOrderProducts on WorkOrders.wo_id=WorkOrderProducts.wop_wo_id
 		inner join Products on Products.product_sn = WorkOrderProducts.wop_product_sn
-		where Products.product_qc_date is Null and Products.product_date_assembly is not Null;"""
+		where Products.product_date_assembly is Null;"""
 	else:
 		query='''select WorkOrders.wo_id, WorkOrders.wo_open_date , Products.product_sn,
 		Products.product_family, Products.product_pn from WorkOrders
 		inner join WorkOrderProducts on WorkOrders.wo_id=WorkOrderProducts.wop_wo_id
 		inner join Products on Products.product_sn = WorkOrderProducts.wop_product_sn
-		where WorkOrders.wo_employee_id='''+str(employee_id)+''' and Products.product_qc_date is Null and Products.product_date_assembly is not Null;'''
+		where WorkOrders.wo_employee_id='''+str(employee_id)+''' and Products.product_date_assembly is Null;'''
 
 	db_connection = db.connect_to_database()
 	cursor = db.execute_query(db_connection=db_connection, query=query)
@@ -362,18 +362,17 @@ def get_qc_list(employee_id=None):
 
 	if employee_id is None:
 		query="""select WorkOrders.wo_id, WorkOrders.wo_open_date , Products.product_sn,
-		Products.product_family, Products.product_pn from WorkOrders
+		Products.product_family, Products.product_pn, Products.product_date_assembly from WorkOrders
 		inner join WorkOrderProducts on WorkOrders.wo_id=WorkOrderProducts.wop_wo_id
 		inner join Products on Products.product_sn = WorkOrderProducts.wop_product_sn
-		where Products.product_qc_date is not Null and Products.product_date_assembly is not Null 
-		and Products.product_warranty_expiration_date is Null;"""
+		where Products.product_qc_date is Null and Products.product_date_assembly is not Null;"""
 	else:
 		query='''select WorkOrders.wo_id, WorkOrders.wo_open_date , Products.product_sn,
-		Products.product_family, Products.product_pn from WorkOrders
+		Products.product_family, Products.product_pn, Products.product_date_assembly from WorkOrders
 		inner join WorkOrderProducts on WorkOrders.wo_id=WorkOrderProducts.wop_wo_id
 		inner join Products on Products.product_sn = WorkOrderProducts.wop_product_sn
-		where WorkOrders.wo_employee_id='''+str(employee_id)+''' and Products.product_qc_date is not Null and
-		Products.product_date_assembly is not Null and Products.product_warranty_expiration_date is Null;'''
+		where WorkOrders.wo_employee_id='''+str(employee_id)+''' and Products.product_qc_date is Null and
+		Products.product_date_assembly is not Null;'''
 
 	db_connection = db.connect_to_database()
 	cursor = db.execute_query(db_connection=db_connection, query=query)
