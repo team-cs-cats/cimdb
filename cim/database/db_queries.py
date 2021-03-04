@@ -55,7 +55,7 @@ def get_db_regular_components():
 	# Load SQL query for regular component data
 	query = """SELECT
 	RegularComponents.rc_pn,
-	RegularComponents.rc_part_name,
+	RegularComponents.rc_pn_desc,
 	RegularComponents.rc_category,
 	SUM(LocationsRegularComps.lrc_quantity) AS TotalQuantity,
 	Locations.location_room_number,
