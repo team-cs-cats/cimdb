@@ -124,9 +124,10 @@ def insert_location_regular_comps(new_regular_component_quantity, location_id_fr
 	# Load SQL query for INSERTing new locations/regular components data
 	add_location_regular_comps_query = """
 	INSERT INTO LocationsRegularComps (lrc_quantity, lrc_location_id, lrc_rc_pn)
-	VALUES ('%s', '%s', '%s');
-	"""%(new_regular_component_quantity, location_id_from_dropdown_Input, regular_component_id_from_dropdown_Input)
-	insert(insert_query_to_run=add_location_regular_comps_query)
+	VALUES (%s, %s, %s);
+	"""
+	insert(insert_query_to_run=add_location_regular_comps_query, 
+		data_to_insert=(new_regular_component_quantity, location_id_from_dropdown_Input, regular_component_id_from_dropdown_Input))
 
 
 def insert_regular_component(new_rc_pn_desc , new_rc_category):
@@ -134,9 +135,9 @@ def insert_regular_component(new_rc_pn_desc , new_rc_category):
 	# Load SQL query for INSERTing new regular component data
 	add_regular_component_query = """
 	INSERT INTO RegularComponents (rc_pn_desc , rc_category)
-	VALUES ('%s', '%s')
-	"""%(new_rc_pn_desc , new_rc_category)
-	insert(insert_query_to_run=add_regular_component_query)
+	VALUES (%s, %s)
+	"""
+	insert(insert_query_to_run=add_regular_component_query, data_to_insert=(new_rc_pn_desc , new_rc_category))
 
 
 def get_receiving_id(site_id):

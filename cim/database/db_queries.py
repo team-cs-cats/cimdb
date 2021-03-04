@@ -463,4 +463,4 @@ def get_newest_regular_component_part_number():
 	db_connection = db.connect_to_database()
 	cursor = db.execute_query(db_connection=db_connection, query=query)
 	regular_component_pn_result = cursor.fetchall()
-	return regular_component_pn_result['rc_pn']
+	return regular_component_pn_result[0]['rc_pn']
