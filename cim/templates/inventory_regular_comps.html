@@ -140,7 +140,7 @@ Filter Existing Regular Components
 		{% if regular_component.rc_pn != 200 %} 
 			<div class="row">
 				<div class="col text-center border-top"> 
-					Part Number: <strong>{{regular_component.rc_part_name}}</strong> - Category: <strong>{{regular_component.rc_category}}</strong>
+					Part Number: <strong>{{regular_component.rc_pn_desc}}</strong> - Category: <strong>{{regular_component.rc_category}}</strong>
 				</div>
 
 			</div>
@@ -148,7 +148,7 @@ Filter Existing Regular Components
 			<div class="row ml-5 mr-5">
 
 				<div class="col d-flex flex-row ml-5 ml-2 p-2">
-					<p class="mt-2 mr-2">Order more of component {{regular_component.rc_part_name}}: </p>
+					<p class="mt-2 mr-2">Order more of component {{regular_component.rc_pn_desc}}: </p>
 					<div>
 						<select class="custom-select mt-2 pl-2 ml-2" id="new_rc_site" required>
 							<option selected>Select Site: </option>
@@ -172,7 +172,7 @@ Filter Existing Regular Components
 				</div>
 
 				<div class="col d-flex flex-row-reverse"> 
-					<button class="btn-sm btn-danger">Delete All {{regular_component.rc_part_name}}</button>
+					<button class="btn-sm btn-danger">Delete All {{regular_component.rc_pn_desc}}</button>
 
 					<button type="button" 
 					class="btn-sm btn-warning text-right" 
@@ -180,7 +180,7 @@ Filter Existing Regular Components
 					data-target="#editRegularComponent" 
 					data-reg-comp-part-number="{{regular_component.rc_pn}}"
 					data-reg-comp-category="{{regular_component.rc_category}}"
-					data-title="Edit Details for Part Number {{regular_component.rc_pn}}">Edit Details for {{regular_component.rc_part_name}}</button>
+					data-title="Edit Details for Part Number {{regular_component.rc_pn}}">Edit Details for {{regular_component.rc_pn_desc}}</button>
 
 				</div>
 			</div>
@@ -213,7 +213,7 @@ Filter Existing Regular Components
 							data-reg-comp-room-number="{{location.RoomNumber}}" 
 							data-reg-comp-shelf-number="{{location.ShelfNumber}}" 
 							data-reg-comp-quantity={{location.Quantity}}
-							data-title="Edit Quantity of {{regular_component.rc_part_name}}">Edit</button></th>
+							data-title="Edit Quantity of {{regular_component.rc_pn_desc}}">Edit</button></th>
 
 							<td><button class="btn-sm btn-danger">Delete</button></td>
 					</tr>
@@ -224,7 +224,7 @@ Filter Existing Regular Components
 				</table>
 
 				{% else %}
-				<div class="text-danger text-center mb-5">{{regular_component.rc_part_name}} is currently out of stock in all Sites.</div>
+				<div class="text-danger text-center mb-5">{{regular_component.rc_pn_desc}} is currently out of stock in all Sites.</div>
 				{% endif %}
 
 			</div>
