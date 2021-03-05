@@ -76,7 +76,7 @@ Each new location will automatically be assigned a location ID upon creation.
 		<label for="add_location_shelf_number">Shelf Number: </label>
 		<input type="number" min="0" max="99" class='m-1' name="add_location_shelf_number" id="add_location_shelf_number" placeholder="99">
 
-		<input type="submit" class="btn-sm btn-success m-1" value="Add New Location" >
+		<input type="submit" class="btn-sm btn-success m-1" id="addNewLocationBtn" name="addNewLocationBtn" value="Add New Location" >
 	</div>
 
 </form>
@@ -156,9 +156,10 @@ Filter Existing Locations
 						class="btn-sm btn-warning" 
 						data-toggle="modal" 
 						data-target="#editLocation" 
-						data-site-name="{{location.location_site_name}}" 
+						data-site-id="{{location.location_site_id}}" 
 						data-location-room-number="{{location.location_room_number}}" 
 						data-location-shelf-number="{{location.location_shelf_number}}" 
+						data-location-id="{{location.location_id}}"
 						data-title="Edit Location ID {{location.location_id}}"
 						>Edit</button></th>
 					<td><button class="btn-sm btn-danger">Delete</button></td>
@@ -176,20 +177,22 @@ Filter Existing Locations
 <div id="editLocation" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form>
+                <form method="POST">
                     <div class="modal-header">
                         <h5 class="modal-title">Modal Window</h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">  
 
+                    	<input type="hidden" id="location-id-to-edit" name="location-id-to-edit" value="">  
+
                     	<div class="form-group p-1">
                     		<label class="control-label" >Site:</label>
-                    		<select class="custom-select" id="location-site" required>
+                    		<select class="custom-select" id="location-site" name="location-site" required>
 							<option selected>Select Site: </option>
 								{% for site in sites %}
 									{% if site.site_id != 1 %}
-							    	<option>{{site.site_address_city}}</option>
+							    	<option value={{site.site_id}}>{{site.site_address_city}}</option>
 									{% endif %}
 							    {% endfor %}
 							</select>
@@ -197,17 +200,17 @@ Filter Existing Locations
 
                         <div class="form-group p-1">
                             <label class="control-label" >Room Number:</label>
-                            <input type="number" min="0" max="999" id="room-number" class="form-control" value=>
+                            <input type="number" min="0" max="999" id="room-number" name="room-number" class="form-control" >
                         </div>   
 
                         <div class="form-group p-1">
                             <label class="control-label" >Shelf Number:</label>
-                            <input type="number" min="0" max="999" id="shelf-number" class="form-control">
+                            <input type="number" min="0" max="999" id="shelf-number" name="shelf-number" class="form-control">
                         </div>                      
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary">Update</button>
+                        <button type="Submit" class="btn btn-primary" name="editExistingLocationBtn" id="editExistingLocationBtn" >Update</button>
                     </div>
                 </form>
             </div>

@@ -17,8 +17,11 @@ $(document).ready(function(){
 		var shelfNumberData = parseInt(button.data("location-shelf-number"));
 		$(this).find("#shelf-number").val(shelfNumberData);
 
-		var siteNameData = button.data("site-name");        
-		$(this).find("#location-site").val(siteNameData);
+		var siteNameData = parseInt(button.data("site-id"));        
+		$(this).find("#location-site").val(siteNameData); 
+
+		var locationIdData = button.data("site-id");    
+		$(this).find("#location-id-to-edit").val(locationIdData);
 	});
 });
 

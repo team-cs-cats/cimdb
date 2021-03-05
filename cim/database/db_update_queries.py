@@ -74,10 +74,18 @@ def update_employee(employee_group_input, employee_first_name_input, employee_la
 	update(update_query_to_run=update_employee_query)
 
 
-def update_location():
+def update_location(location_room_number_input, location_shelf_number_input, 
+	location_site_id_dropdown_input, location_id_from_update_button):
 
 	# Load SQL query for updating the data for a selected location
-	update_location_query = """"""
+	update_location_query = """
+		UPDATE Locations SET 
+		 location_room_number = '%s',
+		 location_shelf_number = '%s',
+		 location_site_id = '%s'
+		WHERE location_id = '%s';
+	""" % (location_room_number_input, location_shelf_number_input, 
+	location_site_id_dropdown_input, location_id_from_update_button)
 	update(update_query_to_run=update_location_query)
 
 

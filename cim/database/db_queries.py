@@ -143,6 +143,7 @@ def get_db_locations():
 	Locations.location_id, 
 	Locations.location_room_number, 
 	Locations.location_shelf_number, 
+	Locations.location_site_id,
 	Sites.site_address_city as location_site_name 
 	FROM Locations 
 	INNER JOIN Sites 

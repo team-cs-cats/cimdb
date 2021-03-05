@@ -541,17 +541,44 @@ def locations():
 	# if post request perform insertion of new location
 	if request.method=="POST":
 
-		# # obtain data from new location form
-		provided_add_new_location_site = request.form['add_new_location_site']
-		provided_add_location_room_number = request.form['add_location_room_number']
-		provided_add_location_shelf_number = request.form['add_location_shelf_number']	
+		# First check for a new insertion
+		if "addNewLocationBtn" in request.form:
 
-		# perform the insertion
-		dbiq.insert_location(
-			new_location_room_number=provided_add_location_room_number, 
-			new_location_shelf_number=provided_add_location_shelf_number, 
-			new_location_site_id=provided_add_new_location_site)
+			# obtain data from new location form
+			provided_add_new_location_site = request.form['add_new_location_site']
+			provided_add_location_room_number = request.form['add_location_room_number']
+			provided_add_location_shelf_number = request.form['add_location_shelf_number']	
 
+			# perform the insertion
+			dbiq.insert_location(
+				new_location_room_number=provided_add_location_room_number, 
+				new_location_shelf_number=provided_add_location_shelf_number, 
+				new_location_site_id=provided_add_new_location_site)
+
+
+		# Then, check to handle Edit (UPDATE) an exisitng location
+		if "editExistingLocationBtn" in request.form:
+
+			# obtain data from the Edit Employee Details Modal
+			provided_edit_location_site = request.form['location-site']
+			provided_edit_location_room_number = request.form['room-number']
+			provided_edit_location_shelf_number = request.form['shelf-number']
+			provided_edit_location_site_id = request.form['location-id-to-edit']	
+
+			# Perform the update
+			dbuq.update_location(location_room_number_input=provided_edit_location_room_number, 
+				location_shelf_number_input=provided_edit_location_shelf_number, 
+				location_site_id_dropdown_input=provided_edit_location_site, 
+				location_id_from_update_button=provided_edit_location_site_id)
+
+		# Lastly, check if the POST was a DELETE for a location
+		if "deleteExistingLocationBtn" in request.form:
+
+			# obtain data from the Delete Location Modal
+			location_id_to_delete = request.form['location-id-to-delete']
+
+			# Perform the deletion
+			dbdq.delete_location(location_id_to_delete=location_id_to_delete)
 
 		# Update the location results since they have changed
 		location_results = dbq.get_db_locations()
