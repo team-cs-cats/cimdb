@@ -517,6 +517,80 @@ def inventory_regular_components():
 			sites=site_results)
 
 
+	if request.method=="POST":
+
+		# Handle Order New Regular Component (INSERT)
+		if "btnAddRegComp" in request.form:
+			
+			# First, load in the reg comp details from the web page
+			provided_part_description = request.form['new_reg_comp_part_description']
+			provided_part_category = request.form['new_reg_comp_part_category']
+			provided_site_id = int(request.form['new_reg_comp_part_site_id'])
+			provided_quantity = int(request.form['new_reg_comp_part_quantity'])
+
+			print(provided_part_description, provided_part_category, provided_site_id, provided_quantity)
+
+			# We need to insert the new regular component using the part number description and regular component category
+			dbiq.insert_regular_component(new_rc_pn_desc=provided_part_description, new_rc_category=provided_part_category)
+
+			# This returns the newest regular component part number that has been generated (which will be the one we just inserted) 
+			new_regular_component_part_number = dbq.get_newest_regular_component_part_number()
+
+			print('new_regular_component_part_number', new_regular_component_part_number)
+
+			# Then we need to obtain the location ID where the regular components will be placed.
+			# We do this by selecting the location ID where the provided site has a receiving department (room 1)
+			receiving_location_id = dbiq.get_receiving_id(site_id=provided_site_id)
+
+			print('receiving_location_id', receiving_location_id)
+
+			# Then insert into the LocationsRegularComps table using the location ID, reg comp ID, and quantity ordered
+			dbiq.insert_location_regular_comps(
+				new_regular_component_quantity=provided_quantity, 
+				location_id_from_dropdown_Input=receiving_location_id, 
+				regular_component_id_from_dropdown_Input=new_regular_component_part_number
+				)
+
+			
+
+		# Handle Edit Existing Regular Component (UPDATE)
+		# if "btnSpecCompUpdate" in request.form:
+
+		# 	# obtain data from new special component form
+		# 	updated_spec_comp_part_number = request.form['spec-comp-edit-part-number']
+		# 	updated_spec_comp_location = int(request.form['spec-comp-edit-location'])
+
+		# 	# for the 'Is Free' checkbox, we first assume it is False (not checked). Then, if it is found to be checked, we update.
+		# 	updated_spec_comp_is_free = 0
+		# 	if request.form.get('spec-comp-edit-is-free'):
+		# 		updated_spec_comp_is_free = 1
+			
+		# 	print('updated_spec_comp_is_free', updated_spec_comp_is_free)
+		# 	sc_id_to_update = request.form['spec-comp-serial-number']
+
+		# 	# perform the update
+		# 	dbuq.update_special_component(updated_spec_comp_part_number=updated_spec_comp_part_number, 
+		# 		updated_spec_comp_location=updated_spec_comp_location,
+		# 		updated_spec_comp_is_free=updated_spec_comp_is_free,
+		# 		sc_id_to_update=sc_id_to_update)
+
+		# # Handle Delete Existing Special Component (DELETE)
+		# if "btnSpecCompDelete" in request.form:
+
+		# 	# obtain data from new special component form
+		# 	sc_id_to_delete = request.form['spec-comp-delete-serial-number']
+
+		# 	# perform the update
+		# 	dbdq.delete_special_component(spec_comp_sn_to_delete=sc_id_to_delete)
+
+
+
+		# regardless, refresh the page with any changes to the data
+		return render_template("inventory_regular_comps.html", 
+			regular_components=dbq.get_db_regular_components(), 
+			reg_comp_locations=dbq.get_db_regular_components_by_location(), 
+			sites=dbq.get_db_sites())
+
 @webapp.route('/shipping', methods=['GET', 'POST'])
 @login_required
 def shipping():
@@ -559,17 +633,44 @@ def locations():
 	# if post request perform insertion of new location
 	if request.method=="POST":
 
-		# # obtain data from new location form
-		provided_add_new_location_site = request.form['add_new_location_site']
-		provided_add_location_room_number = request.form['add_location_room_number']
-		provided_add_location_shelf_number = request.form['add_location_shelf_number']	
+		# First check for a new insertion
+		if "addNewLocationBtn" in request.form:
 
-		# perform the insertion
-		dbiq.insert_location(
-			new_location_room_number=provided_add_location_room_number, 
-			new_location_shelf_number=provided_add_location_shelf_number, 
-			new_location_site_id=provided_add_new_location_site)
+			# obtain data from new location form
+			provided_add_new_location_site = request.form['add_new_location_site']
+			provided_add_location_room_number = request.form['add_location_room_number']
+			provided_add_location_shelf_number = request.form['add_location_shelf_number']	
 
+			# perform the insertion
+			dbiq.insert_location(
+				new_location_room_number=provided_add_location_room_number, 
+				new_location_shelf_number=provided_add_location_shelf_number, 
+				new_location_site_id=provided_add_new_location_site)
+
+
+		# Then, check to handle Edit (UPDATE) an exisitng location
+		if "editExistingLocationBtn" in request.form:
+
+			# obtain data from the Edit Employee Details Modal
+			provided_edit_location_site = request.form['location-site']
+			provided_edit_location_room_number = request.form['room-number']
+			provided_edit_location_shelf_number = request.form['shelf-number']
+			provided_edit_location_site_id = request.form['location-id-to-edit']	
+
+			# Perform the update
+			dbuq.update_location(location_room_number_input=provided_edit_location_room_number, 
+				location_shelf_number_input=provided_edit_location_shelf_number, 
+				location_site_id_dropdown_input=provided_edit_location_site, 
+				location_id_from_update_button=provided_edit_location_site_id)
+
+		# Lastly, check if the POST was a DELETE for a location
+		if "btnLocationDelete" in request.form:
+
+			# obtain data from the Delete Location Modal
+			location_id_to_delete = request.form['location-id-to-delete']
+
+			# Perform the deletion
+			dbdq.delete_location(location_id_to_delete=location_id_to_delete)
 
 		# Update the location results since they have changed
 		location_results = dbq.get_db_locations()
