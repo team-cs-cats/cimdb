@@ -29,6 +29,7 @@ class DummyData:
         self.product_components=self.load_data("product_components")
         self.assembly=self.load_data("assembly")
         self.qc=self.load_data("qc")
+        self.wo_status=self.load_data("workorder_status_catalog")
 
     @staticmethod
     def load_data(filename):
@@ -75,5 +76,7 @@ class DummyData:
         return self.assembly
     def get_qc(self):
         return self.qc
+    def get_wo_status(self):
+        return self.wo_status
 
 

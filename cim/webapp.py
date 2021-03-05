@@ -196,7 +196,7 @@ def logout():
 	return redirect(url_for("index"))
 
 
-@webapp.route('/workorders', methods=['GET', 'POST'])
+@webapp.route('/workorders', methods=['GET', 'POST','PUT','DELETE'])
 @login_required
 def workorders():
 	"""The webapp's page for work orders, which allows reviewing and adding work orders."""
@@ -212,11 +212,17 @@ def workorders():
 		# get information from DB
 		workorder_results=dbq.get_db_work_orders()
 		employee_results=dbq.get_db_employees()
+		
 	
+		# get work orders status
+		workorder_status=data.get_wo_status()
+		print("getting status%%%%%%%%%%%%%%%%%")
+		print(workorder_status)
 
 		return render_template("workorders.html",
 								employees=employee_results ,
-								workorders=workorder_results
+								workorders=workorder_results,
+								workorder_status=workorder_status
 								)
 
 	if request.method=="POST":
@@ -226,7 +232,51 @@ def workorders():
 		dbiq.insert_work_order(date,None,"assembly_pending",int(reference),id)
 		print(f'got a post request! id is: {id} and date is: {date} and reference is{reference}')
 		return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+
+
+	if request.method=='PUT':
+
+		# extract information form request body
+		wo_id=request.json["wo_id"]
+		wo_open_date=request.json["wo_open_date"]
+		wo_close_date=request.json["wo_close_date"]
+		wo_status=request.json["wo_status"]
+		wo_reference_number=request.json["wo_reference_number"]
+		wo_employee_name=request.json["wo_employee_name"]
+
+		# retrive employee ID using it's name:
+
+		# update DB
+
+		# return response
+		# TODO error respose
+
+		print(f'got a PUT request! id is: {wo_id} and wo_employee_name is {wo_employee_name}')
+		return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+
+
 		
+
+	if request.method=='DELETE':
+		# extract information form request body
+		wo_id=request.json["wo_id"]
+
+		# retrive products SN
+
+		# retrive SC SN
+
+		# retrive the total number of RC
+		
+		# update DB
+		# remove all products
+		# set SC to free
+		# add RC to inventory
+
+		# return response
+		# TODO error respose
+
+		print(f'got a Delete request! id is: {wo_id}')
+		return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
 
 
 @webapp.route('/landing', methods=['GET', 'POST'])
@@ -651,7 +701,7 @@ def site_management():
 
 
 # workorder details. it takes the wo_id as argument to retrive the the information from DB
-@webapp.route('/wo-details', methods=['GET', 'POST'])
+@webapp.route('/wo-details', methods=['GET', 'POST','PUT','DELETE'])
 @login_required
 def wo_details(wo_id=""):
 	"""The webapp's page takes wo_id and retirve the inforamtion from DB."""
@@ -679,6 +729,9 @@ def wo_details(wo_id=""):
 		# print(f'############ wo_id is : {wo_id}')
 		# print(f'############ products are is : {products}')
 
+		#get locations
+		location_results = dbq.get_db_locations()
+
 		
 		if wo_id !="":
 			products=dbq.get_db_workorder_details(str(wo_id))
@@ -700,7 +753,8 @@ def wo_details(wo_id=""):
 								wo_id=wo_id,
 								products_catalog=products_catalog ,
 								products=products,
-								workorder_information=workorder_information
+								workorder_information=workorder_information,
+								locations=location_results
 								)
 
 	if request.method=="POST":
@@ -748,6 +802,43 @@ def wo_details(wo_id=""):
 			wo_id=request.json["wo_id"]
 			dbiq.insert_work_order_products(wo_id,product_sn)
 
+		return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+
+	if request.method=='PUT':
+
+		# extract information form request body
+		product_sn=request.json["product_sn"]
+		product_pn=request.json["product_pn"]
+		product_date_assembly=request.json["product_date_assembly"]
+		product_qc_date=request.json["product_qc_date"]
+		product_warranty_expiration_date=request.json["product_warranty_expiration_date"]
+		product_location_id=request.json["product_location_id"]
+
+		#  update DB
+
+		# return response
+		# TODO error respose
+
+		print(f'got a PUT request! id is: {product_sn} and product_location_id is {product_location_id}')
+		return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+
+
+	if request.method=='DELETE':
+		# extract information form request body
+		product_sn=request.json["product_sn"]
+
+		# retrive SC SN
+
+		# retrive the total number of RC
+		
+		# update DB
+		#  set SC to free
+		# add RC to inventory
+
+		# return response
+		# TODO error respose
+
+		print(f'got a Delete request! id is: {product_sn}')
 		return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
 
 

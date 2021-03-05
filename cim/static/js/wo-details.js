@@ -4,8 +4,6 @@ function go_back() {
   window.history.back();
 }
 
-
-
 // Open another wo using the wo_id
 //reloads the page
 function reload_workorder(){
@@ -132,3 +130,162 @@ function add_new_product(wo_id,employee_id){
   }
   
 }
+
+
+
+// edit product details
+function edit_workorder_details(){
+  const data={
+    product_sn: this.product_sn_to_edit.value,
+    product_pn: this.product_pn_to_edit.value,
+    product_family: this.product_family_to_edit.value,
+    product_date_assembly: this.product_assembly_date_to_edit.value,
+    product_qc_date: this.product_qc_date_to_edit.value,
+    product_warranty_expiration_date: this.product_warranty_date_to_edit.value,
+    product_location_id: this.product_location_to_edit.value
+  }
+  console.log("edit clicked",data)
+
+  // make an Update request to server
+  fetch('/wo-details', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+    // location.reload()
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+  
+};
+
+
+// delete product details
+function delete_workorder_details(){
+  const data={
+    product_sn: this.delete_WorkOrderDetails_title.innerText,
+  }
+  console.log("delete clicked",data)
+
+  // make an Update request to server
+  fetch('/wo-details', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+    // location.reload()
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+  
+};
+
+
+// Edit product Modal
+$(document).ready(function() {
+  $('#editWorkOrderDetails').on('shown.bs.modal', function (event) {
+    	
+    // Get the button that triggered the modal
+		var button = $(event.relatedTarget);
+    
+    //Extract value from the custom data-* attribute and update modal attr
+    document.getElementById("edit_WorkOrderDetails_title").innerText=button.attr("data-product-sn")
+    document.getElementById("product_family_to_edit").value=button.attr("data-product_family")
+
+    // Used Jquery to grab the product part number and pass to modal
+    var productPNData = button.data("product_pn");
+    $(this).find("#product_pn_to_edit").val(productPNData);
+
+    document.getElementById("product_sn_to_edit").value=button.attr("data-product-sn")
+    document.getElementById("product_assembly_date_to_edit").value=button.attr("data-product_date_assembly")
+    document.getElementById("product_qc_date_to_edit").value=button.attr("data-product_qc_date")
+    document.getElementById("product_warranty_date_to_edit").value=button.attr("data-product_warranty_expiration_date")
+    document.getElementById("product_location_to_edit").value=button.attr("data-product_location_id")  
+	});   
+});
+
+// Delete product Modal
+$(document).ready(function() {
+  $('#deleteWorkOrderDetails').on('shown.bs.modal', function (event) {
+    	// Get the button that triggered the modal
+		var button = $(event.relatedTarget);
+
+    //Extract value from the custom data-* attribute and update modal attr
+    document.getElementById("delete_WorkOrderDetails_title").innerText=button.attr("data-product_sn")
+       		
+	});
+    
+});
+
+//event listener for edit Modal
+document.addEventListener('input', function (event) {
+
+  // Only run on our select menu
+if (event.target.id !== 'product_family_to_edit') return;
+
+update_pn_in_edit_modal()
+
+}, false)
+
+function update_pn_in_edit_modal(){
+
+  // The selected value
+  
+  var family=document.getElementById("product_family_to_edit").value
+
+  var models = document.getElementById("product_pn_to_edit")
+  //clear options
+  models.innerHTML = ""
+
+  //add new options
+  for (var i = 0; i < d[family].length; i++) {
+      var o = document.createElement("option");
+      // o.value = d[family][i]
+      o.text = d[family][i]
+      models.appendChild(o);
+  }
+  
+}
+
+// function sleep(ms) {
+//   return new Promise(resolve => setTimeout(resolve, ms));
+// }
+
+
+// function set_part_number () {
+  
+//   document.getElementById("product_pn_to_edit").value=part_number
+//   console.log("t is:",part_number)
+// }
+
+// function test(){
+//   setTimeout(set_part_number, 500)
+// }
+
+
+// test  Modal
+$(document).ready(function() {
+  $('#exampleModal').on('show.bs.modal', function (event) {
+    	
+    // Get the button that triggered the modal
+		var button = $(event.relatedTarget);
+    
+    //Extract value from the custom data-* attribute and update modal attr
+    document.getElementById("test_title").innerText=button.attr("data-product-sn")
+    
+    // document.getElementById("test_pn").value=button.attr("data-product_pn")
+     
+	});   
+});

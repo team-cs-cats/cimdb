@@ -7,7 +7,7 @@ function components_info(serial_number){
   console.log("clicked")
     
   valid=["P7125","P8766"]
-if(valid.includes(serial_number)){
+if(true){
   var url='/product-details?'+'product_sn='+serial_number
   console.log("URL IS: ",url)
   
@@ -71,3 +71,27 @@ document.addEventListener('input', function (event) {
 	console.log(event.target.options[event.target.selectedIndex]);
 
 }, false)
+
+// Edit product Modal
+$(document).ready(function() {
+  $('#pass_qc').on('shown.bs.modal', function (event) {
+    	
+    // Get the button that triggered the modal
+		var button = $(event.relatedTarget);
+    
+    //Extract value from the custom data-* attribute and update modal attr
+    document.getElementById("pass_qc_title").innerText=button.attr("data_product_sn")
+});
+});
+
+
+$(document).ready(function() {
+  $('#failed_qc').on('shown.bs.modal', function (event) {
+    	
+    // Get the button that triggered the modal
+		var button = $(event.relatedTarget);
+    
+    //Extract value from the custom data-* attribute and update modal attr
+    document.getElementById("failed_qc_title").innerText=button.attr("data_product_sn")
+});
+});
