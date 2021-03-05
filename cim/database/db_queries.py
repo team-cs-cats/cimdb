@@ -143,6 +143,7 @@ def get_db_locations():
 	Locations.location_id, 
 	Locations.location_room_number, 
 	Locations.location_shelf_number, 
+	Locations.location_site_id,
 	Sites.site_address_city as location_site_name 
 	FROM Locations 
 	INNER JOIN Sites 
@@ -452,3 +453,14 @@ def get_db_regular_component_pn(rc_pn_desc):
 	
 		
 	return regular_component_pn_result
+
+
+
+def get_newest_regular_component_part_number():
+	# returns the most recently added regular component part number from the regular components entity
+
+	query = """SELECT rc_pn FROM RegularComponents WHERE rc_pn=(SELECT max(rc_pn) FROM RegularComponents);"""
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	regular_component_pn_result = cursor.fetchall()
+	return regular_component_pn_result[0]['rc_pn']

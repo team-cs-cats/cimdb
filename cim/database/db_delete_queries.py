@@ -58,10 +58,12 @@ def delete_employee(employee_id_to_delete):
 	delete(delete_query_to_run=delete_employee_query)
 
 
-def delete_location():
+def delete_location(location_id_to_delete):
 
 	# Load SQL query for DELETEing the data for a selected location
-	delete_location_query = """"""
+	delete_location_query = """
+	DELETE FROM Locations WHERE location_id='%s';
+	"""%(location_id_to_delete)
 	delete(delete_query_to_run=delete_location_query)
 
 
