@@ -20,11 +20,36 @@ $(document).ready(function(){
 		var siteNameData = parseInt(button.data("site-id"));        
 		$(this).find("#location-site").val(siteNameData); 
 
-		var locationIdData = button.data("site-id");    
+		var locationIdData = button.data("location-id");    
 		$(this).find("#location-id-to-edit").val(locationIdData);
 	});
 });
 
+
+
+// open locations DELETE modal popup
+$(document).ready(function(){
+	$("#deleteLocation").on("show.bs.modal", function(event){
+		// Get the button that triggered the modal
+		var button = $(event.relatedTarget);
+
+		// Extract value from the custom data-* attribute
+		var titleData = button.data("title");
+		$(this).find(".modal-title").text(titleData);
+
+		var roomNumberData = parseInt(button.data("location-room-number"));
+		$(this).find("#room-number").val(roomNumberData);
+
+		var shelfNumberData = parseInt(button.data("location-shelf-number"));
+		$(this).find("#shelf-number").val(shelfNumberData);
+
+		var siteNameData = parseInt(button.data("site-id"));        
+		$(this).find("#location-site").val(siteNameData); 
+
+		var locationIdData = button.data("location-id");    
+		$(this).find("#location-id-to-delete").val(locationIdData);
+	});
+});
 
 
 //add a new location

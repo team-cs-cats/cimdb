@@ -572,7 +572,7 @@ def locations():
 				location_id_from_update_button=provided_edit_location_site_id)
 
 		# Lastly, check if the POST was a DELETE for a location
-		if "deleteExistingLocationBtn" in request.form:
+		if "btnLocationDelete" in request.form:
 
 			# obtain data from the Delete Location Modal
 			location_id_to_delete = request.form['location-id-to-delete']
