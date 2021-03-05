@@ -117,7 +117,6 @@ def get_db_regular_components_by_location():
 	return reg_comp_results
 
 
-
 def get_db_sites():
 
 	# Load SQL query for site data (except for 'customer' site ie shipped products/work orders)
@@ -300,15 +299,7 @@ def get_product_sn(sc_sn):
 		return get_product_sn_result[0]["product_sn"]
 	
 
-def update_is_free(sc_sn):
-	# should be added to upate queries later
-	# updates is_free attr of a SC once it's assigned to a product
 
-	query = """UPDATE SpecialComponents SET sc_is_free=0 WHERE sc_sn ="""+str(sc_sn)+""" ;"""
-	db_connection = db.connect_to_database()
-	cursor = db.execute_query(db_connection=db_connection, query=query)
-	
-	
 def get_is_free(sc_sn):
 	# returns True if a SC is free otherwise flase
 	query = """select sc_is_free from SpecialComponents 
@@ -324,14 +315,6 @@ def get_is_free(sc_sn):
 	
 	else:
 		return False
-
-
-def rev_update_is_free(sc_sn):
-	# will be deleted--- only for dev purposes
-	
-	query = """UPDATE SpecialComponents SET sc_is_free=1 WHERE sc_sn ="""+str(sc_sn)+""" ;"""
-	db_connection = db.connect_to_database()
-	cursor = db.execute_query(db_connection=db_connection, query=query)
 
 	
 def get_assembly_list(employee_id=None):
@@ -441,6 +424,7 @@ def get_db_regular_component_desc(rc_pn):
 	return regular_component_desc_result
 
 def get_db_regular_component_pn(rc_pn_desc):
+
 	# returns a regular compoenent part number of a given rc_pn_desc
 	
 	query = """select RegularComponents.rc_pn from RegularComponents where
@@ -452,3 +436,48 @@ def get_db_regular_component_pn(rc_pn_desc):
 	
 		
 	return regular_component_pn_result
+
+def get_db_get_employee_id(employee_first_name,employee_last_name):
+
+	# returns employee_id of the given first and last name
+	# TODO: add another argument in the case there were employees with simialr names
+	
+	query = """select Employees.employee_id from Employees where
+	Employees.employee_first_name='"""+employee_first_name+"""' and Employees.employee_last_name='"""+employee_last_name+"""' ;"""
+		
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	employee_id_result = cursor.fetchall()
+	
+		
+	return employee_id_result[0]
+
+def get_db_products_in_a_workorder(wo_id):
+
+	# returns the product_sn of all products in a work_order 
+
+	query = """select wop_product_sn from WorkOrderProducts where wop_wo_id = """+wo_id+""";"""
+		
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	products_in_a_workorder_results = cursor.fetchall()
+	
+		
+	return products_in_a_workorder_results
+
+def get_rc_qunatity_in_a_location(rc_pn,location_id):
+
+	# returns quantity of a rc in a location
+
+	query = """select lrc_quantity from LocationsRegularComps where lrc_rc_pn = """+rc_pn+"""
+	and lrc_location_id= """+location_id+""" ;"""
+		
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	rc_qunatity_in_a_location_results = cursor.fetchall()
+
+	if len(rc_qunatity_in_a_location_results)==0:
+		return -1
+	
+		
+	return rc_qunatity_in_a_location_results[0]['lrc_quantity']

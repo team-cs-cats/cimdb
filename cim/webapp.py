@@ -216,8 +216,8 @@ def workorders():
 	
 		# get work orders status
 		workorder_status=data.get_wo_status()
-		print("getting status%%%%%%%%%%%%%%%%%")
-		print(workorder_status)
+		# print("getting status%%%%%%%%%%%%%%%%%")
+		# print(workorder_status)
 
 		return render_template("workorders.html",
 								employees=employee_results ,
@@ -246,7 +246,25 @@ def workorders():
 
 		# retrive employee ID using it's name:
 
+		employee_first_name,employee_last_name=wo_employee_name.split()
+		wo_employee_id=dbq.get_db_get_employee_id(employee_first_name,employee_last_name)['employee_id']
+		# print(f'first is {employee_first_name} and lst is {employee_last_name} and id is {wo_employee_id}')
+
+		# add quotations to dates and status
+		# TODO a more smart way
+		wo_open_date="'"+wo_open_date+"'"
+
+		if wo_close_date=="":
+			wo_close_date= "NULL"
+		else:
+			wo_close_date="'"+wo_close_date+"'"
+
+		wo_status = "'"+wo_status+"'"
+
+
 		# update DB
+
+		dbuq.update_work_order(wo_id,wo_open_date,wo_close_date,wo_status,wo_reference_number,wo_employee_id)
 
 		# return response
 		# TODO error respose
@@ -262,15 +280,89 @@ def workorders():
 		wo_id=request.json["wo_id"]
 
 		# retrive products SN
+		product_results=dbq.get_db_products_in_a_workorder(wo_id)
+		products_in_wo=[]
+		for product in product_results:
+			products_in_wo.append(product["wop_product_sn"])
+		print("products in wo are: ", products_in_wo)
 
+		# get product components
+		
+		regular_components=[]
+		for sn in products_in_wo:
+			regular_components.append(dbq.get_db_product_components(sn))
+
+		print("products details in wo are: ", regular_components)
+		
 		# retrive SC SN
+		sc_sn=[]
+
+		for sn in products_in_wo:
+			sc_sn.append(dbq.get_db_product_details(sn)['product_sc_sn'])
+
+		print("sc_sn in wo are: ", sc_sn)
+
+		
 
 		# retrive the total number of RC
+		regular_products_to_restore={}
+		
+		for components in regular_components: #for each product in WO
+			for component in components:	# for each component in product
+				# if products does not exists in the dictionary add it with it's quantity
+				if component['prc_rc_pn'] not in regular_products_to_restore.keys():
+					regular_products_to_restore[component['prc_rc_pn']]=component['prc_quantity_needed']
+				
+				# otherwise add the quantity to curretn quantitiy
+				else:
+					regular_products_to_restore[component['prc_rc_pn']]=regular_products_to_restore[component['prc_rc_pn']]+component['prc_quantity_needed']
+		
+		# NO GC should be removed as its not a real RC
+		regular_products_to_restore.pop('200', None)
+
+		print("regular_products_to_restore in wo are: ", regular_products_to_restore)
 		
 		# update DB
+		#  All free SC and RC will be added to the warehouse room 2 shelf 1 of the site location 
+		#  for now the location is: RENO ID 57
+		#TODO : retrive warehouse location ID based on the employee and session data 
+
 		# remove all products
-		# set SC to free
-		# add RC to inventory
+		# as product_sn is a FK in 2 tables, first it has to be deleted from those tables
+		# the product itself can be deleted
+
+		# remove wo (and its products) from WorkorderProducts
+		dbdq.delete_work_order_products_by_wo_id(wo_id)
+
+		# remove product from ProductsRegularComps and Products 
+		for sn in products_in_wo:
+			dbdq.delete_products_regular_comps(str(sn))
+			dbdq.delete_product(str(sn))
+		
+		print("deleted!!!!!")
+
+
+		# set SC to free and update location
+		# why location 57? read above notes
+		for sn in sc_sn:
+			dbuq.set_sc_free(sn)
+			dbuq.set_sc_location(str(sn),"57") 
+
+		# add RC to inventory -- get current quant and update it
+
+		for rc_pn,qunatity in regular_products_to_restore.items():
+			current_quantity=dbq.get_rc_qunatity_in_a_location(str(rc_pn),"57")
+
+			if current_quantity==-1: # does not exists should be added a new entry
+				dbiq.ali_insert_location_regular_comps(str(rc_pn),"57",str(qunatity))
+			
+			else: # exists should be updated
+				new_quant=current_quantity+qunatity
+				dbuq.set_rc_qunatity_in_a_location(str(rc_pn),"57",str(new_quant))
+		
+
+		# Remove workorder
+		dbdq.delete_work_order(wo_id)
 
 		# return response
 		# TODO error respose
@@ -630,7 +722,7 @@ def site_management():
 @webapp.route('/wo-details', methods=['GET', 'POST','PUT','DELETE'])
 @login_required
 def wo_details(wo_id=""):
-	"""The webapp's page takes wo_id and retirve the inforamtion from DB."""
+	"""The webapp's page takes wo_id and retrieve  the inforamtion from DB."""
 
 	# if the current user is not authenticated, redirect the user to the logged out index page
 	if not current_user.is_authenticated:
@@ -686,7 +778,7 @@ def wo_details(wo_id=""):
 	if request.method=="POST":
 
 		# for development 
-		#  dbq.rev_update_is_free(101711)
+		#  dbuq.set_sc_not_free(101711)
 		# return
 
 		print(f'got a post request! and request.json is: {request.json}')
@@ -713,7 +805,8 @@ def wo_details(wo_id=""):
 		product_warranty_date,employee_id,product_location,product_sc_sn)
 
 		# update is_free attr
-		dbq.update_is_free(product_sc_sn)
+		dbuq.set_sc_not_free(product_sc_sn)
+		
 				
 
 		# get product_sn using its SC_sn
@@ -735,12 +828,37 @@ def wo_details(wo_id=""):
 		# extract information form request body
 		product_sn=request.json["product_sn"]
 		product_pn=request.json["product_pn"]
+		product_family=request.json["product_family"]
 		product_date_assembly=request.json["product_date_assembly"]
 		product_qc_date=request.json["product_qc_date"]
 		product_warranty_expiration_date=request.json["product_warranty_expiration_date"]
 		product_location_id=request.json["product_location_id"]
 
+				
+		# add quotations to dates and family and pn
+		# TODO a more smart way
+		product_pn="'"+product_pn+"'"
+
+		product_family="'"+product_family+"'"
+
+
+		if product_date_assembly=="":
+			product_date_assembly= "NULL"
+		else:
+			product_date_assembly="'"+product_date_assembly+"'"
+
+		if product_qc_date=="":
+			product_qc_date= "NULL"
+		else:
+			product_qc_date="'"+product_qc_date+"'"
+
+		if product_warranty_expiration_date=="":
+			product_warranty_expiration_date= "NULL"
+		else:
+			product_warranty_expiration_date="'"+product_warranty_expiration_date+"'"
+
 		#  update DB
+		dbuq.update_product(str(product_pn),product_family,product_date_assembly,product_qc_date,product_warranty_expiration_date,product_location_id,product_sn)
 
 		# return response
 		# TODO error respose
@@ -753,14 +871,73 @@ def wo_details(wo_id=""):
 		# extract information form request body
 		product_sn=request.json["product_sn"]
 
+	
+		# get product components
+		regular_components=dbq.get_db_product_components(product_sn)
+		print("products details in wo are: ", regular_components)
+		
 		# retrive SC SN
+		sc_sn=dbq.get_db_product_details(product_sn)['product_sc_sn']
+		print("sc_sn in wo are: ", sc_sn)
 
 		# retrive the total number of RC
+		regular_products_to_restore={}
 		
-		# update DB
-		#  set SC to free
-		# add RC to inventory
+		for component in regular_components: #for each component in product
+			
+			# if products does not exists in the dictionary add it with it's quantity
+			if component['prc_rc_pn'] not in regular_products_to_restore.keys():
+				regular_products_to_restore[component['prc_rc_pn']]=component['prc_quantity_needed']
+			
+			# otherwise add the quantity to curretn quantitiy
+			else:
+				regular_products_to_restore[component['prc_rc_pn']]=regular_products_to_restore[component['prc_rc_pn']]+component['prc_quantity_needed']
+		
+		# NO GC should be removed as its not a real RC
+		regular_products_to_restore.pop('200', None)
 
+		print("regular_products_to_restore in wo are: ", regular_products_to_restore)
+
+
+
+		# update DB
+		#  All free SC and RC will be added to the warehouse room 2 shelf 1 of the site location 
+		#  for now the location is: RENO ID 57
+		#TODO : retrive warehouse location ID based on the employee and session data 
+
+		
+		# as product_sn is a FK in 2 tables, first it has to be deleted from those tables
+		# the product itself can be deleted
+
+		# remove product from WorkorderProducts
+		dbdq.delete_work_order_products_by_product_sn(str(product_sn))
+		
+
+		# remove product from ProductsRegularComps and Products 
+		dbdq.delete_products_regular_comps(str(product_sn))
+		dbdq.delete_product(str(product_sn))
+		
+		print("deleted!!!!!")
+
+
+		# set SC to free and update location
+		# why location 57? read above notes
+		dbuq.set_sc_free(sc_sn)
+		dbuq.set_sc_location(str(sc_sn),"57") 
+
+		# add RC to inventory -- get current quant and update it
+
+		for rc_pn,qunatity in regular_products_to_restore.items():
+			current_quantity=dbq.get_rc_qunatity_in_a_location(str(rc_pn),"57")
+
+			if current_quantity==-1: # does not exists should be added a new entry
+				dbiq.ali_insert_location_regular_comps(str(rc_pn),"57",str(qunatity))
+			
+			else: # exists should be updated
+				new_quant=current_quantity+qunatity
+				dbuq.set_rc_qunatity_in_a_location(str(rc_pn),"57",str(new_quant))
+		
+	
 		# return response
 		# TODO error respose
 
@@ -769,10 +946,10 @@ def wo_details(wo_id=""):
 
 
 # products details. it takes the product_sn as argument to retrive the the information from DB
-@webapp.route('/product-details', methods=['GET', 'POST'])
+@webapp.route('/product-details', methods=['GET', 'POST','PUT'])
 @login_required
 def product_details(product_sn=""):
-	"""The webapp's page takes product_sn and retirve the inforamtion from DB."""
+	"""The webapp's page takes product_sn and retrieve  the inforamtion from DB."""
 
 	# if the current user is not authenticated, redirect the user to the logged out index page
 	if not current_user.is_authenticated:
@@ -827,25 +1004,113 @@ def product_details(product_sn=""):
 
 		# create correct object using post data
 		product_sn=request.json['product_sn']
-		regular_componenets=[
+		regular_components=[
 			{'rc_pn':dbq.get_db_regular_component_pn(request.json['MB'])[0]['rc_pn'],'quant':1}, # MB Data
 			{'rc_pn':dbq.get_db_regular_component_pn(request.json['Case'])[0]['rc_pn'],'quant':1}, # Case Data
 			{'rc_pn':dbq.get_db_regular_component_pn(request.json['GC'])[0]['rc_pn'],'quant':1}, # GC Data
 			{'rc_pn':dbq.get_db_regular_component_pn(request.json['RAM'])[0]['rc_pn'],'quant':request.json['RAM_quant']}, # RAM Data
 			{'rc_pn':dbq.get_db_regular_component_pn(request.json['HDD'])[0]['rc_pn'],'quant':request.json['HDD_quant']}, # HDD Data
 		]
-
-
-		
-		# add compoenents into table
-
-		for component in regular_componenets:
+		# add components into table
+		for component in regular_components:
 			dbiq.insert_products_regular_comps(product_sn,component['rc_pn'],component['quant'])
-
 		 		
 		# TODO: adjust RC quantity
 		
 		return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+
+
+
+	if request.method=='PUT':
+
+		#  for SC and RC it first delete all previous components and adds them into inventory
+		# then take new itmes from inventory and assign into to the product
+
+		
+		print(f'got a PUT request! and request.json is: {request.json}')
+
+		# create correct object using post data
+		product_sn=request.json['product_sn']
+		updated_regular_components=[
+			{'rc_pn':dbq.get_db_regular_component_pn(request.json['MB'])[0]['rc_pn'],'quant':1}, # MB Data
+			{'rc_pn':dbq.get_db_regular_component_pn(request.json['Case'])[0]['rc_pn'],'quant':1}, # Case Data
+			{'rc_pn':dbq.get_db_regular_component_pn(request.json['GC'])[0]['rc_pn'],'quant':1}, # GC Data
+			{'rc_pn':dbq.get_db_regular_component_pn(request.json['RAM'])[0]['rc_pn'],'quant':request.json['RAM_quant']}, # RAM Data
+			{'rc_pn':dbq.get_db_regular_component_pn(request.json['HDD'])[0]['rc_pn'],'quant':request.json['HDD_quant']}, # HDD Data
+		]
+		updated_sc_sn=request.json['sc_sn']
+
+
+		# get product components
+		regular_components=dbq.get_db_product_components(product_sn)
+		print("products details are: ", regular_components)
+		
+		# retrive SC SN
+		sc_sn=dbq.get_db_product_details(product_sn)['product_sc_sn']
+		print("sc_sn is: ", sc_sn)
+
+		# retrive the total number of RC
+		regular_products_to_restore={}
+		
+		for component in regular_components: #for each component in product
+			
+			# if products does not exists in the dictionary add it with it's quantity
+			if component['prc_rc_pn'] not in regular_products_to_restore.keys():
+				regular_products_to_restore[component['prc_rc_pn']]=component['prc_quantity_needed']
+			
+			# otherwise add the quantity to curretn quantitiy
+			else:
+				regular_products_to_restore[component['prc_rc_pn']]=regular_products_to_restore[component['prc_rc_pn']]+component['prc_quantity_needed']
+
+		# NO GC should be removed as its not a real RC
+		regular_products_to_restore.pop('200', None)
+
+
+		# remove current components
+		#  All free SC and RC will be added to the warehouse room 2 shelf 1 of the site location 
+		#  for now the location is: RENO ID 57
+		#TODO : retrive warehouse location ID based on the employee and session data 
+
+			
+		# remove product from ProductsRegularComps and Products 
+		dbdq.delete_products_regular_comps(str(product_sn))
+		
+		# set SC to free and update location
+		# why location 57? read above notes
+		dbuq.set_sc_free(sc_sn)
+		dbuq.set_sc_location(str(sc_sn),"57") 
+
+		# add RC to inventory -- get current quant and update it
+
+		for rc_pn,qunatity in regular_products_to_restore.items():
+			current_quantity=dbq.get_rc_qunatity_in_a_location(str(rc_pn),"57")
+
+			if current_quantity==-1: # does not exists should be added a new entry
+				dbiq.ali_insert_location_regular_comps(str(rc_pn),"57",str(qunatity))
+			
+			else: # exists should be updated
+				new_quant=current_quantity+qunatity
+				dbuq.set_rc_qunatity_in_a_location(str(rc_pn),"57",str(new_quant))
+
+			
+		# update special_compoenet
+		dbuq.set_sc_not_free(str(updated_sc_sn))
+
+		dbuq.set_sc_sn_of_a_product(str(updated_sc_sn),str(product_sn))
+
+		# add new RC
+		for component in updated_regular_components:
+			dbiq.insert_products_regular_comps(product_sn,component['rc_pn'],component['quant'])
+
+
+		# TODO: adjust RC quantity
+	
+		# return response
+		# TODO error respose
+
+		print(f'got a PUT request! id is: {product_sn}')
+		return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
 				
 
 		
@@ -853,7 +1118,7 @@ def product_details(product_sn=""):
 @webapp.route('/assembly', methods=['GET', 'POST'])
 @login_required
 def assembly():
-	"""The webapp's page retirve the inforamtion from DB for the Assembly process."""
+	"""The webapp's page retrieve  the inforamtion from DB for the Assembly process."""
 
 	# if the current user is not authenticated, redirect the user to the logged out index page
 	if not current_user.is_authenticated:
@@ -882,7 +1147,7 @@ def assembly():
 @webapp.route('/qc', methods=['GET', 'POST'])
 @login_required
 def QC():
-	"""The webapp's page retirve the inforamtion from DB for the Assembly process."""
+	"""The webapp's page retrieve  the inforamtion from DB for the Assembly process."""
 
 	# if the current user is not authenticated, redirect the user to the logged out index page
 	if not current_user.is_authenticated:
@@ -946,17 +1211,35 @@ def get_free_sc_sn():
 @webapp.route('/data/product_components_exist', methods=['GET', 'POST'])
 @login_required
 def get_product_components():
-	# returns True if a product has Regular Compoenents otherwise returns False
+	# returns True if a product has Regular components otherwise returns False
 
 	if request.method=="POST":
 		
 		print(f'got a post request! and request.json is: {request.json}')
 		
-		product_compoenents=dbq.get_db_product_components(request.json["product_sn"])
+		product_components=dbq.get_db_product_components(request.json["product_sn"])
 
-		if len(product_compoenents)==0:
+		if len(product_components)==0:
 			return json.dumps({'result':False}), 200, {'ContentType':'application/json'}
 
 		else:
 			return json.dumps({'result':True}), 200, {'ContentType':'application/json'}
-	
+
+
+@webapp.route('/data/test', methods=['GET', 'POST'])
+@login_required
+def test(sn="",id=""):
+	# to test a db query
+
+	if request.method=="GET":
+
+		if request.args.get("sn"):
+			sn=request.args.get("sn")
+
+		if request.args.get("id"):
+			id=request.args.get("id")
+
+	print("args are: ",sn,id)
+	print("query result",dbq.get_rc_qunatity_in_a_location(sn,id))
+
+	return "HOY!"

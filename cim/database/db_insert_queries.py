@@ -161,3 +161,14 @@ def insert_special_component(new_sc_pn, new_sc_location_id):
 	# insert the new special component into the database
 	insert(insert_query_to_run=add_special_component_query, data_to_insert=new_special_component_data)
 
+
+
+# for ali dev --- will be removed later
+def ali_insert_location_regular_comps(new_rc_pn,new_rc_location_id,new_rc_quantity):
+
+	# Load SQL query for INSERTing new locations/regular components data
+	add_location_regular_comps_query = """INSERT INTO LocationsRegularComps (lrc_quantity, lrc_location_id, lrc_rc_pn)
+	VALUES (%s, %s, %s)"""
+	add_location_regular_comps_data=(new_rc_quantity,new_rc_location_id,new_rc_pn)
+	
+	insert(insert_query_to_run=add_location_regular_comps_query,data_to_insert=add_location_regular_comps_data)

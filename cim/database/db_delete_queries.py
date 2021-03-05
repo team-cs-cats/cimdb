@@ -35,19 +35,24 @@ def delete_site(site_id_to_delete):
 	delete(delete_query_to_run=delete_site_query)
 
 
-def delete_work_order():
+def delete_work_order(wo_id):
 
 	# Load SQL query for DELETEing the data for a selected work order 
-	delete_work_order_query = """"""
+	delete_work_order_query = """DELETE FROM WorkOrders WHERE wo_id="""+wo_id+""" ;"""
 	delete(delete_query_to_run=delete_work_order_query)
 
 
-def delete_work_order_products():
+def delete_work_order_products_by_wo_id(wo_id):
 
 	# Load SQL query for DELETEing the data for a selected work order/products 
-	delete_work_order_products_query = """"""
-	delete(delete_query_to_run=delete_work_order_products_query)
+	delete_work_order_products_by_wo_id_query = """DELETE FROM WorkOrderProducts WHERE wop_wo_id="""+wo_id+""" ;"""
+	delete(delete_query_to_run=delete_work_order_products_by_wo_id_query)
 
+def delete_work_order_products_by_product_sn(product_sn):
+
+	# Load SQL query for DELETEing the data for a selected work order/products 
+	delete_work_order_products_by_wo_id_query = """DELETE FROM WorkOrderProducts WHERE wop_product_sn="""+product_sn+""" ;"""
+	delete(delete_query_to_run=delete_work_order_products_by_wo_id_query)
 
 def delete_employee(employee_id_to_delete):
 
@@ -72,10 +77,10 @@ def delete_location_regular_comps():
 	delete(delete_query_to_run=delete_location_regular_comps_query)
 
 
-def delete_products_regular_comps():
+def delete_products_regular_comps(product_sn):
 
 	# Load SQL query for DELETEing the data for a selected products/regular components relationship
-	delete_product_regular_comps_query = """"""
+	delete_product_regular_comps_query = """DELETE FROM ProductsRegularComps WHERE prc_product_sn = """+product_sn+""" ;"""
 	delete(delete_query_to_run=delete_product_regular_comps_query)
 
 
@@ -86,10 +91,10 @@ def delete_products_special_comps():
 	delete(delete_query_to_run=delete_product_special_comps_query)
 
 
-def delete_product():
+def delete_product(product_sn):
 
 	# Load SQL query for DELETEing the data for a selected product
-	delete_product_query = """"""
+	delete_product_query = """DELETE FROM Products WHERE product_sn = """+product_sn+""" ;"""
 	delete(delete_query_to_run=delete_product_query)
 
 

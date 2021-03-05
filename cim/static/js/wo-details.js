@@ -157,7 +157,7 @@ function edit_workorder_details(){
   .then(response => response.json())
   .then(data => {
     console.log('Success:', data);
-    // location.reload()
+    location.reload()
   })
   .catch((error) => {
     console.error('Error:', error);
@@ -184,7 +184,7 @@ function delete_workorder_details(){
   .then(response => response.json())
   .then(data => {
     console.log('Success:', data);
-    // location.reload()
+    location.reload()
   })
   .catch((error) => {
     console.error('Error:', error);
