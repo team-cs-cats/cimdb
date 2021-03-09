@@ -31,6 +31,9 @@ import cim.database.db_update_queries as dbuq
 # import DELETE queries as dbdq
 import cim.database.db_delete_queries as dbdq
 
+# import filter (SELECT) queries as dbfq
+import cim.database.db_filter_queries as dbfq
+
 # resolve CORS issues for local development
 from flask_cors import CORS, cross_origin
 
@@ -716,12 +719,14 @@ def site_management():
 		# Check if the user submitted a form to filter existing sites
 		if "btnFilterSites" in request.form:
 
-			# Obtain data from the filter existing sites form
-			filter_site_address_1 = request.form['site-filter-address-1']
-			filter_site_address_2 = request.form['site-filter-address-2']
-			filter_site_city = request.form['site-filter-city']
-			filter_site_state = request.form['site-filter-state']
-			filter_site_zip = request.form['site-filter-zip']
+			# Obtain data from the filter existing sites form			
+			provided_filter_site_paramaters = request.form.get('filterSiteSearch')
+
+			# Perform the filter
+
+			site_results = dbfq.filter_site(filter_site_paramater=provided_filter_site_paramaters)
+			return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
+
 
 		# Check if the user submitted a form to clear all filters of existing sites
 		if "btnClearFilterSites" in request.form:
@@ -961,7 +966,7 @@ def product_details(product_sn=""):
 		for component in regular_componenets:
 			dbiq.insert_products_regular_comps(product_sn,component['rc_pn'],component['quant'])
 
-		 		
+				
 		# TODO: adjust RC quantity
 		
 		return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
