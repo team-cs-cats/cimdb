@@ -723,7 +723,6 @@ def site_management():
 			provided_filter_site_paramaters = request.form.get('filterSiteSearch')
 
 			# Perform the filter
-
 			site_results = dbfq.filter_site(filter_site_paramater=provided_filter_site_paramaters)
 			return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
 

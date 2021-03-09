@@ -58,27 +58,12 @@ $(document).ready(function(){
 
 
 // Live Search Filter
-// $(document).ready(function(){
-
-//     // select 
-//     $("#filterSearch").on("input",function(e){
-        
-//         $("#datalist").empty();
-//         $.ajax({
-//             method:"post",
-//             url:"/site-mgmt",
-//             data:{text:$("#filterSearch").val()},
-
-//             success:function(res){
-//                 var data = "<ul>";
-//                 console.log('res is ' + res);
-//                 $.each(res,function(index,value){
-//                     console.log(value.site_id);
-//                     data += "<li>"+value.site_id+"</li>";
-//                 });
-//                 data += "</ul>";
-//                 $("#datalist").html(data);
-//             }
-//         });
-//     });
-// });
+$(document).ready(function(){
+  $("#filterSiteSearch").on("keyup", function() {
+  	console.log('got it');
+    var value = $(this).val().toLowerCase();
+    $("#siteResults tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});

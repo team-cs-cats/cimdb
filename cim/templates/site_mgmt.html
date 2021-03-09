@@ -91,7 +91,7 @@ Filter Existing Sites
 <!-- Main results table -->
 {% block table_contents %}
 
-<table class="table table-striped " >
+<table class="table table-striped " id='siteResults'>
 <tr >
 	<th>Site Address 1</th>
 	<th>Address 2</th>
@@ -103,11 +103,11 @@ Filter Existing Sites
 </tr>
 {% for site in sites %}
 <tr>
-	<td>{{site.site_address_1}}</td>
-	<td>{{site.site_address_2}}</td>
-	<td>{{site.site_address_city}}</td>
-	<td>{{site.site_address_state}}</td>
-	<td>{{site.site_address_postal_code}}</td>
+	<td value={{site.site_address_1}}>{{site.site_address_1}}</td>
+	<td value={{site.site_address_2}}>{{site.site_address_2}}</td>
+	<td value={{site.site_address_city}}>{{site.site_address_city}}</td>
+	<td value={{site.site_address_state}}>{{site.site_address_state}}</td>
+	<td value={{site.site_address_postal_code}}>{{site.site_address_postal_code}}</td>
 
 	<!-- <th><button class="btn-sm btn-warning">Edit</button></th> -->
 	<th><button type="button"
