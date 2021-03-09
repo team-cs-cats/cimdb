@@ -76,16 +76,13 @@ Filter Existing Sites
 
 	<div class="text-center">
 
-		<label for="existing_site_id">Site ID:</label>
-		<input type="number" min="1" max="99" class='m-1' name="existing_site_id" id="existing_site_id" placeholder="99">
+		<input type="text" class='m-1' name="site-filter-address-1" id="site-filter-address-1" placeholder="Address ">
 
-		<input type="text" class='m-1' name="existing_site_address_1" id="existing_site_address_1" placeholder="Address ">
+		<input type="text" class='m-1' name="site-filter-address-2" id="site-filter-address-2" placeholder="Address 2">
 
-		<input type="text" class='m-1' name="existing_site_address_2" id="existing_site_address_2" placeholder="Address 2">
+		<input type="text" class='m-1' name="site-filter-city" id="site-filter-city" placeholder="City">
 
-		<input type="text" class='m-1' name="existing_site_city" id="existing_site_city" placeholder="City">
-
-		<select class="custom-select m-1" name="existing_site_state" id="existing_site_state" required>
+		<select class="custom-select m-1" name="site-filter-state" id="site-filter-state" required>
 			<option selected>Filter State: </option>
 			{% for state in states %}
 			<option>{{state.Code}}</option>
@@ -93,10 +90,10 @@ Filter Existing Sites
 		</select>
 
 		<label for="existing_site_zip">Zip: </label>
-		<input type="number" min="11111" max="99999" class='m-1' name="existing_site_zip" id="existing_site_zip" placeholder="99999">
+		<input type="number" min="11111" max="99999" class='m-1' name="site-filter-zip" id="site-filter-zip" placeholder="99999">
 
-		<input type="button" class="btn-sm btn-primary m-1" value="Filter" onclick=filterData() >
-		<input type="button" class="btn-sm btn-primary m-1" value="Clear Filters" onclick=clearFilters() >
+		<input type="submit" class="btn-sm btn-primary m-1" name="btnFilterSites" id="btnFilterSites" value="Filter" onclick=filterData() >
+		<input type="submit" class="btn-sm btn-primary m-1" name="btnClearFilterSites" id="btnFilterSites" value="Clear Filters" onclick=clearFilters() >
 
 
 	</div>
@@ -126,8 +123,7 @@ Filter Existing Sites
 
 <table class="table table-striped " >
 <tr >
-	<th>Site ID</th>
-	<th>Address 1</th>
+	<th>Site Address 1</th>
 	<th>Address 2</th>
 	<th>City</th>
 	<th>State</th>
@@ -137,7 +133,6 @@ Filter Existing Sites
 </tr>
 {% for site in sites %}
 <tr>
-	<td>{{site.site_id}}</td>
 	<td>{{site.site_address_1}}</td>
 	<td>{{site.site_address_2}}</td>
 	<td>{{site.site_address_city}}</td>

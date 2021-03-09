@@ -675,6 +675,7 @@ def site_management():
 
 	if request.method=="POST":
 
+		# Check if the user submitted a form to add a new site
 		if "addNewSiteBtn" in request.form:
 
 			# obtain data from new site form
@@ -693,6 +694,7 @@ def site_management():
 				new_site_state=provided_site_state, 
 				new_site_zip=provided_site_zip)
 
+		# Check if the user submitted a form to update an existing site
 		if "btnUpdate" in request.form:
 
 			# obtain data from new site form
@@ -711,6 +713,22 @@ def site_management():
 				update_site_zip=update_site_zip,
 				site_id_to_update=site_id_to_update)
 
+		# Check if the user submitted a form to filter existing sites
+		if "btnFilterSites" in request.form:
+
+			# Obtain data from the filter existing sites form
+			filter_site_address_1 = request.form['site-filter-address-1']
+			filter_site_address_2 = request.form['site-filter-address-2']
+			filter_site_city = request.form['site-filter-city']
+			filter_site_state = request.form['site-filter-state']
+			filter_site_zip = request.form['site-filter-zip']
+
+		# Check if the user submitted a form to clear all filters of existing sites
+		if "btnClearFilterSites" in request.form:
+
+			# Refresh the selection query before reloading the page
+			site_results = dbq.get_db_sites()
+		
 		# Lastly, check if the POST was a DELETE for a site
 		if "btnSiteDelete" in request.form:
 
