@@ -35,14 +35,14 @@ Note that a newly added site will only be pre-populate with the five standard ro
 
 	<div class="text-center">
 
-		<input type="text" class='m-1' name="new_site_address_1" id="new_site_address_1" placeholder="Address " required>
+		<input type="text" class='m-1 w-50' name="new_site_address_1" id="new_site_address_1" placeholder="Address " required>
 
-		<input type="text" class='m-1' name="new_site_address_2" id="new_site_address_2" placeholder="Address 2">
+		<input type="text" class='m-1 w-25' name="new_site_address_2" id="new_site_address_2" placeholder="Address 2">
 
 		<input type="text" class='m-1' name="new_site_city" id="new_site_city" placeholder="City" required>
 
 		<select class="custom-select" name="new_site_state" id="new_site_state" required>
-			<option selected>Select State: </option>
+			<option value="" selected disabled hidden>Select State: </option>
 			{% for state in states %}
 			<option>{{state.Code}}</option>
 			{% endfor %}
@@ -53,11 +53,10 @@ Note that a newly added site will only be pre-populate with the five standard ro
 
 		<input type="submit" class="btn-sm btn-success m-1" id="addNewSiteBtn" name="addNewSiteBtn" value="Add New Site" >
 
-
-
 	</div>
 
 </form>
+
 {% endblock %}
 
 <!-- Header for Filter section -->
@@ -72,62 +71,29 @@ Filter Existing Sites
 
 <!-- Form for Filter section -->
 {% block filter_form %}
-<form id="existing-site-data-filter" action="">
+<form id="existing-site-data-filter" action="" method="POST">
+	<div class="d-flex justify-content-center">
+		<div class="w-75">
 
-	<div class="text-center">
+		<div class="input-group">
+		  <div class="w-75">
+		    <input type="search" id="filterSiteSearch" class="form-control" name='filterSiteSearch' placeholder="Filter Existing Sites by Address, City, State or Zip Code" />
+		  </div>
 
-		<label for="existing_site_id">Site ID:</label>
-		<input type="number" min="1" max="99" class='m-1' name="existing_site_id" id="existing_site_id" placeholder="99">
-
-		<input type="text" class='m-1' name="existing_site_address_1" id="existing_site_address_1" placeholder="Address ">
-
-		<input type="text" class='m-1' name="existing_site_address_2" id="existing_site_address_2" placeholder="Address 2">
-
-		<input type="text" class='m-1' name="existing_site_city" id="existing_site_city" placeholder="City">
-
-		<select class="custom-select m-1" name="existing_site_state" id="existing_site_state" required>
-			<option selected>Filter State: </option>
-			{% for state in states %}
-			<option>{{state.Code}}</option>
-			{% endfor %}
-		</select>
-
-		<label for="existing_site_zip">Zip: </label>
-		<input type="number" min="11111" max="99999" class='m-1' name="existing_site_zip" id="existing_site_zip" placeholder="99999">
-
-		<input type="button" class="btn-sm btn-primary m-1" value="Filter" onclick=filterData() >
-		<input type="button" class="btn-sm btn-primary m-1" value="Clear Filters" onclick=clearFilters() >
-
-
-	</div>
-
-</form>
-
-<!-- <form id="existing-site-data-filter" action="" method="POST">
-	<div class="input-group">
-	  <div class="form-outline w-75">
-	    <input type="search" id="filterSearch" class="form-control" name='filterSearch' placeholder="Filter by Site Name, Address, City, State or Zip Code" />
+		  <input type="submit" class="btn-sm btn-primary m-1" name="btnFilterSites" id="btnFilterSites" value="Filter" >
+			<input type="submit" class="btn-sm btn-primary m-1" name="btnClearFilterSites" id="btnFilterSites" value="Clear Filters" >
+			</div>
 	  </div>
-	  <button type="submit" id="filterExistingSitesBtn" name="btn" class="btn btn-primary">
-	    <i class="fas fa-search">Filter</i>
-	  </button>
-	  <button type="button" class="btn btn-primary">
-	    <i class="fas fa-search">Clear Filters</i>
-	  </button>
 	</div>
 </form>
- -->
-
-<p id="datalist"></p>
 {% endblock %}
 
 <!-- Main results table -->
 {% block table_contents %}
 
-<table class="table table-striped " >
+<table class="table table-striped " id='siteResults'>
 <tr >
-	<th>Site ID</th>
-	<th>Address 1</th>
+	<th>Site Address 1</th>
 	<th>Address 2</th>
 	<th>City</th>
 	<th>State</th>
@@ -137,12 +103,11 @@ Filter Existing Sites
 </tr>
 {% for site in sites %}
 <tr>
-	<td>{{site.site_id}}</td>
-	<td>{{site.site_address_1}}</td>
-	<td>{{site.site_address_2}}</td>
-	<td>{{site.site_address_city}}</td>
-	<td>{{site.site_address_state}}</td>
-	<td>{{site.site_address_postal_code}}</td>
+	<td value={{site.site_address_1}}>{{site.site_address_1}}</td>
+	<td value={{site.site_address_2}}>{{site.site_address_2}}</td>
+	<td value={{site.site_address_city}}>{{site.site_address_city}}</td>
+	<td value={{site.site_address_state}}>{{site.site_address_state}}</td>
+	<td value={{site.site_address_postal_code}}>{{site.site_address_postal_code}}</td>
 
 	<!-- <th><button class="btn-sm btn-warning">Edit</button></th> -->
 	<th><button type="button"

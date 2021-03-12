@@ -79,7 +79,24 @@ Filter Existing Employees
 
 <!-- Form for Filter section -->
 {% block filter_form %}
-<form id="existing-employee-data-filter" action="">
+<form id="existing-employee-data-filter" action="" method="POST">
+	<div class="d-flex justify-content-center">
+		<div class="w-75">
+
+		<div class="input-group">
+		  <div class="w-75">
+		    <input type="search" id="filterEmployeeSearch" class="form-control" name='filterEmployeeSearch' placeholder="Filter Existing Employees Employee ID, First or Last Name, Group, Site or Email" />
+		  </div>
+
+		  <input type="submit" class="btn-sm btn-primary m-1" name="btnFilterEmployees" id="btnFilterEmployees" value="Filter" >
+			<input type="submit" class="btn-sm btn-primary m-1" name="btnClearFilterEmployees" id="btnFilterEmployees" value="Clear Filters" >
+			</div>
+	  </div>
+	</div>
+</form>
+
+
+<!-- <form id="existing-employee-data-filter" action="">
 
 	<div class="text-center">
 
@@ -116,7 +133,7 @@ Filter Existing Employees
 
 	</div>
 
-</form>
+</form> -->
 {% endblock %}
 
 <!-- Main results table -->
@@ -135,12 +152,12 @@ Filter Existing Employees
 </tr>
 {% for employee in employees %}
 <tr>
-	<td>{{employee.employee_id}}</td>
-	<td>{{employee.employee_first_name}}</td>
-	<td>{{employee.employee_last_name}}</td>
-	<td>{% if employee.employee_group == 'production' %}Production{% else %}Supervisor{% endif %}</td>
-	<td>{{employee.employee_site_name}}</td>
-	<td>{{employee.employee_email}}</td>
+	<td value={{employee.employee_id}}>{{employee.employee_id}}</td>
+	<td value={{employee.employee_first_name}}>{{employee.employee_first_name}}</td>
+	<td value={{employee.employee_last_name}}>{{employee.employee_last_name}}</td>
+	<td value={{employee.employee_group}}>{% if employee.employee_group == 'production' %}Production{% else %}Supervisor{% endif %}</td>
+	<td value={{employee.employee_site_name}}>{{employee.employee_site_name}}</td>
+	<td value={{employee.employee_email}}>{{employee.employee_email}}</td>
 
 	<!-- <th><button class="btn-sm btn-warning">Edit</button></th> -->
 	<th><button type="button" 

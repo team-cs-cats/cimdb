@@ -31,6 +31,9 @@ import cim.database.db_update_queries as dbuq
 # import DELETE queries as dbdq
 import cim.database.db_delete_queries as dbdq
 
+# import filter (SELECT) queries as dbfq
+import cim.database.db_filter_queries as dbfq
+
 # resolve CORS issues for local development
 from flask_cors import CORS, cross_origin
 
@@ -767,6 +770,7 @@ def site_management():
 
 	if request.method=="POST":
 
+		# Check if the user submitted a form to add a new site
 		if "addNewSiteBtn" in request.form:
 
 			# obtain data from new site form
@@ -785,6 +789,7 @@ def site_management():
 				new_site_state=provided_site_state, 
 				new_site_zip=provided_site_zip)
 
+		# Check if the user submitted a form to update an existing site
 		if "btnUpdate" in request.form:
 
 			# obtain data from new site form
@@ -803,6 +808,23 @@ def site_management():
 				update_site_zip=update_site_zip,
 				site_id_to_update=site_id_to_update)
 
+		# Check if the user submitted a form to filter existing sites
+		if "btnFilterSites" in request.form:
+
+			# Obtain data from the filter existing sites form			
+			provided_filter_site_paramaters = request.form.get('filterSiteSearch')
+
+			# Perform the filter
+			site_results = dbfq.filter_site(filter_site_paramater=provided_filter_site_paramaters)
+			return render_template("site_mgmt.html", sites=site_results, states=data.get_states())
+
+
+		# Check if the user submitted a form to clear all filters of existing sites
+		if "btnClearFilterSites" in request.form:
+
+			# Refresh the selection query before reloading the page
+			site_results = dbq.get_db_sites()
+		
 		# Lastly, check if the POST was a DELETE for a site
 		if "btnSiteDelete" in request.form:
 
@@ -1203,7 +1225,6 @@ def product_details(product_sn=""):
 		# add new RC
 		for component in updated_regular_components:
 			dbiq.insert_products_regular_comps(product_sn,component['rc_pn'],component['quant'])
-
 
 		# TODO: adjust RC quantity
 	
