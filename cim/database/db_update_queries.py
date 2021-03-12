@@ -42,11 +42,28 @@ def update_site(update_site_address_1, update_site_address_2, update_site_city, 
 	update(update_query_to_run=update_site_query)
 
 
-def update_work_order():
+def update_work_order(wo_id,update_wo_open_date,update_wo_close_date,update_wo_status,update_wo_reference_number,update_wo_employee_id):
 
 	# Load SQL query for updating the data for a selected work order 
-	update_work_order_query = """"""
+	# update_work_order_query = """UPDATE WorkOrders SET
+	# wo_open_date = '"""+str(update_wo_open_date)+"""', 
+	# wo_close_date = '"""+update_wo_close_date+"""', 
+	# wo_status = '"""+update_wo_status+"""', 
+	# wo_reference_number = """+str(update_wo_reference_number)+""", 
+	# wo_employee_id = """+str(update_wo_employee_id)+""" 
+	# WHERE wo_id = """+str(wo_id)+""" ;""" 
+
+	update_work_order_query = """UPDATE WorkOrders SET
+	wo_open_date = %s, 
+	wo_close_date = %s, 
+	wo_status = %s, 
+	wo_reference_number = %s, 
+	wo_employee_id = %s 
+	WHERE wo_id = %s ;"""	%(update_wo_open_date,update_wo_close_date,update_wo_status,update_wo_reference_number,update_wo_employee_id,wo_id)
+	
+	# print("update_work_order_query is: ",update_work_order_query)
 	update(update_query_to_run=update_work_order_query)
+	
 
 
 def update_work_order_products():
@@ -110,10 +127,20 @@ def update_products_special_comps():
 	update(update_query_to_run=update_product_special_comps_query)
 
 
-def update_product():
+def update_product(update_product_pn,update_product_family,update_product_date_assembly,
+update_product_qc_date,update_product_warranty_expiration_date,update_product_location_id,product_sn):
 
 	# Load SQL query for updating the data for a selected product
-	update_product_query = """"""
+	update_product_query = """UPDATE Products SET
+	product_pn = %s,
+	product_family= %s,
+	product_date_assembly=%s,
+	product_qc_date = %s,
+	product_warranty_expiration_date = %s,
+	product_location_id=%s
+	WHERE product_sn = %s""" %(update_product_pn,update_product_family,update_product_date_assembly,
+	update_product_qc_date,update_product_warranty_expiration_date,update_product_location_id,product_sn)
+
 	update(update_query_to_run=update_product_query)
 
 
@@ -156,3 +183,50 @@ def update_site(update_site_address_1, update_site_address_2, update_site_city, 
 	;
 	""" % (update_site_address_1, update_site_address_2, update_site_city, update_site_state, update_site_zip, site_id_to_update)
 	update(update_query_to_run=update_site_query)
+
+#partial updates. these functions are used to update a sinlge attr of an entity
+
+def set_sc_not_free(sc_sn):
+	#  updates is_free attr of a SC once it's assigned to a product
+
+	query = """UPDATE SpecialComponents SET sc_is_free=0 WHERE sc_sn ="""+str(sc_sn)+""" ;"""
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+
+def set_sc_free(sc_sn):
+	
+	
+	query = """UPDATE SpecialComponents SET sc_is_free=1 WHERE sc_sn ="""+str(sc_sn)+""" ;"""
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+
+
+def set_sc_location(sc_sn,sc_location_id):
+	# updates location of a SC
+
+	query = """UPDATE SpecialComponents SET
+	sc_location_id= """+sc_location_id+""" WHERE sc_sn ="""+str(sc_sn)+""" ;"""
+
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query) 
+
+
+def set_rc_qunatity_in_a_location(rc_pn,sc_location_id,quantity):
+	# updates quantity of a location
+
+	query = """UPDATE LocationsRegularComps SET
+	lrc_quantity= """+quantity+""" WHERE lrc_location_id ="""+sc_location_id+"""
+	AND lrc_rc_pn= """+rc_pn+""" ;"""
+
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+
+def set_sc_sn_of_a_product(sc_sn,product_sn):
+	# updates sc_sn of a product
+
+	query = """UPDATE Products SET
+	product_sc_sn= """+sc_sn+""" WHERE product_sn ="""+product_sn+""" ;"""
+	
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+

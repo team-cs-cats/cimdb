@@ -106,7 +106,7 @@ for (const [key, value] of Object.entries(product_data)) {
       if(data.result==false){
         add_compoenents(product_data)
       }else{
-        alert("Update is not impelemented yet!")
+        edit_compoenents(product_data)
       }
       
     })
@@ -136,16 +136,30 @@ function add_compoenents(input_data){
   .catch((error) => {
     console.error('Error:', error);
   });
-
-
-
 }
 
 
 //sends edit requests to server to edit components of a product
-// function update_compoenents(){
+function edit_compoenents(input_data){
 
-// }
+  console.log("adding new componets with the data: ",input_data)
+  fetch('/product-details', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(input_data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success! compoennets exist:', data);
+    location.reload()
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+}
+
 
 //parse data into the update form
 window.addEventListener('DOMContentLoaded', (event) => {

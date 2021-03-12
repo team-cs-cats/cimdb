@@ -34,7 +34,7 @@ function edit_workorder_info(){
   }
   console.log("edit clicked",data)
 
-  //make an Update request to server
+  // make an Update request to server
   fetch('/workorders', {
     method: 'PUT',
     headers: {
@@ -45,7 +45,7 @@ function edit_workorder_info(){
   .then(response => response.json())
   .then(data => {
     console.log('Success:', data);
-    // location.reload()
+    location.reload()
   })
   .catch((error) => {
     console.error('Error:', error);
@@ -72,7 +72,7 @@ function delete_workorder_info(workorder_number){
   .then(response => response.json())
   .then(data => {
     console.log('Success:', data);
-    // location.reload()
+    location.reload()
   })
   .catch((error) => {
     console.error('Error:', error);
