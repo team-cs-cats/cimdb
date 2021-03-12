@@ -31,28 +31,24 @@
 <div id="data-entry-div">
 	<h3>Approve and Assign a New Work Order:</h3>
 	
-	<form id="wo-data-entry" action="">
+	<form class="form-group input-form" id="wo-data-entry" action="">
+		
+		<label for="wo_employee_id">Employee in Charge:</label>
+		<select class="col-md-2 custom-select" id="wo_employee_name_assign" required>
+			{% for employee in employees %}
+				<option value={{employee.employee_id}}>{{employee.employee_first_name}} {{employee.employee_last_name}}</option>
+			{% endfor %}
+		</select>
 
-		<div class="inner-div">
-			<label for="wo_employee_id">Employee in Charge:</label>
-			<select class="custom-select" id="wo_employee_name_assign" required>
-				{% for employee in employees %}
-					<option value={{employee.employee_id}}>{{employee.employee_first_name}} {{employee.employee_last_name}}</option>
-				{% endfor %}
-			</select>
+		<label for="ref">Reference Number: </label>
+		<input type="number" name="ref" id="wo_reference_number_assign">
 
-			<label for="ref">Reference Number: </label>
-			<input type="number" name="ref" id="wo_reference_number_assign">
+		<label for="date">Date: </label>
+		<input type="date" name="date" id="wo_open_date_assign" >
 
-			<label for="date">Date: </label>
-			<input type="date" name="date" id="wo_open_date_assign" >
-	
-
-		</div>
-
-		<div class="inner-div">
-			<input type="button" class="btn btn-success" value="Assign and Add" onclick=add_new_workorder() >
-		</div>	
+		
+		<input type="button" class="btn btn-success" value="Assign and Add" onclick=add_new_workorder() >
+			
 
 	</form>
 </div>
@@ -62,49 +58,36 @@
 	<h3>Filter Approved Work Orders</h3>
 	<p>Filter the the approved work orders using the form below:</p>
 
-	<form id="wo-data-filter" action="">
-
-		<div class="inner-div">
-			<label for="wo_id">Workorder ID:</label>
-			<input type="text" name="wo_id" id="wo_id_filter" placeholder="wo_id">
-			
-			<label for="wo_open_date">Workorder Open Date: </label>
-			<input type="date" name="wo_open_date_filter" id="wo_open_date">
-
-			<label for="wo_close_date">Workorder Close Date: </label>
-			<input type="date" name="wo_close_date_filter" id="wo_close_date">
-		</div>
+	<form class="form-group filter-form" id="wo-data-filter" action="">
 		
-		
-		<div class="inner-div">
-			<label for="wo_employee_id">Employee in Charge:</label>
-			<select class="custom-select" id="wo_employee_name_filter" required>
-				{% for employee in employees %}
-					<option>{{employee.employee_first_name}} {{employee.employee_last_name}}</option>
-				{% endfor %}
-			</select>
-			
-			<label for="wo_status">status</label>
-			<select name="wo_status" id="wo_status_filter">
-				<option value="0">Pending_Assembly</option>
-				<option value="1">Pending_QC</option>
-				<option value="2">Pending_Shipping</option>
-				<option value="3">Completed</option>
-			</select>
-		</div>
+
+			<label for="filter-key">
+				<select class="form-control" name="filter-key" id="filter-key">
+					<option>Please Select Filter parameter</option>
+					<option value="wo_id">Workorder ID</option>
+					<option value="wo_open_date">Workorder Open Date</option>
+					<option value="wo_close_date">Workorder Close Date</option>
+					<option value="wo_refrence_number">Reference Number</option>
+					<option value="wo_employee_id">Employee in Charge</option>
+					<option value="wo_status">status</option>
+				</select>
+			</label>
+			<div id="filter-value">
 	
-		<div class="inner-div">
-			<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
-			<input type="button" class="btn btn-primary" value="Clear Filters" onclick=clear() >
-		</div>
+			</div>
+			<div>
+				<input type="button" class="btn btn-primary" value="Filter" id="filterBtn">
+			</div>
+			
+		
+			
 	</form>
 </div>
 
 
-
 <!-- dummy content for demo --will be replaced -->
 <div id="results">
-	<table class="table table-striped" >
+	<table class="table table-striped" id="wo-results" >
 		<tr>
 			<th>ID</th>
 			<th>Open Date</th>

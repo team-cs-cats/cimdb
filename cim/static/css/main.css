@@ -68,3 +68,15 @@ a:hover {
 .navbar-nav li:hover .dropdown-menu {
     display: block;
 }
+
+.filter-form{
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.input-form{
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}

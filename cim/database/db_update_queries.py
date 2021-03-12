@@ -230,3 +230,22 @@ def set_sc_sn_of_a_product(sc_sn,product_sn):
 	db_connection = db.connect_to_database()
 	cursor = db.execute_query(db_connection=db_connection, query=query)
 
+
+def set_product_qc_date(product_sn,product_qc_date):
+	# updates product_qc_date of a product. used for QC approval
+
+	query = """UPDATE Products SET
+	product_qc_date= """+product_qc_date+""" WHERE product_sn ="""+product_sn+""" ;"""
+	
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+
+def set_product_date_assembly(product_sn,product_date_assembly):
+	# updates product_date_assembly of a product. used for assembly approval
+
+	query = """UPDATE Products SET
+	product_date_assembly= """+product_date_assembly+""" WHERE product_sn ="""+product_sn+""" ;"""
+	
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+

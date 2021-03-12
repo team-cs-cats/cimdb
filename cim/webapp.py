@@ -40,6 +40,9 @@ from flask_cors import CORS, cross_origin
 # for backend processes
 import random
 
+#to handel json files for return statment
+from flask import jsonify
+
 #create the web application
 webapp = Flask(__name__)
 CORS(webapp)
@@ -229,6 +232,32 @@ def workorders():
 								)
 
 	if request.method=="POST":
+		
+		#if filter request
+		if request.json["req"]=="filter":
+			filter_key=request.json["filter_key"]
+			filter_value=request.json["filter_value"]
+
+			print(f'key is: {filter_key} and value is:{filter_value}')
+
+			# Get filtered information from DB
+			workorder_results=dbfq.filter_work_order(filter_key,filter_value)
+
+			# Get information from DB
+			employee_results=dbq.get_db_employees()
+			
+			# get work orders status
+			workorder_status=data.get_wo_status()
+			
+			return jsonify(workorder_results)
+			return render_template("workorders.html",
+									employees=employee_results ,
+									workorders=workorder_results,
+									workorder_status=workorder_status
+									)
+
+
+
 		id=request.json["id"]
 		date=request.json["date"]
 		reference=request.json["reference"]
@@ -1237,7 +1266,7 @@ def product_details(product_sn=""):
 
 		
 # Assembly page. The page lists are assigned products ready for assembly 
-@webapp.route('/assembly', methods=['GET', 'POST'])
+@webapp.route('/assembly', methods=['GET', 'POST','PUT'])
 @login_required
 def assembly():
 	"""The webapp's page retrieve  the inforamtion from DB for the Assembly process."""
@@ -1264,9 +1293,27 @@ def assembly():
 		# render the assembly page
 		return render_template("assembly.html",assembly_list=assembly_list,products_catalog=products_catalog)
 
+	if request.method=="PUT":
+		print(f'got a PUT request! and request.json is: {request.json}')
+
+		product_sn=request.json['product_sn']
+		product_date_assembly="'"+request.json['product_date_assembly']+"'"
+
+		print(f'sn is: {product_sn} and product_date_assembly is : {product_date_assembly}')
+
+
+		# update database
+		dbuq.set_product_date_assembly(product_sn,product_date_assembly)
+
+		# return response
+		# TODO error respose
+		
+		return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+
 
 # QC page. The page lists are assigned products ready for assembly 
-@webapp.route('/qc', methods=['GET', 'POST'])
+@webapp.route('/qc', methods=['GET', 'POST','PUT'])
 @login_required
 def QC():
 	"""The webapp's page retrieve  the inforamtion from DB for the Assembly process."""
@@ -1290,6 +1337,26 @@ def QC():
 		
 		# render the assembly page
 		return render_template("qc.html",qc_list=qc_list,products_catalog=products_catalog)
+
+	if request.method=="PUT":
+		print(f'got a PUT request! and request.json is: {request.json}')
+
+		product_sn=request.json['product_sn']
+		product_qc_date="'"+request.json['product_qc_date']+"'"
+
+		print(f'sn is: {product_sn} and qc_date is : {product_qc_date}')
+
+
+		# update database
+		dbuq.set_product_qc_date(product_sn,product_qc_date)
+
+		# return response
+		# TODO error respose
+		
+		return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+
+
 
 @webapp.route('/data/product_catalog', methods=['GET', 'POST'])
 @login_required
@@ -1348,20 +1415,22 @@ def get_product_components():
 			return json.dumps({'result':True}), 200, {'ContentType':'application/json'}
 
 
-@webapp.route('/data/test', methods=['GET', 'POST'])
+
+
+@webapp.route('/data/wo_status_cataloge', methods=['GET'])
 @login_required
-def test(sn="",id=""):
-	# to test a db query
+def wo_status_cataloge():
 
-	if request.method=="GET":
+	return jsonify(data.get_wo_status())
 
-		if request.args.get("sn"):
-			sn=request.args.get("sn")
 
-		if request.args.get("id"):
-			id=request.args.get("id")
+@webapp.route('/data/list_of_employees', methods=['GET'])
+@login_required
+def employees():
 
-	print("args are: ",sn,id)
-	print("query result",dbq.get_rc_qunatity_in_a_location(sn,id))
+	employees=dbq.get_db_employees()
+	result=[]
+	for employee in employees:
+		result.append(employee["employee_first_name"]+" "+employee["employee_last_name"])
+	return jsonify(result)
 
-	return "HOY!"
