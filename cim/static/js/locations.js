@@ -89,3 +89,13 @@ function add_new_location(){
 	});
 }
 
+
+// Live Search Filter
+$(document).ready(function(){
+  $("#filterLocationSearch").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#locationResults tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});

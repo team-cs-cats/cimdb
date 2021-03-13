@@ -93,38 +93,26 @@ Filter Existing Locations
 
 <!-- Form for Filter section -->
 {% block filter_form %}
-<form id="existing-location-data-filter" action="">
+<form id="existing-location-data-filter" action="" method="POST">
+	<div class="d-flex justify-content-center">
+		<div class="w-75">
 
-	<div class="text-center">
+		<div class="input-group">
+		  <div class="w-75">
+		    <input type="search" id="filterLocationSearch" class="form-control" name='filterLocationSearch' placeholder="Filter Existing Locations by Site City, Room Number or Shelf Number" />
+		  </div>
 
-		<select class="custom-select m-1" id="existing_location_site">
-			<option selected>Select Site: </option>
-				{% for site in sites %}
-					{% if site.site_id != 1 %}
-			    	<option>{{site.site_address_city}}</option>
-					{% endif %}
-			    {% endfor %}
-			</select>
-		</select>
-
-		<label for="existing_location_room_number">Room Number: </label>
-		<input type="number" min="0" max="99" class='m-1' name="existing_location_room_number" id="existing_location_room_number" placeholder="99">
-
-		<label for="existing_location_shelf_number">Shelf Number: </label>
-		<input type="number" min="0" max="99" class='m-1' name="existing_location_shelf_number" id="existing_location_shelf_number" placeholder="99">
-
-		<input type="button" class="btn-sm btn-primary m-1" value="Filter" onclick=filterData() >
-		<input type="button" class="btn-sm btn-primary m-1" value="Clear Filters" onclick=clearFilters() >
-
-
+		  <input type="submit" class="btn-sm btn-primary m-1" name="btnFilterLocation" id="btnFilterLocations" value="Filter" >
+			<input type="submit" class="btn-sm btn-primary m-1" name="btnClearFilterLocation" id="btnFilterLocations" value="Clear Filters" >
+			</div>
+	  </div>
 	</div>
-
 </form>
 {% endblock %}
 
 <!-- Main results table -->
 {% block table_contents %}
-<table class="table table-striped " >
+<table class="table table-striped " id='locationResults'>
 		<tr >
 			<th>Location ID</th>
 			<th>2Fast4U Site Name</th>
