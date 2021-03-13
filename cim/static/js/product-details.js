@@ -128,7 +128,20 @@ function add_compoenents(input_data){
     },
     body: JSON.stringify(input_data),
   })
-  .then(response => response.json())
+  .then(response => {
+    
+    //if error:
+    if(response.status >= 400 && response.status < 600){
+      response.clone().json().then(data => {
+        
+        alert('Error! Inventory is not enough for '+data['pn']);
+      })
+      throw new Error('Something went wrong');
+    }
+
+    // otherwise proceed
+    
+  })
   .then(data => {
     console.log('Success! compoennets exist:', data);
     location.reload()

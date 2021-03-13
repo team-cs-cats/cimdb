@@ -55,21 +55,16 @@ def filter_site(filter_site_paramater):
 	return filter(filter_query_to_run=filter_site_query, data_to_filter=filter_site_data)
 
 
-def filter_work_order(filter_wo_open_date,filter_wo_close_date, filter_wo_status, filter_wo_reference_number, filter_wo_employee_id):
+def filter_work_order(filter_key,filter_value):
 
 	# Load SQL query for filtering filter work order data
 	filter_work_order_query = """
 	SELECT * 
 	FROM WorkOrders
-	WHERE
-	wo_open_date = %s OR
-	wo_close_date = %s OR
-	wo_status = %s OR
-	wo_reference_number = %s OR
-	wo_employee_id = %s
-	;
-	"""
-	filter_workorder_data=(filter_wo_open_date, filter_wo_close_date, filter_wo_status, filter_wo_reference_number, filter_wo_employee_id)
+	WHERE ( """ +filter_key+""" LIKE %s) ;"""
+ 
+	filter_workorder_data = ('%'+filter_value+'%')
+	
 	print(f'filter work order data is: {filter_workorder_data}')
 	return filter(filter_query_to_run=filter_work_order_query,data_to_filter=filter_workorder_data)
 
