@@ -16,7 +16,7 @@
 				<p> The components inforamtion can be reviwed , using the <b>Details</b> button.</p>
 				<p> If the product passed QC, update the status using <b>Send to Shipping</b> button.</p>
 				<p> The inventory information will be updated automatically.</p>
-				<p> In the case of any problems , notify the supervisor by <b>Report</b> button.</p>
+<!-- 				<p> In the case of any problems , notify the supervisor by <b>Report</b> button.</p> -->
 			</div>
 
 			<div class="process-overview">
@@ -35,37 +35,52 @@
 	<h3>Filter Products</h3>
 	<p>The list can be filtered using the form below:</p>
 
+	<form id="assembly-data-filter" action="">
 
-
-	<form class="form-group filter-form" id="qc-data-filter" action="">
+		<div class="inner-div">
+			<label for="wo_id">Workorder ID:</label>
+			<input type="text" name="wo_id" id="wo_id" placeholder="wo_id">
+			
+			<label for="wo_open_date">Workorder Open Date: </label>
+            <input type="date" name="wo_open_date" id="wo_open_date">
+            
+            <label for="product_assembly_date">Assembly Date:</label>
+			<input type="date" name="product_assembly_date" id="product_assembly_date">
 		
+        </div>
+        
+        <div class="inner-div">
+            <label for="product_sn">Product SN:</label>
+			<input type="text" name="product_sn" id="product_sn" placeholder="product_sn">
 
-		<label for="filter-key">
-			<select class="form-control" name="filter-key" id="filter-key">
-				<option>Please Select Filter parameter</option>
-				<option value="wo_id">Workorder ID</option>
-				<option value="wo_open_date">Workorder Open Date</option>
-				<option value="wo_close_date">Workorder Close Date</option>
-				<option value="product_assembly_date">Product Assembly Date</option>
-				<option value="product_sn">Product SN</option>
-				<option value="product_family">Product Family</option>
-				<option value="product_pn">Product Pn</option>
+			
+			<label for="product_family">Product Family:</label>
+			<select class="custom-select" id="product_family" required>
+				<option selected>Select Family:</option>
+				{% for product in products_catalog %}
+					<option>{{product}}</option>
+				{% endfor %}
 			</select>
-		</label>
-		<div id="filter-value">
-
-		</div>
-		<div>
-			<input type="button" class="btn btn-primary" value="Filter" id="filterBtn">
-		</div>
+			
+			<label for="product_pn">Product PN</label>
+			<select class="custom-select" id="product_pn">
+				<option selected>Select Family First:</option>
+				{% for product in products_catalog %}
+					<option>{{product}}</option>
+				{% endfor %}
+			</select>
 		
-		
+		</div>
+				
+		<div class="inner-div">
+			<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
+		</div>
 	</form>
-	
 </div>
 
 
 
+<!-- dummy content for demo --will be replaced -->
 <div id="results">
 	<table class="table table-striped" >
 		<tr>
@@ -77,7 +92,7 @@
             <th>Assembly Date</th>
 			<th>Details</th>
 			<th>Passed QC?</th>
-			<th>Report</th>
+<!-- 			<th>Report</th> -->
 		</tr>
 			{% for product in qc_list %}
 				<tr>
@@ -96,11 +111,11 @@
 						data_product_sn={{product.product_sn}}>Approve</button>
 					</td>
 
-					<td><button class="btn btn-dark"
+<!-- 					<td><button class="btn btn-dark"
 						data-toggle="modal"
 						data-target="#failed_qc" 
 						data_product_sn={{product.product_sn}}>Report</button>
-					</td>
+					</td> -->
 
 				</tr>
 			{% endfor %}
@@ -122,14 +137,12 @@
 
 					 <h2>QC Approval</h2>
 					 <p>The product passed all approved QC tests and is ready for next step.</p>
-					 <label for="qc_approval_date">QC Approval Date</label>
-					 <input type="date" id="qc_approval_date" >
 					 
 
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-					<button type="button" class="btn btn-success" id="btnUpdate" name="btnUpdate" data-dismiss="modal" aria-label="Close" onclick=qc_approval()>Approve</button>
+					<button type="button" class="btn btn-success" id="btnUpdate" name="btnUpdate" data-dismiss="modal" aria-label="Close" onclick=send_to_shipping()>Approve</button>
 				</div>
 			</form>
 		</div>
@@ -171,6 +184,3 @@
 
 <script src="{{ url_for('static', filename='js/qc.js') }}"></script>
 {% endblock%}
-
-
-
