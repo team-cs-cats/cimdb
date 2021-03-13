@@ -60,7 +60,6 @@ $(document).ready(function(){
 // Live Search Filter
 $(document).ready(function(){
   $("#filterSiteSearch").on("keyup", function() {
-  	console.log('got it');
     var value = $(this).val().toLowerCase();
     $("#siteResults tr").filter(function() {
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
