@@ -210,7 +210,7 @@ def get_db_work_orders():
 
 	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
 	if len(work_order_results) == 0:
-		work_order_results = data.get_wo()
+		return {}
 
 	return work_order_results
 
@@ -236,8 +236,8 @@ def get_a_work_order(workorder_id):
 	work_order_result = cursor.fetchall()
 
 	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
-	# if len(work_order_result) == 0:
-	# 	work_order_result = data.get_wo()
+	if len(work_order_result) == 0:
+		return {}
 
 	return work_order_result[0]
 
@@ -254,16 +254,16 @@ def get_db_workorder_details(workorder_id):
 	workorder_details_result = cursor.fetchall()
 
 	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
-	# if len(workorder_details_result) == 0:
-	# 	workorder_details_result = data.get_wo()
+	if len(workorder_details_result) == 0:
+		return {}
 
 	return workorder_details_result
 
 
-def get_free_sc_sn(sc_pn):
+def get_free_sc_sn(sc_pn,sc_location_id):
 	# returns SN of the free special compoenents of a family
 	query = """select sc_sn from SpecialComponents 
-	where sc_is_free=1 AND sc_pn='"""+sc_pn+"""' ORDER BY sc_sn DESC;"""
+	where sc_is_free=1 AND sc_pn='"""+sc_pn+"""' AND sc_location_id='""" +sc_location_id+"""' ORDER BY sc_sn DESC;"""
 
 	print(f'querry is {query}')
 
@@ -273,7 +273,7 @@ def get_free_sc_sn(sc_pn):
 
 	# Check if the query was successful: if it returned content we are good. If not, use the dummy dataset instead.
 	if len(free_sc_sn_results) == 0:
-		print("EROOR in FREE SC!!!")
+		return -1
 
 	return free_sc_sn_results
 
@@ -299,7 +299,6 @@ def get_product_sn(sc_sn):
 	else:
 		return get_product_sn_result[0]["product_sn"]
 	
-
 
 def get_is_free(sc_sn):
 	# returns True if a SC is free otherwise flase
@@ -466,7 +465,7 @@ def get_db_products_in_a_workorder(wo_id):
 		
 	return products_in_a_workorder_results
 
-def get_rc_qunatity_in_a_location(rc_pn,location_id):
+def get_rc_quantity_in_a_location(rc_pn,location_id):
 
 	# returns quantity of a rc in a location
 
@@ -483,7 +482,6 @@ def get_rc_qunatity_in_a_location(rc_pn,location_id):
 		
 	return rc_qunatity_in_a_location_results[0]['lrc_quantity']
 
-
 def get_newest_regular_component_part_number():
 	# returns the most recently added regular component part number from the regular components entity
 
@@ -492,3 +490,35 @@ def get_newest_regular_component_part_number():
 	cursor = db.execute_query(db_connection=db_connection, query=query)
 	regular_component_pn_result = cursor.fetchall()
 	return regular_component_pn_result[0]['rc_pn']
+
+def get_location_id(location_site_id,location_room_number,location_shelf_number):
+
+	# returns locations ID of a given site, room and shelf number
+
+	query = """select location_id from Locations where
+	 location_room_number= """+location_room_number+""" and
+	 location_shelf_number= """+location_shelf_number+""" and
+	 location_site_id="""+location_site_id+""" ;"""
+		
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	location_id_results = cursor.fetchall()
+
+	if len(location_id_results)==0:
+		return -1
+	
+		
+	return location_id_results[0]['location_id']
+
+def get_wo_of_a_product(product_sn):
+
+	# returns the product_sn of all products in a work_order 
+
+	query = """select wop_wo_id from WorkOrderProducts where wop_product_sn = """+product_sn+""";"""
+		
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+	wo_of_a_product_results = cursor.fetchall()
+	
+		
+	return wo_of_a_product_results[0]

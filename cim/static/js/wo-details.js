@@ -259,33 +259,3 @@ function update_pn_in_edit_modal(){
   
 }
 
-// function sleep(ms) {
-//   return new Promise(resolve => setTimeout(resolve, ms));
-// }
-
-
-// function set_part_number () {
-  
-//   document.getElementById("product_pn_to_edit").value=part_number
-//   console.log("t is:",part_number)
-// }
-
-// function test(){
-//   setTimeout(set_part_number, 500)
-// }
-
-
-// test  Modal
-$(document).ready(function() {
-  $('#exampleModal').on('show.bs.modal', function (event) {
-    	
-    // Get the button that triggered the modal
-		var button = $(event.relatedTarget);
-    
-    //Extract value from the custom data-* attribute and update modal attr
-    document.getElementById("test_title").innerText=button.attr("data-product-sn")
-    
-    // document.getElementById("test_pn").value=button.attr("data-product_pn")
-     
-	});   
-});
