@@ -75,45 +75,26 @@ Note that each shelf in each room can store multiple special components, each wi
 
 <!-- Form for Filter section -->
 {% block filter_form %}
-<form id="existing-spec-comp-data-filter" action="">
+<form id="existing-spec-comp-data-filter" action="" method="POST">
+	<div class="d-flex justify-content-center">
+		<div class="w-75">
 
-	<div class="text-center">
+		<div class="input-group">
+		  <div class="w-75">
+		    <input type="search" id="filterSpecCompsSearch" class="form-control" name='filterSpecCompsSearch' placeholder="Filter Existing CPUS (Special Components) by Serial Number, Part Number, Availability (Yes or No), Site or Location" />
+		  </div>
 
-		<label for="existing_spec_comp_serial_number">Serial Number: </label>
-		<input type="number" min="1000000000" max="9999999998" class='m-1' name="existing_spec_comp_serial_number" id="existing_spec_comp_serial_number" placeholder="1234567890">	
-
-		<!-- TODO: update to CPU type -->
-		<label for="existing_spec_comp_part_number">Part Number: </label>
-		<input type="number" min="10000" max="99998" class='m-1' name="existing_reg_comp_part_number" id="existing_spec_comp_part_number" placeholder="12345">		
-
-		<select class="custom-select m-1" id="existing_reg_comp_site">
-			<option selected>Select Site: </option>
-			{% for site in sites %}
-			<option>{{site.site_address_city}}</option>
-			{% endfor %}
-		</select>
-
-		<label for="existing_spec_comp_room_number">Room Number: </label>
-		<input type="number" min="0" max="99" class='m-1' name="existing_spec_comp_room_number" id="existing_spec_comp_room_number" placeholder="99">
-
-		<label for="existing_spec_comp_shelf_number">Shelf Number: </label>
-		<input type="number" min="0" max="99" class='m-1' name="existing_spec_comp_shelf_number" id="existing_spec_comp_shelf_number" placeholder="99">
-
-		<label for="sc_is_free">Is Free: </label>
-		<input type="checkbox" name="sc_is_free" id="sc_is_free">
-
-		<input type="button" class="btn-sm btn-primary m-1" value="Filter" onclick=filterData() >
-		<input type="button" class="btn-sm btn-primary m-1" value="Clear Filters" onclick=clearFilters() >
-
-
+		  <input type="submit" class="btn-sm btn-primary m-1" name="btnFilterSites" id="btnFilterSites" value="Filter" >
+			<input type="submit" class="btn-sm btn-primary m-1" name="btnClearFilterSites" id="btnFilterSites" value="Clear Filters" >
+			</div>
+	  </div>
 	</div>
-
 </form>
 {% endblock %}
 
 <!-- Main results table -->
 {% block table_contents %}
-<table class="table table-striped " >
+<table class="table table-striped " id="specCompsResults">
 <tr >
 	<th>CPU Serial Number</th>
 	<th>Part Number</th>
