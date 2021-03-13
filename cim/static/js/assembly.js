@@ -6,16 +6,10 @@ console.log("I am  connected!")
 function components_info(serial_number){
   console.log("clicked")
     
-  valid=["P7125","P8766"]
-if(valid.includes(serial_number)){
   var url='/product-details?'+'product_sn='+serial_number
   console.log("URL IS: ",url)
   
   window.location.href=url
-}else{
-  alert('only "P7125" and"P8766" are implemented for demo')
-
-};
 
 }
 
@@ -104,7 +98,7 @@ function assembly_approval(){
   var product_date_assembly=this.assembly_approval_date.value
 
   if(product_date_assembly === ""){
-    alert("Select QC approval date")
+    alert("Select Assembly approval date")
     return
   }
   else{

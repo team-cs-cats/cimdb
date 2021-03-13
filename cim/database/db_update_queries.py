@@ -211,7 +211,7 @@ def set_sc_location(sc_sn,sc_location_id):
 	cursor = db.execute_query(db_connection=db_connection, query=query) 
 
 
-def set_rc_qunatity_in_a_location(rc_pn,sc_location_id,quantity):
+def set_rc_quantity_in_a_location(rc_pn,sc_location_id,quantity):
 	# updates quantity of a location
 
 	query = """UPDATE LocationsRegularComps SET
@@ -249,3 +249,20 @@ def set_product_date_assembly(product_sn,product_date_assembly):
 	db_connection = db.connect_to_database()
 	cursor = db.execute_query(db_connection=db_connection, query=query)
 
+def set_product_location(product_sn,product_location_id):
+	# updates product_location_id of a product. used for assembly and QC approval
+
+	query = """UPDATE Products SET
+	product_location_id= """+product_location_id+""" WHERE product_sn ="""+product_sn+""" ;"""
+	
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)
+
+def set_workorder_status(wo_id,wo_status):
+	# updates status of a workorder. used for assembly and QC and shipping approval
+
+	query = """UPDATE WorkOrders SET
+	wo_status= """+wo_status+""" WHERE wo_id ="""+wo_id+""" ;"""
+	
+	db_connection = db.connect_to_database()
+	cursor = db.execute_query(db_connection=db_connection, query=query)

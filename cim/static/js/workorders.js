@@ -88,7 +88,7 @@ function add_new_workorder(){
   date=this.wo_open_date_assign.value
   console.log("a new work order for ",employee_id," created on ",date," and ref number is: ",reference_number)
 
-  const data = { id: employee_id, reference:reference_number, date:date };
+  const data = { id: employee_id, reference:reference_number, date:date , req:"add"};
   console.log(data)
 
   fetch('/workorders', {
