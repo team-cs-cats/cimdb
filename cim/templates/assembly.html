@@ -12,12 +12,12 @@
 	<div class="two-column">
 			<div class="information">
 				<h2>Assembly Line</h2>
-				<p> The items below are assiagned to you for assembly by your supervisor.</p>
-				<p> The components inforamtion can be reviwed , using the <b>Details</b> button.</p>
-				<p> One the product is assembled, update the status using <b>Send to QC</b> button.</p>
-				<p> The inventory information will be updated automatically upon a product assembly.</p>
-				<p> You can order componnets from Inventory Tab in the Navbar above.</p>
-				<p> In the case of any problems , notify the supervisor by <b>Report</b> button.</p>
+				<p> Your supervisor has assigned you to assemble the following products.</p>
+				<p> The components requires to assemble each product can be reviewed using the <b>Details</b> button.</p>
+				<p> Once the product is assembled, update the pruduct status by using the <b>Send to QC</b> button.</p>
+				<p> Component inventory will be updated automatically when a product has been assembled.</p>
+				<p> You can order components from the Inventory Tab in the Navbar above.</p>
+				<!-- <p> In the case of any problems, notify your supervisor by the <b>Report</b> button.</p> -->
 			</div>
 
 			<div class="process-overview">
@@ -35,15 +35,15 @@
 
 <div id="data-filtering">
 	<h3>Filter Products</h3>
-	<p>The list can be filtered using the form below:</p>
+	<p>The list of displayed products can be filtered using the form below:</p>
 
 	<form id="assembly-data-filter" action="">
 
 		<div class="inner-div">
-			<label for="wo_id">Workorder ID:</label>
+			<label for="wo_id">Work Order ID:</label>
 			<input type="text" name="wo_id" id="wo_id" placeholder="wo_id">
 			
-			<label for="wo_open_date">Workorder Open Date: </label>
+			<label for="wo_open_date">Work Order Open Date: </label>
 			<input type="date" name="wo_open_date" id="wo_open_date">
 		
         </div>
@@ -61,7 +61,7 @@
 				{% endfor %}
 			</select>
 	
-			<label for="product_pn">Product PN</label>
+			<label for="product_pn">Product Part Number: </label>
 			<select class="custom-select" id="product_pn">
 				<option selected>Select Family First:</option>
 				{% for product in products_catalog %}
@@ -84,14 +84,14 @@
 <div id="results">
 	<table class="table table-striped" >
 		<tr>
-			<th>wo id</th>
-			<th>wo open date</th>
-			<th>product SN</th>
-			<th>product family</th>
-			<th>product PN</th>
+			<th>Work Order ID</th>
+			<th>Work Order Open Date</th>
+			<th>Product Serial Number</th>
+			<th>Product Family</th>
+			<th>Product Part Number</th>
 			<th>Details</th>
 			<th>Assembled?</th>
-			<th>Problem?</th>
+			<!-- <th>Problem?</th> -->
 		</tr>
 
 		{% for product in assembly_list %}
@@ -102,8 +102,8 @@
 				<td>{{product.product_family}}</td>
 				<td>{{product.product_pn}}</td>
 				<td><button class="btn btn-secondary" onclick=components_info("{{product.product_sn}}")>Details</td>
-				<th><button class="btn btn-info" onclick=assemble_product("{{product.product_sn}}")>send to QC</button></th>
-				<td><button class="btn btn-dark" onclick=report_product("{{product.product_sn}}")>Report</button></td>
+				<th><button class="btn btn-info" onclick=assemble_product("{{product.product_sn}}")>Send to QC</button></th>
+				<!-- <td><button class="btn btn-dark" onclick=report_product("{{product.product_sn}}")>Report</button></td> -->
 			</tr>
 		{% endfor %}
 			

@@ -16,7 +16,7 @@
 				<p> The components inforamtion can be reviwed , using the <b>Details</b> button.</p>
 				<p> If the product passed QC, update the status using <b>Send to Shipping</b> button.</p>
 				<p> The inventory information will be updated automatically.</p>
-				<p> In the case of any problems , notify the supervisor by <b>Report</b> button.</p>
+<!-- 				<p> In the case of any problems , notify the supervisor by <b>Report</b> button.</p> -->
 			</div>
 
 			<div class="process-overview">
@@ -92,7 +92,7 @@
             <th>Assembly Date</th>
 			<th>Details</th>
 			<th>Passed QC?</th>
-			<th>Report</th>
+<!-- 			<th>Report</th> -->
 		</tr>
 			{% for product in qc_list %}
 				<tr>
@@ -111,11 +111,11 @@
 						data_product_sn={{product.product_sn}}>Approve</button>
 					</td>
 
-					<td><button class="btn btn-dark"
+<!-- 					<td><button class="btn btn-dark"
 						data-toggle="modal"
 						data-target="#failed_qc" 
 						data_product_sn={{product.product_sn}}>Report</button>
-					</td>
+					</td> -->
 
 				</tr>
 			{% endfor %}
