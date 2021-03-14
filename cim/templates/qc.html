@@ -57,6 +57,7 @@
 		</div>
 		<div>
 			<input type="button" class="btn btn-primary" value="Filter" id="filterBtn">
+			<input type="button" class="btn btn-warning" value="Clear" id="filterClearBtn">
 		</div>
 		
 		
@@ -67,18 +68,21 @@
 
 
 <div id="results">
-	<table class="table table-striped" >
-		<tr>
-			<th>wo id</th>
-			<th>wo open date</th>
-			<th>product SN</th>
-			<th>product family</th>
-            <th>product PN</th>
-            <th>Assembly Date</th>
-			<th>Details</th>
-			<th>Passed QC?</th>
-			<th>Report</th>
-		</tr>
+	<table class="table table-striped" id="qc-results" >
+		<thead>
+			<tr id="table-head">
+				<th>wo id</th>
+				<th>wo open date</th>
+				<th>product SN</th>
+				<th>product family</th>
+				<th>product PN</th>
+				<th>Assembly Date</th>
+				<th>Details</th>
+				<th>Passed QC?</th>
+				<!-- <th>Report</th> -->
+			</tr>
+		</thead>
+		<tbody>
 			{% for product in qc_list %}
 				<tr>
 					<td>{{product.wo_id}}</td>
@@ -96,14 +100,15 @@
 						data_product_sn={{product.product_sn}}>Approve</button>
 					</td>
 
-					<td><button class="btn btn-dark"
+					<!-- <td><button class="btn btn-dark"
 						data-toggle="modal"
 						data-target="#failed_qc" 
 						data_product_sn={{product.product_sn}}>Report</button>
-					</td>
+					</td> -->
 
 				</tr>
 			{% endfor %}
+		</tbody>
 		
 	</table>
 	
@@ -138,7 +143,7 @@
 
 
 <!-- Modal popup for Report feature -->
-<div id="failed_qc" class="modal fade" tabindex="-1">
+<!-- <div id="failed_qc" class="modal fade" tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<form>
@@ -160,7 +165,7 @@
 			</form>
 		</div>
 	</div>
-</div>
+</div> -->
 
 
 <!-- Connect to jquery (first) in order to open modals -->

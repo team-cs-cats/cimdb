@@ -104,7 +104,7 @@ function add_new_product(wo_id,employee_id){
   }else{
 
     const data = {product_pn: this.product_pn.value,
-                  product_family:this.product_pn.value,
+                  product_family:this.product_family.value,
                   wo_id:wo_id,
                   employee_id:employee_id,
                   sc_pn:sc_pn

@@ -56,6 +56,7 @@
 			</div>
 			<div>
 				<input type="button" class="btn btn-primary" value="Filter" id="filterBtn">
+				<input type="button" class="btn btn-warning" value="Clear" id="filterClearBtn">
 			</div>
 			
 			
@@ -66,41 +67,45 @@
 
 
 <div id="results">
-	<table class="table table-striped" >
-		<tr>
-			<th>wo id</th>
-			<th>wo open date</th>
-			<th>product SN</th>
-			<th>product family</th>
-			<th>product PN</th>
-			<th>Details</th>
-			<th>Assembled?</th>
-			<th>Problem?</th>
-		</tr>
-
-		{% for product in assembly_list %}
-			<tr>
-				<td>{{product.wo_id}}</td>
-				<td>{{product.wo_open_date}}</td>
-				<td>{{product.product_sn}}</td>
-				<td>{{product.product_family}}</td>
-				<td>{{product.product_pn}}</td>
-				<td><button class="btn btn-secondary" onclick=components_info("{{product.product_sn}}")>Details</td>
-				
-				<td><button class="btn btn-info"
-					data-toggle="modal"
-					data-target="#pass_assembly" 
-					data_product_sn={{product.product_sn}}>Approve</button>
-				</td>
-
-				<td><button class="btn btn-dark"
-					data-toggle="modal"
-					data-target="#failed_assembly" 
-					data_product_sn={{product.product_sn}}>Report</button>
-				</td>
-
+	<table class="table table-striped" id="assembly-results" >
+		<thead>
+			<tr id="table-head">
+				<th>wo id</th>
+				<th>wo open date</th>
+				<th>product SN</th>
+				<th>product family</th>
+				<th>product PN</th>
+				<th>Details</th>
+				<th>Assembled?</th>
+				<!-- <th>Problem?</th> -->
 			</tr>
-		{% endfor %}
+		</thead>
+
+		<tbody>
+			{% for product in assembly_list %}
+				<tr>
+					<td>{{product.wo_id}}</td>
+					<td>{{product.wo_open_date}}</td>
+					<td>{{product.product_sn}}</td>
+					<td>{{product.product_family}}</td>
+					<td>{{product.product_pn}}</td>
+					<td><button class="btn btn-secondary" onclick=components_info("{{product.product_sn}}")>Details</td>
+					
+					<td><button class="btn btn-info"
+						data-toggle="modal"
+						data-target="#pass_assembly" 
+						data_product_sn={{product.product_sn}}>Approve</button>
+					</td>
+
+					<!-- <td><button class="btn btn-dark"
+						data-toggle="modal"
+						data-target="#failed_assembly" 
+						data_product_sn={{product.product_sn}}>Report</button>
+					</td> -->
+
+				</tr>
+			{% endfor %}
+		</tbody>
 			
 	</table>
 	
@@ -135,7 +140,7 @@
 
 
 <!-- Modal popup for Report feature -->
-<div id="failed_assembly" class="modal fade" tabindex="-1">
+<!-- <div id="failed_assembly" class="modal fade" tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<form>
@@ -157,7 +162,7 @@
 			</form>
 		</div>
 	</div>
-</div>
+</div> -->
 
 
 <!-- Connect to jquery (first) in order to open modals -->

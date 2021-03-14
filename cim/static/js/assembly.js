@@ -1,7 +1,3 @@
-console.log("I am  connected!")
-
-  
-
 //get component information details
 function components_info(serial_number){
   console.log("clicked")
@@ -12,60 +8,6 @@ function components_info(serial_number){
   window.location.href=url
 
 }
-
-//assembel product information 
-function assemble_product(serial_number){
-  console.log("clicked")
-  alert("Product: "+serial_number+" will be ASSEMBLED later!")
-};
-
-//report product details
-function report_product(serial_number){
-  console.log("clicked")
-  alert("Product: "+serial_number+" will be REPORTED later!")
-};
-
-
-var d
-
-fetch('/data/product_catalog')
-.then(response => response.json())
-.then(data => {
-  console.log('Success:', data);
-  d=data
-})
-.catch((error) => {
-  console.error('Error:', error);
-});
-
-document.addEventListener('input', function (event) {
-
-    // Only run on our select menu
-	if (event.target.id !== 'product_family') return;
-
-	// The selected value
-	console.log(event.target.value);
-    var family=document.getElementById("product_family").value
-    console.log("selected: ",family)
-    var models = document.getElementById("product_pn")
-    //clear options
-    models.innerHTML = ""
-    console.log("Data is: ",d)
-    var topmax = d[family].length
-    console.log("max is: ", topmax, " and values are: ",d[family])
-    // console.log("values are: ",d[family])
-    for (var i = 0; i < d[family].length; i++) {
-        var o = document.createElement("option");
-        o.value = d[family][i]
-        o.text = d[family][i]
-        models.appendChild(o);
-}
-
-	// The selected option element
-	console.log(event.target.options[event.target.selectedIndex]);
-
-}, false)
-
 
 
 // Edit product Modal
@@ -295,39 +237,48 @@ function product_pn_filter_input(name){
   }
   
 
-function filter(){
-  var filter_key=document.getElementById("filter-key").value
-  var filter_value=document.getElementById(filter_key).value
-  console.log("key and values are: ",filter_key)
+// function filter(){
+//   var filter_key=document.getElementById("filter-key").value
+//   var filter_value=document.getElementById(filter_key).value
+//   console.log("key and values are: ",filter_key)
 
-  const data = { filter_key: filter_key, filter_value:filter_value, req:"filter" };
-  console.log(data)
+//   const data = { filter_key: filter_key, filter_value:filter_value, req:"filter" };
+//   console.log(data)
 
-  fetch('/workorders', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Success:', data);
-    // location.reload()
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
-}
-
-// $(document).ready(function(){
-//   $("#filterBtn").on("click", function() {
-//   	console.log('clicked!');
-//     var filter_key=$("#filter-key").val()
-//     var filter_value=$("#"+filter_key).val()
-//     console.log("key and values are: ",filter_key,filter_value)
-//     $("#wo-results tr").filter(function() {
-//       $(this).toggle($(this).text().toLowerCase().indexOf(filter_key) > -1)
-//     });
+//   fetch('/workorders', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(data),
+//   })
+//   .then(response => response.json())
+//   .then(data => {
+//     console.log('Success:', data);
+//     // location.reload()
+//   })
+//   .catch((error) => {
+//     console.error('Error:', error);
 //   });
-// });
+// }
+
+$(document).ready(function(){
+  $("#filterBtn").on("click", function() {
+  	console.log('clicked!');
+    var filter_key=$("#filter-key").val().toLowerCase();
+    var filter_value=$("#"+filter_key).val().toLowerCase();
+    console.log("key and values are: ",filter_key,filter_value)
+    $("#assembly-results tr").filter(function() {
+      if($(this).attr('id')!='table-head'){
+        // $(this).css("background-color", "#000000");
+        $(this).toggle($(this).text().toLowerCase().indexOf(filter_value) > -1)
+       }    
+    });
+  });
+});
+
+$(document).ready(function(){
+  $("#filterClearBtn").on("click", function() {
+    location.reload()  	
+  });
+});
