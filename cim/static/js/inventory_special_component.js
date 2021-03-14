@@ -57,8 +57,10 @@ $(document).ready(function(){
 $(document).ready(function(){
   $("#filterSpecCompsSearch").on("keyup", function() {
     var value = $(this).val().toLowerCase();
-    $("#specCompsResults tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    $("#specCompsResults tr").filter(function(index) {
+    	if (index !==0) {
+    		$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    	}
     });
   });
 });

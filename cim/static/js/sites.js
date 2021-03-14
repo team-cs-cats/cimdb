@@ -61,8 +61,10 @@ $(document).ready(function(){
 $(document).ready(function(){
   $("#filterSiteSearch").on("keyup", function() {
     var value = $(this).val().toLowerCase();
-    $("#siteResults tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    $("#siteResults tr").filter(function(index) {
+    	if (index !==0) {
+    		$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    	}
     });
   });
 });
