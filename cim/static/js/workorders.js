@@ -300,39 +300,51 @@ function employee_filter_input(name){
 });
 }
 
-function filter(){
-  var filter_key=document.getElementById("filter-key").value
-  var filter_value=document.getElementById(filter_key).value
-  console.log("key and values are: ",filter_key)
+// sql problem in back end
 
-  const data = { filter_key: filter_key, filter_value:filter_value, req:"filter" };
-  console.log(data)
+// function filter(){
+//   var filter_key=document.getElementById("filter-key").value
+//   var filter_value=document.getElementById(filter_key).value
+//   console.log("key and values are: ",filter_key)
 
-  fetch('/workorders', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Success:', data);
-    // location.reload()
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
-}
+//   const data = { filter_key: filter_key, filter_value:filter_value, req:"filter" };
+//   console.log(data)
+
+//   fetch('/workorders', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(data),
+//   })
+//   .then(response => response.json())
+//   .then(data => {
+//     console.log('Success:', data);
+//     location.reload()
+//   })
+//   .catch((error) => {
+//     location.reload();
+//   });
+// }
 
 $(document).ready(function(){
   $("#filterBtn").on("click", function() {
   	console.log('clicked!');
-    var filter_key=$("#filter-key").val()
-    var filter_value=$("#"+filter_key).val()
+    var filter_key=$("#filter-key").val().toLowerCase();
+    var filter_value=$("#"+filter_key).val().toLowerCase();
     console.log("key and values are: ",filter_key,filter_value)
     $("#wo-results tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(filter_key) > -1)
+      if($(this).attr('id')!='table-head'){
+        // $(this).css("background-color", "#000000");
+        $(this).toggle($(this).text().toLowerCase().indexOf(filter_value) > -1)
+       }    
     });
   });
 });
+
+$(document).ready(function(){
+  $("#filterClearBtn").on("click", function() {
+    location.reload()  	
+  });
+});
+
