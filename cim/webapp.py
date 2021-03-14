@@ -473,7 +473,7 @@ def inventory_special_components():
 			for insertion in range(provided_new_sc_quantity):
 				dbiq.insert_special_component(
 					new_sc_pn=provided_new_sc_pn, 
-					new_inventory_location=provided_new_sc_site)
+					new_sc_location_id=provided_new_sc_site)
 			
 			return render_template("inventory_special_comps.html", 
 				special_components=dbq.get_db_special_components(), 

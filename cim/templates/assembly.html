@@ -12,12 +12,12 @@
 	<div class="two-column">
 			<div class="information">
 				<h2>Assembly Line</h2>
-				<p> Your supervisor has assigned you to assemble the following products.</p>
-				<p> The components requires to assemble each product can be reviewed using the <b>Details</b> button.</p>
-				<p> Once the product is assembled, update the pruduct status by using the <b>Send to QC</b> button.</p>
-				<p> Component inventory will be updated automatically when a product has been assembled.</p>
-				<p> You can order components from the Inventory Tab in the Navbar above.</p>
-				<!-- <p> In the case of any problems, notify your supervisor by the <b>Report</b> button.</p> -->
+				<p> The items below are assiagned to you for assembly by your supervisor.</p>
+				<p> The components inforamtion can be reviwed , using the <b>Details</b> button.</p>
+				<p> One the product is assembled, update the status using <b>Send to QC</b> button.</p>
+				<p> The inventory information will be updated automatically upon a product assembly.</p>
+				<p> You can order componnets from Inventory Tab in the Navbar above.</p>
+				<p> In the case of any problems , notify the supervisor by <b>Report</b> button.</p>
 			</div>
 
 			<div class="process-overview">
@@ -35,63 +35,47 @@
 
 <div id="data-filtering">
 	<h3>Filter Products</h3>
-	<p>The list of displayed products can be filtered using the form below:</p>
+	<p>The list can be filtered using the form below:</p>
 
-	<form id="assembly-data-filter" action="">
-
-		<div class="inner-div">
-			<label for="wo_id">Work Order ID:</label>
-			<input type="text" name="wo_id" id="wo_id" placeholder="wo_id">
-			
-			<label for="wo_open_date">Work Order Open Date: </label>
-			<input type="date" name="wo_open_date" id="wo_open_date">
+	<form class="form-group filter-form" id="assembly-data-filter" action="">
 		
-        </div>
-        
-        <div class="inner-div">
-            <label for="product_sn">Product SN:</label>
-			<input type="text" name="product_sn" id="product_sn" placeholder="product_sn">
 
-			
-			<label for="product_family">Product Family:</label>
-			<select class="custom-select" id="product_family" required>
-				<option selected>Select Family:</option>
-				{% for product in products_catalog %}
-					<option>{{product}}</option>
-				{% endfor %}
-			</select>
+			<label for="filter-key">
+				<select class="form-control" name="filter-key" id="filter-key">
+					<option>Please Select Filter parameter</option>
+					<option value="wo_id">Workorder ID</option>
+					<option value="wo_open_date">Workorder Open Date</option>
+					<option value="wo_close_date">Workorder Close Date</option>
+					<option value="product_sn">Product SN</option>
+					<option value="product_family">Product Family</option>
+					<option value="product_pn">Product Pn</option>
+				</select>
+			</label>
+			<div id="filter-value">
 	
-			<label for="product_pn">Product Part Number: </label>
-			<select class="custom-select" id="product_pn">
-				<option selected>Select Family First:</option>
-				{% for product in products_catalog %}
-					<option>{{product}}</option>
-				{% endfor %}
-			</select>
-		
-		</div>
-				
-		<div class="inner-div">
-			<input type="button" class="btn btn-primary" value="Filter" onclick=addData() >
-			<input type="button" class="btn btn-primary" value="Clear Filters" onclick=clear() >
-		</div>
+			</div>
+			<div>
+				<input type="button" class="btn btn-primary" value="Filter" id="filterBtn">
+			</div>
+			
+			
 	</form>
+	
+	
 </div>
 
 
-
-<!-- dummy content for demo --will be replaced -->
 <div id="results">
 	<table class="table table-striped" >
 		<tr>
-			<th>Work Order ID</th>
-			<th>Work Order Open Date</th>
-			<th>Product Serial Number</th>
-			<th>Product Family</th>
-			<th>Product Part Number</th>
+			<th>wo id</th>
+			<th>wo open date</th>
+			<th>product SN</th>
+			<th>product family</th>
+			<th>product PN</th>
 			<th>Details</th>
 			<th>Assembled?</th>
-			<!-- <th>Problem?</th> -->
+			<th>Problem?</th>
 		</tr>
 
 		{% for product in assembly_list %}
@@ -102,8 +86,19 @@
 				<td>{{product.product_family}}</td>
 				<td>{{product.product_pn}}</td>
 				<td><button class="btn btn-secondary" onclick=components_info("{{product.product_sn}}")>Details</td>
-				<th><button class="btn btn-info" onclick=assemble_product("{{product.product_sn}}")>Send to QC</button></th>
-				<!-- <td><button class="btn btn-dark" onclick=report_product("{{product.product_sn}}")>Report</button></td> -->
+				
+				<td><button class="btn btn-info"
+					data-toggle="modal"
+					data-target="#pass_assembly" 
+					data_product_sn={{product.product_sn}}>Approve</button>
+				</td>
+
+				<td><button class="btn btn-dark"
+					data-toggle="modal"
+					data-target="#failed_assembly" 
+					data_product_sn={{product.product_sn}}>Report</button>
+				</td>
+
 			</tr>
 		{% endfor %}
 			
@@ -111,6 +106,69 @@
 	
 </div>
 
+<!-- Modal popup for Assembly Approval feature -->
+<div id="pass_assembly" class="modal fade" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form >
+				<div class="modal-header">
+					<h5 class="modal-title">Assembly Approval for Product #<span id="pass_assembly_title"> </span></h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+
+					 <h2>Assembly Approval</h2>
+					 <p>The product is assembled and ready for next step.</p>
+					 <label for="assembly_approval_date">Assembly Approval Date</label>
+					 <input type="date" id="assembly_approval_date" >
+					 
+
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-success" id="btnUpdate" name="btnUpdate" data-dismiss="modal" aria-label="Close" onclick=assembly_approval()>Approve</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal popup for Report feature -->
+<div id="failed_assembly" class="modal fade" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form>
+				<div class="modal-header">
+					<h5 class="modal-title">Assembly Denial for Product #<span id="failed_assembly_title"> </span></h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+
+					 <h2>Assembly Denial</h2>
+					 <p>The product failed Assembly NOT ready for next step.</p>
+					 <p>This will inform the supervisor team</p>
+					 
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-success"  id="reportbtn" data-dismiss="modal" aria-label="Close" onclick=report()>Report</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<!-- Connect to jquery (first) in order to open modals -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
 <script src="{{ url_for('static', filename='js/assembly.js') }}"></script>
 
 {% endblock%}
+
+
+

@@ -32,9 +32,10 @@ def regular_component_locations(regular_component_id):
 	SELECT 
 	Locations.location_site_id AS location_site_id ,
 	Locations.location_id AS location_id ,
-	Locations.location_room_number AS location_room_number ,
-	Locations.location_shelf_number AS location_shelf_number ,
-	LocationsRegularComps.lrc_quantity AS quantity_at_location
+	Locations.location_room_number AS RoomNumber ,
+	Locations.location_shelf_number AS ShelfNumber ,
+	LocationsRegularComps.lrc_quantity AS Quantity,
+	Sites.site_address_city AS SiteCity
 	FROM Locations
 	INNER JOIN LocationsRegularComps ON Locations.location_id=LocationsRegularComps.lrc_location_id
 	WHERE LocationsRegularComps.lrc_rc_pn == %s;"""
