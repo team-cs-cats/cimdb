@@ -128,11 +128,14 @@ CREATE TABLE `WorkOrders` (
 
 
 -- Populate WorkOrders table with data
+-- Work Order 879845 is assigned to Employee 61764 "Kaiser","Reina" from Site ID 16 (Reno)
+-- Work Order 815348 is assigned to Employee 39816 "Kalindi","Shulem" from Site ID 16 (Reno),
+-- Work Order 845236 is assigned to Employee 35477 "Giulia","Comberbeach" from Site ID 16 (Reno);
 LOCK TABLES `WorkOrders` WRITE;
 INSERT INTO `WorkOrders` VALUES 
-(879845, "2021-01-29", null, "assembly_pending", 84596, 77919),
-(815348, "2021-01-12", null, "qc_pending", 84325, 60126),
-(845236, "2021-01-24", "2021-01-16", "shipping_pending", 23165, 17597);
+(879845, "2021-01-29", null, "assembly_pending", 84596, 61764),
+(815348, "2021-01-12", null, "qc_pending", 84325, 39816),
+(845236, "2021-01-24", "2021-01-16", "shipping_pending", 23165, 35477);
 UNLOCK TABLES;
 
 
@@ -279,19 +282,22 @@ CREATE TABLE `Products` (
   FOREIGN KEY (`product_sc_sn`) REFERENCES `SpecialComponents`(`sc_sn`) ON UPDATE CASCADE
 );
 
--- Populate RegularComponents table with data
+-- Populate Products table with data
 LOCK TABLES `Products` WRITE;
-INSERT INTO `Products` VALUES 
-(1,"Pro-i3", "Pro","2020-12-20","2020-12-12","2021-12-21",77919,20,3001),
-(2,"Pro-i3", "Pro","2020-12-20","2020-12-12","2021-12-21",77919,20,3002),
-(3,"Basic-i3", "Basic","2020-12-20","2020-12-12","2021-12-21",77919,20,3003),
-(4,"Pro-i5", "Pro","2020-12-20","2020-12-12","2021-12-21",77919,20,5001),
-(5,"Pro-i5", "Pro","2020-12-20","2020-12-12","2021-12-21",77919,20,5002),
-(6,"Basic-i5", "Basic","2020-12-20","2020-12-12","2021-12-21",77919,20,5003),
-(7,"Pro-i7", "Pro","2020-12-20","2020-12-12","2021-12-21",77919,20,7001),
-(8,"Basic-i7", "Basic","2020-12-20","2020-12-12","2021-12-21",77919,20,7002),
-(9,"Basic-i7", "Basic","2020-12-20","2020-12-12","2021-12-21",77919,20,7003),
-(10,"Pro-i7", "Pro","2020-12-20","2020-12-12","2021-12-21",77919,20,7004);
+INSERT INTO `Products` 
+(`product_sn`, `product_pn`, `product_family`, `product_date_assembly`, `product_qc_date`, 
+  `product_warranty_expiration_date`, `product_employee_id`, `product_location_id`, `product_sc_sn`)
+VALUES 
+(1,"Pro-i3", "Pro","2020-12-20","2020-12-12","2021-12-21",61764,57,3001),
+(2,"Pro-i3", "Pro","2020-12-20","2020-12-12","2021-12-21",39816,57,3002),
+(3,"Basic-i3", "Basic","2020-12-20","2020-12-12","2021-12-21",35477,57,3003),
+(4,"Pro-i5", "Pro","2020-12-20","2020-12-12","2021-12-21",61764,57,5001),
+(5,"Pro-i5", "Pro","2020-12-20","2020-12-12","2021-12-21",39816,57,5002),
+(6,"Basic-i5", "Basic","2020-12-20","2020-12-12","2021-12-21",35477,57,5003),
+(7,"Pro-i7", "Pro","2020-12-20","2020-12-12","2021-12-21",61764,57,7001),
+(8,"Basic-i7", "Basic","2020-12-20","2020-12-12","2021-12-21",39816,57,7002),
+(9,"Basic-i7", "Basic","2020-12-20","2020-12-12","2021-12-21",35477,57,7003),
+(10,"Pro-i7", "Pro","2020-12-20","2020-12-12","2021-12-21",61764,57,7004);
 UNLOCK TABLES;
 
 
@@ -307,6 +313,7 @@ CREATE TABLE `WorkOrderProducts` (
   FOREIGN KEY (`wop_product_sn`) REFERENCES `Products`(`product_sn`) ON UPDATE CASCADE
 );
 
+
 -- Populate WorkOrderProducts table with data
 LOCK TABLES `WorkOrderProducts` WRITE;
 INSERT INTO `WorkOrderProducts` VALUES 
@@ -318,8 +325,8 @@ INSERT INTO `WorkOrderProducts` VALUES
 (6,845236,6),
 (7,879845,7),
 (8,815348,8),
-(9,879845,9),
-(10,815348,10);
+(9,845236,9),
+(10,879845,10);
 UNLOCK TABLES;
 
 
