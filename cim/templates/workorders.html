@@ -77,6 +77,7 @@
 			</div>
 			<div>
 				<input type="button" class="btn btn-primary" value="Filter" id="filterBtn">
+				<input type="button" class="btn btn-warning" value="Clear" id="filterClearBtn">
 			</div>
 			
 		
@@ -88,48 +89,50 @@
 <!-- dummy content for demo --will be replaced -->
 <div id="results">
 	<table class="table table-striped" id="wo-results" >
-		<tr>
-			<th>ID</th>
-			<th>Open Date</th>
-			<th>Close Date</th>
-			<th>Status</th>
-			<th>Refrence Number</th>
-			<th>Employee</th>
-			<th>Products</th>
-			<th>Edit</th>
-			<th>Delete</th>
-		</tr>
-
-		
-		{% for wo in workorders %}
-			<tr>
-				<td>{{wo.wo_id}}</td>
-				<td>{{wo.wo_open_date}}</td>
-				<td>{{wo.wo_close_date}}</td>
-				<td>{{wo.wo_status}}</td>
-				<td>{{wo.wo_reference_number}}</td>
-				<td>{{wo.wo_employee_full_name}}</td>
-				<td><button class="btn btn-secondary" onclick=products_info("{{wo.wo_id}}")># of products</button></td>
-				
-				<!-- Edit Modal data -->
-				<td><button class="btn btn-warning"
-					data-toggle="modal"
-					data-target="#editWorkOrder"
-					data-wo-id="{{wo.wo_id}}"
-					data-wo-open-date="{{wo.wo_open_date}}"
-					data-wo-close-date="{{wo.wo_close_date}}"
-					data-wo-status="{{wo.wo_status}}"
-					data-wo-refrence-number="{{wo.wo_reference_number}}"
-					data-wo-employee-full-name="{{wo.wo_employee_full_name}}"					
-					>Edit</button></td>
-				
-					<!-- Delete Modal data --> 
-				<td><button class="btn btn-danger"
-					data-toggle="modal"
-					data-target="#deleteWorkOrder"
-					data-wo-id="{{wo.wo_id}}">Delete</button></td>
+		<thead>
+			<tr id="table-head">
+				<th>ID</th>
+				<th>Open Date</th>
+				<th>Close Date</th>
+				<th>Status</th>
+				<th>Refrence Number</th>
+				<th>Employee</th>
+				<th>Products</th>
+				<th>Edit</th>
+				<th>Delete</th>
 			</tr>
-		{% endfor %}
+		</thead>
+		<tbody>				
+			{% for wo in workorders %}
+				<tr>
+					<td>{{wo.wo_id}}</td>
+					<td>{{wo.wo_open_date}}</td>
+					<td>{{wo.wo_close_date}}</td>
+					<td>{{wo.wo_status}}</td>
+					<td>{{wo.wo_reference_number}}</td>
+					<td>{{wo.wo_employee_full_name}}</td>
+					<td><button class="btn btn-secondary" onclick=products_info("{{wo.wo_id}}")># of products</button></td>
+					
+					<!-- Edit Modal data -->
+					<td><button class="btn btn-warning"
+						data-toggle="modal"
+						data-target="#editWorkOrder"
+						data-wo-id="{{wo.wo_id}}"
+						data-wo-open-date="{{wo.wo_open_date}}"
+						data-wo-close-date="{{wo.wo_close_date}}"
+						data-wo-status="{{wo.wo_status}}"
+						data-wo-refrence-number="{{wo.wo_reference_number}}"
+						data-wo-employee-full-name="{{wo.wo_employee_full_name}}"					
+						>Edit</button></td>
+					
+						<!-- Delete Modal data --> 
+					<td><button class="btn btn-danger"
+						data-toggle="modal"
+						data-target="#deleteWorkOrder"
+						data-wo-id="{{wo.wo_id}}">Delete</button></td>
+				</tr>
+			{% endfor %}
+		</tbody>
 
 		
 	</table>
