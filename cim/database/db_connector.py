@@ -13,7 +13,7 @@ user = 'cs340_hollaasa'       # don't forget the CS_340 prefix
 passwd = '9908'               # should only be 4 digits if default
 db = 'cs340_hollaasa' 
 
-# # Ali
+# # # Ali
 # host = 'localhost'
 # user = 'user'                                   # can be different if you set up another username in your MySQL installation
 # passwd = '1qaz2wsx!QAZ@WSX'                        # set accordingly

@@ -58,20 +58,11 @@ CREATE TABLE `Locations` (
 
 
 -- Populate Locations table with data
+-- Keeping 1, 0, 0, 1 as Customer Location, and keeping locations for Reno
 LOCK TABLES `Locations` WRITE;
 INSERT INTO `Locations` 
 VALUES 
-(1, 0, 0, 1),
-(2, 1, 1, 12), (3, 1, 2, 12), (4, 1, 3, 12), (5, 1, 4, 12), (6, 1, 5, 12), 
-(7, 2, 1, 12), (8, 2, 2, 12), (9, 2, 3, 12), (10, 2, 4, 12), (11, 2, 5, 12), 
-(12, 3, 1, 12), (13, 3, 2, 12), (14, 3, 3, 12), (15, 3, 4, 12), (16, 3, 5, 12), 
-(17, 4, 1, 12), (18, 4, 2, 12), (19, 4, 3, 12), (20, 4, 4, 12), (21, 4, 5, 12), 
-(22, 5, 1, 12), (23, 5, 2, 12), (24, 5, 3, 12), (25, 5, 4, 12), (26, 5, 5, 12), 
-(27, 1, 1, 14), (28, 1, 2, 14), (29, 1, 3, 14), (30, 1, 4, 14), (31, 1, 5, 14), 
-(32, 2, 1, 14), (33, 2, 2, 14), (34, 2, 3, 14), (35, 2, 4, 14), (36, 2, 5, 14), 
-(37, 3, 1, 14), (38, 3, 2, 14), (39, 3, 3, 14), (40, 3, 4, 14), (41, 3, 5, 14), 
-(42, 4, 1, 14), (43, 4, 2, 14), (44, 4, 3, 14), (45, 4, 4, 14), (46, 4, 5, 14), 
-(47, 5, 1, 14), (48, 5, 2, 14), (49, 5, 3, 14), (50, 5, 4, 14), (51, 5, 5, 14), 
+(1, 0, 0, 1), 
 (52, 1, 1, 16), (53, 1, 2, 16), (54, 1, 3, 16), (55, 1, 4, 16), (56, 1, 5, 16), 
 (57, 2, 1, 16), (58, 2, 2, 16), (59, 2, 3, 16), (60, 2, 4, 16), (61, 2, 5, 16), 
 (62, 3, 1, 16), (63, 3, 2, 16), (64, 3, 3, 16), (65, 3, 4, 16), (66, 3, 5, 16), 
@@ -97,17 +88,9 @@ CREATE TABLE `Employees` (
 -- Populate Employees table with data
 LOCK TABLES `Employees` WRITE;
 INSERT INTO `Employees` VALUES 
-(74253,"supervisor","Karlan","Lepard","klepard1@2fast4you.com","L32nLN0", 12),
-(77644,"supervisor","Hayes","Leades","hleades2@2fast4you.com","7nRJect", 14),
 (14324,"supervisor","Pam","Luddy","pluddy6@2fast4you.com","CcBwnjq", 16),
-(77919,"production","Ursulina","Aikin","uaikin0@2fast4you.com","UMTJP38H", 12),
-(60126,"production","Hervey","Wykes","hwykes3@2fast4you.com","yEKKJA", 14),
 (61764,"production","Kaiser","Reina","kreina4@2fast4you.com","KnrAKdA", 16),
-(58873,"production","Trudie","Calvie","tcalvie2@2fast4you.com","DUw9pMv6mgc", 12),
-(46535,"production","Melodee","Duff","mduff5@2fast4you.com","xj91eB93aHEf", 14),
 (35477,"production","Giulia","Comberbeach","gcomberbeach7@2fast4you.com","oxAFg4t", 16),
-(17597,"production","Antonie","Gepp","agepp6@2fast4you.com","4MHKqvgRahlu", 12),
-(97633,"production","Shawn","Boxell","sboxell7@2fast4you.com","GEFXwPR", 14),
 (39816,"production","Kalindi","Shulem","kshulem0@2fast4you.com","DJi02w0oV2", 16);
 UNLOCK TABLES;
 
@@ -128,11 +111,25 @@ CREATE TABLE `WorkOrders` (
 
 
 -- Populate WorkOrders table with data
+-- Work Order 879845 is assigned to Employee 61764 "Kaiser","Reina" from Site ID 16 (Reno)
+-- Work Order 815348 is assigned to Employee 39816 "Kalindi","Shulem" from Site ID 16 (Reno),
+-- Work Order 845236 is assigned to Employee 35477 "Giulia","Comberbeach" from Site ID 16 (Reno);
 LOCK TABLES `WorkOrders` WRITE;
 INSERT INTO `WorkOrders` VALUES 
+<<<<<<< HEAD
+(879845, "2021-01-29", null, "assembly_pending", 84596, 61764),
+(815348, "2021-01-12", null, "qc_pending", 84325, 39816),
+(845236, "2021-01-24", "2021-01-16", "shipping_pending", 23165, 35477);
+=======
 (879845, "2021-01-29", null, "assembly_pending", 84596, 77919),
 (815348, "2021-01-12", null, "qc_pending", 84325, 60126),
-(845236, "2021-01-24", "2021-01-16", "shipping_pending", 23165, 17597);
+(968412, "2021-01-02", null, "assembly_pending", 98125, 58873),
+(874523, "2021-01-22", null, "qc_pending", 98214, 46535),
+(845236, "2021-01-24", "2021-01-16", "completed", 23165, 17597),
+(658412, "2021-01-12", null, "qc_pending", 87462, 97633),
+(874596, "2021-01-14", null, "shipping_pending", 841256, 58873),
+(512648, "2021-01-21", null, "shipping_pending", 68451, 35477);
+>>>>>>> parent of 1ba8aaf (Updated CIMDB.sql and fixed some typos)
 UNLOCK TABLES;
 
 
@@ -186,21 +183,42 @@ CREATE TABLE `LocationsRegularComps` (
 LOCK TABLES `LocationsRegularComps` WRITE;
 INSERT INTO `LocationsRegularComps` 
 (lrc_id,  lrc_location_id,  lrc_rc_pn,  lrc_quantity) VALUES 
-(1,57,1,100),
-(2,57,2,100),
-(3,57,3,100),
-(4,57,50,100),
-(5,57,51,100),
-(6,57,52,100),
-(7,57,100,100),
-(8,57,101,100),
-(9,57,102,100),
-(10,57,150,100),
-(11,57,151,100),
-(12,57,152,100),
-(13,57,200,1),
-(14,57,201,100),
-(15,57,202,100)
+(1, 4,                        1,        0),  
+(2, 64,                     2,        1),  
+(3, 69,                     3,        3),  
+(4, 43,                     50,       14),  
+(5, 14,                      51,       25),  
+(6, 35,                     52,       0),  
+(7, 45,                     150,        234),  
+(8, 15,                     151,        62),  
+(9, 30,                     152,        73),  
+(10, 68,                     1,        25),  
+(11, 34,                     2,        74),  
+(12, 31,                     3,        95),  
+(13, 13,                     50,       4),  
+(14, 24,                     51,       0),  
+(15, 72,                     52,       0),  
+(16, 57,                     150,        234),  
+(17, 29,                     151,        7),  
+(18, 58,                     152,        33),  
+(19, 67,                     1,        0),  
+(20, 5,                      2,        237),  
+(21, 61,                     3,        88),  
+(22, 65,                     50,       81),  
+(23, 59,                     51,       26),  
+(24, 54,                      52,       0),  
+(25, 11,                     150,        42),  
+(26, 25,                     151,        27),  
+(27, 71,                    152,        25),  
+(28, 38,                    1,        238),  
+(29, 7,                      2,        42),  
+(30, 53,                   3,        265),  
+(31, 40,                   50,       23),  
+(32, 26,                      51,       8),  
+(33, 63,                   52,       0),  
+(34, 48,                   150,        0),  
+(35, 16,                   151,        2),  
+(36, 22,                   152,        4)  
 ;
 UNLOCK TABLES;
 
@@ -225,9 +243,10 @@ LOCK TABLES `SpecialComponents` WRITE;
 INSERT INTO `SpecialComponents` 
 (`sc_sn`, `sc_pn`, `sc_is_free`, `sc_product_sn`, `sc_location_id`)
 VALUES 
-(3000, "i3", 1, null, 57),
-(3001, "i3", 1, null, 57),
-(3002, "i3", 1, null, 57),
+<<<<<<< HEAD
+(3000, "i3", 0, null, 57),
+(3001, "i3", 0, null, 57),
+(3002, "i3", 0, null, 57),
 (3003, "i3", 1, null, 57),
 (3004, "i3", 1, null, 57),
 (3005, "i3", 1, null, 57),
@@ -236,18 +255,18 @@ VALUES
 (3008, "i3", 1, null, 57),
 (3009, "i3", 1, null, 57),
 (5000, "i5", 1, null, 57),
-(5001, "i5", 1, null, 57),
-(5002, "i5", 1, null, 57),
-(5003, "i5", 1, null, 57),
+(5001, "i5", 0, null, 57),
+(5002, "i5", 0, null, 57),
+(5003, "i5", 0, null, 57),
 (5004, "i5", 1, null, 57),
 (5005, "i5", 1, null, 57),
 (5006, "i5", 1, null, 57),
 (5007, "i5", 1, null, 57),
 (5008, "i5", 1, null, 57),
 (5009, "i5", 1, null, 57),
-(7000, "i7", 1, null, 57),
-(7001, "i7", 1, null, 57),
-(7002, "i7", 1, null, 57),
+(7000, "i7", 0, null, 57),
+(7001, "i7", 0, null, 57),
+(7002, "i7", 0, null, 57),
 (7003, "i7", 1, null, 57),
 (7004, "i7", 1, null, 57),
 (7005, "i7", 1, null, 57),
@@ -255,6 +274,27 @@ VALUES
 (7007, "i7", 1, null, 57),
 (7008, "i7", 1, null, 57),
 (7009, "i7", 1, null, 57);
+=======
+(610205, "i3", 1, null, 3),
+(293039, "i5", 1, null, 5),
+(56853, "i7", 1, null, 7),
+(1046, "i5", 1, null, 8),
+(184930, "i5", 1, null, 12),
+(101711, "i7", 1, null, 45),
+(714673, "i7", 1, null, 23),
+(473446, "i3", 0, null, 67),
+(3000, "i3", 1, null, 4),
+(3001, "i3", 1, null, 58),
+(3002, "i3", 1, null, 58),
+(3003, "i3", 0, null, 34),
+(5001, "i5", 1, null, 55),
+(5002, "i5", 1, null, 65),
+(5003, "i5", 1, null, 23),
+(7001, "i7", 1, null, 22),
+(7002, "i7", 1, null, 22),
+(7003, "i7", 1, null, 22),
+(7004, "i7", 1, null, 56);
+>>>>>>> parent of 1ba8aaf (Updated CIMDB.sql and fixed some typos)
 UNLOCK TABLES;
 
 
@@ -279,19 +319,22 @@ CREATE TABLE `Products` (
   FOREIGN KEY (`product_sc_sn`) REFERENCES `SpecialComponents`(`sc_sn`) ON UPDATE CASCADE
 );
 
--- Populate RegularComponents table with data
+-- Populate Products table with data
 LOCK TABLES `Products` WRITE;
-INSERT INTO `Products` VALUES 
-(1,"Pro-i3", "Pro","2020-12-20","2020-12-12","2021-12-21",77919,20,3001),
-(2,"Pro-i3", "Pro","2020-12-20","2020-12-12","2021-12-21",77919,20,3002),
-(3,"Basic-i3", "Basic","2020-12-20","2020-12-12","2021-12-21",77919,20,3003),
-(4,"Pro-i5", "Pro","2020-12-20","2020-12-12","2021-12-21",77919,20,5001),
-(5,"Pro-i5", "Pro","2020-12-20","2020-12-12","2021-12-21",77919,20,5002),
-(6,"Basic-i5", "Basic","2020-12-20","2020-12-12","2021-12-21",77919,20,5003),
-(7,"Pro-i7", "Pro","2020-12-20","2020-12-12","2021-12-21",77919,20,7001),
-(8,"Basic-i7", "Basic","2020-12-20","2020-12-12","2021-12-21",77919,20,7002),
-(9,"Basic-i7", "Basic","2020-12-20","2020-12-12","2021-12-21",77919,20,7003),
-(10,"Pro-i7", "Pro","2020-12-20","2020-12-12","2021-12-21",77919,20,7004);
+INSERT INTO `Products` 
+(`product_sn`, `product_pn`, `product_family`, `product_date_assembly`, `product_qc_date`, 
+  `product_warranty_expiration_date`, `product_employee_id`, `product_location_id`, `product_sc_sn`)
+VALUES 
+(1,"Pro-i3", "Pro","2020-12-20","2020-12-12","2021-12-21",61764,57,3001),
+(2,"Pro-i3", "Pro","2020-12-20","2020-12-12","2021-12-21",39816,57,3002),
+(3,"Basic-i3", "Basic","2020-12-20","2020-12-12","2021-12-21",35477,57,3003),
+(4,"Pro-i5", "Pro","2020-12-20","2020-12-12","2021-12-21",61764,57,5001),
+(5,"Pro-i5", "Pro","2020-12-20","2020-12-12","2021-12-21",39816,57,5002),
+(6,"Basic-i5", "Basic","2020-12-20","2020-12-12","2021-12-21",35477,57,5003),
+(7,"Pro-i7", "Pro","2020-12-20","2020-12-12","2021-12-21",61764,57,7001),
+(8,"Basic-i7", "Basic","2020-12-20","2020-12-12","2021-12-21",39816,57,7002),
+(9,"Basic-i7", "Basic","2020-12-20","2020-12-12","2021-12-21",35477,57,7003),
+(10,"Pro-i7", "Pro","2020-12-20","2020-12-12","2021-12-21",61764,57,7004);
 UNLOCK TABLES;
 
 
@@ -307,10 +350,12 @@ CREATE TABLE `WorkOrderProducts` (
   FOREIGN KEY (`wop_product_sn`) REFERENCES `Products`(`product_sn`) ON UPDATE CASCADE
 );
 
+
 -- Populate WorkOrderProducts table with data
 LOCK TABLES `WorkOrderProducts` WRITE;
 INSERT INTO `WorkOrderProducts` VALUES 
 (1,879845,1),
+<<<<<<< HEAD
 (2,815348,2),
 (3,845236,3),
 (4,879845,4),
@@ -318,8 +363,17 @@ INSERT INTO `WorkOrderProducts` VALUES
 (6,845236,6),
 (7,879845,7),
 (8,815348,8),
-(9,879845,9),
-(10,815348,10);
+(9,845236,9),
+(10,879845,10);
+=======
+(2,879845,5),
+(3,879845,8),
+(4,815348,3),
+(5,968412,2),
+(6,874523,4),
+(7,845236,6),
+(8,845236,7);
+>>>>>>> parent of 1ba8aaf (Updated CIMDB.sql and fixed some typos)
 UNLOCK TABLES;
 
 
@@ -357,37 +411,7 @@ INSERT INTO `ProductsRegularComps` VALUES
 (17,4,50,2),
 (18,4,100,1),
 (19,4,150,2),
-(20,4,200,1),
-(21,5,1,1),
-(22,5,50,2),
-(23,5,100,1),
-(24,5,150,2),
-(25,5,200,1),
-(26,6,3,1),
-(27,6,51,3),
-(28,6,102,1),
-(29,6,152,1),
-(30,6,200,1),
-(31,7,3,1),
-(32,7,52,3),
-(33,7,100,1),
-(34,7,151,3),
-(35,7,202,1),
-(36,8,3,1),
-(37,8,50,2),
-(38,8,100,1),
-(39,8,150,2),
-(40,8,200,1),
-(41,9,3,1),
-(42,9,52,3),
-(43,9,100,1),
-(44,9,151,3),
-(45,9,202,1),
-(46,10,3,1),
-(47,10,50,2),
-(48,10,100,1),
-(49,10,150,2),
-(50,10,200,1);
+(20,4,200,1);
 UNLOCK TABLES;
 
 

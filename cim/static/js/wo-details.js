@@ -203,11 +203,7 @@ $(document).ready(function() {
     //Extract value from the custom data-* attribute and update modal attr
     document.getElementById("edit_WorkOrderDetails_title").innerText=button.attr("data-product-sn")
     document.getElementById("product_family_to_edit").value=button.attr("data-product_family")
-
-    // Used Jquery to grab the product part number and pass to modal
-    var productPNData = button.data("product_pn");
-    $(this).find("#product_pn_to_edit").val(productPNData);
-
+    document.getElementById("product_pn_to_edit").value=button.attr("data-product_pn")
     document.getElementById("product_sn_to_edit").value=button.attr("data-product-sn")
     document.getElementById("product_assembly_date_to_edit").value=button.attr("data-product_date_assembly")
     document.getElementById("product_qc_date_to_edit").value=button.attr("data-product_qc_date")

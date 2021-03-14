@@ -68,7 +68,7 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 
 <!-- Header for Filter section -->
 {% block filter_header %}
-Filter Existing Regular Components
+<!-- Filter Existing Regular Components -->
 {% endblock %}
 
 <!-- Description for Filter section -->
@@ -78,57 +78,7 @@ Filter Existing Regular Components
 
 <!-- Form for Filter section -->
 {% block filter_form %}
-<form id="existing-reg-comp-data-filter" action="">
 
-	<div class="text-center">
-
-		<select class="custom-select m-1" id="filter_category" required>
-			<option selected>Select Category: </option>
-			<option>Case</option>
-			<option>Graphics Card (GC)</option>
-			<option>Hard Drive Disk (HDD)</option>
-			<option>Motherboard (MB)</option>
-			<option>RAM</option>
-		</select>	
-
-		<label for="existing_reg_comp_part_number">Part Number: </label>
-		<input type="number" min="10000" max="99998" class='m-1' name="existing_reg_comp_part_number" id="existing_reg_comp_part_number" placeholder="12345">		
-
-		<select class="custom-select m-1" id="existing_reg_comp_site">
-			<option selected>Select Site: </option>
-			{% for site in sites %}
-			<option>{{site.site_address_city}}</option>
-			{% endfor %}
-		</select>
-
-		<label for="existing_reg_comp_room_number">Room Number: </label>
-		<input type="number" min="0" max="99" class='m-1' name="existing_reg_comp_room_number" id="existing_reg_comp_room_number" placeholder="99">
-
-		<label for="existing_reg_comp_shelf_number">Shelf Number: </label>
-		<input type="number" min="0" max="99" class='m-1' name="existing_reg_comp_shelf_number" id="existing_reg_comp_shelf_number" placeholder="99">
-
-		<input type="button" class="btn-sm btn-primary m-1" value="Filter" onclick=filterData() >
-		<input type="button" class="btn-sm btn-primary m-1" value="Clear Filters" onclick=clearFilters() >
-
-
-	</div>
-
-</form>
-
-<!-- 
-<div class="input-group">
-  <div class="form-outline w-75">
-    <input type="search" id="filterSearch" class="form-control" placeholder="Filter by Category, Part Number, Site Name, Room Number or Shelf Number" />
-  </div>
-  <button type="button" class="btn btn-primary">
-    <i class="fas fa-search">Filter</i>
-  </button>
-  <button type="button" class="btn btn-primary">
-    <i class="fas fa-search">Clear Filters</i>
-  </button>
-</div> -->
-
-<p id="datalist"></p>
 {% endblock %}
 
 <!-- Main results table -->
@@ -148,30 +98,6 @@ Filter Existing Regular Components
 			</div>
 
 			<div class="row ml-5 mr-5">
-
-				<div class="col d-flex flex-row ml-5 ml-2 p-2">
-					<p class="mt-2 mr-2">Order more of component {{regular_component.rc_pn_desc}}: </p>
-					<div>
-						<select class="custom-select mt-2 pl-2 ml-2" id="new_rc_site" required>
-							<option selected>Select Site: </option>
-							{% for site in sites %}
-							<option>{{site.site_address_city}}</option>
-							{% endfor %}
-						</select>
-					</div>
-
-					<div >
-						<select class="custom-select mt-2" id="new_rc_site" required>
-							<option selected>Select Quantity: </option>
-							<option>10</option>
-							<option>25</option>
-							<option>50</option>
-							<option>100</option>
-						</select>
-					</div>
-
-					<div><button class="btn-sm btn-info m-1">Order More</button></div>
-				</div>
 
 				<div class="col d-flex flex-row-reverse"> 
 					<button class="btn-sm btn-danger">Delete All {{regular_component.rc_pn_desc}}</button>
@@ -209,7 +135,7 @@ Filter Existing Regular Components
 							class="btn-sm btn-warning text-right" 
 							data-toggle="modal" 
 							data-target="#editRegularComponentQuantity" 
-							data-reg-comp-part-number="{{regular_component.rc_pn}}"
+							data-reg-comp-part-number="{{regular_component.rc_pn_desc}}"
 							data-reg-comp-category="{{regular_component.rc_category}}"
 							data-reg-comp-site-name="{{location.SiteCity}}" 
 							data-reg-comp-room-number="{{location.RoomNumber}}" 
@@ -254,7 +180,7 @@ Filter Existing Regular Components
 					<div class="modal-body">  
 
 						<div class="form-group p-1">
-							<label class="control-label" >Quantity in <span id="reg-comp-view-site"></span>, Room <span id="reg-comp-view-room-number"></span>, Shelf <span id="reg-comp-view-shelf-number"></span>:</label>
+							<label class="control-label" >Quantity in <span id="reg-comp-view-site" name="reg-comp-view-site"></span>, Room <span id="reg-comp-view-room-number"></span>, Shelf <span id="reg-comp-view-shelf-number"></span>:</label>
 							<input type="number" min="0" max="999" id="reg-comp-edit-quantity" class="form-control" required>
 						</div> 
 

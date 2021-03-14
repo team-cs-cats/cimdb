@@ -13,7 +13,7 @@
 			<h3>Manage Work Order Details</h3>
 			<h5 class="access-level">This page requires supervisor-level access permission.</h5>
 			<p>Manage (View, Add, Edit and Delete) products in a Work Order</p>
-			<button type="button" class="btn btn-secondary" onclick=go_back()>Back to Work Orders</button>
+			<button type="button" class="btn btn-light" onclick=go_back()>Back to Work Orders</button>
 		</div>
 
 		<div class="process-overview">
@@ -34,7 +34,10 @@
 <div class='intro-div'>
 	<div class="two-column">
 		<div id="data-entry-div">
-			<h4>Add New Product to Work Order <b>{{wo_id}}</b></h4>
+			<h3>Update Products in Work Order <b>{{wo_id}} </b></h3>
+			<h4>Add a New Product</h4>
+			<p>Add new product to this order. You will be redirecterd to
+				a new page to enter components information for the new product</p>
 		
 			<form id="product-data-entry" action="">
 				<div class="inner-div">
@@ -70,12 +73,12 @@
 					<label for="wo_id">Work Order ID:</label>
 					<input type="text" name="wo_id" id="wo_id_reload" placeholder="wo_id">
 
-					<input type="button" class="btn btn-secondary" value="Refresh" onclick=reload_workorder()>
+					<input type="button" class="btn btn-success" value="Refresh" onclick=reload_workorder()>
 					
 				</form>				
 			</div>
 			
-			<p> Not all Work Orders have Products: Try 845236 or 879845. </p>
+			<p> Not all WO have products: Try 845236 or 879845 </p>
 		</div>
 
 	</div>
@@ -87,9 +90,9 @@
 <div id="results">
 
 	<div>
-		<h4>Work Order Details</h4>
+		<h4>Work order information</h4>
 		<!-- <p>{{workorder_information}}</p> -->
-		<p><b>Work Order ID:</b> {{workorder_information.wo_id}}</p>
+		<p><b>Work Order id:</b> {{workorder_information.wo_id}}</p>
 		<p><b>Open Date:</b> {{workorder_information.wo_open_date}} </p>
 		<p><b>Employee in Charge:</b> {{workorder_information.wo_employee_full_name}} </p>
 		<!-- <p>{{products}}</p> -->
@@ -124,7 +127,7 @@
 					<!-- <td>{{product.product_employee_id}}</td> -->
 					<td>{{product.product_location_id}}</td>
 					<td>{{product.product_sc_sn}}</td>
-					<td><button class="btn btn-secondary" onclick=components_info("{{product.product_sn}}")>Info</button></td>
+					<td><button class="btn btn-secondary" onclick=components_info("{{product.product_sn}}")>info</button></td>
 					
 					<!-- Edit workorderdetails Modal Data -->
 					<td><button class="btn btn-warning"
@@ -280,3 +283,6 @@
 <script src="{{ url_for('static', filename='js/wo-details.js') }}"></script>
 
 {% endblock%}
+
+
+

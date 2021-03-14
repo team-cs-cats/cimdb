@@ -85,7 +85,7 @@ Filter Existing Employees
 
 		<div class="input-group">
 		  <div class="w-75">
-		    <input type="search" id="filterEmployeeSearch" class="form-control" name='filterEmployeeSearch' placeholder="Filter Existing Employees Employee ID, First or Last Name, Group, Site or Email" />
+		    <input type="search" id="filterEmployeeSearch" class="form-control" name='filterEmployeeSearch' placeholder="Filter Existing Employees by Employee ID, First or Last Name, Group, Site or Email" />
 		  </div>
 
 		  <input type="submit" class="btn-sm btn-primary m-1" name="btnFilterEmployees" id="btnFilterEmployees" value="Filter" >
@@ -94,52 +94,12 @@ Filter Existing Employees
 	  </div>
 	</div>
 </form>
-
-
-<!-- <form id="existing-employee-data-filter" action="">
-
-	<div class="text-center">
-
-		<label for="existing_employee_id">Employee ID:</label>
-		<input type="number" min="11111" max="99999" class='m-1' name="existing_employee_id" id="existing_employee_id" placeholder="12345">
-
-		<label for="existing_employee_fname">Employee First Name:</label>
-		<input type="text" class='m-1' name="existing_employee_fname" id="existing_employee_fname" placeholder="Jane">
-
-		<label for="existing_employee_lname">Employee Last Name:</label>
-		<input type="text" class='m-1' name="existing_employee_lname" id="existing_employee_lname" placeholder="Doe">
-
-		<label for="existing_employee_email">Employee Email:</label>
-		<input type="email" class='m-1' name="existing_employee_email" id="existing_employee_email" placeholder="jsmith8@2fast4you.com">
-
-		<select class="custom-select m-1" id="existing_employee_group">
-			<option selected>Select Group: </option>
-		    <option value='production'>Production</option>
-		    <option value='supervisor'>Supervisor</option>
-		</select>
-
-		<select class="custom-select m-1" id="existing_employee_site">
-			<option selected>Select Site: </option>
-				{% for site in sites %}
-					{% if site.site_id != 1 %}
-			    	<option>{{site.site_address_city}}</option>
-					{% endif %}
-			    {% endfor %}
-		</select>
-
-		<input type="button" class="btn-sm btn-primary m-1" value="Filter" onclick=filterData() >
-		<input type="button" class="btn-sm btn-primary m-1" value="Clear Filters" onclick=clearFilters() >
-
-
-	</div>
-
-</form> -->
 {% endblock %}
 
 <!-- Main results table -->
 {% block table_contents %}
 
-<table class="table table-striped " >
+<table class="table table-striped " id="employeeResults" >
 <tr >
 	<th>Employee ID</th>
 	<th>First</th>

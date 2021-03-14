@@ -60,3 +60,15 @@ $(document).ready(function(){
 
 	});
 });
+
+// Live Search Filter
+$(document).ready(function(){
+  $("#filterEmployeeSearch").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#employeeResults tr").filter(function(index) {
+    	if (index !==0) {
+    		$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    	}
+    });
+  });
+});
