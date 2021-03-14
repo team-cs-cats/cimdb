@@ -57,12 +57,4 @@ $(document).ready(function(){
 
 
 
-// Tooltip Toggle
-	
-// $('[data-toggle="tooltip"]').tooltip({
-//    container: 'body'
-// });
-
-
-
 
