@@ -88,17 +88,9 @@ CREATE TABLE `Employees` (
 -- Populate Employees table with data
 LOCK TABLES `Employees` WRITE;
 INSERT INTO `Employees` VALUES 
-(74253,"supervisor","Karlan","Lepard","klepard1@2fast4you.com","L32nLN0", 12),
-(77644,"supervisor","Hayes","Leades","hleades2@2fast4you.com","7nRJect", 14),
 (14324,"supervisor","Pam","Luddy","pluddy6@2fast4you.com","CcBwnjq", 16),
-(77919,"production","Ursulina","Aikin","uaikin0@2fast4you.com","UMTJP38H", 12),
-(60126,"production","Hervey","Wykes","hwykes3@2fast4you.com","yEKKJA", 14),
 (61764,"production","Kaiser","Reina","kreina4@2fast4you.com","KnrAKdA", 16),
-(58873,"production","Trudie","Calvie","tcalvie2@2fast4you.com","DUw9pMv6mgc", 12),
-(46535,"production","Melodee","Duff","mduff5@2fast4you.com","xj91eB93aHEf", 14),
 (35477,"production","Giulia","Comberbeach","gcomberbeach7@2fast4you.com","oxAFg4t", 16),
-(17597,"production","Antonie","Gepp","agepp6@2fast4you.com","4MHKqvgRahlu", 12),
-(97633,"production","Shawn","Boxell","sboxell7@2fast4you.com","GEFXwPR", 14),
 (39816,"production","Kalindi","Shulem","kshulem0@2fast4you.com","DJi02w0oV2", 16);
 UNLOCK TABLES;
 
