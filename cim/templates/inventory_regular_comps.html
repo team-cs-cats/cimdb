@@ -148,7 +148,7 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 
 			<div class="row ml-5 mr-5">
 
-				<div class="col d-flex flex-row ml-5 ml-2 p-2">
+<!-- 				<div class="col d-flex flex-row ml-5 ml-2 p-2">
 					<p class="mt-2 mr-2">Order more of component {{regular_component.rc_pn_desc}}: </p>
 					<div>
 						<select class="custom-select mt-2 pl-2 ml-2" id="new_rc_site" required>
@@ -170,7 +170,7 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 					</div>
 
 					<div><button class="btn-sm btn-info m-1">Order More</button></div>
-				</div>
+				</div> -->
 
 				<div class="col d-flex flex-row-reverse"> 
 					<button class="btn-sm btn-danger">Delete All {{regular_component.rc_pn_desc}}</button>
@@ -208,7 +208,7 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 							class="btn-sm btn-warning text-right" 
 							data-toggle="modal" 
 							data-target="#editRegularComponentQuantity" 
-							data-reg-comp-part-number="{{regular_component.rc_pn}}"
+							data-reg-comp-part-number="{{regular_component.rc_pn_desc}}"
 							data-reg-comp-category="{{regular_component.rc_category}}"
 							data-reg-comp-site-name="{{location.SiteCity}}" 
 							data-reg-comp-room-number="{{location.RoomNumber}}" 
