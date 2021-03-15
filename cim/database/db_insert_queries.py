@@ -142,13 +142,28 @@ def insert_regular_component(new_rc_pn_desc , new_rc_category):
 
 def get_receiving_id(site_id):
 
+	print('the site id we are looing ', site_id)
+
 	# provided a site id, return the location ID of the Receiving Room (Room 1) of that site
-	query = "SELECT location_id FROM Locations WHERE Locations.location_site_id = '%s' AND Locations.location_room_number = 1 LIMIT 1"
-	db_connection = db.connect_to_database()
-	params = (site_id, )
-	cursor = db.execute_query(db_connection=db_connection, query=query, query_params=params)
-	site_id = cursor.fetchall()
-	return site_id[0]['location_id']
+	def query_for_location(provided_site_id):
+		query = "SELECT location_id FROM Locations WHERE Locations.location_site_id = '%s' AND Locations.location_room_number = 1 LIMIT 1"
+		db_connection = db.connect_to_database()
+		params = (provided_site_id, )
+		cursor = db.execute_query(db_connection=db_connection, query=query, query_params=params)
+		return cursor.fetchall()
+
+	resulting_location_id = query_for_location(provided_site_id=site_id)
+
+	# catch error where no location room number 1 is present
+	if len(resulting_location_id) == 0:
+
+		# we need to create a location for the receiving room at this site
+		insert_location(new_location_room_number='1', new_location_shelf_number='1', new_location_site_id=site_id)
+
+		# then update the site id with the location we just added
+		resulting_location_id = query_for_location(provided_site_id=site_id)
+
+	return resulting_location_id[0]['location_id']
 
 def insert_special_component(new_sc_pn, new_sc_location_id):
 
