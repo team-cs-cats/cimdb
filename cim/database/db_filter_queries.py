@@ -218,10 +218,12 @@ def filter_special_components(filter_spec_comps_parameter):
 	(Locations.location_site_id LIKE %s) OR 
 	(Locations.location_room_number LIKE %s) OR
 	(Locations.location_shelf_number LIKE %s) OR
-	(SpecialComponents.sc_is_free LIKE %s)
+	(SpecialComponents.sc_is_free LIKE %s) OR
+	(Sites.site_address_city LIKE %s)
 	);
 	"""
 	filter_special_component_data = ('%'+filter_spec_comps_parameter+'%',
+	 '%'+filter_spec_comps_parameter+'%',
 	 '%'+filter_spec_comps_parameter+'%',
 	 '%'+filter_spec_comps_parameter+'%',
 	 '%'+filter_spec_comps_parameter+'%',
