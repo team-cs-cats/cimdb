@@ -494,7 +494,6 @@ def inventory_special_components():
 			if request.form.get('spec-comp-edit-is-free'):
 				updated_spec_comp_is_free = 1
 			
-			print('updated_spec_comp_is_free', updated_spec_comp_is_free)
 			sc_id_to_update = request.form['spec-comp-serial-number']
 
 			# perform the update
@@ -510,12 +509,8 @@ def inventory_special_components():
 			# Obtain data from the filter existing special components form			
 			provided_filter_spec_comps_paramaters = request.form.get('filterSpecCompsSearch')
 
-			print('\n', provided_filter_spec_comps_paramaters, '\n')
-
 			# Perform the filter
 			filtered_spec_comps_results = dbfq.filter_special_components(filter_spec_comps_parameter=provided_filter_spec_comps_paramaters)
-
-			print(filtered_spec_comps_results)
 
 			# render the page using the filtered results
 			return render_template("inventory_special_comps.html", 
