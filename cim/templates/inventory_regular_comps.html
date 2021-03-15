@@ -27,7 +27,7 @@ Inventory - Regular Components
 <!-- Description for Create New section -->
 {% block create_description %}
 <h6>Order New Regular Components</h6> 
-If a new regular component (non-CPU/non unique) needs to be ordered and added to the inventory, use this form.
+To add new regular components to the inventory, use this form.
 {% endblock %}
 
 <!-- Form for Create New section -->
@@ -91,13 +91,13 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 		<!-- don't select 'no graphics card' as a location -->
 		{% if regular_component.rc_pn != 200 %} 
 			<div class="row">
-				<div class="col text-center border-top"> 
+				<div class="col text-center border-top p-1"> 
 					Part Number: <strong>{{regular_component.rc_pn_desc}}</strong> - Category: <strong>{{regular_component.rc_category}}</strong>
 				</div>
 
 			</div>
 
-			<div class="row ml-5 mr-5">
+<!-- 			<div class="row ml-5 mr-5">
 
 				<div class="col d-flex flex-row-reverse"> 
 					<button class="btn-sm btn-danger">Delete All {{regular_component.rc_pn_desc}}</button>
@@ -111,7 +111,7 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 					data-title="Edit Details for Part Number {{regular_component.rc_pn}}">Edit Details for {{regular_component.rc_pn_desc}}</button>
 
 				</div>
-			</div>
+			</div> -->
 
 			<div class="row ml-5 mr-5">
 
@@ -122,7 +122,7 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 						<th>Site/Location</th>
 						<th>Quantity</th>
 						<th>Edit Quantity</th>
-						<th>Delete from Location</th>
+						<!-- <th>Delete from Location</th> -->
 					</tr>
 
 					{% for location in reg_comp_locations %}
@@ -131,7 +131,7 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 						<td>{{location.SiteCity}}/Room {{location.RoomNumber}}, Shelf {{location.ShelfNumber}}</td>
 						<td>{{location.Quantity}}</td>
 
-						<th><button type="button" 
+						<td><button type="button" 
 							class="btn-sm btn-warning text-right" 
 							data-toggle="modal" 
 							data-target="#editRegularComponentQuantity" 
@@ -141,9 +141,9 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 							data-reg-comp-room-number="{{location.RoomNumber}}" 
 							data-reg-comp-shelf-number="{{location.ShelfNumber}}" 
 							data-reg-comp-quantity={{location.Quantity}}
-							data-title="Edit Quantity of {{regular_component.rc_pn_desc}}">Edit</button></th>
+							data-title="Edit Quantity of {{regular_component.rc_pn_desc}}">Edit</button></td>
 
-							<td><button class="btn-sm btn-danger">Delete</button></td>
+							<!-- <td><button class="btn-sm btn-danger">Delete</button></td> -->
 					</tr>
 						{% endif %}
 					{% endfor %}
