@@ -11,7 +11,8 @@
 
 <div class="content">
 	
-	<h4 class="text-center">Welcome {{user_first_name}} {{user_last_name}}</h1>
+	<h4 class="text-center p-5">Welcome to the 2Fast4U CIMDB! </h1> 
+	<!-- {{user_first_name}} {{user_last_name}}</h1> -->
 
 	<div class="card">
 
@@ -19,31 +20,42 @@
 
 			<div class="container">
 				<div class="row">
-					<div class="col text-justify">
+					<div class="col text-center">
 
-						<div class="card m-5" style="width: 18rem;">
+<!-- Commented out since we have not implemented sessions: TODO, add sessions -->
+<!-- 						<div class="card m-5" style="width: 18rem;">
 						  <div class="card-body">
 						    <h5 class="card-title">{{user_group}}</h5>
 						    <p class="card-text">Site: {% for site in sites %}{% if site.site_id == user_site_id|int %}{{site.site_name}}{% endif %}{% endfor %}</p>
 						    <p class="card-text">Email: {{user_email}}</p>
 						  </div>
-						</div>
+						</div> -->
 
+					<div class="d-flex justify-content-center">
+						
 					<div class="list-group">
-					  <a href="/workorders" class="list-group-item list-group-item-action">To view further details regarding your existing work orders, click here.</a>
-					  <a href="/assembly" class="list-group-item list-group-item-action">To view all products assigned to you for assembly, click here.</a>
-					  <a href="/qc" class="list-group-item list-group-item-action">To view all products in need of QC, click here.</a>
-					  <a href="/shipping" class="list-group-item list-group-item-action">To view all work orders ready to ship, click here.</a>
-					  <a href="/inventory-reg" class="list-group-item list-group-item-action">To view current inventory of all regular components, click here.</a>
-					  <a href="/inventory-reg" class="list-group-item list-group-item-action">To view current inventory of all unique CPUs (special components), click here.</a>
-					  <a href="/locations" class="list-group-item list-group-item-action">To manage storage locations, click here (requires Supervisor credentials).</a>
-					  <a href="/employee-mgmt" class="list-group-item list-group-item-action">To manage employee details, click here (requires Supervisor credentials).</a>
-					  <a href="/site-mgmt" class="list-group-item list-group-item-action">To manage site details, click here (requires Supervisor credentials).</a>
+					  <a href="/workorders" class="list-group-item list-group-item-action"><strong>View</strong>, <strong>Add</strong>, <strong>Edit</strong> or <strong>Delete</strong> Work Orders</a>
+					  <a href="/wo-details" class="list-group-item list-group-item-action"><strong>View</strong>, <strong>Add</strong>, <strong>Edit</strong> or <strong>Delete</strong> Products on an Existing Work Order</a>
+					  <a href="/product-details" class="list-group-item list-group-item-action"><strong>View</strong> or <strong>Edit</strong> Components for an Existing Product</a>
+					  <a href="/assembly" class="list-group-item list-group-item-action"><strong>View</strong> all Products ready for Assembly and <strong>Edit</strong> Products to mark them as Assembled</a>
+					  <a href="/qc" class="list-group-item list-group-item-action"><strong>View</strong> all Products in need of Quality Control and <strong>Edit</strong> Products to mark them as QC'd</a>
+					  <a href="/shipping" class="list-group-item list-group-item-action"><strong>View</strong> Status of all Work Orders and <strong>Edit</strong> Work Orders to mark them as Shipped and Completed</a>
+					  <a href="/inventory-reg" class="list-group-item list-group-item-action"><strong>View</strong> Locations of Regular Components or <strong>Add</strong> New Regular Components to Inventory</a></a>
+					  <a href="/inventory-reg" class="list-group-item list-group-item-action"><strong>View</strong>, <strong>Add</strong>, <strong>Edit</strong> or <strong>Delete</strong> from the Inventory of Unique CPUs (Special Components)</a>
+					  <a href="/locations" class="list-group-item list-group-item-action"><strong>View</strong>, <strong>Add</strong>, <strong>Edit</strong> or <strong>Delete</strong> Locations</a>
+					  <a href="/employee-mgmt" class="list-group-item list-group-item-action"><strong>View</strong>, <strong>Add</strong>, <strong>Edit</strong> or <strong>Delete</strong> Employees</a>
+					  <a href="/site-mgmt" class="list-group-item list-group-item-action"><strong>View</strong>, <strong>Add</strong>, <strong>Edit</strong> or <strong>Delete</strong> Sites</a>
+					</div>
+
 					</div>
 
 
+
+
 					</div>
-					<div class="col m-3">
+
+					<!-- Commented out since we have not implemented sessions: TODO, implement sessions -->
+<!-- 					<div class="col m-3">
 
 						{% if work_order_count > 1 %}
 
@@ -85,7 +97,7 @@
 						</div>
 						{% endif %}
 
-					</div>
+					</div> -->
 				</div>
 			</div>
 

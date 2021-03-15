@@ -84,27 +84,33 @@ def filter_work_order_products(filter_wop_wo_id,filter_wop_product_sn):
 	return filter(filter_query_to_run=filter_work_order_products,data_to_filter=filter_work_order_products_data)
 
 	
-	
-
-
-def filter_employees(filter_employee_id, filter_employee_first_name, filter_employee_last_name,  
-	filter_employee_email, filter_employee_group, filter_employee_site_id):
+def filter_employees(filter_employees_parameter):
 
 	# Load SQL query for filtering filter employee data
 	filter_employee_query = """
-	SELECT * 
-	FROM Employees
+	SELECT Employees.employee_id, 
+	Employees.employee_group, 
+	Employees.employee_first_name, 
+	Employees.employee_last_name, 
+	Employees.employee_email, 
+	Employees.employee_site_id,
+	Sites.site_address_city AS employee_site_name 
+	FROM Employees 
+	INNER JOIN Sites 
+	ON Employees.employee_site_id=Sites.site_id 
 	WHERE
-	employee_id = %s OR
-	employee_first_name = %s OR
-	employee_last_name = %s OR
-	employee_email = %s OR
-	employee_group = %s OR
-	employee_site_id = %s
-	;
+	(
+	(employee_id LIKE %s) OR
+	(employee_first_name LIKE %s) OR
+	(employee_last_name LIKE %s) OR
+	(employee_email LIKE %s) OR
+	(employee_group LIKE %s) OR
+	(employee_site_id LIKE %s)
+	);
 	"""
-	filter_employee_data = (filter_employee_id, filter_employee_first_name, filter_employee_last_name,  
-	filter_employee_email, filter_employee_group, filter_employee_site_id)
+	filter_employee_data = ('%'+filter_employees_parameter+'%', '%'+filter_employees_parameter+'%', '%'+filter_employees_parameter+'%',  
+	'%'+filter_employees_parameter+'%', '%'+filter_employees_parameter+'%', '%'+filter_employees_parameter+'%')
+
 	return filter(filter_query_to_run=filter_employee_query, data_to_filter=filter_employee_data)
 
 
@@ -189,22 +195,68 @@ def filter_regular_components(filter_rc_category, filter_rc_pn_desc, filter_site
 	filter_regular_component_data = (filter_rc_category, filter_rc_pn_desc, filter_site_id, filter_room_number, filter_shelf_number)
 	return filter(filter_query_to_run=filter_regular_component_query, data_to_filter=filter_regular_component_data)
 
-def filter_special_components(filter_sc_sn, filter_sc_pn, filter_site_id, filter_room_number, filter_shelf_number, filter_sc_is_free):
+def filter_special_components(filter_spec_comps_parameter):
 
 	# Load SQL query for filtering filter regular component data
 	filter_special_component_query = """
-	SELECT * 
-	FROM SpecialComponents
-	INNER JOIN Locations ON Locations.location_id = SpecialComponents.sc_location_id
+	SELECT
+	SpecialComponents.sc_sn AS sc_sn,
+	SpecialComponents.sc_pn AS sc_pn,
+	SpecialComponents.sc_is_free AS sc_free,
+	SpecialComponents.sc_product_sn AS sc_product_sn,
+	SpecialComponents.sc_location_id AS sc_loc_id,
+	Locations.location_room_number AS sc_room,
+	Locations.location_shelf_number AS sc_shelf,
+	Sites.site_address_city AS sc_site_city
+	FROM SpecialComponents 
+	INNER JOIN Locations ON Locations.location_id=SpecialComponents.sc_location_id
+	INNER JOIN Sites ON Locations.location_site_id=Sites.site_id
 	WHERE
-	SpecialComponents.sc_sn = %s OR
-	SpecialComponents.sc_pn = %s OR
-	Locations.location_site_id
-	Locations.location_room_number = %s OR
-	Locations.location_shelf_number = %s OR
-	SpecialComponents.sc_is_free = %s
-	;
+	(
+	(SpecialComponents.sc_sn LIKE %s) OR
+	(SpecialComponents.sc_pn LIKE %s) OR
+	(Locations.location_site_id LIKE %s) OR 
+	(Locations.location_room_number LIKE %s) OR
+	(Locations.location_shelf_number LIKE %s) OR
+	(SpecialComponents.sc_is_free LIKE %s) OR
+	(Sites.site_address_city LIKE %s)
+	);
 	"""
-	filter_special_component_data = (filter_sc_sn, filter_sc_pn, filter_site_id, filter_room_number, filter_shelf_number, filter_sc_is_free)
+	filter_special_component_data = ('%'+filter_spec_comps_parameter+'%',
+	 '%'+filter_spec_comps_parameter+'%',
+	 '%'+filter_spec_comps_parameter+'%',
+	 '%'+filter_spec_comps_parameter+'%',
+	 '%'+filter_spec_comps_parameter+'%',
+	 '%'+filter_spec_comps_parameter+'%',
+	 '%'+filter_spec_comps_parameter+'%')
+
 	return filter(filter_query_to_run=filter_special_component_query, data_to_filter=filter_special_component_data)
 
+def filter_employees(filter_employees_parameter):
+
+	# Load SQL query for filtering filter employee data
+	filter_employee_query = """
+	SELECT Employees.employee_id, 
+	Employees.employee_group, 
+	Employees.employee_first_name, 
+	Employees.employee_last_name, 
+	Employees.employee_email, 
+	Employees.employee_site_id,
+	Sites.site_address_city AS employee_site_name 
+	FROM Employees 
+	INNER JOIN Sites 
+	ON Employees.employee_site_id=Sites.site_id 
+	WHERE
+	(
+	(employee_id LIKE %s) OR
+	(employee_first_name LIKE %s) OR
+	(employee_last_name LIKE %s) OR
+	(employee_email LIKE %s) OR
+	(employee_group LIKE %s) OR
+	(employee_site_id LIKE %s)
+	);
+	"""
+	filter_employee_data = ('%'+filter_employees_parameter+'%', '%'+filter_employees_parameter+'%', '%'+filter_employees_parameter+'%',  
+	'%'+filter_employees_parameter+'%', '%'+filter_employees_parameter+'%', '%'+filter_employees_parameter+'%')
+
+	return filter(filter_query_to_run=filter_employee_query, data_to_filter=filter_employee_data)

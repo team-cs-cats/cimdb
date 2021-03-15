@@ -41,7 +41,7 @@ INSERT INTO `Sites` VALUES
 (1, 'Customer', 'Customer', 'Customer', 'CA', '99999'),
 (12, '12745 Lampwood Road', 'Suite 612', 'Los Angeles', 'CA', '90023'),
 (14, '26262 Shoreline Drive', NULL, 'San Francisco', 'CA', '94125'),
-(16, '1984 Washoe Street', NULL, 'Reno', 'CA', '89523');
+(16, '1984 Washoe Street', NULL, 'Reno', 'NV', '89523');
 UNLOCK TABLES;
 
 
@@ -116,20 +116,9 @@ CREATE TABLE `WorkOrders` (
 -- Work Order 845236 is assigned to Employee 35477 "Giulia","Comberbeach" from Site ID 16 (Reno);
 LOCK TABLES `WorkOrders` WRITE;
 INSERT INTO `WorkOrders` VALUES 
-<<<<<<< HEAD
 (879845, "2021-01-29", null, "assembly_pending", 84596, 61764),
 (815348, "2021-01-12", null, "qc_pending", 84325, 39816),
 (845236, "2021-01-24", "2021-01-16", "shipping_pending", 23165, 35477);
-=======
-(879845, "2021-01-29", null, "assembly_pending", 84596, 77919),
-(815348, "2021-01-12", null, "qc_pending", 84325, 60126),
-(968412, "2021-01-02", null, "assembly_pending", 98125, 58873),
-(874523, "2021-01-22", null, "qc_pending", 98214, 46535),
-(845236, "2021-01-24", "2021-01-16", "completed", 23165, 17597),
-(658412, "2021-01-12", null, "qc_pending", 87462, 97633),
-(874596, "2021-01-14", null, "shipping_pending", 841256, 58873),
-(512648, "2021-01-21", null, "shipping_pending", 68451, 35477);
->>>>>>> parent of 1ba8aaf (Updated CIMDB.sql and fixed some typos)
 UNLOCK TABLES;
 
 
@@ -243,7 +232,6 @@ LOCK TABLES `SpecialComponents` WRITE;
 INSERT INTO `SpecialComponents` 
 (`sc_sn`, `sc_pn`, `sc_is_free`, `sc_product_sn`, `sc_location_id`)
 VALUES 
-<<<<<<< HEAD
 (3000, "i3", 0, null, 57),
 (3001, "i3", 0, null, 57),
 (3002, "i3", 0, null, 57),
@@ -274,27 +262,6 @@ VALUES
 (7007, "i7", 1, null, 57),
 (7008, "i7", 1, null, 57),
 (7009, "i7", 1, null, 57);
-=======
-(610205, "i3", 1, null, 3),
-(293039, "i5", 1, null, 5),
-(56853, "i7", 1, null, 7),
-(1046, "i5", 1, null, 8),
-(184930, "i5", 1, null, 12),
-(101711, "i7", 1, null, 45),
-(714673, "i7", 1, null, 23),
-(473446, "i3", 0, null, 67),
-(3000, "i3", 1, null, 4),
-(3001, "i3", 1, null, 58),
-(3002, "i3", 1, null, 58),
-(3003, "i3", 0, null, 34),
-(5001, "i5", 1, null, 55),
-(5002, "i5", 1, null, 65),
-(5003, "i5", 1, null, 23),
-(7001, "i7", 1, null, 22),
-(7002, "i7", 1, null, 22),
-(7003, "i7", 1, null, 22),
-(7004, "i7", 1, null, 56);
->>>>>>> parent of 1ba8aaf (Updated CIMDB.sql and fixed some typos)
 UNLOCK TABLES;
 
 
@@ -355,7 +322,6 @@ CREATE TABLE `WorkOrderProducts` (
 LOCK TABLES `WorkOrderProducts` WRITE;
 INSERT INTO `WorkOrderProducts` VALUES 
 (1,879845,1),
-<<<<<<< HEAD
 (2,815348,2),
 (3,845236,3),
 (4,879845,4),
@@ -365,15 +331,6 @@ INSERT INTO `WorkOrderProducts` VALUES
 (8,815348,8),
 (9,845236,9),
 (10,879845,10);
-=======
-(2,879845,5),
-(3,879845,8),
-(4,815348,3),
-(5,968412,2),
-(6,874523,4),
-(7,845236,6),
-(8,845236,7);
->>>>>>> parent of 1ba8aaf (Updated CIMDB.sql and fixed some typos)
 UNLOCK TABLES;
 
 

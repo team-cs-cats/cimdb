@@ -105,12 +105,20 @@ def update_location(location_room_number_input, location_shelf_number_input,
 	location_site_id_dropdown_input, location_id_from_update_button)
 	update(update_query_to_run=update_location_query)
 
-
-def update_location_regular_comps():
-
-	# Load SQL query for updating the data for a selected locations/regular components relationship
-	update_location_regular_comps_query = """"""
-	update(update_query_to_run=update_location_regular_comps_query)
+def update_reg_comp_location_quantity(rc_id, loc_id, qty):
+	"""
+	Updates the regular component quantity at a provided location
+	"""
+	update_reg_comp_loc_qty_query = """
+	UPDATE LocationsRegularComps 
+	SET
+	lrc_quantity= '%s' 
+	WHERE 
+	lrc_location_id = '%s'
+	AND lrc_rc_pn= '%s' 
+	;
+	"""% (qty, loc_id, rc_id)
+	update(update_query_to_run=update_reg_comp_loc_qty_query)
 
 
 def update_products_regular_comps():

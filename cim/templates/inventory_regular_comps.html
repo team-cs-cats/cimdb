@@ -27,7 +27,7 @@ Inventory - Regular Components
 <!-- Description for Create New section -->
 {% block create_description %}
 <h6>Order New Regular Components</h6> 
-If a new regular component (non-CPU/non unique) needs to be ordered and added to the inventory, use this form.
+To add new regular components to the inventory, use this form.
 {% endblock %}
 
 <!-- Form for Create New section -->
@@ -48,15 +48,16 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 			<option value='RAM'>RAM</option>
 		</select>
 
+		<label for="new_reg_comp_quantity">Order Quantity: </label>
+		<input type="number" min="1" max="50" class='m-1 p-1' name="new_reg_comp_part_quantity" id="new_reg_comp_part_quantity" placeholder="#" required>
+
 		<select class="custom-select m-1 p-1" id="new_reg_comp_part_site_id" name="new_reg_comp_part_site_id" value="new_reg_comp_part_site_id" required>
-			<option selected>Select Site: </option>
+			<option value="" selected disabled hidden >Select Site: </option>
 			{% for site in sites %}
 			<option value={{site.site_id}}>{{site.site_address_city}}</option>
 			{% endfor %}
 		</select>
 
-		<label for="new_reg_comp_quantity">Order Quantity: </label>
-		<input type="number" min="1" max="50" class='m-1 p-1' name="new_reg_comp_part_quantity" id="new_reg_comp_part_quantity" placeholder="#" required>
 
 		<input type="submit" class="btn-sm btn-success m-1 p-1" data-toggle="tooltip" data-placement="auto" 
 		title="All ordered components will be placed in the Receiving Department (Room 1) at the selected site." 
@@ -91,13 +92,13 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 		<!-- don't select 'no graphics card' as a location -->
 		{% if regular_component.rc_pn != 200 %} 
 			<div class="row">
-				<div class="col text-center border-top"> 
+				<div class="col text-center border-top p-1"> 
 					Part Number: <strong>{{regular_component.rc_pn_desc}}</strong> - Category: <strong>{{regular_component.rc_category}}</strong>
 				</div>
 
 			</div>
 
-			<div class="row ml-5 mr-5">
+<!-- 			<div class="row ml-5 mr-5">
 
 				<div class="col d-flex flex-row-reverse"> 
 					<button class="btn-sm btn-danger">Delete All {{regular_component.rc_pn_desc}}</button>
@@ -111,7 +112,7 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 					data-title="Edit Details for Part Number {{regular_component.rc_pn}}">Edit Details for {{regular_component.rc_pn_desc}}</button>
 
 				</div>
-			</div>
+			</div> -->
 
 			<div class="row ml-5 mr-5">
 
@@ -122,7 +123,7 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 						<th>Site/Location</th>
 						<th>Quantity</th>
 						<th>Edit Quantity</th>
-						<th>Delete from Location</th>
+						<!-- <th>Delete from Location</th> -->
 					</tr>
 
 					{% for location in reg_comp_locations %}
@@ -131,19 +132,25 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 						<td>{{location.SiteCity}}/Room {{location.RoomNumber}}, Shelf {{location.ShelfNumber}}</td>
 						<td>{{location.Quantity}}</td>
 
-						<th><button type="button" 
+						<td><button type="button" 
 							class="btn-sm btn-warning text-right" 
 							data-toggle="modal" 
 							data-target="#editRegularComponentQuantity" 
-							data-reg-comp-part-number="{{regular_component.rc_pn_desc}}"
+							data-reg-comp-id-to-edit="{{regular_component.rc_pn}}"
+							data-reg-comp-part-number="{{regular_component.rc_pn_desc}}" 
+							data-reg-comp-quantity={{location.Quantity}}
+
+							data-location-id-to-edit="{{location.LocationId}}"
+
 							data-reg-comp-category="{{regular_component.rc_category}}"
 							data-reg-comp-site-name="{{location.SiteCity}}" 
-							data-reg-comp-room-number="{{location.RoomNumber}}" 
-							data-reg-comp-shelf-number="{{location.ShelfNumber}}" 
-							data-reg-comp-quantity={{location.Quantity}}
-							data-title="Edit Quantity of {{regular_component.rc_pn_desc}}">Edit</button></th>
 
-							<td><button class="btn-sm btn-danger">Delete</button></td>
+							data-reg-comp-room-number="{{location.RoomNumber}}" 
+							data-reg-comp-shelf-number="{{location.ShelfNumber}}"
+
+							data-title="Edit Quantity of {{regular_component.rc_pn_desc}}">Edit</button></td>
+
+							<!-- <td><button class="btn-sm btn-danger">Delete</button></td> -->
 					</tr>
 						{% endif %}
 					{% endfor %}
@@ -172,23 +179,27 @@ If a new regular component (non-CPU/non unique) needs to be ordered and added to
 	<div id="editRegularComponentQuantity" class="modal fade" tabindex="-1">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form>
+				<form method="POST">
 					<div class="modal-header">
 						<h5 class="modal-title">Modal Window</h5>
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 					</div>
 					<div class="modal-body">  
 
+						<input type="hidden" id="reg-comp-id-to-edit" name="reg-comp-id-to-edit" value="">
+						<input type="hidden" id="location-id-to-edit" name="location-id-to-edit" value="">  
+
 						<div class="form-group p-1">
-							<label class="control-label" >Quantity in <span id="reg-comp-view-site" name="reg-comp-view-site"></span>, Room <span id="reg-comp-view-room-number"></span>, Shelf <span id="reg-comp-view-shelf-number"></span>:</label>
-							<input type="number" min="0" max="999" id="reg-comp-edit-quantity" class="form-control" required>
+
+							<label class="control-label" >Update component quantity?</label>
+							<input type="number" min="0" max="999" id="reg-comp-edit-quantity" name="reg-comp-edit-quantity" class="form-control" required>
 						</div> 
 
 					</div>
 
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						<button type="button" class="btn btn-primary">Update</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">No/Cancel</button>
+						<button type="submit" class="btn btn-primary" id='btnRegCompQuantityUpdate' name='btnRegCompQuantityUpdate'>Yes/Update</button>
 					</div>
 				</form>
 			</div>

@@ -40,7 +40,7 @@ If new CPUs (special components with unique serial numbers) need to be added to 
 		<input type="number" min="10000" max="99998" class='m-1' name="new_spec_comp_part_number" id="new_spec_comp_part_number" placeholder="12345" required>
  -->
 		<select class="custom-select m-1" id="new_spec_comp_part_number" name="new_spec_comp_part_number" required>
-			<optgroup label="CPU Type: ">
+			<option value="" selected disabled hidden >CPU Type: </option>
 			{% for sc_category in special_components_catalog.CPU %}
 			<option>{{sc_category}}</option>
 			{% endfor %}
@@ -48,7 +48,7 @@ If new CPUs (special components with unique serial numbers) need to be added to 
 		</select>
 
 		<select class="custom-select m-1" id="new_spec_comp_site" name="new_spec_comp_site" required>
-			<option selected>Select Site: </option>
+			<option value="" selected disabled hidden >Select Site: </option>
 			{% for site in sites %}
 			<option value={{site.site_id}}>{{site.site_address_city}}</option>
 			{% endfor %}
@@ -81,11 +81,11 @@ Note that each shelf in each room can store multiple special components, each wi
 
 		<div class="input-group">
 		  <div class="w-75">
-		    <input type="search" id="filterSpecCompsSearch" class="form-control" name='filterSpecCompsSearch' placeholder="Filter Existing CPUS (Special Components) by Serial Number, Part Number, Availability (Yes or No), Site or Location" />
+		    <input type="search" id="filterSpecCompsSearch" class="form-control" name='filterSpecCompsSearch' placeholder="Filter by Serial Number, Part Number, Availability (Yes or No), Site City, Room Number or Shelf Number" />
 		  </div>
 
-		  <input type="submit" class="btn-sm btn-primary m-1" name="btnFilterSites" id="btnFilterSites" value="Filter" >
-			<input type="submit" class="btn-sm btn-primary m-1" name="btnClearFilterSites" id="btnFilterSites" value="Clear Filters" >
+		  <input type="submit" class="btn-sm btn-primary m-1" name="btnFilterSpecComps" id="btnFilterSpecComps" value="Filter" >
+			<input type="submit" class="btn-sm btn-primary m-1" name="btnClearFilterSpecComps" id="btnClearFilterSpecComps" value="Clear Filters" >
 			</div>
 	  </div>
 	</div>
@@ -119,7 +119,7 @@ Note that each shelf in each room can store multiple special components, each wi
 		data-spec-comp-part-number="{{special_component.sc_pn}}"
 		data-spec-comp-edit-location="{{special_component.sc_loc_id}}" 
 		data-spec-comp-is-free="{{special_component.sc_free}}" 
-		data-title="Edit Special Component ID {{special_component.sc_sn}}">Edit</button></th>
+		data-title="Edit Special Component: Serial Number {{special_component.sc_sn}}">Edit</button></th>
 
 		<td><button type="button" 
 		class="btn-sm btn-danger" 

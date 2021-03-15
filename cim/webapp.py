@@ -121,7 +121,7 @@ def request_loader(request):
 # Add an association for any unauthorized session logins.
 @login_manager.unauthorized_handler
 def unauthorized_handler():
-	return 'Unauthorized'
+	return redirect(url_for('index'))
 
 
 
@@ -191,15 +191,20 @@ def login():
 		user_site_id = user.employee_details['employee_site_id']
 		user_group = user.employee_details['employee_group'].capitalize()
 		flask_login.login_user(user)
-		session['user_first_name'] = user_first_name
-		return redirect(url_for('landing', 
-			user_first_name=user_first_name, 
-			user_last_name=user_last_name, 
-			user_email=user_email, 
-			user_id=user_id, 
-			user_site_id=user_site_id,
-			user_group=user_group
-			))
+
+		# Commented out since we have not implemented sessions
+		# session['user_first_name'] = user_first_name
+		# return redirect(url_for('landing', 
+		# 	user_first_name=user_first_name, 
+		# 	user_last_name=user_last_name, 
+		# 	user_email=user_email, 
+		# 	user_id=user_id, 
+		# 	user_site_id=user_site_id,
+		# 	user_group=user_group
+		# 	))
+
+		# otherwise, render the landing page
+		return redirect(url_for('landing'))
 
 	# If the user provided bad credentials, return them to the index page (TODO: flash error)
 	return render_template("index.html")
@@ -494,7 +499,6 @@ def inventory_special_components():
 			if request.form.get('spec-comp-edit-is-free'):
 				updated_spec_comp_is_free = 1
 			
-			print('updated_spec_comp_is_free', updated_spec_comp_is_free)
 			sc_id_to_update = request.form['spec-comp-serial-number']
 
 			# perform the update
@@ -502,6 +506,32 @@ def inventory_special_components():
 				updated_spec_comp_location=updated_spec_comp_location,
 				updated_spec_comp_is_free=updated_spec_comp_is_free,
 				sc_id_to_update=sc_id_to_update)
+
+
+		# Check if the user submitted a form to filter existing special components
+		if "btnFilterSpecComps" in request.form:
+
+			# Obtain data from the filter existing special components form			
+			provided_filter_spec_comps_paramaters = request.form.get('filterSpecCompsSearch')
+
+			# Perform the filter
+			filtered_spec_comps_results = dbfq.filter_special_components(filter_spec_comps_parameter=provided_filter_spec_comps_paramaters)
+
+			# render the page using the filtered results
+			return render_template("inventory_special_comps.html", 
+				special_components=filtered_spec_comps_results, 
+				sites=dbq.get_db_sites(),
+				special_components_catalog=data.get_sp_catalog(),
+				locations=dbq.get_db_locations()
+				)
+
+
+
+		# Check if the user submitted a form to clear all filters of existing special components
+		if "btnClearFilterSpecComps" in request.form:
+
+			# Refresh the selection query before reloading the page
+			employee_results = dbq.get_db_employees()
 
 		# Handle Delete Existing Special Component (DELETE)
 		if "btnSpecCompDelete" in request.form:
@@ -585,25 +615,17 @@ def inventory_regular_components():
 			
 
 		# Handle Edit Existing Regular Component (UPDATE)
-		# if "btnSpecCompUpdate" in request.form:
+		if "btnRegCompQuantityUpdate" in request.form:
 
-		# 	# obtain data from new special component form
-		# 	updated_spec_comp_part_number = request.form['spec-comp-edit-part-number']
-		# 	updated_spec_comp_location = int(request.form['spec-comp-edit-location'])
+			# obtain data from new special component form
+			updated_reg_comp_id = request.form['reg-comp-id-to-edit']
+			updated_location_id = request.form['location-id-to-edit']
+			updated_quantity = request.form['reg-comp-edit-quantity']
 
-		# 	# for the 'Is Free' checkbox, we first assume it is False (not checked). Then, if it is found to be checked, we update.
-		# 	updated_spec_comp_is_free = 0
-		# 	if request.form.get('spec-comp-edit-is-free'):
-		# 		updated_spec_comp_is_free = 1
-			
-		# 	print('updated_spec_comp_is_free', updated_spec_comp_is_free)
-		# 	sc_id_to_update = request.form['spec-comp-serial-number']
+			print('the post is', updated_reg_comp_id, updated_location_id, updated_quantity)
 
-		# 	# perform the update
-		# 	dbuq.update_special_component(updated_spec_comp_part_number=updated_spec_comp_part_number, 
-		# 		updated_spec_comp_location=updated_spec_comp_location,
-		# 		updated_spec_comp_is_free=updated_spec_comp_is_free,
-		# 		sc_id_to_update=sc_id_to_update)
+			# perform the update
+			dbuq.update_reg_comp_location_quantity(rc_id=updated_reg_comp_id, loc_id=updated_location_id, qty=updated_quantity)
 
 		# # Handle Delete Existing Special Component (DELETE)
 		# if "btnSpecCompDelete" in request.form:
@@ -632,14 +654,21 @@ def shipping():
 	if not current_user.is_authenticated:
 		return redirect(url_for("cim.templates.index"))
 
-	# Load work order results from the database (or the dummy data if the database doesn't work)
-	work_order_results = dbq.get_db_work_orders()
-
-	# Load work order results from the database (or the dummy data if the database doesn't work)
-	employee_results = dbq.get_db_employees()
-
+	# When first loaded, load in work orders and employee data from DB
 	if request.method=="GET":
-		return render_template("shipping.html", work_orders=work_order_results, employees=employee_results)
+		return render_template("shipping.html", work_orders=dbq.get_db_work_orders(), employees=dbq.get_db_employees())
+
+	# If a POST request is submitted, update the Status for the provided work order to Shipped
+	if request.method=="POST":
+
+		# obtain the details of the work order to update
+		shipped_work_order = str(request.form['work-order-id-to-ship'])
+
+		# Update the status of the work order to completed
+		dbuq.set_workorder_status(wo_id=shipped_work_order, wo_status="'completed'")
+
+		# reload with updated information
+		return render_template("shipping.html", work_orders=dbq.get_db_work_orders(), employees=dbq.get_db_employees())
 
 @webapp.route('/locations', methods=['GET', 'POST'])
 @login_required
@@ -766,6 +795,27 @@ def employee_management():
 				employee_last_name_input=updated_employee_lname, employee_email_input=updated_employee_email, 
 				employee_site_id_dropdown_input=updated_employee_site_id, employee_id_from_update_button=employee_id_to_update)
 
+		# Check if the user submitted a form to filter existing employees
+		if "btnFilterEmployees" in request.form:
+
+			# Obtain data from the filter existing sites form			
+			provided_filter_employee_paramaters = request.form.get('filterEmployeeSearch')
+
+			# Perform the filter
+			filtered_employee_results = dbfq.filter_employees(filter_employees_parameter=provided_filter_employee_paramaters)
+
+			# Reload the site results, since the original connection to the database has expired
+			site_results = dbq.get_db_sites()
+			return render_template("employee_mgmt.html", sites=site_results, employees=filtered_employee_results)
+
+
+		# Check if the user submitted a form to clear all filters of existing employees
+		if "btnClearFilterEmployees" in request.form:
+
+			# Refresh the selection query before reloading the page
+			employee_results = dbq.get_db_employees()
+
+
 		# Lastly, check if the POST was a DELETE for an employee
 		if "deleteExistingEmployeeBtn" in request.form:
 
@@ -775,8 +825,10 @@ def employee_management():
 			# Perform the deletion
 			dbdq.delete_employee(employee_id_to_delete=employee_id_to_delete)
 
+
 		# Reload the employee details since they have been updated
 		employee_results = dbq.get_db_employees()
+		site_results = dbq.get_db_sites()
 		return render_template("employee_mgmt.html", sites=site_results, employees=employee_results)
 
 

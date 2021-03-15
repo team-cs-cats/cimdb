@@ -59,9 +59,9 @@ def get_db_regular_components():
 	RegularComponents.rc_pn_desc,
 	RegularComponents.rc_category,
 	SUM(LocationsRegularComps.lrc_quantity) AS TotalQuantity,
-	Locations.location_room_number,
-	Locations.location_shelf_number,
-	Sites.site_address_city
+	Locations.location_room_number AS RoomNumber,
+	Locations.location_shelf_number AS ShelfNumber,
+	Sites.site_address_city AS SiteCity
 	FROM RegularComponents 
 	INNER JOIN LocationsRegularComps ON RegularComponents.rc_pn=LocationsRegularComps.lrc_rc_pn
 	INNER JOIN Locations ON Locations.location_id=LocationsRegularComps.lrc_location_id
@@ -101,6 +101,7 @@ def get_db_regular_components_by_location():
 	# Load SQL query for regular component data
 	query = """SELECT
 	LocationsRegularComps.lrc_rc_pn AS PartNumber,
+	LocationsRegularComps.lrc_location_id AS LocationId,
 	Sites.site_address_city AS SiteCity,
 	Locations.location_room_number AS RoomNumber,
 	Locations.location_shelf_number AS ShelfNumber,
