@@ -84,27 +84,33 @@ def filter_work_order_products(filter_wop_wo_id,filter_wop_product_sn):
 	return filter(filter_query_to_run=filter_work_order_products,data_to_filter=filter_work_order_products_data)
 
 	
-	
-
-
-def filter_employees(filter_employee_id, filter_employee_first_name, filter_employee_last_name,  
-	filter_employee_email, filter_employee_group, filter_employee_site_id):
+def filter_employees(filter_employees_parameter):
 
 	# Load SQL query for filtering filter employee data
 	filter_employee_query = """
-	SELECT * 
-	FROM Employees
+	SELECT Employees.employee_id, 
+	Employees.employee_group, 
+	Employees.employee_first_name, 
+	Employees.employee_last_name, 
+	Employees.employee_email, 
+	Employees.employee_site_id,
+	Sites.site_address_city AS employee_site_name 
+	FROM Employees 
+	INNER JOIN Sites 
+	ON Employees.employee_site_id=Sites.site_id 
 	WHERE
-	employee_id = %s OR
-	employee_first_name = %s OR
-	employee_last_name = %s OR
-	employee_email = %s OR
-	employee_group = %s OR
-	employee_site_id = %s
-	;
+	(
+	(employee_id LIKE %s) OR
+	(employee_first_name LIKE %s) OR
+	(employee_last_name LIKE %s) OR
+	(employee_email LIKE %s) OR
+	(employee_group LIKE %s) OR
+	(employee_site_id LIKE %s)
+	);
 	"""
-	filter_employee_data = (filter_employee_id, filter_employee_first_name, filter_employee_last_name,  
-	filter_employee_email, filter_employee_group, filter_employee_site_id)
+	filter_employee_data = ('%'+filter_employees_parameter+'%', '%'+filter_employees_parameter+'%', '%'+filter_employees_parameter+'%',  
+	'%'+filter_employees_parameter+'%', '%'+filter_employees_parameter+'%', '%'+filter_employees_parameter+'%')
+
 	return filter(filter_query_to_run=filter_employee_query, data_to_filter=filter_employee_data)
 
 

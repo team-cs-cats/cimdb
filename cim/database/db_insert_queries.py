@@ -163,6 +163,7 @@ def get_receiving_id(site_id):
 		# then update the site id with the location we just added
 		resulting_location_id = query_for_location(provided_site_id=site_id)
 
+	# return the location ID desired
 	return resulting_location_id[0]['location_id']
 
 def insert_special_component(new_sc_pn, new_sc_location_id):

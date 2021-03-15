@@ -766,6 +766,27 @@ def employee_management():
 				employee_last_name_input=updated_employee_lname, employee_email_input=updated_employee_email, 
 				employee_site_id_dropdown_input=updated_employee_site_id, employee_id_from_update_button=employee_id_to_update)
 
+		# Check if the user submitted a form to filter existing employees
+		if "btnFilterEmployees" in request.form:
+
+			# Obtain data from the filter existing sites form			
+			provided_filter_employee_paramaters = request.form.get('filterEmployeeSearch')
+
+			# Perform the filter
+			filtered_employee_results = dbfq.filter_employees(filter_employees_parameter=provided_filter_employee_paramaters)
+
+			# Reload the site results, since the original connection to the database has expired
+			site_results = dbq.get_db_sites()
+			return render_template("employee_mgmt.html", sites=site_results, employees=filtered_employee_results)
+
+
+		# Check if the user submitted a form to clear all filters of existing employees
+		if "btnClearFilterEmployees" in request.form:
+
+			# Refresh the selection query before reloading the page
+			employee_results = dbq.get_db_employees()
+
+
 		# Lastly, check if the POST was a DELETE for an employee
 		if "deleteExistingEmployeeBtn" in request.form:
 
@@ -775,8 +796,10 @@ def employee_management():
 			# Perform the deletion
 			dbdq.delete_employee(employee_id_to_delete=employee_id_to_delete)
 
+
 		# Reload the employee details since they have been updated
 		employee_results = dbq.get_db_employees()
+		site_results = dbq.get_db_sites()
 		return render_template("employee_mgmt.html", sites=site_results, employees=employee_results)
 
 
