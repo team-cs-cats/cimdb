@@ -232,7 +232,6 @@ LOCK TABLES `SpecialComponents` WRITE;
 INSERT INTO `SpecialComponents` 
 (`sc_sn`, `sc_pn`, `sc_is_free`, `sc_product_sn`, `sc_location_id`)
 VALUES 
-<<<<<<< HEAD
 (3000, "i3", 0, null, 57),
 (3001, "i3", 0, null, 57),
 (3002, "i3", 0, null, 57),
@@ -263,27 +262,6 @@ VALUES
 (7007, "i7", 1, null, 57),
 (7008, "i7", 1, null, 57),
 (7009, "i7", 1, null, 57);
-=======
-(610205, "i3", 1, null, 3),
-(293039, "i5", 1, null, 5),
-(56853, "i7", 1, null, 7),
-(1046, "i5", 1, null, 8),
-(184930, "i5", 1, null, 12),
-(101711, "i7", 1, null, 45),
-(714673, "i7", 1, null, 23),
-(473446, "i3", 0, null, 67),
-(3000, "i3", 1, null, 4),
-(3001, "i3", 1, null, 58),
-(3002, "i3", 1, null, 58),
-(3003, "i3", 0, null, 34),
-(5001, "i5", 1, null, 55),
-(5002, "i5", 1, null, 65),
-(5003, "i5", 1, null, 23),
-(7001, "i7", 1, null, 22),
-(7002, "i7", 1, null, 22),
-(7003, "i7", 1, null, 22),
-(7004, "i7", 1, null, 56);
->>>>>>> parent of 1ba8aaf (Updated CIMDB.sql and fixed some typos)
 UNLOCK TABLES;
 
 
@@ -344,7 +322,6 @@ CREATE TABLE `WorkOrderProducts` (
 LOCK TABLES `WorkOrderProducts` WRITE;
 INSERT INTO `WorkOrderProducts` VALUES 
 (1,879845,1),
-<<<<<<< HEAD
 (2,815348,2),
 (3,845236,3),
 (4,879845,4),
@@ -354,15 +331,6 @@ INSERT INTO `WorkOrderProducts` VALUES
 (8,815348,8),
 (9,845236,9),
 (10,879845,10);
-=======
-(2,879845,5),
-(3,879845,8),
-(4,815348,3),
-(5,968412,2),
-(6,874523,4),
-(7,845236,6),
-(8,845236,7);
->>>>>>> parent of 1ba8aaf (Updated CIMDB.sql and fixed some typos)
 UNLOCK TABLES;
 
 
