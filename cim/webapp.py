@@ -184,14 +184,15 @@ def login():
 			return redirect(url_for('index'))
 
 		# otherwise use the id to save the employee details and render the landing page
+		user_first_name = user.employee_details['employee_first_name']
+		user_last_name = user.employee_details['employee_last_name']
+		user_email = user.employee_details['employee_email']
+		user_id = user.employee_details['employee_id']
+		user_site_id = user.employee_details['employee_site_id']
+		user_group = user.employee_details['employee_group'].capitalize()
+		flask_login.login_user(user)
+
 		# Commented out since we have not implemented sessions
-		# user_first_name = user.employee_details['employee_first_name']
-		# user_last_name = user.employee_details['employee_last_name']
-		# user_email = user.employee_details['employee_email']
-		# user_id = user.employee_details['employee_id']
-		# user_site_id = user.employee_details['employee_site_id']
-		# user_group = user.employee_details['employee_group'].capitalize()
-		# flask_login.login_user(user)
 		# session['user_first_name'] = user_first_name
 		# return redirect(url_for('landing', 
 		# 	user_first_name=user_first_name, 
