@@ -41,7 +41,7 @@ INSERT INTO `Sites` VALUES
 (1, 'Customer', 'Customer', 'Customer', 'CA', '99999'),
 (12, '12745 Lampwood Road', 'Suite 612', 'Los Angeles', 'CA', '90023'),
 (14, '26262 Shoreline Drive', NULL, 'San Francisco', 'CA', '94125'),
-(16, '1984 Washoe Street', NULL, 'Reno', 'CA', '89523');
+(16, '1984 Washoe Street', NULL, 'Reno', 'NV', '89523');
 UNLOCK TABLES;
 
 
