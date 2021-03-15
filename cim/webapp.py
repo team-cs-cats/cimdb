@@ -657,14 +657,21 @@ def shipping():
 	if not current_user.is_authenticated:
 		return redirect(url_for("cim.templates.index"))
 
-	# Load work order results from the database (or the dummy data if the database doesn't work)
-	work_order_results = dbq.get_db_work_orders()
-
-	# Load work order results from the database (or the dummy data if the database doesn't work)
-	employee_results = dbq.get_db_employees()
-
+	# When first loaded, load in work orders and employee data from DB
 	if request.method=="GET":
-		return render_template("shipping.html", work_orders=work_order_results, employees=employee_results)
+		return render_template("shipping.html", work_orders=dbq.get_db_work_orders(), employees=dbq.get_db_employees())
+
+	# If a POST request is submitted, update the Status for the provided work order to Shipped
+	if request.method=="POST":
+
+		# obtain the details of the work order to update
+		shipped_work_order = str(request.form['work-order-id-to-ship'])
+
+		# Update the status of the work order to completed
+		dbuq.set_workorder_status(wo_id=shipped_work_order, wo_status="'completed'")
+
+		# reload with updated information
+		return render_template("shipping.html", work_orders=dbq.get_db_work_orders(), employees=dbq.get_db_employees())
 
 @webapp.route('/locations', methods=['GET', 'POST'])
 @login_required

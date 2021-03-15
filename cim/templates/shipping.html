@@ -165,16 +165,16 @@
 <div id="shipWorkOrder" class="modal fade" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form>
+                <form method="POST">
                     <div class="modal-header">
                         <h5 class="modal-title">Ship Work Order</h5>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
                     <div class="modal-body">
 
-					 <input type="hidden" id="location-id-to-delete" name="location-id-to-delete" value=""> 
+					 <input type="hidden" id="work-order-id-to-ship" name="work-order-id-to-ship" value=""> 
 
-					 <div class="form-group p-1" method="PUT">
+					 <div class="form-group p-1">
 
 						<p>Shipping this work order will: </p>
 						<ul>
@@ -205,9 +205,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-<!-- Include moment to reformat the date fields -->
-<script src="moment.js"></script>
-<script>moment().format("MMM Do YYYY");</script>
 
 <!-- load shipping JS for View Work Order modal -->
 <script type="text/javascript" src="{{ url_for('static', filename='js/shipping.js') }}"></script>
