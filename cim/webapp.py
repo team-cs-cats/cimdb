@@ -503,6 +503,36 @@ def inventory_special_components():
 				updated_spec_comp_is_free=updated_spec_comp_is_free,
 				sc_id_to_update=sc_id_to_update)
 
+
+		# Check if the user submitted a form to filter existing special components
+		if "btnFilterSpecComps" in request.form:
+
+			# Obtain data from the filter existing special components form			
+			provided_filter_spec_comps_paramaters = request.form.get('filterSpecCompsSearch')
+
+			print('\n', provided_filter_spec_comps_paramaters, '\n')
+
+			# Perform the filter
+			filtered_spec_comps_results = dbfq.filter_special_components(filter_spec_comps_parameter=provided_filter_spec_comps_paramaters)
+
+			print(filtered_spec_comps_results)
+
+			# render the page using the filtered results
+			return render_template("inventory_special_comps.html", 
+				special_components=filtered_spec_comps_results, 
+				sites=dbq.get_db_sites(),
+				special_components_catalog=data.get_sp_catalog(),
+				locations=dbq.get_db_locations()
+				)
+
+
+
+		# Check if the user submitted a form to clear all filters of existing special components
+		if "btnClearFilterSpecComps" in request.form:
+
+			# Refresh the selection query before reloading the page
+			employee_results = dbq.get_db_employees()
+
 		# Handle Delete Existing Special Component (DELETE)
 		if "btnSpecCompDelete" in request.form:
 
