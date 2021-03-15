@@ -116,20 +116,9 @@ CREATE TABLE `WorkOrders` (
 -- Work Order 845236 is assigned to Employee 35477 "Giulia","Comberbeach" from Site ID 16 (Reno);
 LOCK TABLES `WorkOrders` WRITE;
 INSERT INTO `WorkOrders` VALUES 
-<<<<<<< HEAD
 (879845, "2021-01-29", null, "assembly_pending", 84596, 61764),
 (815348, "2021-01-12", null, "qc_pending", 84325, 39816),
 (845236, "2021-01-24", "2021-01-16", "shipping_pending", 23165, 35477);
-=======
-(879845, "2021-01-29", null, "assembly_pending", 84596, 77919),
-(815348, "2021-01-12", null, "qc_pending", 84325, 60126),
-(968412, "2021-01-02", null, "assembly_pending", 98125, 58873),
-(874523, "2021-01-22", null, "qc_pending", 98214, 46535),
-(845236, "2021-01-24", "2021-01-16", "completed", 23165, 17597),
-(658412, "2021-01-12", null, "qc_pending", 87462, 97633),
-(874596, "2021-01-14", null, "shipping_pending", 841256, 58873),
-(512648, "2021-01-21", null, "shipping_pending", 68451, 35477);
->>>>>>> parent of 1ba8aaf (Updated CIMDB.sql and fixed some typos)
 UNLOCK TABLES;
 
 
