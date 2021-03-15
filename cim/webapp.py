@@ -615,25 +615,17 @@ def inventory_regular_components():
 			
 
 		# Handle Edit Existing Regular Component (UPDATE)
-		# if "btnSpecCompUpdate" in request.form:
+		if "btnRegCompQuantityUpdate" in request.form:
 
-		# 	# obtain data from new special component form
-		# 	updated_spec_comp_part_number = request.form['spec-comp-edit-part-number']
-		# 	updated_spec_comp_location = int(request.form['spec-comp-edit-location'])
+			# obtain data from new special component form
+			updated_reg_comp_id = request.form['reg-comp-id-to-edit']
+			updated_location_id = request.form['location-id-to-edit']
+			updated_quantity = request.form['reg-comp-edit-quantity']
 
-		# 	# for the 'Is Free' checkbox, we first assume it is False (not checked). Then, if it is found to be checked, we update.
-		# 	updated_spec_comp_is_free = 0
-		# 	if request.form.get('spec-comp-edit-is-free'):
-		# 		updated_spec_comp_is_free = 1
-			
-		# 	print('updated_spec_comp_is_free', updated_spec_comp_is_free)
-		# 	sc_id_to_update = request.form['spec-comp-serial-number']
+			print('the post is', updated_reg_comp_id, updated_location_id, updated_quantity)
 
-		# 	# perform the update
-		# 	dbuq.update_special_component(updated_spec_comp_part_number=updated_spec_comp_part_number, 
-		# 		updated_spec_comp_location=updated_spec_comp_location,
-		# 		updated_spec_comp_is_free=updated_spec_comp_is_free,
-		# 		sc_id_to_update=sc_id_to_update)
+			# perform the update
+			dbuq.update_reg_comp_location_quantity(rc_id=updated_reg_comp_id, loc_id=updated_location_id, qty=updated_quantity)
 
 		# # Handle Delete Existing Special Component (DELETE)
 		# if "btnSpecCompDelete" in request.form:
