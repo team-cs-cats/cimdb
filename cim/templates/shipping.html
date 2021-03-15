@@ -38,13 +38,8 @@
 								<p>Pending Assembly and QC by {{work_order.wo_employee_full_name}}</p>
 							<button type="button" 
 								class="btn-sm btn-secondary text-right" 
-								data-toggle="modal" 
-								data-target="#viewWorkOrder" 
-								data-work-order-id="{{work_order.wo_id}}"
-								data-work-order-open-date="{{work_order.wo_open_date}}" 
-								data-work-order-reference-number="{{work_order.wo_reference_number}}" 
-								data-title="Details of Work Order {{work_order.wo_id}}"
-								>View Order
+								onclick="window.location.href='/wo-details?wo_id={{work_order.wo_id}}'"
+								>View Order Details
 							</button>
 						</div>
 						</div>
@@ -76,13 +71,8 @@
 							
 							<button type="button" 
 								class="btn-sm btn-secondary text-right" 
-								data-toggle="modal" 
-								data-target="#viewWorkOrder" 
-								data-work-order-id="{{work_order.wo_id}}"
-								data-work-order-open-date="{{work_order.wo_open_date}}" 
-								data-work-order-reference-number="{{work_order.wo_reference_number}}" 
-								data-title="Details of Work Order {{work_order.wo_id}}"
-								>View Order
+								onclick="window.location.href='/wo-details?wo_id={{work_order.wo_id}}'"
+								>View Order Details
 							</button>
 
 						</div>
@@ -113,17 +103,23 @@
 						<div>
 							<h6 class="card-title">Work Order {{work_order.wo_id}}</h6>
 
+							<p>Prepared by {{work_order.wo_employee_full_name}}</p>
+
 							<button type="button" 
 								class="btn-sm btn-secondary text-right" 
+								onclick="window.location.href='/wo-details?wo_id={{work_order.wo_id}}'"
+								>View Order Details
+							</button>
+							<button type="button" 
+								class="btn-sm btn-info text-right" 
 								data-toggle="modal" 
 								data-target="#viewWorkOrder" 
 								data-work-order-id="{{work_order.wo_id}}"
 								data-work-order-open-date="{{work_order.wo_open_date}}" 
 								data-work-order-reference-number="{{work_order.wo_reference_number}}" 
 								data-title="Details of Work Order {{work_order.wo_id}}"
-								>View Order
+								>Ship
 							</button>
-							<a href="#" class="btn-sm btn-info">Ship</a>
 						</div>
 						</div>
 						</div>
@@ -176,8 +172,7 @@
 					</div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary">Update</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close Details</button>
                     </div>
                 </form>
             </div>
