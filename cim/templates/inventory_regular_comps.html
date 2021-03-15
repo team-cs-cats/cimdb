@@ -48,15 +48,16 @@ To add new regular components to the inventory, use this form.
 			<option value='RAM'>RAM</option>
 		</select>
 
+		<label for="new_reg_comp_quantity">Order Quantity: </label>
+		<input type="number" min="1" max="50" class='m-1 p-1' name="new_reg_comp_part_quantity" id="new_reg_comp_part_quantity" placeholder="#" required>
+
 		<select class="custom-select m-1 p-1" id="new_reg_comp_part_site_id" name="new_reg_comp_part_site_id" value="new_reg_comp_part_site_id" required>
-			<option selected>Select Site: </option>
+			<option value="" selected disabled hidden >Select Site: </option>
 			{% for site in sites %}
 			<option value={{site.site_id}}>{{site.site_address_city}}</option>
 			{% endfor %}
 		</select>
 
-		<label for="new_reg_comp_quantity">Order Quantity: </label>
-		<input type="number" min="1" max="50" class='m-1 p-1' name="new_reg_comp_part_quantity" id="new_reg_comp_part_quantity" placeholder="#" required>
 
 		<input type="submit" class="btn-sm btn-success m-1 p-1" data-toggle="tooltip" data-placement="auto" 
 		title="All ordered components will be placed in the Receiving Department (Room 1) at the selected site." 

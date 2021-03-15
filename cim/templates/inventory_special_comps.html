@@ -40,7 +40,7 @@ If new CPUs (special components with unique serial numbers) need to be added to 
 		<input type="number" min="10000" max="99998" class='m-1' name="new_spec_comp_part_number" id="new_spec_comp_part_number" placeholder="12345" required>
  -->
 		<select class="custom-select m-1" id="new_spec_comp_part_number" name="new_spec_comp_part_number" required>
-			<optgroup label="CPU Type: ">
+			<option value="" selected disabled hidden >CPU Type: </option>
 			{% for sc_category in special_components_catalog.CPU %}
 			<option>{{sc_category}}</option>
 			{% endfor %}
@@ -48,7 +48,7 @@ If new CPUs (special components with unique serial numbers) need to be added to 
 		</select>
 
 		<select class="custom-select m-1" id="new_spec_comp_site" name="new_spec_comp_site" required>
-			<option selected>Select Site: </option>
+			<option value="" selected disabled hidden >Select Site: </option>
 			{% for site in sites %}
 			<option value={{site.site_id}}>{{site.site_address_city}}</option>
 			{% endfor %}

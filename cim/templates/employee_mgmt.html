@@ -45,18 +45,18 @@ Employee ID numbers are automatically generated upon employee addition.
 		<input type="text" class='m-1' name="new_employee_email" id="new_employee_email" placeholder="jsmith8@2fast4you.com" required>
 
 		<select class="custom-select m-1" id="new_employee_group" name="new_employee_group" required>
-			<option selected>Select Group: </option>
+			<option value="" selected disabled hidden >Select Group: </option>
 		    <option value='Production'>Production</option>
 		    <option value='Supervisor'>Supervisor</option>
 		</select>
 
 		<select class="custom-select m-1" id="new_employee_site" name="new_employee_site" required>
-			<option selected>Select Site: </option>
-				{% for site in sites %}
-					{% if site.site_id != 1 %}
-			    	<option value={{site.site_id}}>{{site.site_address_city}}</option>
-					{% endif %}
-			    {% endfor %}
+			<option value="" selected disabled hidden >Select Site: </option>
+			{% for site in sites %}
+				{% if site.site_id != 1 %}
+		    		<option value={{site.site_id}}>{{site.site_address_city}}</option>
+				{% endif %}
+		    {% endfor %}
 		</select>
 
 		<input type="submit" class="btn-sm btn-success m-1" id="addNewEmployeeBtn" name="addNewEmployeeBtn" value="Add New Employee" >

@@ -61,12 +61,12 @@ Each new location will automatically be assigned a location ID upon creation.
 	<div class="inner-div text-center">
 
 		<select class="custom-select m-1" name="add_new_location_site" id="add_new_location_site" required>
-			<option selected>Select Site: </option>
-				{% for site in sites %}
-					{% if site.site_id != 1 %}
-			    	<option value={{site.site_id}}>{{site.site_address_city}}</option>
-					{% endif %}
-			    {% endfor %}
+			<option value="" selected disabled hidden >Select Site: </option>
+			{% for site in sites %}
+				{% if site.site_id != 1 %}
+		    		<option value={{site.site_id}}>{{site.site_address_city}}</option>
+				{% endif %}
+		    {% endfor %}
 		</select>
 
 		<label for="add_location_room_number">Room Number: </label>
