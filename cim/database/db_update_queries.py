@@ -107,7 +107,7 @@ def update_location(location_room_number_input, location_shelf_number_input,
 
 def update_reg_comp_location_quantity(rc_id, loc_id, qty):
 	"""
-	Updates the regulat location quantity at a provided location
+	Updates the regular component quantity at a provided location
 	"""
 	update_reg_comp_loc_qty_query = """
 	UPDATE LocationsRegularComps 
